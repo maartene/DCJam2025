@@ -5,6 +5,9 @@ import PackageDescription
 
 let package = Package(
     name: "DCJam2025",
+    platforms: [
+        .macOS(.v15)
+    ],
     dependencies: [
         .package(url: "https://github.com/STREGAsGate/Raylib.git", branch: "master")
     ],
