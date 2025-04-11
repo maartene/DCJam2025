@@ -93,7 +93,7 @@ class Game {
 
     private func draw3D() {
         Raylib.beginMode3D(camera)
-        drawMap(world.map, vantagePoint: world.partyPosition)
+        drawMap(world.currentFloor, vantagePoint: world.partyPosition)
         Raylib.endMode3D()
     }
     
