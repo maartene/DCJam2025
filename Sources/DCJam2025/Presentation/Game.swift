@@ -14,14 +14,24 @@ class Game {
     
     var camera = makeCamera()
     
-    let world = World(map: Floor([
-        ["#","#","#","#","#","#"],
-        ["#",".",".",".","#","#"],
-        ["#",".","#",".",".","#"],
-        ["#",".","#","#",".","#"],
-        ["#",".",".",".",".","#"],
-        ["#","#","#","#","#","#"],
-    ]), partyStartPosition: Coordinate(x: 1, y: 1))
+    let world = World(floors: [
+        Floor([
+            ["#","#","#","#","#","#"],
+            ["#",".",".",".","#","#"],
+            ["#",".","#",".",".","#"],
+            ["#",".","#","#",".","#"],
+            ["#",".",".",".","<","#"],
+            ["#","#","#","#","#","#"],
+        ]),
+        Floor([
+            ["#","#","#","#","#","#"],
+            ["#",".",".",".",".","#"],
+            ["#","#","#","#",".","#"],
+            ["#","#","#","#",".","#"],
+            ["#",".",".",".",">","#"],
+            ["#","#","#","#","#","#"],
+        ]),
+    ], partyStartPosition: Coordinate(x: 1, y: 1))
     
     func run() {
         Raylib.initWindow(screenWidth, screenHeight, "DCJam2025")
@@ -101,11 +111,30 @@ class Game {
         for row in map.minY ... map.maxY {
             for column in map.minX ... map.maxX {
                 let coordinate = Coordinate(x: column, y: row)
-                if map.tileAt(coordinate) == .wall {
-                    let light = light(position: coordinate, vantagePoint: vantagePoint)
-                    Raylib.drawCubeV(coordinate.toVector3, .one, Color.gray * light)
+                switch map.tileAt(coordinate) {
+                case .wall:
+                    drawWallAt(coordinate, vantagePoint: vantagePoint)
+                case .stairsUp:
+                    drawStairsUpAt(coordinate)
+                case .stairsDown:
+                    drawStairsDownAt(coordinate)
+                default:
+                    break
                 }
             }
         }
+    }
+    
+    private func drawWallAt(_ coordinate: Coordinate, vantagePoint: Coordinate) {
+        let light = light(position: coordinate, vantagePoint: vantagePoint)
+        Raylib.drawCubeV(coordinate.toVector3, .one, Color.gray * light)
+    }
+    
+    private func drawStairsUpAt(_ coordinate: Coordinate) {
+        Raylib.drawCubeV(coordinate.toVector3, .one, Color(r: 200, g: 0, b: 0, a: 128))
+    }
+    
+    private func drawStairsDownAt(_ coordinate: Coordinate) {
+        Raylib.drawCubeV(coordinate.toVector3, .one, Color(r: 0, g: 200, b: 0, a: 128))
     }
 }

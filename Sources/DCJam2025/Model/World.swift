@@ -8,7 +8,7 @@
 final class World {
     private(set) var partyPosition: Coordinate
     private(set) var partyHeading: CompassDirection
-    private(set) var currentFloorIndex = 0
+    private var currentFloorIndex = 0
     private var floors: [Floor]
     
     var currentFloor: Floor {
