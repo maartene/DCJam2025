@@ -10,6 +10,8 @@ import Raylib
 class Game {
     let screenWidth: Int32 = 800
     let screenHeight: Int32 = 450
+    let offset: Float = -0.1
+    
     var camera = makeCamera()
     
     let world = World(map: Map([
@@ -42,14 +44,7 @@ class Game {
     
     private func update() {
         processKeyInput()
-        
         updateCamera()
-    }
-    
-    private func updateCamera() {
-        camera.position = world.partyPosition.toVector3
-        camera.target = cameraTarget(position: world.partyPosition, heading: world.partyHeading)
-        Raylib.updateCamera(&camera)
     }
     
     private func processKeyInput() {
@@ -77,6 +72,16 @@ class Game {
             world.turnPartyCounterClockwise()
         }
     }
+    
+    private func updateCamera() {
+        let cameraPosition = world.partyPosition.toVector3
+        let forward = MovementDirection.forward.toCompassDirection(facing: world.partyHeading).toCoordinate
+        let target = world.partyPosition + forward
+        
+        camera.target = target.toVector3
+        camera.position = cameraPosition + forward.toVector3.scale(offset)
+        Raylib.updateCamera(&camera)
+    }
 
     private func drawGameView() {
         Raylib.beginDrawing()
@@ -86,6 +91,12 @@ class Game {
         Raylib.endDrawing()
     }
 
+    private func draw3D() {
+        Raylib.beginMode3D(camera)
+        drawMap(world.map, vantagePoint: world.partyPosition)
+        Raylib.endMode3D()
+    }
+    
     func drawMap(_ map: Map, vantagePoint: Coordinate) {
         for row in map.minY ... map.maxY {
             for column in map.minX ... map.maxX {
@@ -96,11 +107,5 @@ class Game {
                 }
             }
         }
-    }
-    
-    private func draw3D() {
-        Raylib.beginMode3D(camera)
-        drawMap(world.map, vantagePoint: world.partyPosition)
-        Raylib.endMode3D()
     }
 }
