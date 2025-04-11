@@ -37,13 +37,25 @@ class Game {
         camera.projection = .perspective
         camera.fovy = 60
         camera.up = Vector3(x: 0, y: 1, z: 0)
-        camera.position = Vector3(x: 1, y: 0, z: 1)
-        camera.target = Vector3(x: 2, y: 0, z: 1)
         return camera
     }
     
     private func update() {
+        processKeyInput()
+        
+        updateCamera()
+    }
+    
+    private func updateCamera() {
+        camera.position = world.partyPosition.toVector3
+        camera.target = camera.position + Vector3(x: 0, y: 0, z: 1)
         Raylib.updateCamera(&camera)
+    }
+    
+    private func processKeyInput() {
+        if Raylib.isKeyPressed(.letterW) {
+            world.moveParty(.forward)
+        }
     }
 
     private func drawGameView() {
