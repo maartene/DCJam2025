@@ -1,0 +1,22 @@
+{
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:DCJam2025}",
+            "name": "Debug DCJam2025",
+            "program": "${workspaceFolder:DCJam2025}/.build/debug/DCJam2025",
+            "preLaunchTask": "swift: Build Debug DCJam2025"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:DCJam2025}",
+            "name": "Release DCJam2025",
+            "program": "${workspaceFolder:DCJam2025}/.build/release/DCJam2025",
+            "preLaunchTask": "swift: Build Release DCJam2025"
+        }
+    ]
+}
