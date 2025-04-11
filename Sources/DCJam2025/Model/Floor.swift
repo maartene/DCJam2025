@@ -21,7 +21,7 @@ enum Tile {
     }
 }
 
-struct Map {
+struct Floor {
     private var tiles = [Coordinate: Tile]()
     
     var minX: Int {

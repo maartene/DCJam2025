@@ -14,7 +14,7 @@ class Game {
     
     var camera = makeCamera()
     
-    let world = World(map: Map([
+    let world = World(map: Floor([
         ["#","#","#","#","#","#"],
         ["#",".",".",".","#","#"],
         ["#",".","#",".",".","#"],
@@ -97,7 +97,7 @@ class Game {
         Raylib.endMode3D()
     }
     
-    func drawMap(_ map: Map, vantagePoint: Coordinate) {
+    func drawMap(_ map: Floor, vantagePoint: Coordinate) {
         for row in map.minY ... map.maxY {
             for column in map.minX ... map.maxX {
                 let coordinate = Coordinate(x: column, y: row)

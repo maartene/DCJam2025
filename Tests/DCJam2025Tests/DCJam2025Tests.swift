@@ -8,7 +8,7 @@ import Testing
         (MovementDirection.left, Coordinate(x: -1, y: 0)),
         (MovementDirection.right, Coordinate(x: 1, y: 0)),
     ]) func movePartyForward(testcase: (direction: MovementDirection, expectedPosition: Coordinate)) {
-        let world = World(map: Map())
+        let world = World(map: Floor())
         
         world.moveParty(testcase.direction)
         
@@ -16,7 +16,7 @@ import Testing
     }
     
     @Test("get to coordinate (0,2) when it moves forward twice") func movePartyForwardTwice() {
-        let world = World(map: Map())
+        let world = World(map: Floor())
         
         world.moveParty(.forward)
         world.moveParty(.forward)
@@ -25,7 +25,7 @@ import Testing
     }
     
     @Test("stays in the same position, when you move forward first, then right, then back and finally left") func moveInACircle() {
-        let world = World(map: Map())
+        let world = World(map: Floor())
         
         world.moveParty(.forward)
         world.moveParty(.right)
@@ -42,7 +42,7 @@ import Testing
         (Coordinate(x: 24, y: 72), CompassDirection.north, MovementDirection.left, Coordinate(x: 23, y: 72)),
         (Coordinate(x: 24, y: 72), CompassDirection.south, MovementDirection.left, Coordinate(x: 25, y: 72)),
     ]) func movementTakesHeadingIntoAccount(testcase: (startPosition: Coordinate, heading: CompassDirection, movementDirection: MovementDirection, expectedPosition: Coordinate)) {
-        let world = World(map: Map(), partyStartPosition: testcase.startPosition, partyStartHeading: testcase.heading)
+        let world = World(map: Floor(), partyStartPosition: testcase.startPosition, partyStartHeading: testcase.heading)
         
         world.moveParty(testcase.movementDirection)
         
@@ -50,7 +50,7 @@ import Testing
     }
     
     @Test("not move through walls") func cannotMoveThroughWalls() {
-        let map = Map([
+        let map = Floor([
             ["#","#","#","#"],
             ["#",".",".","#"],
             ["#","#","#","#"],
@@ -65,13 +65,13 @@ import Testing
 
 @Suite("Party rotation should") struct PartyRotationTests {
     @Test("face north when the new world is created") func partyInNewWorldFacesNorth() {
-        let world = World(map: Map())
+        let world = World(map: Floor())
         
         #expect(world.partyHeading == .north)
     }
     
     @Test("face east when it turns clockwise") func turnClockwiseOnce() {
-        let world = World(map: Map())
+        let world = World(map: Floor())
         
         world.turnPartyClockwise()
         
@@ -79,7 +79,7 @@ import Testing
     }
     
     @Test("face west when it turns clockwise three times") func turnClockwiseThreeTimes() {
-        let world = World(map: Map())
+        let world = World(map: Floor())
         
         world.turnPartyClockwise()
         world.turnPartyClockwise()
@@ -89,7 +89,7 @@ import Testing
     }
     
     @Test("face west when it turns counter clockwise once") func turnCounterClockwise() {
-        let world = World(map: Map())
+        let world = World(map: Floor())
         
         world.turnPartyCounterClockwise()
         
@@ -99,13 +99,13 @@ import Testing
 
 @Suite("When moving from one floor to another") struct MultipleLevelTests {
     @Test("a new party starts at floornumber 0") func newPartyStartsAtFloor0() {
-        let world = World(map: Map())
+        let world = World(map: Floor())
         
         #expect(world.currentFloor == 0)
     }
     
     @Test("when a party moves into a staircase, the floornumber should increase by 1") func partyMovesUpStairs() {
-        let map = Map([
+        let map = Floor([
             [".","<"]
         ])
         let world = World(map: map)
@@ -116,7 +116,7 @@ import Testing
     }
     
     @Test("when a party moves into a staircase leading down, the floornumber should decrease by 1") func partyMovesDownStairs() {
-        let map = Map([
+        let map = Floor([
             [".",">"]
         ])
         let world = World(map: map)

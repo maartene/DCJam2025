@@ -10,9 +10,9 @@ final class World {
     private(set) var partyHeading: CompassDirection
     private(set) var currentFloor = 0
     
-    let map: Map
+    let map: Floor
     
-    init(map: Map, partyStartPosition: Coordinate = Coordinate(x: 0, y: 0), partyStartHeading: CompassDirection = CompassDirection.north) {
+    init(map: Floor, partyStartPosition: Coordinate = Coordinate(x: 0, y: 0), partyStartHeading: CompassDirection = CompassDirection.north) {
         self.map = map
         self.partyPosition = partyStartPosition
         self.partyHeading = partyStartHeading
@@ -29,13 +29,10 @@ final class World {
         case .stairsUp:
             currentFloor += 1
             partyPosition = newPosition
-            print("Moving up!")
+            
         case .stairsDown:
             currentFloor -= 1
             partyPosition = newPosition
-            print("Moving down!")
-        default:
-            break
         }
     }
     
