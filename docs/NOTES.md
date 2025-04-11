@@ -12,3 +12,5 @@
 - All domain logic should be covered by tests
 
 ## 🍅 Pomodoro 1
+- ✅ Bring in basic movement logic
+- ✅ First pass of visualizer

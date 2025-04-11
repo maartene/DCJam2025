@@ -47,16 +47,21 @@ class Game {
         Raylib.endDrawing()
     }
 
-    private func draw3D() {
-        Raylib.beginMode3D(camera)
-            for row in world.map.minY ... world.map.maxY {
-                for column in world.map.minX ... world.map.maxX {
-                    let coordinate = Coordinate(x: column, y: row)
-                    if world.map.tileAt(coordinate) == .wall {
-                        Raylib.drawCubeV(coordinate.toVector3, .one, .blue)
-                    }
+    func drawMap(_ map: Map, vantagePoint: Coordinate) {
+        for row in map.minY ... map.maxY {
+            for column in map.minX ... map.maxX {
+                let coordinate = Coordinate(x: column, y: row)
+                if map.tileAt(coordinate) == .wall {
+                    let light = light(position: coordinate, vantagePoint: vantagePoint)
+                    Raylib.drawCubeV(coordinate.toVector3, .one, Color.gray * light)
                 }
             }
+        }
+    }
+    
+    private func draw3D() {
+        Raylib.beginMode3D(camera)
+        drawMap(world.map, vantagePoint: world.partyPosition)
         Raylib.endMode3D()
     }
 }
@@ -66,5 +71,15 @@ Game().run()
 extension Coordinate {
     var toVector3: Vector3 {
         Vector3(x: Float(x), y: 0, z: Float(y))
+    }
+}
+
+extension Color {
+    static func *(color: Color, scalar: Float) -> Color {
+        let r = Float(color.r) * scalar
+        let g = Float(color.g) * scalar
+        let b = Float(color.b) * scalar
+        
+        return Color(r: UInt8(r), g: UInt8(g), b: UInt8(b), a: color.a)
     }
 }
