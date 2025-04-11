@@ -27,3 +27,18 @@ extension Color {
         return Color(r: UInt8(r), g: UInt8(g), b: UInt8(b), a: color.a)
     }
 }
+
+func cameraTarget(position: Coordinate, heading: CompassDirection) -> Vector3 {
+    let forward = switch heading {
+    case .north:
+        Vector3(x: 0, y: 0, z: 1)
+    case .east:
+        Vector3(x: 1, y: 0, z: 0)
+    case .south:
+        Vector3(x: 0, y: 0, z: -1)
+    case .west:
+        Vector3(x: -1, y: 0, z: 0)
+    }
+    
+    return position.toVector3 + forward
+}

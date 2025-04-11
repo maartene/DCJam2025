@@ -48,13 +48,33 @@ class Game {
     
     private func updateCamera() {
         camera.position = world.partyPosition.toVector3
-        camera.target = camera.position + Vector3(x: 0, y: 0, z: 1)
+        camera.target = cameraTarget(position: world.partyPosition, heading: world.partyHeading)
         Raylib.updateCamera(&camera)
     }
     
     private func processKeyInput() {
         if Raylib.isKeyPressed(.letterW) {
             world.moveParty(.forward)
+        }
+        
+        if Raylib.isKeyPressed(.letterD) {
+            world.moveParty(.right)
+        }
+        
+        if Raylib.isKeyPressed(.letterA) {
+            world.moveParty(.left)
+        }
+        
+        if Raylib.isKeyPressed(.letterS) {
+            world.moveParty(.backwards)
+        }
+        
+        if Raylib.isKeyPressed(.letterQ) {
+            world.turnPartyClockwise()
+        }
+        
+        if Raylib.isKeyPressed(.letterE) {
+            world.turnPartyCounterClockwise()
         }
     }
 
