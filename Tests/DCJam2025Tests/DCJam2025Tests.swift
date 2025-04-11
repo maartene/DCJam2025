@@ -101,7 +101,7 @@ import Testing
     @Test("a new party starts at floornumber 0") func newPartyStartsAtFloor0() {
         let world = World(map: Floor())
         
-        #expect(world.currentFloor == 0)
+        #expect(world.currentFloorIndex == 0)
     }
     
     @Test("when a party moves into a staircase, the floornumber should increase by 1") func partyMovesUpStairs() {
@@ -112,7 +112,7 @@ import Testing
         
         world.moveParty(.right)
         
-        #expect(world.currentFloor == 1)
+        #expect(world.currentFloorIndex == 1)
     }
     
     @Test("when a party moves into a staircase leading down, the floornumber should decrease by 1") func partyMovesDownStairs() {
@@ -123,6 +123,6 @@ import Testing
         
         world.moveParty(.right)
         
-        #expect(world.currentFloor == -1)
+        #expect(world.currentFloorIndex == -1)
     }
 }

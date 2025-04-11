@@ -8,7 +8,7 @@
 final class World {
     private(set) var partyPosition: Coordinate
     private(set) var partyHeading: CompassDirection
-    private(set) var currentFloor = 0
+    private(set) var currentFloorIndex = 0
     
     let map: Floor
     
@@ -27,11 +27,11 @@ final class World {
         case .wall:
             break
         case .stairsUp:
-            currentFloor += 1
+            currentFloorIndex += 1
             partyPosition = newPosition
             
         case .stairsDown:
-            currentFloor -= 1
+            currentFloorIndex -= 1
             partyPosition = newPosition
         }
     }
