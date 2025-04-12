@@ -64,27 +64,35 @@ extension World: Equatable {
 }
 
 func makeWorld(from floorplans: [String]) -> World {
-    let lines = floorplans[0].split(separator: "\n")
-    var mapArray = [[Character]]()
+    let mapArray = convertStringTomapArray(floorplans[0])
+    let floor = Floor(mapArray)
+    let startPosition = determineStartPosition(mapArray) ?? Coordinate(x: 0, y: 0)
+    return World(floors: [floor], partyStartPosition: startPosition)
     
-    for line in lines {
-        var row = [Character]()
-        for character in line {
-            row.append(character)
+    func convertStringTomapArray(_ input: String) -> [[Character]] {
+        let lines = floorplans[0].split(separator: "\n")
+        var mapArray = [[Character]]()
+        
+        for line in lines {
+            var row = [Character]()
+            for character in line {
+                row.append(character)
+            }
+            mapArray.append(row)
         }
-        mapArray.append(row)
+        
+        return mapArray
     }
     
-    let floor = Floor(mapArray)
-    
-    var startPosition = Coordinate(x: 0, y: 0)
-    for row in 0 ..< mapArray.count {
-        for column in 0 ..< mapArray[row].count {
-            if mapArray[row][column] == "S" {
-                startPosition = Coordinate(x: column, y: row)
+    func determineStartPosition(_ mapArray: [[Character]]) -> Coordinate? {
+        for row in 0 ..< mapArray.count {
+            for column in 0 ..< mapArray[row].count {
+                if mapArray[row][column] == "S" {
+                    return Coordinate(x: column, y: row)
+                }
             }
         }
+        
+        return nil
     }
-    
-    return World(floors: [floor], partyStartPosition: startPosition)
 }
