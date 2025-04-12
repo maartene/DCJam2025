@@ -34,3 +34,5 @@ What is there to find? The answer to the ultimate secret: what came before? the 
             - ✅ Have tests check for equality of currentFloor instead of index
                 - ✅ Floor should conform to equatable
     
+## 🍅 Pomodoro 3
+- ✅ Add tests for coordinate space conversions
