@@ -85,8 +85,8 @@ class Game {
     
     private func updateCamera() {
         let cameraPosition = world.partyPosition.toVector3
-        let forward = MovementDirection.forward.toCompassDirection(facing: world.partyHeading).toCoordinate
-        let target = world.partyPosition + forward
+        let forward = world.partyHeading.forward
+        let target = target(from: world.partyPosition, heading: world.partyHeading)
         
         camera.target = target.toVector3
         camera.position = cameraPosition + forward.toVector3.scale(offset)
@@ -95,7 +95,7 @@ class Game {
 
     private func drawGameView() {
         Raylib.beginDrawing()
-            Raylib.clearBackground(.darkGray)
+            Raylib.clearBackground(.black)
             draw3D()
             Raylib.drawFPS(10, 10)
         Raylib.endDrawing()
@@ -111,23 +111,27 @@ class Game {
         for row in map.minY ... map.maxY {
             for column in map.minX ... map.maxX {
                 let coordinate = Coordinate(x: column, y: row)
-                switch map.tileAt(coordinate) {
-                case .wall:
-                    drawWallAt(coordinate, vantagePoint: vantagePoint)
-                case .stairsUp:
-                    drawStairsUpAt(coordinate)
-                case .stairsDown:
-                    drawStairsDownAt(coordinate)
-                default:
-                    break
-                }
+                drawTile(map.tileAt(coordinate), at: coordinate, lookingFrom: vantagePoint)
             }
+        }
+    }
+    
+    private func drawTile(_ tile:Tile, at coordinate: Coordinate, lookingFrom vantagePoint: Coordinate) {
+        switch tile {
+        case .wall:
+            drawWallAt(coordinate, vantagePoint: vantagePoint)
+        case .stairsUp:
+            drawStairsUpAt(coordinate)
+        case .stairsDown:
+            drawStairsDownAt(coordinate)
+        default:
+            break
         }
     }
     
     private func drawWallAt(_ coordinate: Coordinate, vantagePoint: Coordinate) {
         let light = light(position: coordinate, vantagePoint: vantagePoint)
-        Raylib.drawCubeV(coordinate.toVector3, .one, Color.gray * light)
+        Raylib.drawCubeV(coordinate.toVector3, .one, Color.darkGray * light)
     }
     
     private func drawStairsUpAt(_ coordinate: Coordinate) {

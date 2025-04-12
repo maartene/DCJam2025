@@ -92,4 +92,8 @@ enum CompassDirection {
         default: return .east
         }
     }
+    
+    var forward: Coordinate {
+        MovementDirection.forward.toCompassDirection(facing: self).toCoordinate
+    }
 }

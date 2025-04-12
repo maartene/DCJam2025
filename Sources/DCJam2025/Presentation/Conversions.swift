@@ -12,6 +12,10 @@ func light(position: Coordinate, vantagePoint: Coordinate) -> Float {
     return 1.0 / Float(distance)
 }
 
+func target(from position: Coordinate, heading: CompassDirection) -> Coordinate {
+    position + heading.forward
+}
+
 extension Coordinate {
     var toVector3: Vector3 {
         Vector3(x: Float(x), y: 0, z: Float(y))
