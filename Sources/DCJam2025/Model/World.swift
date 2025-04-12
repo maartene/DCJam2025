@@ -64,13 +64,25 @@ extension World: Equatable {
 }
 
 func makeWorld(from floorplans: [String]) -> World {
-    let mapArray = convertStringTomapArray(floorplans[0])
-    let floor = Floor(mapArray)
-    let startPosition = determineStartPosition(mapArray) ?? Coordinate(x: 0, y: 0)
-    return World(floors: [floor], partyStartPosition: startPosition)
+    let convertedFloorplans = floorplans.map { convertFloorPlanToFloorAndStartposition($0) }
+    
+    let floors = convertedFloorplans.map { $0.floor }
+    let startPosition = convertedFloorplans
+        .compactMap { $0.startPosition }
+        .first ?? Coordinate(x: 0, y: 0)
+    
+    return World(floors: floors, partyStartPosition: startPosition)
+    
+    func convertFloorPlanToFloorAndStartposition(_ floorplan: String) -> (floor: Floor, startPosition: Coordinate?) {
+        let mapArray = convertStringTomapArray(floorplan)
+        let floor = Floor(mapArray)
+        let startPosition = determineStartPosition(mapArray)
+        
+        return (floor, startPosition)
+    }
     
     func convertStringTomapArray(_ input: String) -> [[Character]] {
-        let lines = floorplans[0].split(separator: "\n")
+        let lines = input.split(separator: "\n")
         var mapArray = [[Character]]()
         
         for line in lines {

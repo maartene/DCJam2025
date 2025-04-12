@@ -57,3 +57,22 @@ struct Floor {
 }
 
 extension Floor: Equatable { }
+
+extension Floor: CustomStringConvertible {
+    var description: String {
+        var lines = [String]()
+        for y in 0 ... maxY {
+            var line = ""
+            for x in 0 ... maxX {
+                switch  tileAt(Coordinate(x: x, y: y)) {
+                case .floor: line += "."
+                case .wall: line += "#"
+                case .stairsUp: line += "<"
+                case .stairsDown: line += ">"
+                }
+            }
+            lines.append(line)
+        }
+        return lines.joined(separator: "\n")
+    }
+}

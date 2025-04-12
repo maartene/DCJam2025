@@ -29,4 +29,45 @@ import Testing
         
         #expect(world == expectedWorld)
     }
+    
+    @Test("Create a world with a multiple floors when moer than one floorplan is provided") func multipleFloorWorld() {
+        let floorplan1 =
+        """
+        #####
+        #...#
+        #.S<#
+        #...#
+        #####
+        """
+        
+        let floorplan2 =
+        """
+        #####
+        #...#
+        #.#>#
+        #...#
+        #####
+        """
+        
+        let world = makeWorld(from: [floorplan1, floorplan2])
+        
+        let expectedWorld = World(floors: [
+            Floor([
+                ["#","#","#","#","#"],
+                ["#",".",".",".","#"],
+                ["#",".",".","<","#"],
+                ["#",".",".",".","#"],
+                ["#","#","#","#","#"],
+            ]),
+            Floor([
+                ["#","#","#","#","#"],
+                ["#",".",".",".","#"],
+                ["#",".","#",">","#"],
+                ["#",".",".",".","#"],
+                ["#","#","#","#","#"],
+            ])
+        ], partyStartPosition: Coordinate(x: 2, y: 2))
+        
+        #expect(world == expectedWorld)
+    }
 }
