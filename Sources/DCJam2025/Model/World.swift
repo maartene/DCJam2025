@@ -53,3 +53,38 @@ final class World {
         partyHeading = partyHeading.rotatedCounterClockwise()
     }
 }
+
+extension World: Equatable {
+    static func == (lhs: World, rhs: World) -> Bool {
+        lhs.partyPosition == rhs.partyPosition &&
+        lhs.partyHeading == rhs.partyHeading &&
+        lhs.floors == rhs.floors && 
+        lhs.currentFloorIndex == rhs.currentFloorIndex
+    }
+}
+
+func makeWorld(from floorplans: [String]) -> World {
+    let lines = floorplans[0].split(separator: "\n")
+    var mapArray = [[Character]]()
+    
+    for line in lines {
+        var row = [Character]()
+        for character in line {
+            row.append(character)
+        }
+        mapArray.append(row)
+    }
+    
+    let floor = Floor(mapArray)
+    
+    var startPosition = Coordinate(x: 0, y: 0)
+    for row in 0 ..< mapArray.count {
+        for column in 0 ..< mapArray[row].count {
+            if mapArray[row][column] == "S" {
+                startPosition = Coordinate(x: column, y: row)
+            }
+        }
+    }
+    
+    return World(floors: [floor], partyStartPosition: startPosition)
+}
