@@ -7,8 +7,14 @@
     
 - ✅ Visualize the world
 
-- Win condition: reach the treasure
+- ✅ Win condition: reach the treasure
 
-- Lose condition: get caught???
+- Lose condition: get caught by enemies???
 
 - Minimap maybe?
+
+- More intesting maps (10 levels would be cool)
+
+- UI to spice stuff up
+
+- Sound

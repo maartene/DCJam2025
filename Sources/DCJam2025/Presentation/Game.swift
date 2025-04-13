@@ -26,7 +26,7 @@ class Game {
         Floor([
             ["#","#","#","#","#","#"],
             ["#",".",".",".",".","#"],
-            ["#","#","#","#",".","#"],
+            ["#","#","T","#",".","#"],
             ["#","#","#","#",".","#"],
             ["#",".",".",".",">","#"],
             ["#","#","#","#","#","#"],
@@ -98,6 +98,7 @@ class Game {
             Raylib.clearBackground(.black)
             draw3D()
             Raylib.drawFPS(10, 10)
+            Raylib.drawText("\(world.state)", 10, 30, 12, .white)
         Raylib.endDrawing()
     }
 
@@ -124,6 +125,8 @@ class Game {
             drawStairsUpAt(coordinate)
         case .stairsDown:
             drawStairsDownAt(coordinate)
+        case .target:
+            drawTargetAt(coordinate)
         default:
             break
         }
@@ -140,5 +143,9 @@ class Game {
     
     private func drawStairsDownAt(_ coordinate: Coordinate) {
         Raylib.drawCubeV(coordinate.toVector3, .one, Color(r: 0, g: 200, b: 0, a: 128))
+    }
+    
+    private func drawTargetAt(_ coordinate: Coordinate) {
+        Raylib.drawCubeV(coordinate.toVector3, .one, Color(r: 0, g: 0, b: 200, a: 128))
     }
 }

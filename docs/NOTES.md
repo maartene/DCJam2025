@@ -36,3 +36,9 @@ What is there to find? The answer to the ultimate secret: what came before? the 
     
 ## 🍅 Pomodoro 3
 - ✅ Add tests for coordinate space conversions
+
+## 🍅 Pomodoro 4
+- ✅ Win condition added: find the treasure
+- ✅ Stub for visual representation of state
+
+## 🍅 Pomodoro 5
