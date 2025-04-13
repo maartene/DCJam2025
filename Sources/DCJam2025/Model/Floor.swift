@@ -10,12 +10,14 @@ enum Tile {
     case wall
     case stairsUp
     case stairsDown
+    case target
     
     static func characterToTile(_ character: Character) -> Tile {
         switch character {
         case "#": return .wall
         case "<": return .stairsUp
         case ">": return .stairsDown
+        case "T": return .target
         default: return .floor
         }
     }
@@ -69,6 +71,7 @@ extension Floor: CustomStringConvertible {
                 case .wall: line += "#"
                 case .stairsUp: line += "<"
                 case .stairsDown: line += ">"
+                case .target: line += "T"
                 }
             }
             lines.append(line)

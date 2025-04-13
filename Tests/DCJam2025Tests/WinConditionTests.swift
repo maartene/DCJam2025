@@ -14,4 +14,14 @@ import Testing
         
         #expect(world.state == .inProgress)
     }
+    
+    @Test("be 'won' when the pary reaches the target tile") func wonGame() {
+        let world = World(map: Floor([
+            ["S","T"]
+        ]))
+        
+        world.moveParty(.right)
+        
+        #expect(world.state == .won)
+    }
 }

@@ -8,6 +8,8 @@
 final class World {
     enum WorldState {
         case inProgress
+        case won
+        case defeated
     }
     
     private(set) var partyPosition: Coordinate
@@ -42,9 +44,10 @@ final class World {
         case .stairsUp:
             currentFloorIndex += 1
             partyPosition = newPosition
-            
         case .stairsDown:
             currentFloorIndex -= 1
+            partyPosition = newPosition
+        default:
             partyPosition = newPosition
         }
     }
@@ -57,7 +60,13 @@ final class World {
         partyHeading = partyHeading.rotatedCounterClockwise()
     }
     
-    var state: WorldState = .inProgress
+    var state: WorldState {
+        if currentFloor.tileAt(partyPosition) == .target {
+            return .won
+        }
+        
+        return .inProgress
+    }
 }
 
 extension World: Equatable {
