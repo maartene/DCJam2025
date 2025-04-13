@@ -6,6 +6,10 @@
 //
 
 final class World {
+    enum WorldState {
+        case inProgress
+    }
+    
     private(set) var partyPosition: Coordinate
     private(set) var partyHeading: CompassDirection
     private var currentFloorIndex = 0
@@ -52,6 +56,8 @@ final class World {
     func turnPartyCounterClockwise() {
         partyHeading = partyHeading.rotatedCounterClockwise()
     }
+    
+    var state: WorldState = .inProgress
 }
 
 extension World: Equatable {
