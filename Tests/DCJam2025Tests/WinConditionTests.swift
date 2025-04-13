@@ -31,7 +31,8 @@ import Testing
         ]))
         
         world.moveParty(.right)
+        world.moveParty(.left)
         
-        #expect(world.state == .won)
+        #expect(world.partyPosition == Coordinate(x: 1, y: 0))
     }
 }
