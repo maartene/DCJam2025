@@ -17,10 +17,7 @@ final class World {
     private var currentFloorIndex = 0
     private var floors: [Floor]
     
-    var currentFloor: Floor {
-        floors[currentFloorIndex]
-    }
-    
+    // Initializers
     init(floors: [Floor], partyStartPosition: Coordinate = Coordinate(x: 0, y: 0), partyStartHeading: CompassDirection = CompassDirection.north) {
         self.floors = floors
         self.partyPosition = partyStartPosition
@@ -33,6 +30,34 @@ final class World {
              partyStartHeading: partyStartHeading)
     }
     
+    // Queries
+    var currentFloor: Floor {
+        floors[currentFloorIndex]
+    }
+    
+    var state: WorldState {
+        if currentFloor.tileAt(partyPosition) == .target {
+            return .won
+        }
+        
+        return .inProgress
+    }
+    
+    var visitedTilesOnCurrentFloor: Set<Coordinate> {
+        [
+            Coordinate(x: -1, y: -1),
+            Coordinate(x: 0, y: -1),
+            Coordinate(x: 1, y: -1),
+            Coordinate(x: -1, y: 0),
+            Coordinate(x: 0, y: 0),
+            Coordinate(x: 1, y: 0),
+            Coordinate(x: -1, y: 1),
+            Coordinate(x: 0, y: 1),
+            Coordinate(x: 1, y: 1)
+         ]
+    }
+    
+    // MARK: Commands
     func moveParty(_ direction: MovementDirection) {
         guard state != .won else {
             return
@@ -64,13 +89,7 @@ final class World {
         partyHeading = partyHeading.rotatedCounterClockwise()
     }
     
-    var state: WorldState {
-        if currentFloor.tileAt(partyPosition) == .target {
-            return .won
-        }
-        
-        return .inProgress
-    }
+    
 }
 
 extension World: Equatable {
