@@ -9,9 +9,9 @@
 
 - ✅ Win condition: reach the treasure
 
-- Lose condition: get caught by enemies???
+- 🚧 Minimap maybe?
 
-- Minimap maybe?
+- Lose condition: get caught by enemies???
 
 - More intesting maps (10 levels would be cool)
 
