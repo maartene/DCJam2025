@@ -6,6 +6,12 @@
 //
 
 final class World {
+    enum WorldState {
+        case inProgress
+        case won
+        case defeated
+    }
+    
     private(set) var partyPosition: Coordinate
     private(set) var partyHeading: CompassDirection
     private var currentFloorIndex = 0
@@ -28,6 +34,10 @@ final class World {
     }
     
     func moveParty(_ direction: MovementDirection) {
+        guard state != .won else {
+            return
+        }
+        
         let newPosition = partyPosition + direction.toCompassDirection(facing: partyHeading).toCoordinate
         
         switch currentFloor.tileAt(newPosition) {
@@ -38,9 +48,10 @@ final class World {
         case .stairsUp:
             currentFloorIndex += 1
             partyPosition = newPosition
-            
         case .stairsDown:
             currentFloorIndex -= 1
+            partyPosition = newPosition
+        default:
             partyPosition = newPosition
         }
     }
@@ -51,6 +62,14 @@ final class World {
     
     func turnPartyCounterClockwise() {
         partyHeading = partyHeading.rotatedCounterClockwise()
+    }
+    
+    var state: WorldState {
+        if currentFloor.tileAt(partyPosition) == .target {
+            return .won
+        }
+        
+        return .inProgress
     }
 }
 

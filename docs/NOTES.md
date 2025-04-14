@@ -39,3 +39,9 @@ What is there to find? The answer to the ultimate secret: what came before? the 
 
 ## 🍅 Pomodoro 4
 - ✅ Create a nicer 'importer' of levels
+
+## 🍅 Pomodoro 5
+- ✅ Win condition added: find the treasure
+- ✅ Stub for visual representation of state
+
+## 🍅 Pomodoro 6

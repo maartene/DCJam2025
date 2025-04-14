@@ -5,19 +5,15 @@
 //  Created by Maarten Engels on 11/04/2025.
 //
 
-enum Tile {
-    case floor
-    case wall
-    case stairsUp
-    case stairsDown
+enum Tile: Character {
+    case floor = "."
+    case wall = "#"
+    case stairsUp = "<"
+    case stairsDown = ">"
+    case target = "T"
     
     static func characterToTile(_ character: Character) -> Tile {
-        switch character {
-        case "#": return .wall
-        case "<": return .stairsUp
-        case ">": return .stairsDown
-        default: return .floor
-        }
+        Tile(rawValue: character) ?? .floor
     }
 }
 
@@ -64,12 +60,7 @@ extension Floor: CustomStringConvertible {
         for y in 0 ... maxY {
             var line = ""
             for x in 0 ... maxX {
-                switch  tileAt(Coordinate(x: x, y: y)) {
-                case .floor: line += "."
-                case .wall: line += "#"
-                case .stairsUp: line += "<"
-                case .stairsDown: line += ">"
-                }
+                line += String(tileAt(Coordinate(x: x, y: y)).rawValue)
             }
             lines.append(line)
         }
