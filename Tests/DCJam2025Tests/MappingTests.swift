@@ -26,4 +26,26 @@ import Testing
         
         #expect(world.visitedTilesOnCurrentFloor == expectedVisitedTiles)
     }
+    
+    @Test("When the party moves, new tiles added to the visited world") func newTilesVisited() {
+        let world = World(map: Floor())
+        world.moveParty(.right)
+        
+        let expectedVisitedTiles: Set = [
+            Coordinate(x: -1, y: -1),
+            Coordinate(x: 0, y: -1),
+            Coordinate(x: 1, y: -1),
+            Coordinate(x: -1, y: 0),
+            Coordinate(x: 0, y: 0),
+            Coordinate(x: 1, y: 0),
+            Coordinate(x: -1, y: 1),
+            Coordinate(x: 0, y: 1),
+            Coordinate(x: 1, y: 1),
+            Coordinate(x: 2, y: -1),
+            Coordinate(x: 2, y: 0),
+            Coordinate(x: 2, y: 1),
+        ]
+        
+        #expect(world.visitedTilesOnCurrentFloor == expectedVisitedTiles)
+    }
 }

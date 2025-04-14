@@ -16,12 +16,15 @@ final class World {
     private(set) var partyHeading: CompassDirection
     private var currentFloorIndex = 0
     private var floors: [Floor]
+    private var visitedTilesOnFloor: Set<Coordinate> = []
     
     // Initializers
     init(floors: [Floor], partyStartPosition: Coordinate = Coordinate(x: 0, y: 0), partyStartHeading: CompassDirection = CompassDirection.north) {
         self.floors = floors
         self.partyPosition = partyStartPosition
         self.partyHeading = partyStartHeading
+        
+        updateVisibleTiles()
     }
     
     convenience init(map: Floor, partyStartPosition: Coordinate = Coordinate(x: 0, y: 0), partyStartHeading: CompassDirection = CompassDirection.north) {
@@ -44,17 +47,7 @@ final class World {
     }
     
     var visitedTilesOnCurrentFloor: Set<Coordinate> {
-        [
-            Coordinate(x: -1, y: -1),
-            Coordinate(x: 0, y: -1),
-            Coordinate(x: 1, y: -1),
-            Coordinate(x: -1, y: 0),
-            Coordinate(x: 0, y: 0),
-            Coordinate(x: 1, y: 0),
-            Coordinate(x: -1, y: 1),
-            Coordinate(x: 0, y: 1),
-            Coordinate(x: 1, y: 1)
-         ]
+        visitedTilesOnFloor
     }
     
     // MARK: Commands
@@ -79,6 +72,8 @@ final class World {
         default:
             partyPosition = newPosition
         }
+        
+        updateVisibleTiles()
     }
     
     func turnPartyClockwise() {
@@ -89,7 +84,20 @@ final class World {
         partyHeading = partyHeading.rotatedCounterClockwise()
     }
     
-    
+    private func updateVisibleTiles() {
+        visitedTilesOnFloor.formUnion([
+            Coordinate(x: -1, y: -1),
+            Coordinate(x: 0, y: -1),
+            Coordinate(x: 1, y: -1),
+            Coordinate(x: -1, y: 0),
+            Coordinate(x: 0, y: 0),
+            Coordinate(x: 1, y: 0),
+            Coordinate(x: -1, y: 1),
+            Coordinate(x: 0, y: 1),
+            Coordinate(x: 1, y: 1)
+            ].map { partyPosition + $0 }
+        )
+    }
 }
 
 extension World: Equatable {
