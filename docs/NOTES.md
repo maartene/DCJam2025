@@ -45,3 +45,8 @@ What is there to find? The answer to the ultimate secret: what came before? the 
 - ✅ Stub for visual representation of state
 
 ## 🍅 Pomodoro 6
+- ✅ Visited tiles on first floor
+- ✅ Very simple minimap
+
+## 🍅 Pomodoro 7
+- ⚠️ Visited tiles on multiple floors

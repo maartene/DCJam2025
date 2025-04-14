@@ -97,8 +97,9 @@ class Game {
         Raylib.beginDrawing()
             Raylib.clearBackground(.black)
             draw3D()
-            Raylib.drawFPS(10, 10)
-            Raylib.drawText("\(world.state)", 10, 30, 12, .white)
+        drawMinimap(world: world)
+            Raylib.drawFPS(10, 400)
+            Raylib.drawText("\(world.state)", 10, 380, 12, .white)
         Raylib.endDrawing()
     }
 
@@ -147,5 +148,26 @@ class Game {
     
     private func drawTargetAt(_ coordinate: Coordinate) {
         Raylib.drawCubeV(coordinate.toVector3, .one, Color(r: 0, g: 0, b: 200, a: 128))
+    }
+    
+    private func drawMinimap(world: World) {
+        let maxX = world.currentFloor.maxX
+        let maxY = world.currentFloor.maxY
+        
+        let visitedTilesOnCurrentFloor: [(coordinate: Coordinate, tile: Tile)] = world.visitedTilesOnCurrentFloor.map {
+            ($0, world.currentFloor.tileAt($0))
+        }
+        
+        for visitedTilesOnCurrentFloor in visitedTilesOnCurrentFloor {
+            let correctedX = maxX - visitedTilesOnCurrentFloor.coordinate.x
+            let correctedY = maxY - visitedTilesOnCurrentFloor.coordinate.y
+            Raylib.drawText(String(visitedTilesOnCurrentFloor.tile.rawValue),
+                            Int32(correctedX) * 16,
+                            Int32(correctedY) * 16,
+                            16,
+                .rayWhite)
+        }
+        
+        Raylib.drawText("@", Int32(maxX - world.partyPosition.x) * 16, Int32(maxY - world.partyPosition.y) * 16, 16, .white)
     }
 }
