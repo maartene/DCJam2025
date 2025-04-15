@@ -85,18 +85,7 @@ final class World {
     }
     
     private func updateVisibleTiles() {
-        visitedTilesOnFloor.formUnion([
-            Coordinate(x: -1, y: -1),
-            Coordinate(x: 0, y: -1),
-            Coordinate(x: 1, y: -1),
-            Coordinate(x: -1, y: 0),
-            Coordinate(x: 0, y: 0),
-            Coordinate(x: 1, y: 0),
-            Coordinate(x: -1, y: 1),
-            Coordinate(x: 0, y: 1),
-            Coordinate(x: 1, y: 1)
-            ].map { partyPosition + $0 }
-        )
+        visitedTilesOnFloor.formUnion(partyPosition.squareAround)
     }
 }
 

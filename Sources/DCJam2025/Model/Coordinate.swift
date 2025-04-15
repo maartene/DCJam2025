@@ -31,6 +31,26 @@ struct Coordinate {
     var magnitude: Double {
         sqrt(Double(x*x + y*y))
     }
+    
+    static var square3x3: Set<Coordinate> {
+        [
+            Coordinate(x: -1, y: -1),
+            Coordinate(x: 0, y: -1),
+            Coordinate(x: 1, y: -1),
+            Coordinate(x: -1, y: 0),
+            Coordinate(x: 0, y: 0),
+            Coordinate(x: 1, y: 0),
+            Coordinate(x: -1, y: 1),
+            Coordinate(x: 0, y: 1),
+            Coordinate(x: 1, y: 1)
+        ]
+    }
+    
+    var squareAround: Set<Coordinate> {
+        Set(Coordinate.square3x3.map {
+            $0 + self
+        })
+    }
 }
 
 extension Coordinate: Equatable { }
