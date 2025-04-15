@@ -49,4 +49,7 @@ What is there to find? The answer to the ultimate secret: what came before? the 
 - ✅ Very simple minimap
 
 ## 🍅 Pomodoro 7
+- ✅ Graphical minimap
+
+## 🍅 Pomodoro 8
 - ⚠️ Visited tiles on multiple floors

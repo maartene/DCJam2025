@@ -16,7 +16,10 @@ let package = Package(
         // Targets can depend on other targets in this package and products from dependencies.
         .executableTarget(
             name: "DCJam2025",
-            dependencies: ["Raylib"]
+            dependencies: ["Raylib"],
+            resources: [
+                .process("Resources")
+            ]
         ),
             .testTarget(name: "DCJam2025Tests", dependencies: [
                 "DCJam2025"

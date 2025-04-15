@@ -6,13 +6,16 @@
 //
 
 import Raylib
+import Foundation
 
 class Game {
-    let screenWidth: Int32 = 800
-    let screenHeight: Int32 = 450
+    let screenWidth: Int32 = 1280
+    let screenHeight: Int32 = 720
     let offset: Float = -0.1
     
     var camera = makeCamera()
+    
+    var sprites = [String: Texture2D]()
     
     let world = World(floors: [
         Floor([
@@ -37,6 +40,9 @@ class Game {
         Raylib.initWindow(screenWidth, screenHeight, "DCJam2025")
         Raylib.setTargetFPS(30)
 
+        loadMinimapImages()
+                    
+        print(Raylib.getWorkingDirectory())
         while Raylib.windowShouldClose == false {
             update()
             drawGameView()
@@ -151,6 +157,9 @@ class Game {
     }
     
     private func drawMinimap(world: World) {
+        let minimapOffset: Int32 = 10
+        let spriteSize: Int32 = 16
+        
         let maxX = world.currentFloor.maxX
         let maxY = world.currentFloor.maxY
         
@@ -158,16 +167,58 @@ class Game {
             ($0, world.currentFloor.tileAt($0))
         }
         
+        let tileToSpriteMap: [Tile: String] = [
+            .wall: "wall",
+            .stairsDown: "stairsDown",
+            .stairsUp: "stairsUp",
+        ]
+        
         for visitedTilesOnCurrentFloor in visitedTilesOnCurrentFloor {
-            let correctedX = maxX - visitedTilesOnCurrentFloor.coordinate.x
-            let correctedY = maxY - visitedTilesOnCurrentFloor.coordinate.y
-            Raylib.drawText(String(visitedTilesOnCurrentFloor.tile.rawValue),
-                            Int32(correctedX) * 16,
-                            Int32(correctedY) * 16,
-                            16,
-                .rayWhite)
+            let correctedX = Int32(maxX - visitedTilesOnCurrentFloor.coordinate.x) * spriteSize + minimapOffset
+            let correctedY = Int32(maxY - visitedTilesOnCurrentFloor.coordinate.y) * spriteSize + minimapOffset
+            
+            if let spriteName = tileToSpriteMap[visitedTilesOnCurrentFloor.tile], let sprite = sprites[spriteName] {
+                Raylib.drawTexture(sprite, correctedX, correctedY, .white)
+            }
         }
         
-        Raylib.drawText("@", Int32(maxX - world.partyPosition.x) * 16, Int32(maxY - world.partyPosition.y) * 16, 16, .white)
+        let playerDirectionSymbol = playerDirectionSymbol(heading: world.partyHeading)
+        
+        if let playerSprite = sprites[playerDirectionSymbol] {
+            let correctedX = Int32(maxX - world.partyPosition.x) * spriteSize + minimapOffset
+            let correctedY = Int32(maxY - world.partyPosition.y) * spriteSize + minimapOffset
+            Raylib.drawTexture(playerSprite, correctedX, correctedY, .white)
+        }
+    }
+    
+    private func playerDirectionSymbol(heading: CompassDirection) -> String {
+        switch heading {
+            
+        case .north: "north"
+        case .east: "west"
+        case .south: "south"
+        case .west: "east"
+        }
+        
+    }
+    
+    private func loadMinimapImages() {
+        let minimapImageNames = [
+            "wall",
+            "north",
+            "south",
+            "east",
+            "west",
+            "stairsUp",
+            "stairsDown",
+        ]
+        
+        minimapImageNames.forEach {
+            guard let url = Bundle.module.url(forResource: $0, withExtension: "png") else {
+                fatalError("Could not find \($0).png")
+            }
+            
+            sprites[$0] = Texture(url: url)
+        }
     }
 }
