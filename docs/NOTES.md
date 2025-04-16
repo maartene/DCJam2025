@@ -52,4 +52,4 @@ What is there to find? The answer to the ultimate secret: what came before? the 
 - ✅ Graphical minimap
 
 ## 🍅 Pomodoro 8
-- ⚠️ Visited tiles on multiple floors
+- ✅ Visited tiles on multiple floors

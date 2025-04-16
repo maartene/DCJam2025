@@ -9,7 +9,7 @@
 
 - ✅ Win condition: reach the treasure
 
-- 🚧 Minimap maybe?
+- ✅ Minimap maybe?
 
 - Lose condition: get caught by enemies???
 

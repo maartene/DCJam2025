@@ -1,6 +1,7 @@
 # TECHDEBT
 
 ## ⚠️ TODO
+- should not be able to rotate when goal is reached
 
 ## 🚧 DOING
 
