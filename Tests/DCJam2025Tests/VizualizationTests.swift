@@ -107,4 +107,62 @@ import Raylib
         #expect(multipliedColor.g == testcase.expectedColor.g)
         #expect(multipliedColor.b == testcase.expectedColor.b)
     }
+    
+    @Test("Multiplying a color with a scalar does not change its alpha value") func multiplyingColorDoesNotChangeAlpha() {
+        #expect((Color.blue * 0.1).a == 255)
+        #expect((Color(r: 123, g: 34, b: 57, a: 100) * 0.3).a == 100)
+    }
+}
+
+@Suite("Minimap conversions") struct MinimapConversions {
+    @Test("Determine sprite and screen position for tiles", arguments: [
+        (Coordinate(x: 1, y: 0), Int32(-20), Int32(-99), "wall", Int32(28), Int32(-51)),
+        (Coordinate(x: 1, y: 2), Int32(15), Int32(11), "stairsDown", Int32(63), Int32(27)),
+        (Coordinate(x: 3, y: 2), Int32(87), Int32(-76), "stairsUp", Int32(103), Int32(-60)),
+    ]) func spriteAndScreenPositionForTiles(testcase: (position: Coordinate, xOffset: Int32, yOffset: Int32, expectedSpriteName: String, expectedScreenX: Int32, expectedScreenY: Int32)) {
+        let floor = Floor([
+            ["#","#","#","#","#"],
+            ["#",".",".",".","#"],
+            ["#",">",".","<","#"],
+            ["#","#","#","#","#"],
+        ])
+        
+        let coordinates = [
+            Coordinate(x: 1, y: 0),
+            Coordinate(x: 1, y: 2),
+            Coordinate(x: 3, y: 2),
+        ]
+        
+        for coordinate in coordinates {
+            let xOffset = Int32.random(in: -100...100)
+            let yOffset = Int32.random(in: -100...100)
+            let info = getSpriteAndPositionForTileAtPosition(coordinate, on: floor, offsetX: xOffset, offsetY: yOffset)
+            
+            print("(Coordinate(x: \(coordinate.x), y: \(coordinate.y)), Int32(\(xOffset)), Int32(\(yOffset)), \"\(info.spriteName)\", Int32(\(info.displayX)), Int32(\(info.displayY)),")
+        }
+        
+        let tileSpriteInfo = getSpriteAndPositionForTileAtPosition(testcase.position, on: floor, offsetX: testcase.xOffset, offsetY: testcase.yOffset)
+        #expect(tileSpriteInfo.spriteName == testcase.expectedSpriteName)
+        #expect(tileSpriteInfo.displayX == testcase.expectedScreenX)
+        #expect(tileSpriteInfo.displayY == testcase.expectedScreenY)
+    }
+    
+    @Test("Determine sprite and screen position for party", arguments: [
+        (Coordinate(x: 1, y: 0), CompassDirection.north, Int32(-20), Int32(-99), "north", Int32(28), Int32(-51)),
+        (Coordinate(x: 1, y: 2), CompassDirection.south, Int32(15), Int32(11), "south", Int32(63), Int32(27)),
+        (Coordinate(x: 3, y: 2), CompassDirection.west, Int32(87), Int32(-76), "east", Int32(103), Int32(-60)),
+        (Coordinate(x: 3, y: 2), CompassDirection.east, Int32(87), Int32(-76), "west", Int32(103), Int32(-60)),
+    ]) func spriteAndScreenPositionForParty(testcase: (position: Coordinate, heading: CompassDirection, xOffset: Int32, yOffset: Int32, expectedSpriteName: String, expectedScreenX: Int32, expectedScreenY: Int32)) {
+        let floor = Floor([
+            ["#",".",".",".","#"],
+            ["#",".",".",".","#"],
+            ["#",".",".",".","#"],
+            ["#",".",".",".","#"],
+        ])
+                
+        let partySpriteInfo = getSpriteAndPositionForPartyAtPosition(testcase.position, heading: testcase.heading, on: floor, offsetX: testcase.xOffset, offsetY: testcase.yOffset)
+        #expect(partySpriteInfo.spriteName == testcase.expectedSpriteName)
+        #expect(partySpriteInfo.displayX == testcase.expectedScreenX)
+        #expect(partySpriteInfo.displayY == testcase.expectedScreenY)
+    }
 }

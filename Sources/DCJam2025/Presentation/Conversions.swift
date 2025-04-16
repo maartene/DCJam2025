@@ -48,5 +48,22 @@ func getSpriteAndPositionForTileAtPosition(_ position: Coordinate, on floor: Flo
     let spriteName = tileToSpriteMap[tile, default: "\(tile)"]
     
     return (spriteName, correctedX, correctedY)
-        
+}
+
+func getSpriteAndPositionForPartyAtPosition(_ position: Coordinate, heading: CompassDirection, on floor: Floor, offsetX: Int32 = 0, offsetY: Int32 = 0) -> (spriteName: String, displayX: Int32, displayY: Int32) {
+    let spriteSize: Int32 = 16
+    
+    let headingToSpriteMap: [CompassDirection: String] = [
+        .north: "north",
+        .east: "west",
+        .south: "south",
+        .west: "east"
+    ]
+    
+    let correctedX = Int32(floor.maxX - position.x) * spriteSize + offsetX
+    let correctedY = Int32(floor.maxY - position.y) * spriteSize + offsetY
+    
+    let spriteName = headingToSpriteMap[heading]!
+    
+    return (spriteName, correctedX, correctedY)
 }

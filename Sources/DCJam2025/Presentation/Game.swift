@@ -171,22 +171,11 @@ class Game {
                 Raylib.drawTexture(sprite, drawTextureInfo.displayX, drawTextureInfo.displayY, .white)
             }
         }
+
+        let drawPartyTextureInfo = getSpriteAndPositionForPartyAtPosition(world.partyPosition, heading: world.partyHeading, on: world.currentFloor, offsetX: 10, offsetY: 10)
         
-        let playerDirectionSymbol = playerDirectionSymbol(heading: world.partyHeading)
-        
-        if let playerSprite = sprites[playerDirectionSymbol] {
-            let correctedX = Int32(maxX - world.partyPosition.x) * spriteSize + minimapOffset
-            let correctedY = Int32(maxY - world.partyPosition.y) * spriteSize + minimapOffset
-            Raylib.drawTexture(playerSprite, correctedX, correctedY, .white)
-        }
-    }
-    
-    private func playerDirectionSymbol(heading: CompassDirection) -> String {
-        switch heading {
-        case .north: "north"
-        case .east: "west"
-        case .south: "south"
-        case .west: "east"
+        if let playerSprite = sprites[drawPartyTextureInfo.spriteName] {
+            Raylib.drawTexture(playerSprite, drawPartyTextureInfo.displayX, drawPartyTextureInfo.displayY, .white)
         }
     }
     
