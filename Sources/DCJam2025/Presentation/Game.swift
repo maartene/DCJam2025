@@ -158,10 +158,6 @@ class Game {
     
     private func drawMinimap(world: World) {
         let minimapOffset: Int32 = 10
-        let spriteSize: Int32 = 16
-        
-        let maxX = world.currentFloor.maxX
-        let maxY = world.currentFloor.maxY
         
         let visitedTilesOnCurrentFloor = world.visitedTilesOnCurrentFloor
         
