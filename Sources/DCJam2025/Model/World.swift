@@ -24,7 +24,7 @@ final class World {
         self.partyPosition = partyStartPosition
         self.partyHeading = partyStartHeading
         
-        updateVisibleTiles()
+        updateVisitedTiles()
     }
     
     convenience init(map: Floor, partyStartPosition: Coordinate = Coordinate(x: 0, y: 0), partyStartHeading: CompassDirection = CompassDirection.north) {
@@ -73,7 +73,7 @@ final class World {
             partyPosition = newPosition
         }
         
-        updateVisibleTiles()
+        updateVisitedTiles()
     }
     
     func turnPartyClockwise() {
@@ -84,8 +84,8 @@ final class World {
         partyHeading = partyHeading.rotatedCounterClockwise()
     }
     
-    private func updateVisibleTiles() {
-        visitedTilesOnFloor[currentFloorIndex] = visitedTilesOnFloor[currentFloorIndex, default: []].union(partyPosition.squareAround)
+    private func updateVisitedTiles() {
+        visitedTilesOnFloor[currentFloorIndex] = visitedTilesOnCurrentFloor.union(partyPosition.squareAround)
     }
 }
 
