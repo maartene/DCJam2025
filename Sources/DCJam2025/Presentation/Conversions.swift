@@ -31,3 +31,22 @@ extension Color {
         return Color(r: UInt8(r), g: UInt8(g), b: UInt8(b), a: color.a)
     }
 }
+
+func getSpriteAndPositionForTileAtPosition(_ position: Coordinate, on floor: Floor, offsetX: Int32 = 0, offsetY: Int32 = 0) -> (spriteName: String, displayX: Int32, displayY: Int32) {
+    let spriteSize: Int32 = 16
+    
+    let tileToSpriteMap: [Tile: String] = [
+        .wall: "wall",
+        .stairsDown: "stairsDown",
+        .stairsUp: "stairsUp",
+    ]
+    
+    let tile = floor.tileAt(position)
+    let correctedX = Int32(floor.maxX - position.x) * spriteSize + offsetX
+    let correctedY = Int32(floor.maxY - position.y) * spriteSize + offsetY
+    
+    let spriteName = tileToSpriteMap[tile, default: "\(tile)"]
+    
+    return (spriteName, correctedX, correctedY)
+        
+}

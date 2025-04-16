@@ -88,4 +88,23 @@ import Raylib
     ]) func testLightCalculation(testcase: (position: Coordinate, vantagePoint: Coordinate, expectedLight: Float)) {
         #expect(light(position: testcase.position, vantagePoint: testcase.vantagePoint) == testcase.expectedLight)
     }
+    
+    @Test("Calculate the multiple of a color and a scalar", arguments: [
+        (Color(r: 255, g: 255, b: 255, a: 255), Float(0.5), Color(r: 127, g: 127, b: 127, a: 255)),
+        (Color(r: 113, g: 194, b: 157, a: 255), Float(0.8371812), Color(r: 94, g: 162, b: 131, a: 255)),
+        (Color(r: 127, g: 11, b: 14, a: 255), Float(0.9392248), Color(r: 119, g: 10, b: 13, a: 255)),
+        (Color(r: 211, g: 64, b: 139, a: 255), Float(0.83148295), Color(r: 175, g: 53, b: 115, a: 255)),
+        (Color(r: 251, g: 237, b: 238, a: 255), Float(0.67156947), Color(r: 168, g: 159, b: 159, a: 255)),
+        (Color(r: 25, g: 137, b: 218, a: 255), Float(0.3642103), Color(r: 9, g: 49, b: 79, a: 255)),
+        (Color(r: 252, g: 38, b: 182, a: 255), Float(0.12794071), Color(r: 32, g: 4, b: 23, a: 255)),
+        (Color(r: 15, g: 88, b: 253, a: 255), Float(0.80421245), Color(r: 12, g: 70, b: 203, a: 255)),
+        (Color(r: 39, g: 75, b: 217, a: 255), Float(0.57205117), Color(r: 22, g: 42, b: 124, a: 255)),
+        (Color(r: 65, g: 90, b: 26, a: 255), Float(0.36239207), Color(r: 23, g: 32, b: 9, a: 255)),
+        (Color(r: 4, g: 24, b: 116, a: 255), Float(0.38090336), Color(r: 1, g: 9, b: 44, a: 255)),
+    ]) func multiplyColorWithScalar(testcase: (color: Color, scalar: Float, expectedColor: Color)) {
+        let multipliedColor = testcase.color * testcase.scalar
+        #expect(multipliedColor.r == testcase.expectedColor.r)
+        #expect(multipliedColor.g == testcase.expectedColor.g)
+        #expect(multipliedColor.b == testcase.expectedColor.b)
+    }
 }

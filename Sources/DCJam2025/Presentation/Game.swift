@@ -163,22 +163,12 @@ class Game {
         let maxX = world.currentFloor.maxX
         let maxY = world.currentFloor.maxY
         
-        let visitedTilesOnCurrentFloor: [(coordinate: Coordinate, tile: Tile)] = world.visitedTilesOnCurrentFloor.map {
-            ($0, world.currentFloor.tileAt($0))
-        }
-        
-        let tileToSpriteMap: [Tile: String] = [
-            .wall: "wall",
-            .stairsDown: "stairsDown",
-            .stairsUp: "stairsUp",
-        ]
+        let visitedTilesOnCurrentFloor = world.visitedTilesOnCurrentFloor
         
         for visitedTilesOnCurrentFloor in visitedTilesOnCurrentFloor {
-            let correctedX = Int32(maxX - visitedTilesOnCurrentFloor.coordinate.x) * spriteSize + minimapOffset
-            let correctedY = Int32(maxY - visitedTilesOnCurrentFloor.coordinate.y) * spriteSize + minimapOffset
-            
-            if let spriteName = tileToSpriteMap[visitedTilesOnCurrentFloor.tile], let sprite = sprites[spriteName] {
-                Raylib.drawTexture(sprite, correctedX, correctedY, .white)
+            let drawTextureInfo = getSpriteAndPositionForTileAtPosition( visitedTilesOnCurrentFloor, on: world.currentFloor, offsetX: minimapOffset, offsetY: minimapOffset)
+            if let sprite = sprites[drawTextureInfo.spriteName] {
+                Raylib.drawTexture(sprite, drawTextureInfo.displayX, drawTextureInfo.displayY, .white)
             }
         }
         
@@ -193,13 +183,11 @@ class Game {
     
     private func playerDirectionSymbol(heading: CompassDirection) -> String {
         switch heading {
-            
         case .north: "north"
         case .east: "west"
         case .south: "south"
         case .west: "east"
         }
-        
     }
     
     private func loadMinimapImages() {
