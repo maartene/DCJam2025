@@ -16,7 +16,7 @@ final class World {
     private(set) var partyHeading: CompassDirection
     private var currentFloorIndex = 0
     private var floors: [Floor]
-    private var visitedTilesOnFloor: Set<Coordinate> = []
+    private var visitedTilesOnFloor = [Int: Set<Coordinate>]()
     
     // Initializers
     init(floors: [Floor], partyStartPosition: Coordinate = Coordinate(x: 0, y: 0), partyStartHeading: CompassDirection = CompassDirection.north) {
@@ -47,7 +47,7 @@ final class World {
     }
     
     var visitedTilesOnCurrentFloor: Set<Coordinate> {
-        visitedTilesOnFloor
+        visitedTilesOnFloor[currentFloorIndex, default: []]
     }
     
     // MARK: Commands
@@ -85,7 +85,7 @@ final class World {
     }
     
     private func updateVisibleTiles() {
-        visitedTilesOnFloor.formUnion(partyPosition.squareAround)
+        visitedTilesOnFloor[currentFloorIndex] = visitedTilesOnFloor[currentFloorIndex, default: []].union(partyPosition.squareAround)
     }
 }
 

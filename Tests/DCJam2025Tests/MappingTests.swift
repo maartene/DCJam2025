@@ -48,4 +48,24 @@ import Testing
         
         #expect(world.visitedTilesOnCurrentFloor == expectedVisitedTiles)
     }
+    
+    @Test("When the party visits a new floor, the visited tiles are reset") func visitedTilesResetOnNewFloor() {
+        let world = World(floors: [
+            Floor([
+                [".",".",",","<"]
+            ]),
+            Floor([
+                [".",".",".",">"]
+            ])
+        ])
+        
+        world.moveParty(.right)
+        world.moveParty(.right)
+        
+        let vistedTilesOnFloor1 = world.visitedTilesOnCurrentFloor.count
+        
+        world.moveParty(.right)
+        
+        #expect(world.visitedTilesOnCurrentFloor.count < vistedTilesOnFloor1)
+    }
 }
