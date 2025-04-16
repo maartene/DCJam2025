@@ -53,3 +53,4 @@ What is there to find? The answer to the ultimate secret: what came before? the 
 
 ## 🍅 Pomodoro 8
 - ✅ Visited tiles on multiple floors
+- ✅ Add some missing tests for conversions

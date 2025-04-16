@@ -70,4 +70,31 @@ import Testing
         
         #expect(world == expectedWorld)
     }
+    
+    @Test("When no start tile is passed in in a floor, it is assumed to be at (0,0)") func assumeStartPosition() {
+        let floorplan =
+        """
+        ...
+        ...
+        """
+        
+        let world = makeWorld(from: [floorplan])
+        
+        #expect(world.partyPosition == Coordinate(x: 0, y: 0))
+    }
+    
+    @Test("A floor can be converted back to its string representations") func floorDescriptionIsStringRepresentation() {
+        let floorplan =
+        """
+        #####
+        #...#
+        #..<#
+        #...#
+        #####
+        """
+        
+        let world = makeWorld(from: [floorplan])
+        
+        #expect(world.currentFloor.description == floorplan)
+    }
 }

@@ -57,9 +57,9 @@ extension Floor: Equatable { }
 extension Floor: CustomStringConvertible {
     var description: String {
         var lines = [String]()
-        for y in 0 ... maxY {
+        for y in minY ... maxY {
             var line = ""
-            for x in 0 ... maxX {
+            for x in minX ... maxX {
                 line += String(tileAt(Coordinate(x: x, y: y)).rawValue)
             }
             lines.append(line)

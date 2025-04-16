@@ -19,10 +19,6 @@ struct Coordinate {
         Coordinate(x: lhs.x - rhs.x, y: lhs.y - rhs.y)
     }
     
-    static func +=(lhs: inout Coordinate, rhs: Coordinate) {
-        lhs = lhs + rhs
-    }
-    
     func distanceTo(_ coordinate: Coordinate) -> Double {
         let vector = coordinate - self
         return vector.magnitude
