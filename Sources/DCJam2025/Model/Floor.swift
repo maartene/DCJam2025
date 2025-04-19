@@ -20,13 +20,8 @@ enum Tile: Character {
 struct Floor {
     private var tiles = [Coordinate: Tile]()
     
-    var minX: Int {
-        tiles.keys.map { $0.x }.min() ?? 0
-    }
-    
-    var minY: Int {
-        tiles.keys.map { $0.y }.min() ?? 0
-    }
+    let minX: Int
+    let minY: Int
     
     var maxX: Int {
         tiles.keys.map { $0.x }.max() ?? 0
@@ -45,6 +40,10 @@ struct Floor {
         }
         
         self.tiles = readTiles.filter { $0.value != .floor }
+        
+        minX = 0
+        minY = 0
+        
     }
     
     func tileAt(_ coordinate: Coordinate) -> Tile {

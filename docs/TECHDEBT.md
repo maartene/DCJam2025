@@ -2,9 +2,10 @@
 
 ## ⚠️ TODO
 - missing tests in Floor
-- there is duplication in `World` where multiple functions do the same check: see if player already won. Abstraction needed to conform to DRY.
+- there is duplication in `World` where multiple functions do the same check: see if player already won. Abstraction needed to conform to DRY
 
 ## 🚧 DOING
+- minX, minY, maxX and maxY are constants, so can be generated only once
 
 ## ✅ DONE
 - no test coverage for conversion of coordinate spaces, while this might be valuable. Maybe property based testing?
