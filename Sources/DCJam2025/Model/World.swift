@@ -77,10 +77,18 @@ final class World {
     }
     
     func turnPartyClockwise() {
+        guard state != .won else {
+            return
+        }
+        
         partyHeading = partyHeading.rotatedClockwise()
     }
     
     func turnPartyCounterClockwise() {
+        guard state != .won else {
+            return
+        }
+        
         partyHeading = partyHeading.rotatedCounterClockwise()
     }
     

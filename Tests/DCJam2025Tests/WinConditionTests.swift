@@ -35,4 +35,15 @@ import Testing
         
         #expect(world.partyPosition == Coordinate(x: 1, y: 0))
     }
+    
+    @Test("not allow rotation when the party reaches the target") func winningGameMakesRotationImpossible() {
+        let world = World(map: Floor([
+            ["S","T"]
+        ]))
+        
+        world.moveParty(.right)
+        world.turnPartyClockwise()
+        
+        #expect(world.partyHeading == .north)
+    }
 }
