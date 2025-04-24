@@ -9,20 +9,16 @@ import Testing
 import Foundation
 @testable import DCJam2025
 
-@Suite("Enemies should") struct EnemyTests {
+@Suite("During update, enemies should") struct EnemyTests {
     @Test("attack party members when they are close enough") func enemiesAttackPartyMembers() {
         let world = World(map: Floor())
         world.spawnEnemy(at: Coordinate(x: 1, y: 0))
         
-        let hpOfPartyMembersBeforeAttack = world.partyMembers
-            .map { $0.currentHP }
-            .reduce(0, +)
+        let hpOfPartyMembersBeforeAttack = sumHPOfPartyMembers(in: world)
         
         world.update(at: Date())
         
-        let hpOfPartyMembersAfterAttack = world.partyMembers
-            .map { $0.currentHP }
-            .reduce(0, +)
+        let hpOfPartyMembersAfterAttack = sumHPOfPartyMembers(in: world)
         
         #expect(hpOfPartyMembersBeforeAttack > hpOfPartyMembersAfterAttack)
     }
@@ -31,16 +27,18 @@ import Foundation
         let world = World(map: Floor())
         world.spawnEnemy(at: Coordinate(x: 10, y: 0))
         
-        let hpOfPartyMembersBeforeAttack = world.partyMembers
-            .map { $0.currentHP }
-            .reduce(0, +)
+        let hpOfPartyMembersBeforeAttack = sumHPOfPartyMembers(in: world)
         
         world.update(at: Date())
         
-        let hpOfPartyMembersAfterUpdate = world.partyMembers
-            .map { $0.currentHP }
-            .reduce(0, +)
+        let hpOfPartyMembersAfterUpdate = sumHPOfPartyMembers(in: world)
         
         #expect(hpOfPartyMembersBeforeAttack == hpOfPartyMembersAfterUpdate)
+    }
+    
+    private func sumHPOfPartyMembers(in world: World) -> Int {
+        world.partyMembers
+            .map { $0.currentHP }
+            .reduce(0, +)
     }
 }
