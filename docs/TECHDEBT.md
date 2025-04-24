@@ -1,6 +1,8 @@
 # TECHDEBT
 
 ## ⚠️ TODO
+- message chain in `LostConditionTests` because `World` exposes array with partymembers
+- array with partymembers should be wrapped in its own data type
 - there is duplication in `World` where multiple functions do the same check: see if player already won. Abstraction needed to conform to DRY
 
 ## 🚧 DOING

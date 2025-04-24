@@ -5,6 +5,8 @@
 //  Created by Maarten Engels on 11/04/2025.
 //
 
+import Foundation
+
 final class World {
     enum WorldState {
         case inProgress
@@ -105,6 +107,10 @@ final class World {
     
     private func updateVisitedTiles() {
         visitedTilesOnFloor[currentFloorIndex] = visitedTilesOnCurrentFloor.union(partyPosition.squareAround)
+    }
+    
+    func update(at time: Date) {
+        partyMembers[0].takeDamage(1)
     }
 }
 

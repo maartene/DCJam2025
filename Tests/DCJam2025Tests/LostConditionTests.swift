@@ -8,7 +8,7 @@
 import Testing
 @testable import DCJam2025
 
-@Suite("The lose condition for this world should") struct LoseConditionTests {
+@Suite("The lose condition for this world should") struct LostConditionTests {
     @Test("be 'defeated' when all party members are rendered unconcious") func loseWhenAllPartyMembersAreUnconscious() {
         let world = makeWorldWithUnconciousPlayers()
         

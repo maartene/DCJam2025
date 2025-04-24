@@ -13,6 +13,8 @@
 
 - ✅ Lose condition: when all party members are rendered uncontious, you lose
 
+- Enemies that can damage players
+
 - More intesting maps (10 levels would be cool)
 
 - UI to spice stuff up
