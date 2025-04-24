@@ -88,7 +88,7 @@ final class World {
     }
     
     func turnPartyClockwise() {
-        guard state != .won else {
+        guard state == .inProgress else {
             return
         }
         
@@ -96,7 +96,7 @@ final class World {
     }
     
     func turnPartyCounterClockwise() {
-        guard state != .won else {
+        guard state == .inProgress else {
             return
         }
         
