@@ -11,7 +11,7 @@
 
 - ✅ Minimap maybe?
 
-- Lose condition: when all party members are rendered uncontious, you lose
+- ✅ Lose condition: when all party members are rendered uncontious, you lose
 
 - More intesting maps (10 levels would be cool)
 

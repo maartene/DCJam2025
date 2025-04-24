@@ -10,12 +10,7 @@ import Testing
 
 @Suite("The lose condition for this world should") struct LoseConditionTests {
     @Test("be 'defeated' when all party members are rendered unconcious") func loseWhenAllPartyMembersAreUnconscious() {
-        let world = World(map: Floor())
-        
-        world.partyMembers[0].takeDamage(Int.max)
-        world.partyMembers[1].takeDamage(Int.max)
-        world.partyMembers[2].takeDamage(Int.max)
-        world.partyMembers[3].takeDamage(Int.max)
+        let world = makeWorldWithUnconciousPlayers()
         
         #expect(world.state == .defeated)
     }
@@ -31,12 +26,7 @@ import Testing
     }
     
     @Test("not allow movement when in the lose condition state") func losingGameMakesMovementImpossible() {
-        let world = World(map: Floor())
-        
-        world.partyMembers[0].takeDamage(Int.max)
-        world.partyMembers[1].takeDamage(Int.max)
-        world.partyMembers[2].takeDamage(Int.max)
-        world.partyMembers[3].takeDamage(Int.max)
+        let world = makeWorldWithUnconciousPlayers()
                 
         world.moveParty(.forward)
         
@@ -44,15 +34,21 @@ import Testing
     }
     
     @Test("not allow rotation when the party reaches the target") func losingGameMakesRotationImpossible() {
+        let world = makeWorldWithUnconciousPlayers()
+                
+        world.turnPartyCounterClockwise()
+        
+        #expect(world.partyHeading == .north)
+    }
+    
+    private func makeWorldWithUnconciousPlayers() -> World {
         let world = World(map: Floor())
         
         world.partyMembers[0].takeDamage(Int.max)
         world.partyMembers[1].takeDamage(Int.max)
         world.partyMembers[2].takeDamage(Int.max)
         world.partyMembers[3].takeDamage(Int.max)
-                
-        world.turnPartyCounterClockwise()
         
-        #expect(world.partyHeading == .north)
+        return world
     }
 }
