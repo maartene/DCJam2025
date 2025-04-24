@@ -8,8 +8,8 @@
 import Testing
 @testable import DCJam2025
 
-@Suite struct LoseConditionTests {
-    @Test("When all party members are rendered unconcious, the game is lost") func loseWhenAllPartyMembersAreUnconscious() {
+@Suite("The lose condition for this world should") struct LoseConditionTests {
+    @Test("be 'defeated' when all party members are rendered unconcious") func loseWhenAllPartyMembersAreUnconscious() {
         let world = World(map: Floor())
         
         world.partyMembers[0].takeDamage(Int.max)
@@ -20,7 +20,7 @@ import Testing
         #expect(world.state == .defeated)
     }
     
-    @Test("When at least one party member is alive, the game is not lost") func notLostWhenAtLeastOnePartyMemberIsAlive() {
+    @Test("be 'inProgress' when at least one party member is not unconcious") func notLostWhenAtLeastOnePartyMemberIsAlive() {
         let world = World(map: Floor())
         
         world.partyMembers[0].takeDamage(Int.max)
@@ -28,5 +28,18 @@ import Testing
         world.partyMembers[2].takeDamage(Int.max)
         
         #expect(world.state != .defeated)
+    }
+    
+    @Test("not allow movement when in the lose condition state") func losingGameMakesMovementImpossible() {
+        let world = World(map: Floor())
+        
+        world.partyMembers[0].takeDamage(Int.max)
+        world.partyMembers[1].takeDamage(Int.max)
+        world.partyMembers[2].takeDamage(Int.max)
+        world.partyMembers[3].takeDamage(Int.max)
+                
+        world.moveParty(.forward)
+        
+        #expect(world.partyPosition == Coordinate(x: 0, y: 0))
     }
 }

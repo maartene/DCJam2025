@@ -63,7 +63,7 @@ final class World {
     
     // MARK: Commands
     func moveParty(_ direction: MovementDirection) {
-        guard state != .won else {
+        guard state == .inProgress else {
             return
         }
         
