@@ -11,9 +11,8 @@ import Foundation
 
 @Suite("Enemies should") struct EnemyTests {
     @Test("attack party members when they are close enough") func enemiesAttackPartyMembers() {
-        let world = World(map: Floor([
-            ["S","s"]
-        ]))
+        let world = World(map: Floor())
+        world.spawnEnemy(at: Coordinate(x: 1, y: 0))
         
         let hpOfPartyMembersBeforeAttack = world.partyMembers
             .map { $0.currentHP }
@@ -26,5 +25,22 @@ import Foundation
             .reduce(0, +)
         
         #expect(hpOfPartyMembersBeforeAttack > hpOfPartyMembersAfterAttack)
+    }
+    
+    @Test("not attack party members when they are not close enough") func enemiesDontAttackPartyMembersOutOfRange() {
+        let world = World(map: Floor())
+        world.spawnEnemy(at: Coordinate(x: 10, y: 0))
+        
+        let hpOfPartyMembersBeforeAttack = world.partyMembers
+            .map { $0.currentHP }
+            .reduce(0, +)
+        
+        world.update(at: Date())
+        
+        let hpOfPartyMembersAfterUpdate = world.partyMembers
+            .map { $0.currentHP }
+            .reduce(0, +)
+        
+        #expect(hpOfPartyMembersBeforeAttack == hpOfPartyMembersAfterUpdate)
     }
 }
