@@ -18,6 +18,8 @@ final class World {
     private var floors: [Floor]
     private var visitedTilesOnFloor = [Int: Set<Coordinate>]()
     
+    let partyMembers = Array(repeating: PartyMember(), count: 4)
+    
     // Initializers
     init(floors: [Floor], partyStartPosition: Coordinate = Coordinate(x: 0, y: 0), partyStartHeading: CompassDirection = CompassDirection.north) {
         self.floors = floors
@@ -39,6 +41,10 @@ final class World {
     }
     
     var state: WorldState {
+        if partyMembers.filter( { $0.isAlive }).isEmpty {
+            return .defeated
+        }
+        
         if currentFloor.tileAt(partyPosition) == .target {
             return .won
         }

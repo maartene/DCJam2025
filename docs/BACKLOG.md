@@ -11,7 +11,7 @@
 
 - ✅ Minimap maybe?
 
-- Lose condition: get caught by enemies???
+- Lose condition: when all party members are rendered uncontious, you lose
 
 - More intesting maps (10 levels would be cool)
 

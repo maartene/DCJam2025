@@ -1,7 +1,6 @@
 # TECHDEBT
 
 ## ⚠️ TODO
-- missing tests in Floor
 - there is duplication in `World` where multiple functions do the same check: see if player already won. Abstraction needed to conform to DRY
 
 ## 🚧 DOING
@@ -12,3 +11,4 @@
 - missing test for color multiplication in Conversions.swift
 - should not be able to rotate when goal is reached
 - minX, minY, maxX and maxY are constants, so can be generated only once
+- missing tests in Floor
