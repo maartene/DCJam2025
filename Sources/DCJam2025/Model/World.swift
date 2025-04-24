@@ -18,7 +18,12 @@ final class World {
     private var floors: [Floor]
     private var visitedTilesOnFloor = [Int: Set<Coordinate>]()
     
-    let partyMembers = Array(repeating: PartyMember(), count: 4)
+    let partyMembers = [
+        PartyMember(),
+        PartyMember(),
+        PartyMember(),
+        PartyMember()
+    ]
     
     // Initializers
     init(floors: [Floor], partyStartPosition: Coordinate = Coordinate(x: 0, y: 0), partyStartHeading: CompassDirection = CompassDirection.north) {
