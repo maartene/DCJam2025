@@ -57,3 +57,4 @@ What is there to find? The answer to the ultimate secret: what came before? the 
 
 ## 🍅 Pomodoro 9
 - ✅ Basic lose condition in game
+- 🚧 Enemies attack players

@@ -13,7 +13,22 @@
 
 - ✅ Lose condition: when all party members are rendered uncontious, you lose
 
-- Enemies that can damage players
+- 🚧 Melee Enemies can damage players
+    - ✅ During update
+    - ✅ Only when they are within melee range
+    - Only when their cooldown expires
+    - Attack a random party member in the front of the party
+    
+- Ranged enemies should
+    - Be able to attack all party members individually
+    - Have different damage amount
+    
+- Magic enemies should
+    - Be able to attack more than one party member at a time (i.e. AoE)
+
+- Party members should have some interesting aspects, at least a name and a portrait.
+
+- Party members should be able to attack as well
 
 - More intesting maps (10 levels would be cool)
 

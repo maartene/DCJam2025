@@ -1,6 +1,9 @@
 # TECHDEBT
 
 ## ⚠️ TODO
+- enemies should be part of floor definition -> requires update to `makeWorld(from:)`
+- `spawnEnemy` in `World` should be removed
+- `enemies` in `World` should not just be a coordinate, and also wrapped in its own data type
 - message chain in `LostConditionTests` because `World` exposes array with partymembers
 - array with partymembers should be wrapped in its own data type
 - there is duplication in `World` where multiple functions do the same check: see if player already won. Abstraction needed to conform to DRY
