@@ -22,14 +22,8 @@ struct Floor {
     
     let minX: Int
     let minY: Int
-    
-    var maxX: Int {
-        tiles.keys.map { $0.x }.max() ?? 0
-    }
-    
-    var maxY: Int {
-        tiles.keys.map { $0.y }.max() ?? 0
-    }
+    let maxX: Int
+    let maxY: Int
     
     init(_ mapArray: [[Character]] = [[]]) {
         var readTiles = [Coordinate: Tile]()
@@ -43,7 +37,8 @@ struct Floor {
         
         minX = 0
         minY = 0
-        
+        maxX = tiles.keys.map { $0.x }.max() ?? 0
+        maxY = tiles.keys.map { $0.y }.max() ?? 0
     }
     
     func tileAt(_ coordinate: Coordinate) -> Tile {
