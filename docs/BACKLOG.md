@@ -26,6 +26,10 @@
 - Magic enemies should
     - Be able to attack more than one party member at a time (i.e. AoE)
 
+- Enemies as sprites
+    - ✅ Show a static sprite
+    - Should show where sprite is looking (probably requires approval testing)
+
 - Party members should have some interesting aspects, at least a name and a portrait.
 
 - Party members should be able to attack as well
