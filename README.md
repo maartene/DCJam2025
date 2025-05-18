@@ -1,5 +1,5 @@
 # DCJam2025
-Entry for [Dungeon Crawler jam 2025](https://itch.io/jam/dcjam2025)
+Started of as an entry for [Dungeon Crawler jam 2025](https://itch.io/jam/dcjam2025) but evolved into its own game.
 
 ## About the game
 ### Backstory
@@ -21,9 +21,8 @@ Run the project using:
  
 ## Supported platforms
 * macOS
-* Linux (Ubuntu 22.04 on WSL)
+* Linux (tested: Ubuntu 22.04 on WSL)
 
 ## License
-* The following license applies to this work: [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) 
-©️ Maarten Engels 2025
 * Contains [Strega's Gate port (MIT license)](https://github.com/STREGAsGate/Raylib) of [Raylib by Ramon Santamaria (Zlib license))](https://github.com/raysan5/raylib). 
+* Copyright 2025, Maarten Engels - thedreamweb.eu
