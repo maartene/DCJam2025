@@ -25,4 +25,5 @@ Run the project using:
 
 ## License
 * Contains [Strega's Gate port (MIT license)](https://github.com/STREGAsGate/Raylib) of [Raylib by Ramon Santamaria (Zlib license))](https://github.com/raysan5/raylib). 
+* Contains placeholder Skeleton image from [Tiny RPG Character Asset Pack v1.03](https://zerie.itch.io/tiny-rpg-character-asset-pack)
 * Copyright 2025, Maarten Engels - thedreamweb.eu

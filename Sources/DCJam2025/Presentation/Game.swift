@@ -16,14 +16,14 @@ class Game {
     var camera = makeCamera()
     
     var sprites = [String: Texture2D]()
-    
+
     let world = World(floors: [
         Floor([
             ["#","#","#","#","#","#"],
             ["#",".",".",".","#","#"],
             ["#",".","#",".",".","#"],
             ["#",".","#","#",".","#"],
-            ["#",".",".",".","<","#"],
+            ["#",".",".",".",".","#"],
             ["#","#","#","#","#","#"],
         ]),
         Floor([
@@ -40,7 +40,7 @@ class Game {
         Raylib.initWindow(screenWidth, screenHeight, "DCJam2025")
         Raylib.setTargetFPS(30)
 
-        loadMinimapImages()
+        loadImages()
                     
         print(Raylib.getWorkingDirectory())
         while Raylib.windowShouldClose == false {
@@ -69,11 +69,11 @@ class Game {
         }
         
         if Raylib.isKeyPressed(.letterD) {
-            world.moveParty(.right)
+            world.moveParty(.left)
         }
         
         if Raylib.isKeyPressed(.letterA) {
-            world.moveParty(.left)
+            world.moveParty(.right)
         }
         
         if Raylib.isKeyPressed(.letterS) {
@@ -112,6 +112,7 @@ class Game {
     private func draw3D() {
         Raylib.beginMode3D(camera)
         drawMap(world.currentFloor, vantagePoint: world.partyPosition)
+        drawEntities(map: world.currentFloor)
         Raylib.endMode3D()
     }
     
@@ -135,7 +136,7 @@ class Game {
         case .target:
             drawTargetAt(coordinate)
         default:
-            break
+            break;
         }
     }
     
@@ -156,6 +157,17 @@ class Game {
         Raylib.drawCubeV(coordinate.toVector3, .one, Color(r: 0, g: 0, b: 200, a: 128))
     }
     
+    private func drawEntities(map: Floor) {
+        for row in map.minY ... map.maxY {
+            for column in map.minX ... map.maxX {
+                let coordinate = Coordinate(x: column, y: row)
+                if coordinate == Coordinate(x: 1, y: 4) {
+                    Raylib.drawBillboard(camera, sprites["orc"]!, coordinate.toVector3, 1, .white)
+                }
+            }
+        }
+    }
+
     private func drawMinimap(world: World) {
         let minimapOffset: Int32 = 10
         
@@ -175,8 +187,9 @@ class Game {
         }
     }
     
-    private func loadMinimapImages() {
-        let minimapImageNames = [
+    private func loadImages() {
+        let imageNames = [
+            // Minimap
             "wall",
             "north",
             "south",
@@ -184,9 +197,11 @@ class Game {
             "west",
             "stairsUp",
             "stairsDown",
+            // Sprites
+            "orc"
         ]
         
-        minimapImageNames.forEach {
+        imageNames.forEach {
             guard let url = Bundle.module.url(forResource: $0, withExtension: "png") else {
                 fatalError("Could not find \($0).png")
             }
