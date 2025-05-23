@@ -30,6 +30,9 @@
     - ✅ Show a static sprite
     - Should show where sprite is looking (probably requires approval testing)
 
+- Enemies as models
+    - ✅ Show a 3D model
+
 - Party members should have some interesting aspects, at least a name and a portrait.
 
 - Party members should be able to attack as well

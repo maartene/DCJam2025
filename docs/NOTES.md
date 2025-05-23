@@ -61,3 +61,6 @@ What is there to find? The answer to the ultimate secret: what came before? the 
 
 ## 🍅 Pomodoro 10
 - ✅ an enemy sprite in the world (static sprite)
+
+## 🍅 Pomodoro 11
+- ✅ a model in the world (unlit, but with texture)

@@ -42,19 +42,9 @@ class Game {
         Raylib.setTargetFPS(30)
 
         loadImages()
-        guard let fooURL = Bundle.module.url(forResource: "example", withExtension: "obj") else {
-            fatalError("Could not find file building_barracks_green in bundle")
-        }
 
-        // 
+        foo = loadModel("barrel_large", withExtension: "obj")
 
-        //foo = Raylib.loadModel("/Users/maartene/Developer/Swift Programming/DCJam2025/Sources/DCJam2025/Resources/Models/example.obj")
-        let fooPath = fooURL.absoluteString
-            .replacingOccurrences(of: "file://", with: "")
-            .replacingOccurrences(of: "%20", with: " ")
-        foo = Raylib.loadModel(fooPath)
-
-        print(Raylib.getWorkingDirectory())
         while Raylib.windowShouldClose == false {
             update()
             drawGameView()
@@ -221,5 +211,17 @@ class Game {
             
             sprites[$0] = Texture(url: url)
         }
+    }
+
+    private func loadModel(_ fileName: String, withExtension ext: String) -> Model {
+        guard let fooURL = Bundle.module.url(forResource: "barrel_large", withExtension: "obj") else {
+            fatalError("Could not find file \(fileName) . \(ext)")
+        }
+
+        let fooPath = fooURL.absoluteString
+            .replacingOccurrences(of: "file://", with: "")
+            .replacingOccurrences(of: "%20", with: " ")
+
+        return Raylib.loadModel(fooPath)
     }
 }
