@@ -9,7 +9,7 @@ import Raylib
 
 func light(position: Coordinate, vantagePoint: Coordinate) -> Float {
     let distance = position.distanceTo(vantagePoint)
-    return 1.0 / Float(distance)
+    return min(Float(1.0) / Float(distance), Float(1.0))
 }
 
 func target(from position: Coordinate, heading: CompassDirection) -> Coordinate {

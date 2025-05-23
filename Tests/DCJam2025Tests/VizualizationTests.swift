@@ -88,6 +88,11 @@ import Raylib
     ]) func testLightCalculation(testcase: (position: Coordinate, vantagePoint: Coordinate, expectedLight: Float)) {
         #expect(light(position: testcase.position, vantagePoint: testcase.vantagePoint) == testcase.expectedLight)
     }
+
+    @Test("Maximize the amount of light to 1 if vantage point and coordiante are the same") func maxLightCalculation() {
+        let position = Coordinate(x: 10, y: 15)
+        #expect(light(position: position, vantagePoint: position) == 1)
+    }
     
     @Test("Calculate the multiple of a color and a scalar", arguments: [
         (Color(r: 255, g: 255, b: 255, a: 255), Float(0.5), Color(r: 127, g: 127, b: 127, a: 255)),

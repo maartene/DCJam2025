@@ -16,6 +16,7 @@ class Game {
     var camera = makeCamera()
     
     var sprites = [String: Texture2D]()
+    var foo: Model!
 
     let world = World(floors: [
         Floor([
@@ -41,7 +42,18 @@ class Game {
         Raylib.setTargetFPS(30)
 
         loadImages()
-                    
+        guard let fooURL = Bundle.module.url(forResource: "example", withExtension: "obj") else {
+            fatalError("Could not find file building_barracks_green in bundle")
+        }
+
+        // 
+
+        //foo = Raylib.loadModel("/Users/maartene/Developer/Swift Programming/DCJam2025/Sources/DCJam2025/Resources/Models/example.obj")
+        let fooPath = fooURL.absoluteString
+            .replacingOccurrences(of: "file://", with: "")
+            .replacingOccurrences(of: "%20", with: " ")
+        foo = Raylib.loadModel(fooPath)
+
         print(Raylib.getWorkingDirectory())
         while Raylib.windowShouldClose == false {
             update()
@@ -112,7 +124,7 @@ class Game {
     private func draw3D() {
         Raylib.beginMode3D(camera)
         drawMap(world.currentFloor, vantagePoint: world.partyPosition)
-        drawEntities(map: world.currentFloor)
+        drawEntities(map: world.currentFloor, vantagePoint: world.partyPosition)
         Raylib.endMode3D()
     }
     
@@ -157,12 +169,13 @@ class Game {
         Raylib.drawCubeV(coordinate.toVector3, .one, Color(r: 0, g: 0, b: 200, a: 128))
     }
     
-    private func drawEntities(map: Floor) {
+    private func drawEntities(map: Floor, vantagePoint: Coordinate) {
         for row in map.minY ... map.maxY {
             for column in map.minX ... map.maxX {
                 let coordinate = Coordinate(x: column, y: row)
                 if coordinate == Coordinate(x: 1, y: 4) {
-                    Raylib.drawBillboard(camera, sprites["orc"]!, coordinate.toVector3, 1, .white)
+                    let light = light(position: coordinate, vantagePoint: vantagePoint)
+                    Raylib.drawModel(foo, coordinate.toVector3, 0.1, .white * light)
                 }
             }
         }
