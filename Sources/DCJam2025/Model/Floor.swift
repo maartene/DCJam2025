@@ -11,7 +11,7 @@ enum Tile: Character {
     case stairsUp = "<"
     case stairsDown = ">"
     case target = "T"
-    
+
     static func characterToTile(_ character: Character) -> Tile {
         Tile(rawValue: character) ?? .floor
     }
@@ -19,12 +19,12 @@ enum Tile: Character {
 
 struct Floor {
     private var tiles = [Coordinate: Tile]()
-    
+
     let minX: Int
     let minY: Int
     let maxX: Int
     let maxY: Int
-    
+
     init(_ mapArray: [[Character]] = [[]]) {
         var readTiles = [Coordinate: Tile]()
         for row in 0 ..< mapArray.count {
@@ -32,15 +32,15 @@ struct Floor {
                 readTiles[Coordinate(x: column, y: row)] = Tile.characterToTile(mapArray[row][column])
             }
         }
-        
+
         self.tiles = readTiles.filter { $0.value != .floor }
-        
+
         minX = 0
         minY = 0
         maxX = tiles.keys.map { $0.x }.max() ?? 0
         maxY = tiles.keys.map { $0.y }.max() ?? 0
     }
-    
+
     func tileAt(_ coordinate: Coordinate) -> Tile {
         tiles[coordinate, default: .floor]
     }

@@ -13,29 +13,29 @@ import Foundation
     @Test("attack party members when they are close enough") func enemiesAttackPartyMembers() {
         let world = World(map: Floor())
         world.spawnEnemy(at: Coordinate(x: 1, y: 0))
-        
+
         let hpOfPartyMembersBeforeAttack = sumHPOfPartyMembers(in: world)
-        
+
         world.update(at: Date())
-        
+
         let hpOfPartyMembersAfterAttack = sumHPOfPartyMembers(in: world)
-        
+
         #expect(hpOfPartyMembersBeforeAttack > hpOfPartyMembersAfterAttack)
     }
-    
+
     @Test("not attack party members when they are not close enough") func enemiesDontAttackPartyMembersOutOfRange() {
         let world = World(map: Floor())
         world.spawnEnemy(at: Coordinate(x: 10, y: 0))
-        
+
         let hpOfPartyMembersBeforeAttack = sumHPOfPartyMembers(in: world)
-        
+
         world.update(at: Date())
-        
+
         let hpOfPartyMembersAfterUpdate = sumHPOfPartyMembers(in: world)
-        
+
         #expect(hpOfPartyMembersBeforeAttack == hpOfPartyMembersAfterUpdate)
     }
-    
+
     private func sumHPOfPartyMembers(in world: World) -> Int {
         world.partyMembers
             .map { $0.currentHP }

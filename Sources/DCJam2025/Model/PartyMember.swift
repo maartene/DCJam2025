@@ -7,11 +7,11 @@
 
 final class PartyMember {
     private(set) var currentHP = 10
-    
+
     var isAlive: Bool {
         currentHP > 0
     }
-    
+
     func takeDamage(_ amount: Int) {
         currentHP -= amount
     }

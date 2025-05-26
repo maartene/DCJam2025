@@ -40,7 +40,7 @@ func getSpriteAndPositionForTileAtPosition(
     let tileToSpriteMap: [Tile: String] = [
         .wall: "wall",
         .stairsDown: "stairsDown",
-        .stairsUp: "stairsUp",
+        .stairsUp: "stairsUp"
     ]
 
     let tile = floor.tileAt(position)
@@ -62,7 +62,7 @@ func getSpriteAndPositionForPartyAtPosition(
         .north: "north",
         .east: "west",
         .south: "south",
-        .west: "east",
+        .west: "east"
     ]
 
     let correctedX = Int32(floor.maxX - position.x) * spriteSize + offsetX

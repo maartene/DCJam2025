@@ -19,7 +19,7 @@ extension Color {
     static var black: Color {
         Color(r: 50, g: 50, b: 50, a: 255)
     }
-    
+
     static var blue: Color {
         Color(r: 0, g: 0, b: 255, a: 255)
     }
@@ -33,15 +33,15 @@ extension Vector3 {
     static var one: Vector3 {
         Vector3(x: 1, y: 1, z: 1)
     }
-    
+
     static var up: Vector3 {
         Vector3(x: 0, y: 1, z: 0)
     }
-    
+
     static func +(lhs: Vector3, rhs: Vector3) -> Vector3 {
         Vector3(x: lhs.x + rhs.x, y: lhs.y + rhs.y, z: lhs.z + rhs.z)
     }
-    
+
     func scale(_ scalar: Float) -> Vector3 {
         Vector3(x: x * scalar, y: y * scalar, z: z * scalar)
     }

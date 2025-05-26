@@ -10,7 +10,7 @@ let package = Package(
     ],
     products: [
         .library(name: "raylib", targets: ["raylib"]),
-        .executable(name: "DCJam2025", targets: ["DCJam2025"]),
+        .executable(name: "DCJam2025", targets: ["DCJam2025"])
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -31,8 +31,8 @@ let package = Package(
             name: "raylib", pkgConfig: "raylib",
             providers: [
                 .brew(["raylib"]),
-                .apt(["raylib-dev"]),
+                .apt(["raylib-dev"])
             ]
-        ),
+        )
     ]
 )

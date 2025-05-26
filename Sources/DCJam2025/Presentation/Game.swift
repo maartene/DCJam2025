@@ -26,7 +26,7 @@ class Game {
                 ["#", ".", "#", ".", ".", "#"],
                 ["#", ".", "#", "#", ".", "#"],
                 ["#", ".", ".", ".", ".", "#"],
-                ["#", "#", "#", "#", "#", "#"],
+                ["#", "#", "#", "#", "#", "#"]
             ]),
             Floor([
                 ["#", "#", "#", "#", "#", "#"],
@@ -34,8 +34,8 @@ class Game {
                 ["#", "#", "T", "#", ".", "#"],
                 ["#", "#", "#", "#", ".", "#"],
                 ["#", ".", ".", ".", ">", "#"],
-                ["#", "#", "#", "#", "#", "#"],
-            ]),
+                ["#", "#", "#", "#", "#", "#"]
+            ])
         ], partyStartPosition: Coordinate(x: 1, y: 1))
 
     func run() {
@@ -81,12 +81,12 @@ class Game {
         if IsKeyPressed(65) {
             world.moveParty(.right)
         }
-        
+
         // `S`
         if IsKeyPressed(83) {
             world.moveParty(.backwards)
         }
-        
+
         // `Q`
         if IsKeyPressed(81) {
             world.turnPartyClockwise()
@@ -216,14 +216,14 @@ class Game {
             "stairsUp",
             "stairsDown",
             // Sprites
-            "orc",
+            "orc"
         ]
 
         imageNames.forEach {
             guard let textureURL = Bundle.module.url(forResource: $0, withExtension: "png") else {
                 fatalError("Could not find \($0).png")
             }
-            
+
             let texturePath = textureURL.absoluteString
                 .replacingOccurrences(of: "file://", with: "")
                 .replacingOccurrences(of: "%20", with: " ")
