@@ -5,18 +5,20 @@ name: Swift
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   build:
     runs-on: macos-latest
 
     steps:
-    - uses: swift-actions/setup-swift@v2
-    - uses: actions/checkout@v4
-    - name: Build
-      run: swift build
-    - name: Test
-      run: swift test
+      - uses: swift-actions/setup-swift@v2
+      - uses: actions/checkout@v4
+      - name: Install Raylib
+        run: brew install raylib
+      - name: Build
+        run: swift build
+      - name: Test
+        run: swift test
