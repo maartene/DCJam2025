@@ -67,33 +67,27 @@ class Game {
     }
 
     private func processKeyInput() {
-        // `W`
-        if IsKeyPressed(87) {
+        if isKeyPressed(KEY_W) {
             world.moveParty(.forward)
         }
 
-        // `D`
-        if IsKeyPressed(68) {
+        if isKeyPressed(KEY_D) {
             world.moveParty(.left)
         }
 
-        // `A`
-        if IsKeyPressed(65) {
+        if isKeyPressed(KEY_A) {
             world.moveParty(.right)
         }
 
-        // `S`
-        if IsKeyPressed(83) {
+        if isKeyPressed(KEY_S) {
             world.moveParty(.backwards)
         }
 
-        // `Q`
-        if IsKeyPressed(81) {
+        if isKeyPressed(KEY_Q) {
             world.turnPartyClockwise()
         }
 
-        // `E`
-        if IsKeyPressed(69) {
+        if isKeyPressed(KEY_E) {
             world.turnPartyCounterClockwise()
         }
     }

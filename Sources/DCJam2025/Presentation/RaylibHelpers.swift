@@ -46,3 +46,7 @@ extension Vector3 {
         Vector3(x: x * scalar, y: y * scalar, z: z * scalar)
     }
 }
+
+func isKeyPressed(_ key: KeyboardKey) -> Bool {
+    IsKeyPressed(Int32(key.rawValue))
+}
