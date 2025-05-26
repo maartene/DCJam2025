@@ -1,0 +1,15 @@
+module raylib {
+    umbrella header "include/raylib.h"
+    export *
+    link "raylib"
+    
+    module raymath {
+        header "include/raymath.h"
+        export *
+    }
+    
+    module rlgl {
+        header "include/rlgl.h"
+        export *
+    }
+}

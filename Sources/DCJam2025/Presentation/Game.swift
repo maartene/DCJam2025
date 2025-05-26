@@ -5,129 +5,138 @@
 //  Created by Maarten Engels on 11/04/2025.
 //
 
-import Raylib
 import Foundation
+import raylib
 
 class Game {
     let screenWidth: Int32 = 1280
     let screenHeight: Int32 = 720
     let offset: Float = -0.1
-    
-    var camera = makeCamera()
-    
-    var sprites = [String: Texture2D]()
-    var foo: Model!
 
-    let world = World(floors: [
-        Floor([
-            ["#","#","#","#","#","#"],
-            ["#",".",".",".","#","#"],
-            ["#",".","#",".",".","#"],
-            ["#",".","#","#",".","#"],
-            ["#",".",".",".",".","#"],
-            ["#","#","#","#","#","#"],
-        ]),
-        Floor([
-            ["#","#","#","#","#","#"],
-            ["#",".",".",".",".","#"],
-            ["#","#","T","#",".","#"],
-            ["#","#","#","#",".","#"],
-            ["#",".",".",".",">","#"],
-            ["#","#","#","#","#","#"],
-        ]),
-    ], partyStartPosition: Coordinate(x: 1, y: 1))
-    
+    var camera = makeCamera()
+
+    var sprites = [String: Texture2D]()
+    var mockModel: Model!
+
+    let world = World(
+        floors: [
+            Floor([
+                ["#", "#", "#", "#", "#", "#"],
+                ["#", ".", ".", ".", "#", "#"],
+                ["#", ".", "#", ".", ".", "#"],
+                ["#", ".", "#", "#", ".", "#"],
+                ["#", ".", ".", ".", ".", "#"],
+                ["#", "#", "#", "#", "#", "#"],
+            ]),
+            Floor([
+                ["#", "#", "#", "#", "#", "#"],
+                ["#", ".", ".", ".", ".", "#"],
+                ["#", "#", "T", "#", ".", "#"],
+                ["#", "#", "#", "#", ".", "#"],
+                ["#", ".", ".", ".", ">", "#"],
+                ["#", "#", "#", "#", "#", "#"],
+            ]),
+        ], partyStartPosition: Coordinate(x: 1, y: 1))
+
     func run() {
-        Raylib.initWindow(screenWidth, screenHeight, "DCJam2025")
-        Raylib.setTargetFPS(30)
+        InitWindow(screenWidth, screenHeight, "DCJam2025")
+        SetTargetFPS(30)
 
         loadImages()
 
-        foo = loadModel("barrel_large", withExtension: "obj")
+        mockModel = loadModel("Skeleton_Warrior", withExtension: "obj")
 
-        while Raylib.windowShouldClose == false {
+        while WindowShouldClose() == false {
             update()
             drawGameView()
         }
-        Raylib.closeWindow()
+        CloseWindow()
     }
-    
+
     private static func makeCamera() -> Camera3D {
         var camera = Camera3D()
-        camera.projection = .perspective
+        camera.projection = CameraProjection.PERSPECTIVE
         camera.fovy = 60
         camera.up = Vector3(x: 0, y: 1, z: 0)
         return camera
     }
-    
+
     private func update() {
         processKeyInput()
         updateCamera()
     }
-    
+
     private func processKeyInput() {
-        if Raylib.isKeyPressed(.letterW) {
+        // `W`
+        if IsKeyPressed(87) {
             world.moveParty(.forward)
         }
-        
-        if Raylib.isKeyPressed(.letterD) {
+
+        // `D`
+        if IsKeyPressed(68) {
             world.moveParty(.left)
         }
-        
-        if Raylib.isKeyPressed(.letterA) {
+
+        // `A`
+        if IsKeyPressed(65) {
             world.moveParty(.right)
         }
         
-        if Raylib.isKeyPressed(.letterS) {
+        // `S`
+        if IsKeyPressed(83) {
             world.moveParty(.backwards)
         }
         
-        if Raylib.isKeyPressed(.letterQ) {
+        // `Q`
+        if IsKeyPressed(81) {
             world.turnPartyClockwise()
         }
-        
-        if Raylib.isKeyPressed(.letterE) {
+
+        // `E`
+        if IsKeyPressed(69) {
             world.turnPartyCounterClockwise()
         }
     }
-    
+
     private func updateCamera() {
         let cameraPosition = world.partyPosition.toVector3
         let forward = world.partyHeading.forward
         let target = target(from: world.partyPosition, heading: world.partyHeading)
-        
+
         camera.target = target.toVector3
         camera.position = cameraPosition + forward.toVector3.scale(offset)
-        Raylib.updateCamera(&camera)
+        UpdateCamera(&camera, CameraProjection.PERSPECTIVE)
     }
 
     private func drawGameView() {
-        Raylib.beginDrawing()
-            Raylib.clearBackground(.black)
-            draw3D()
+        BeginDrawing()
+        ClearBackground(.black)
+        draw3D()
         drawMinimap(world: world)
-            Raylib.drawFPS(10, 400)
-            Raylib.drawText("\(world.state)", 10, 380, 12, .white)
-        Raylib.endDrawing()
+        DrawFPS(10, 400)
+        DrawText("\(world.state)", 10, 380, 12, .white)
+        EndDrawing()
     }
 
     private func draw3D() {
-        Raylib.beginMode3D(camera)
+        BeginMode3D(camera)
         drawMap(world.currentFloor, vantagePoint: world.partyPosition)
         drawEntities(map: world.currentFloor, vantagePoint: world.partyPosition)
-        Raylib.endMode3D()
+        EndMode3D()
     }
-    
+
     func drawMap(_ map: Floor, vantagePoint: Coordinate) {
-        for row in map.minY ... map.maxY {
-            for column in map.minX ... map.maxX {
+        for row in map.minY...map.maxY {
+            for column in map.minX...map.maxX {
                 let coordinate = Coordinate(x: column, y: row)
                 drawTile(map.tileAt(coordinate), at: coordinate, lookingFrom: vantagePoint)
             }
         }
     }
-    
-    private func drawTile(_ tile:Tile, at coordinate: Coordinate, lookingFrom vantagePoint: Coordinate) {
+
+    private func drawTile(
+        _ tile: Tile, at coordinate: Coordinate, lookingFrom vantagePoint: Coordinate
+    ) {
         switch tile {
         case .wall:
             drawWallAt(coordinate, vantagePoint: vantagePoint)
@@ -138,34 +147,34 @@ class Game {
         case .target:
             drawTargetAt(coordinate)
         default:
-            break;
+            break
         }
     }
-    
+
     private func drawWallAt(_ coordinate: Coordinate, vantagePoint: Coordinate) {
         let light = light(position: coordinate, vantagePoint: vantagePoint)
-        Raylib.drawCubeV(coordinate.toVector3, .one, Color.darkGray * light)
+        DrawCubeV(coordinate.toVector3, .one, .darkGray * light)
     }
-    
+
     private func drawStairsUpAt(_ coordinate: Coordinate) {
-        Raylib.drawCubeV(coordinate.toVector3, .one, Color(r: 200, g: 0, b: 0, a: 128))
+        DrawCubeV(coordinate.toVector3, .one, Color(r: 200, g: 0, b: 0, a: 128))
     }
-    
+
     private func drawStairsDownAt(_ coordinate: Coordinate) {
-        Raylib.drawCubeV(coordinate.toVector3, .one, Color(r: 0, g: 200, b: 0, a: 128))
+        DrawCubeV(coordinate.toVector3, .one, Color(r: 0, g: 200, b: 0, a: 128))
     }
-    
+
     private func drawTargetAt(_ coordinate: Coordinate) {
-        Raylib.drawCubeV(coordinate.toVector3, .one, Color(r: 0, g: 0, b: 200, a: 128))
+        DrawCubeV(coordinate.toVector3, .one, Color(r: 0, g: 0, b: 200, a: 128))
     }
-    
+
     private func drawEntities(map: Floor, vantagePoint: Coordinate) {
-        for row in map.minY ... map.maxY {
-            for column in map.minX ... map.maxX {
+        for row in map.minY...map.maxY {
+            for column in map.minX...map.maxX {
                 let coordinate = Coordinate(x: column, y: row)
                 if coordinate == Coordinate(x: 1, y: 4) {
                     let light = light(position: coordinate, vantagePoint: vantagePoint)
-                    Raylib.drawModel(foo, coordinate.toVector3, 0.1, .white * light)
+                    DrawModelEx(mockModel, coordinate.toVector3 + Vector3(x: 0, y: -0.5, z: 0), .up, 180, Vector3(x: 0.5, y: 0.5, z: 0.5), .white * light)
                 }
             }
         }
@@ -173,23 +182,29 @@ class Game {
 
     private func drawMinimap(world: World) {
         let minimapOffset: Int32 = 10
-        
+
         let visitedTilesOnCurrentFloor = world.visitedTilesOnCurrentFloor
-        
+
         for visitedTilesOnCurrentFloor in visitedTilesOnCurrentFloor {
-            let drawTextureInfo = getSpriteAndPositionForTileAtPosition( visitedTilesOnCurrentFloor, on: world.currentFloor, offsetX: minimapOffset, offsetY: minimapOffset)
+            let drawTextureInfo = getSpriteAndPositionForTileAtPosition(
+                visitedTilesOnCurrentFloor, on: world.currentFloor, offsetX: minimapOffset,
+                offsetY: minimapOffset)
             if let sprite = sprites[drawTextureInfo.spriteName] {
-                Raylib.drawTexture(sprite, drawTextureInfo.displayX, drawTextureInfo.displayY, .white)
+                DrawTexture(
+                    sprite, drawTextureInfo.displayX, drawTextureInfo.displayY, .white)
             }
         }
 
-        let drawPartyTextureInfo = getSpriteAndPositionForPartyAtPosition(world.partyPosition, heading: world.partyHeading, on: world.currentFloor, offsetX: 10, offsetY: 10)
-        
+        let drawPartyTextureInfo = getSpriteAndPositionForPartyAtPosition(
+            world.partyPosition, heading: world.partyHeading, on: world.currentFloor, offsetX: 10,
+            offsetY: 10)
+
         if let playerSprite = sprites[drawPartyTextureInfo.spriteName] {
-            Raylib.drawTexture(playerSprite, drawPartyTextureInfo.displayX, drawPartyTextureInfo.displayY, .white)
+            DrawTexture(
+                playerSprite, drawPartyTextureInfo.displayX, drawPartyTextureInfo.displayY, .white)
         }
     }
-    
+
     private func loadImages() {
         let imageNames = [
             // Minimap
@@ -201,27 +216,32 @@ class Game {
             "stairsUp",
             "stairsDown",
             // Sprites
-            "orc"
+            "orc",
         ]
-        
+
         imageNames.forEach {
-            guard let url = Bundle.module.url(forResource: $0, withExtension: "png") else {
+            guard let textureURL = Bundle.module.url(forResource: $0, withExtension: "png") else {
                 fatalError("Could not find \($0).png")
             }
             
-            sprites[$0] = Texture(url: url)
+            let texturePath = textureURL.absoluteString
+                .replacingOccurrences(of: "file://", with: "")
+                .replacingOccurrences(of: "%20", with: " ")
+
+            sprites[$0] = LoadTexture(texturePath)
         }
     }
 
     private func loadModel(_ fileName: String, withExtension ext: String) -> Model {
-        guard let fooURL = Bundle.module.url(forResource: "barrel_large", withExtension: "obj") else {
+        guard let modelURL = Bundle.module.url(forResource: fileName, withExtension: ext)
+        else {
             fatalError("Could not find file \(fileName) . \(ext)")
         }
 
-        let fooPath = fooURL.absoluteString
+        let modelPath = modelURL.absoluteString
             .replacingOccurrences(of: "file://", with: "")
             .replacingOccurrences(of: "%20", with: " ")
 
-        return Raylib.loadModel(fooPath)
+        return LoadModel(modelPath)
     }
 }

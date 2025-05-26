@@ -6,7 +6,7 @@
 //
 
 import Testing
-import Raylib
+import raylib
 @testable import DCJam2025
 
 @Suite("Converting between game logic structures and visual representations should") struct ConversionGameLogicAndVizualizationTests {
