@@ -12,4 +12,9 @@ module raylib {
         header "include/rlgl.h"
         export *
     }
+
+    module raygui {
+        header "include/raygui.h"
+        export *
+    }
 }

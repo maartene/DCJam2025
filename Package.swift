@@ -20,6 +20,9 @@ let package = Package(
             dependencies: ["raylib"],
             resources: [
                 .process("Resources")
+            ],
+            cSettings: [
+                .define("RAYGUI_IMPLEMENTATION")
             ]
         ),
         .testTarget(
