@@ -218,11 +218,7 @@ class Game {
                 fatalError("Could not find \($0).png")
             }
 
-            let texturePath = textureURL.absoluteString
-                .replacingOccurrences(of: "file://", with: "")
-                .replacingOccurrences(of: "%20", with: " ")
-
-            sprites[$0] = LoadTexture(texturePath)
+            sprites[$0] = LoadTexture(textureURL.path(percentEncoded: false))
         }
     }
 
@@ -232,10 +228,6 @@ class Game {
             fatalError("Could not find file \(fileName) . \(ext)")
         }
 
-        let modelPath = modelURL.absoluteString
-            .replacingOccurrences(of: "file://", with: "")
-            .replacingOccurrences(of: "%20", with: " ")
-
-        return LoadModel(modelPath)
+        return LoadModel(modelURL.path(percentEncoded: false))
     }
 }

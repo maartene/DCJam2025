@@ -64,3 +64,10 @@ What is there to find? The answer to the ultimate secret: what came before? the 
 
 ## 🍅 Pomodoro 11
 - ✅ a model in the world (unlit, but with texture)
+
+## 🍅 Pomodoro 12, 13 and 14
+- ✅ wrangle Raylib C version, so we can use the latest Raylib version
+- ✅ export single frame from Blender for Skeleton
+
+## 🍅 Pomodoro 15
+- ✅ replace manual url string manipulation with Foundation function
