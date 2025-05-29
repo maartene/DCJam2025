@@ -2,8 +2,6 @@
 
 ## ⚠️ TODO
 - principal obsession in `partyMemberIndex`
-- `spawnEnemy` in `World` should be removed
-
 - array with partymembers should be wrapped in its own data type
 - there is duplication in `World` where multiple functions do the same check: see if player already won. Abstraction needed to conform to DRY
 

@@ -25,9 +25,10 @@ import Foundation
     }
 
     @Test("not attack party members when they are not close enough") func enemiesDontAttackPartyMembersOutOfRange() {
-        let world = World(map: Floor())
-        world.spawnEnemy(at: Coordinate(x: 10, y: 0))
-
+        let world = World(floors: [Floor()], enemies: [
+            Enemy(position: Coordinate(x: 10, y: 0))
+        ])
+        
         let hpOfPartyMembersBeforeAttack = sumHPOfPartyMembers(in: world)
 
         world.update(at: Date())

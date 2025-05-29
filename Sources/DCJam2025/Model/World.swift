@@ -106,11 +106,7 @@ final class World {
 
         partyHeading = partyHeading.rotatedCounterClockwise()
     }
-    
-    func spawnEnemy(at coordinate: Coordinate) {
-        enemies.insert(Enemy(position: coordinate))
-    }
-    
+        
     func damage(partyMemberIndex: Int, amount: Int) {
         partyMembers[partyMemberIndex].takeDamage(amount)
     }
