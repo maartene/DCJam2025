@@ -9,41 +9,33 @@ import Testing
 @testable import DCJam2025
 
 @Suite("The wincondition for this world should") struct WinConditionTests {
+    let worldWithTarget = World(floors: [Floor([
+        ["S", "T"]
+    ])])
+    
     @Test("be 'inProgress' for a new World") func newGame() {
-        let world = World(map: Floor())
+        let world = World(floors: [Floor()])
 
         #expect(world.state == .inProgress)
     }
 
     @Test("be 'won' when the party reaches the target tile") func wonGame() {
-        let world = World(map: Floor([
-            ["S", "T"]
-        ]))
+        worldWithTarget.executeCommand(.move(direction: .right))
 
-        world.executeCommand(.move(direction: .right))
-
-        #expect(world.state == .won)
+        #expect(worldWithTarget.state == .won)
     }
 
     @Test("not allow movement when the party reaches the target") func winningGameMakesMovementImpossible() {
-        let world = World(map: Floor([
-            ["S", "T"]
-        ]))
+        worldWithTarget.executeCommand(.move(direction: .right))
+        worldWithTarget.executeCommand(.move(direction: .left))
 
-        world.executeCommand(.move(direction: .right))
-        world.executeCommand(.move(direction: .left))
-
-        #expect(world.partyPosition == Coordinate(x: 1, y: 0))
+        #expect(worldWithTarget.partyPosition == Coordinate(x: 1, y: 0))
     }
 
     @Test("not allow rotation when the party reaches the target") func winningGameMakesRotationImpossible() {
-        let world = World(map: Floor([
-            ["S", "T"]
-        ]))
+        worldWithTarget.executeCommand(.move(direction: .right))
+        worldWithTarget.executeCommand(.turnClockwise)
 
-        world.executeCommand(.move(direction: .right))
-        world.executeCommand(.turnClockwise)
-
-        #expect(world.partyHeading == .north)
+        #expect(worldWithTarget.partyHeading == .north)
     }
 }

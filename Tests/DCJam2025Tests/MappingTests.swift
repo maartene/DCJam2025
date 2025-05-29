@@ -9,9 +9,9 @@ import Testing
 @testable import DCJam2025
 
 @Suite("The party should keep track of the tiles it found") struct MappingTests {
+    let worldWithSingleFloor = World(floors: [Floor()])
+    
     @Test("When the world is created, the party only knows about their direct surroundings") func newWorldMap() {
-        let world = World(map: Floor())
-
         let expectedVisitedTiles: Set = [
             Coordinate(x: -1, y: -1),
             Coordinate(x: 0, y: -1),
@@ -24,12 +24,11 @@ import Testing
             Coordinate(x: 1, y: 1)
         ]
 
-        #expect(world.visitedTilesOnCurrentFloor == expectedVisitedTiles)
+        #expect(worldWithSingleFloor.visitedTilesOnCurrentFloor == expectedVisitedTiles)
     }
 
     @Test("When the party moves, new tiles added to the visited world") func newTilesVisited() {
-        let world = World(map: Floor())
-        world.executeCommand(.move(direction: .right))
+        worldWithSingleFloor.executeCommand(.move(direction: .right))
 
         let expectedVisitedTiles: Set = [
             Coordinate(x: -1, y: -1),
@@ -46,7 +45,7 @@ import Testing
             Coordinate(x: 2, y: 1)
         ]
 
-        #expect(world.visitedTilesOnCurrentFloor == expectedVisitedTiles)
+        #expect(worldWithSingleFloor.visitedTilesOnCurrentFloor == expectedVisitedTiles)
     }
 
     @Test("When the party visits a new floor, the visited tiles are reset") func visitedTilesResetOnNewFloor() {

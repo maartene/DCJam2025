@@ -44,12 +44,6 @@ final class World {
         updateVisitedTiles()
     }
 
-    convenience init(map: Floor, partyStartPosition: Coordinate = Coordinate(x: 0, y: 0), partyStartHeading: CompassDirection = CompassDirection.north) {
-        self.init(floors: [map],
-             partyStartPosition: partyStartPosition,
-             partyStartHeading: partyStartHeading)
-    }
-
     // Queries
     var currentFloor: Floor {
         floors[currentFloorIndex]
