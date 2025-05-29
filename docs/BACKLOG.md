@@ -16,7 +16,7 @@
 - 🚧 Melee Enemies can damage players
     - ✅ During update
     - ✅ Only when they are within melee range
-    - Only when their cooldown expires
+    - ✅ Only when their cooldown expires
     - Attack a random party member in the front of the party
     
 - Ranged enemies should

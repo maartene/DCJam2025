@@ -1,7 +1,6 @@
 # TECHDEBT
 
 ## ⚠️ TODO
-- Feature envy in World.update on Enemy
 - Is a KeyPath the right way of describing the position of a party member?
 
 ## 🚧 DOING
@@ -26,3 +25,4 @@
 - array with partymembers should be wrapped in its own data type
 - there is duplication in `World` where multiple functions do the same check: see if player already won. Abstraction needed to conform to DRY
 - Convenience initiazer is not needed and is a risk if it is not updated in sync with the regular initiazer.
+- Feature envy in World.update on Enemy
