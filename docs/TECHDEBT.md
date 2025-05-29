@@ -22,3 +22,4 @@
 - Extract conditional in update
 - message chain in `LostConditionTests` because `World` exposes array with partymembers
 - enemies should be part of floor definition -> requires update to `makeWorld(from:)`
+- enemies are bound to floor

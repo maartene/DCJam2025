@@ -19,7 +19,7 @@ final class World {
     private var currentFloorIndex = 0
     private var floors: [Floor]
     private var visitedTilesOnFloor = [Int: Set<Coordinate>]()
-    private var enemies = Set<Enemy>()
+    private var enemies: [Int: Set<Enemy>]
 
     let partyMembers = [
         PartyMember(),
@@ -29,11 +29,17 @@ final class World {
     ]
 
     // Initializers
-    init(floors: [Floor], partyStartPosition: Coordinate = Coordinate(x: 0, y: 0), partyStartHeading: CompassDirection = CompassDirection.north, enemies: Set<Enemy> = []) {
+    init(floors: [Floor], partyStartPosition: Coordinate = Coordinate(x: 0, y: 0), partyStartHeading: CompassDirection = CompassDirection.north, enemies: [Set<Enemy>] = [[]]) {
         self.floors = floors
         self.partyPosition = partyStartPosition
         self.partyHeading = partyStartHeading
-        self.enemies = enemies
+        self.enemies = [:]
+        
+        var floorIndex = 0
+        for enemiesOnFloor in enemies {
+            self.enemies[floorIndex] = Set(enemiesOnFloor)
+            floorIndex += 1
+        }
         
         updateVisitedTiles()
     }
@@ -47,6 +53,10 @@ final class World {
     // Queries
     var currentFloor: Floor {
         floors[currentFloorIndex]
+    }
+    
+    var enemiesOnCurrentFloor: Set<Enemy> {
+        enemies[currentFloorIndex, default: []]
     }
 
     var state: WorldState {
@@ -118,7 +128,7 @@ final class World {
     // MARK: update
     
     func update(at time: Date) {
-        let enemyPositions = Set(enemies.map { $0.position })
+        let enemyPositions = Set(enemiesOnCurrentFloor.map { $0.position } )
         
         if partyIsNearPositions(enemyPositions) {
             partyMembers[0].takeDamage(1)
@@ -147,7 +157,7 @@ func makeWorld(from floorplans: [String]) -> World {
         .compactMap { $0.startPosition }
         .first ?? Coordinate(x: 0, y: 0)
 
-    return World(floors: floors, partyStartPosition: startPosition, enemies: enemies.first ?? [])
+    return World(floors: floors, partyStartPosition: startPosition, enemies: enemies)
 
     func convertFloorPlanToFloorAndStartposition(_ floorplan: String) -> (floor: Floor, startPosition: Coordinate?) {
         let mapArray = convertStringTomapArray(floorplan)

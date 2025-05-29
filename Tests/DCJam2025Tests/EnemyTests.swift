@@ -26,7 +26,7 @@ import Foundation
 
     @Test("not attack party members when they are not close enough") func enemiesDontAttackPartyMembersOutOfRange() {
         let world = World(floors: [Floor()], enemies: [
-            Enemy(position: Coordinate(x: 10, y: 0))
+            [Enemy(position: Coordinate(x: 10, y: 0))]
         ])
         
         let hpOfPartyMembersBeforeAttack = sumHPOfPartyMembers(in: world)
@@ -36,6 +36,19 @@ import Foundation
         let hpOfPartyMembersAfterUpdate = sumHPOfPartyMembers(in: world)
 
         #expect(hpOfPartyMembersBeforeAttack == hpOfPartyMembersAfterUpdate)
+    }
+    
+    @Test("Enemies are bound to the floor they are placed on") func enemiesAreBoundToAFloor() {
+        let world = makeWorld(from: [
+            ".<s",
+            ".."
+            ])
+        
+        #expect(world.enemiesOnCurrentFloor.isEmpty == false)
+        
+        world.moveParty(.right)
+        
+        #expect(world.enemiesOnCurrentFloor.isEmpty)
     }
 
     private func sumHPOfPartyMembers(in world: World) -> Int {
