@@ -84,9 +84,9 @@ final class World {
         switch command {
         case .move(direction: let direction):
             performMovement(direction: direction)
-        case .rotateClockwise:
+        case .turnClockwise:
             partyHeading = partyHeading.rotatedClockwise()
-        case .rotateCounterClockwise:
+        case .turnCounterClockwise:
             partyHeading = partyHeading.rotatedCounterClockwise()
         }
     }
@@ -209,6 +209,6 @@ func makeWorld(from floorplans: [String]) -> World {
 
 enum PartyCommand {
     case move(direction: MovementDirection)
-    case rotateClockwise
-    case rotateCounterClockwise
+    case turnClockwise
+    case turnCounterClockwise
 }

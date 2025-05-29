@@ -37,7 +37,7 @@ import Testing
     @Test("not allow rotation when the party reaches the target") func losingGameMakesRotationImpossible() {
         let world = makeWorldWithUnconciousPlayers()
 
-        world.executeCommand(.rotateCounterClockwise)
+        world.executeCommand(.turnCounterClockwise)
 
         #expect(world.partyHeading == .north)
     }

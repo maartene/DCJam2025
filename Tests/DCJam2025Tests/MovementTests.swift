@@ -73,7 +73,7 @@ import Testing
     @Test("face east when it turns clockwise") func turnClockwiseOnce() {
         let world = World(map: Floor())
 
-        world.executeCommand(.rotateClockwise)
+        world.executeCommand(.turnClockwise)
 
         #expect(world.partyHeading == .east)
     }
@@ -81,9 +81,9 @@ import Testing
     @Test("face west when it turns clockwise three times") func turnClockwiseThreeTimes() {
         let world = World(map: Floor())
 
-        world.executeCommand(.rotateClockwise)
-        world.executeCommand(.rotateClockwise)
-        world.executeCommand(.rotateClockwise)
+        world.executeCommand(.turnClockwise)
+        world.executeCommand(.turnClockwise)
+        world.executeCommand(.turnClockwise)
 
         #expect(world.partyHeading == .west)
     }
@@ -91,7 +91,7 @@ import Testing
     @Test("face west when it turns counter clockwise once") func turnCounterClockwise() {
         let world = World(map: Floor())
 
-        world.executeCommand(.rotateCounterClockwise)
+        world.executeCommand(.turnCounterClockwise)
 
         #expect(world.partyHeading == .west)
     }
