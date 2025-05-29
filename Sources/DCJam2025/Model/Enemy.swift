@@ -6,7 +6,9 @@
 //
 
 class Enemy {
+    let cooldown = 0.75
     var position: Coordinate
+    var hasAttacked = false
     
     init(position: Coordinate) {
         self.position = position

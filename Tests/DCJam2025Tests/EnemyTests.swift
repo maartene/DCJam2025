@@ -38,6 +38,18 @@ import Foundation
         #expect(hpOfPartyMembersBeforeAttack == hpOfPartyMembersAfterUpdate)
     }
 
+    @Test("not attack party members if enemy is still in cooldown") func enemiesDontAttackDuringCooldown() {
+        let enemy = Enemy(position: Coordinate(x: 1, y: 0))
+        let world = World(floors: [Floor()], enemies: [[enemy]])
+        
+        world.update(at: Date())
+        let hpOfPartyMembersAfterFirstAttack = sumHPOfPartyMembers(in: world)
+
+        world.update(at: Date().addingTimeInterval(enemy.cooldown * 0.5))
+
+        #expect(hpOfPartyMembersAfterFirstAttack == sumHPOfPartyMembers(in: world))
+    }
+
     private func sumHPOfPartyMembers(in world: World) -> Int {
         world.partyMembers.frontLeft.currentHP +
         world.partyMembers.frontRight.currentHP +
