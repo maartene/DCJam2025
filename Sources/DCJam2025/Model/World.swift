@@ -120,25 +120,6 @@ final class World {
             enemy.act(in: self, at: time)
         }
     }
-
-    private func act(_ enemy: Enemy, _ time: Date) {
-        if enemyIsNearParty(enemy) && enemyCooldownHasExpired(enemy, time: time) {
-            attackParty(by: enemy, at: time)
-        }
-    }
-
-    private func enemyIsNearParty(_ enemy: Enemy) -> Bool {
-        partyPosition.squareAround.contains(enemy.position)
-    }
-
-    private func enemyCooldownHasExpired(_ enemy: Enemy, time: Date) -> Bool {
-        enemy.cooldownExpires <= time
-    }
-
-    private func attackParty(by enemy: Enemy, at time: Date) {
-        partyMembers.frontLeft.takeDamage(1)
-        enemiesOnCurrentFloor.first?.cooldownExpires = time.addingTimeInterval(enemy.cooldown)
-    }
 }
 
 extension World: Equatable {
