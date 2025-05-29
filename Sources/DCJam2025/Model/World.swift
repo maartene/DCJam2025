@@ -117,7 +117,7 @@ final class World {
     // MARK: update
     func update(at time: Date) {
         for enemy in enemiesOnCurrentFloor {
-            if enemyIsNearParty(enemy) && enemy.cooldownExpires <= time {
+            if enemyIsNearParty(enemy) && enemyCooldownHasExpired(enemy, time: time) {
                 attackParty(by: enemy, at: time)
             }
         }
@@ -125,6 +125,10 @@ final class World {
 
     private func enemyIsNearParty(_ enemy: Enemy) -> Bool {
         partyPosition.squareAround.contains(enemy.position)
+    }
+
+    private func enemyCooldownHasExpired(_ enemy: Enemy, time: Date) -> Bool {
+        enemy.cooldownExpires <= time
     }
 
     private func attackParty(by enemy: Enemy, at time: Date) {
