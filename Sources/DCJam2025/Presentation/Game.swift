@@ -72,7 +72,7 @@ class Game {
             KEY_A: { self.world.executeCommand(.move(direction: .right)) },
             KEY_S: { self.world.executeCommand(.move(direction: .backwards)) },
             KEY_Q: { self.world.executeCommand(.rotateClockwise) },
-            KEY_E: { self.world.turnPartyCounterClockwise() }
+            KEY_E: { self.world.executeCommand(.rotateCounterClockwise) }
         ]
         
         for keyAction in inputActionMap {

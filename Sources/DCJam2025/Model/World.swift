@@ -91,10 +91,6 @@ final class World {
         }
     }
     
-    func turnPartyCounterClockwise() {
-        executeCommand(.rotateCounterClockwise)
-    }
-    
     func damage(position: KeyPath<PartyMembers, PartyMember>, amount: Int) {
         partyMembers[keyPath: position].takeDamage(amount)
     }
