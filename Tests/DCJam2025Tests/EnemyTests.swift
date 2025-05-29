@@ -11,8 +11,9 @@ import Foundation
 
 @Suite("During update, enemies should") struct EnemyTests {
     @Test("attack party members when they are close enough") func enemiesAttackPartyMembers() {
-        let world = World(map: Floor())
-        world.spawnEnemy(at: Coordinate(x: 1, y: 0))
+        let world = makeWorld(from: [
+            ".s"
+        ])
 
         let hpOfPartyMembersBeforeAttack = sumHPOfPartyMembers(in: world)
 

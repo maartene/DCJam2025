@@ -29,11 +29,12 @@ final class World {
     ]
 
     // Initializers
-    init(floors: [Floor], partyStartPosition: Coordinate = Coordinate(x: 0, y: 0), partyStartHeading: CompassDirection = CompassDirection.north) {
+    init(floors: [Floor], partyStartPosition: Coordinate = Coordinate(x: 0, y: 0), partyStartHeading: CompassDirection = CompassDirection.north, enemies: Set<Enemy> = []) {
         self.floors = floors
         self.partyPosition = partyStartPosition
         self.partyHeading = partyStartHeading
-
+        self.enemies = enemies
+        
         updateVisitedTiles()
     }
 
@@ -144,13 +145,13 @@ extension World: Equatable {
 
 func makeWorld(from floorplans: [String]) -> World {
     let convertedFloorplans = floorplans.map { convertFloorPlanToFloorAndStartposition($0) }
-
+    let enemies = floorplans.map { convertFloorPlanToEnemies($0) }
     let floors = convertedFloorplans.map { $0.floor }
     let startPosition = convertedFloorplans
         .compactMap { $0.startPosition }
         .first ?? Coordinate(x: 0, y: 0)
 
-    return World(floors: floors, partyStartPosition: startPosition)
+    return World(floors: floors, partyStartPosition: startPosition, enemies: enemies.first ?? [])
 
     func convertFloorPlanToFloorAndStartposition(_ floorplan: String) -> (floor: Floor, startPosition: Coordinate?) {
         let mapArray = convertStringTomapArray(floorplan)
@@ -158,6 +159,22 @@ func makeWorld(from floorplans: [String]) -> World {
         let startPosition = determineStartPosition(mapArray)
 
         return (floor, startPosition)
+    }
+    
+    func convertFloorPlanToEnemies(_ floorplan: String) -> Set<Enemy> {
+        let mapArray = convertStringTomapArray(floorplan)
+        
+        var enemiesOnFloor = Set<Enemy>()
+        for row in 0 ..< mapArray.count {
+            for column in 0 ..< mapArray[row].count {
+                if mapArray[row][column] == "s" {
+                    enemiesOnFloor.insert(Enemy(position: Coordinate(x: column, y: row)))
+                }
+                
+            }
+        }
+        
+        return enemiesOnFloor
     }
 
     func convertStringTomapArray(_ input: String) -> [[Character]] {

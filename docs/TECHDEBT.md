@@ -2,7 +2,6 @@
 
 ## ⚠️ TODO
 - principal obsession in `partyMemberIndex`
-- enemies should be part of floor definition -> requires update to `makeWorld(from:)`
 - `spawnEnemy` in `World` should be removed
 
 - array with partymembers should be wrapped in its own data type
@@ -24,3 +23,4 @@
         - [X] `spawnEnemy` should create a new Enemy
 - Extract conditional in update
 - message chain in `LostConditionTests` because `World` exposes array with partymembers
+- enemies should be part of floor definition -> requires update to `makeWorld(from:)`
