@@ -117,18 +117,12 @@ final class World {
     // MARK: update
     
     func update(at time: Date) {
-        let enemyPositions = Set(enemiesOnCurrentFloor.map { $0.position } )
-        
-        if let enemy = enemiesOnCurrentFloor.first {
-            if partyIsNearPositions(enemyPositions) && enemy.cooldownExpires <= time {
+        for enemy in enemiesOnCurrentFloor {
+            if partyPosition.squareAround.contains(enemy.position) && enemy.cooldownExpires <= time {
                 partyMembers.frontLeft.takeDamage(1)
                 enemiesOnCurrentFloor.first?.cooldownExpires = time.addingTimeInterval(enemy.cooldown)
             }
-        }        
-    }
-    
-    private func partyIsNearPositions(_ enemyPositions: Set<Coordinate>) -> Bool {
-        return enemyPositions.intersection(partyPosition.squareAround).isEmpty == false
+        }
     }
 }
 
