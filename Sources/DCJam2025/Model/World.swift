@@ -21,12 +21,12 @@ final class World {
     private var visitedTilesOnFloor = [Int: Set<Coordinate>]()
     private var enemies: [Int: Set<Enemy>]
 
-    let partyMembers = [
+    let partyMembers = PartyMembers(members: [
         PartyMember(),
         PartyMember(),
         PartyMember(),
         PartyMember()
-    ]
+    ])
 
     // Initializers
     init(floors: [Floor], partyStartPosition: Coordinate = Coordinate(x: 0, y: 0), partyStartHeading: CompassDirection = CompassDirection.north, enemies: [Set<Enemy>] = [[]]) {
@@ -60,7 +60,7 @@ final class World {
     }
 
     var state: WorldState {
-        if partyMembers.filter( { $0.isAlive }).isEmpty {
+        if partyMembers.hasAlivePartyMember == false {
             return .defeated
         }
 
@@ -116,9 +116,9 @@ final class World {
 
         partyHeading = partyHeading.rotatedCounterClockwise()
     }
-        
-    func damage(partyMemberIndex: Int, amount: Int) {
-        partyMembers[partyMemberIndex].takeDamage(amount)
+    
+    func damage(position: KeyPath<PartyMembers, PartyMember>, amount: Int) {
+        partyMembers[keyPath: position].takeDamage(amount)
     }
 
     private func updateVisitedTiles() {
@@ -131,7 +131,7 @@ final class World {
         let enemyPositions = Set(enemiesOnCurrentFloor.map { $0.position } )
         
         if partyIsNearPositions(enemyPositions) {
-            partyMembers[0].takeDamage(1)
+            partyMembers.frontLeft.takeDamage(1)
         }
     }
     

@@ -1,8 +1,6 @@
 # TECHDEBT
 
 ## ⚠️ TODO
-- principal obsession in `partyMemberIndex`
-- array with partymembers should be wrapped in its own data type
 - there is duplication in `World` where multiple functions do the same check: see if player already won. Abstraction needed to conform to DRY
 
 ## 🚧 DOING
@@ -23,3 +21,5 @@
 - message chain in `LostConditionTests` because `World` exposes array with partymembers
 - enemies should be part of floor definition -> requires update to `makeWorld(from:)`
 - enemies are bound to floor
+- principal obsession in `partyMemberIndex`
+- array with partymembers should be wrapped in its own data type

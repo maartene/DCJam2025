@@ -19,9 +19,9 @@ import Testing
     @Test("be 'inProgress' when at least one party member is not unconcious") func notLostWhenAtLeastOnePartyMemberIsAlive() {
         let world = World(map: Floor())
 
-        world.damage(partyMemberIndex: 0, amount: Int.max)
-        world.damage(partyMemberIndex: 1, amount: Int.max)
-        world.damage(partyMemberIndex: 2, amount: Int.max)
+        world.damage(position: \.frontLeft, amount: Int.max)
+        world.damage(position: \.frontRight, amount: Int.max)
+        world.damage(position: \.backLeft, amount: Int.max)
 
         #expect(world.state != .defeated)
     }
@@ -45,10 +45,10 @@ import Testing
     private func makeWorldWithUnconciousPlayers() -> World {
         let world = World(map: Floor())
 
-        world.damage(partyMemberIndex: 0, amount: Int.max)
-        world.damage(partyMemberIndex: 1, amount: Int.max)
-        world.damage(partyMemberIndex: 2, amount: Int.max)
-        world.damage(partyMemberIndex: 3, amount: Int.max)
+        world.damage(position: \.frontLeft, amount: Int.max)
+        world.damage(position: \.frontRight, amount: Int.max)
+        world.damage(position: \.backLeft, amount: Int.max)
+        world.damage(position: \.backRight, amount: Int.max)
 
         return world
     }

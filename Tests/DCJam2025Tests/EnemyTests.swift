@@ -39,8 +39,9 @@ import Foundation
     }
 
     private func sumHPOfPartyMembers(in world: World) -> Int {
-        world.partyMembers
-            .map { $0.currentHP }
-            .reduce(0, +)
+        world.partyMembers.frontLeft.currentHP +
+        world.partyMembers.frontRight.currentHP +
+        world.partyMembers.backLeft.currentHP +
+        world.partyMembers.backRight.currentHP
     }
 }
