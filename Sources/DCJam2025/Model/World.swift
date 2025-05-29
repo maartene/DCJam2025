@@ -115,14 +115,21 @@ final class World {
     }
     
     // MARK: update
-    
     func update(at time: Date) {
         for enemy in enemiesOnCurrentFloor {
-            if partyPosition.squareAround.contains(enemy.position) && enemy.cooldownExpires <= time {
-                partyMembers.frontLeft.takeDamage(1)
-                enemiesOnCurrentFloor.first?.cooldownExpires = time.addingTimeInterval(enemy.cooldown)
+            if enemyIsNearParty(enemy) && enemy.cooldownExpires <= time {
+                attackParty(by: enemy, at: time)
             }
         }
+    }
+
+    private func enemyIsNearParty(_ enemy: Enemy) -> Bool {
+        partyPosition.squareAround.contains(enemy.position)
+    }
+
+    private func attackParty(by enemy: Enemy, at time: Date) {
+        partyMembers.frontLeft.takeDamage(1)
+        enemiesOnCurrentFloor.first?.cooldownExpires = time.addingTimeInterval(enemy.cooldown)
     }
 }
 
