@@ -76,11 +76,38 @@ final class World {
     }
 
     // MARK: Commands
-    func moveParty(_ direction: MovementDirection) {
+    func executeCommand(_ command: PartyCommand) {
         guard state == .inProgress else {
             return
         }
+        
+        switch command {
+        case .move(direction: let direction):
+            performMovement(direction: direction)
+        case .rotateClockwise:
+            partyHeading = partyHeading.rotatedClockwise()
+        case .rotateCounterClockwise:
+            partyHeading = partyHeading.rotatedCounterClockwise()
+        }
+    }
+    
+    func moveParty(_ direction: MovementDirection) {
+        executeCommand(.move(direction: direction))
+    }
 
+    func turnPartyClockwise() {
+        executeCommand(.rotateClockwise)
+    }
+
+    func turnPartyCounterClockwise() {
+        executeCommand(.rotateCounterClockwise)
+    }
+    
+    func damage(position: KeyPath<PartyMembers, PartyMember>, amount: Int) {
+        partyMembers[keyPath: position].takeDamage(amount)
+    }
+
+    private func performMovement(direction: MovementDirection) {
         let newPosition = partyPosition + direction.toCompassDirection(facing: partyHeading).toCoordinate
 
         switch currentFloor.tileAt(newPosition) {
@@ -100,27 +127,7 @@ final class World {
 
         updateVisitedTiles()
     }
-
-    func turnPartyClockwise() {
-        guard state == .inProgress else {
-            return
-        }
-
-        partyHeading = partyHeading.rotatedClockwise()
-    }
-
-    func turnPartyCounterClockwise() {
-        guard state == .inProgress else {
-            return
-        }
-
-        partyHeading = partyHeading.rotatedCounterClockwise()
-    }
     
-    func damage(position: KeyPath<PartyMembers, PartyMember>, amount: Int) {
-        partyMembers[keyPath: position].takeDamage(amount)
-    }
-
     private func updateVisitedTiles() {
         visitedTilesOnFloor[currentFloorIndex] = visitedTilesOnCurrentFloor.union(partyPosition.squareAround)
     }
@@ -210,4 +217,10 @@ func makeWorld(from floorplans: [String]) -> World {
 
         return nil
     }
+}
+
+enum PartyCommand {
+    case move(direction: MovementDirection)
+    case rotateClockwise
+    case rotateCounterClockwise
 }

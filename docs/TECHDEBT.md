@@ -1,7 +1,6 @@
 # TECHDEBT
 
 ## ⚠️ TODO
-- there is duplication in `World` where multiple functions do the same check: see if player already won. Abstraction needed to conform to DRY
 
 ## 🚧 DOING
 
@@ -23,3 +22,4 @@
 - enemies are bound to floor
 - principal obsession in `partyMemberIndex`
 - array with partymembers should be wrapped in its own data type
+- there is duplication in `World` where multiple functions do the same check: see if player already won. Abstraction needed to conform to DRY
