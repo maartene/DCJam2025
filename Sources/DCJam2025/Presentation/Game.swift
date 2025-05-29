@@ -71,7 +71,7 @@ class Game {
             KEY_D: { self.world.executeCommand(.move(direction: .left)) },
             KEY_A: { self.world.executeCommand(.move(direction: .right)) },
             KEY_S: { self.world.executeCommand(.move(direction: .backwards)) },
-            KEY_Q: { self.world.turnPartyClockwise() },
+            KEY_Q: { self.world.executeCommand(.rotateClockwise) },
             KEY_E: { self.world.turnPartyCounterClockwise() }
         ]
         

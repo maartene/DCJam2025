@@ -42,7 +42,7 @@ import Testing
         ]))
 
         world.executeCommand(.move(direction: .right))
-        world.turnPartyClockwise()
+        world.executeCommand(.rotateClockwise)
 
         #expect(world.partyHeading == .north)
     }

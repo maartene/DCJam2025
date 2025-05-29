@@ -90,11 +90,7 @@ final class World {
             partyHeading = partyHeading.rotatedCounterClockwise()
         }
     }
-
-    func turnPartyClockwise() {
-        executeCommand(.rotateClockwise)
-    }
-
+    
     func turnPartyCounterClockwise() {
         executeCommand(.rotateCounterClockwise)
     }
