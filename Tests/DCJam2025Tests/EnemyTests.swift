@@ -47,7 +47,19 @@ import Foundation
 
         world.update(at: Date().addingTimeInterval(enemy.cooldown * 0.5))
 
-        #expect(hpOfPartyMembersAfterFirstAttack == sumHPOfPartyMembers(in: world))
+        #expect(sumHPOfPartyMembers(in: world) == hpOfPartyMembersAfterFirstAttack)
+    }
+
+    @Test("attack party members after cooldown has expired") func enemiesAttackAfterCooldownHasExpired() {
+        let enemy = Enemy(position: Coordinate(x: 1, y: 0))
+        let world = World(floors: [Floor()], enemies: [[enemy]])
+        
+        world.update(at: Date())
+        let hpOfPartyMembersAfterFirstAttack = sumHPOfPartyMembers(in: world)
+
+        world.update(at: Date().addingTimeInterval(enemy.cooldown * 1.5))
+
+        #expect(sumHPOfPartyMembers(in: world) < hpOfPartyMembersAfterFirstAttack)
     }
 
     private func sumHPOfPartyMembers(in world: World) -> Int {

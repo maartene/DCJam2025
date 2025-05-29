@@ -1,6 +1,7 @@
 # TECHDEBT
 
 ## ⚠️ TODO
+- Feature envy in World.update on Enemy
 - Is a KeyPath the right way of describing the position of a party member?
 
 ## 🚧 DOING

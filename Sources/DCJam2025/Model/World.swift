@@ -119,10 +119,12 @@ final class World {
     func update(at time: Date) {
         let enemyPositions = Set(enemiesOnCurrentFloor.map { $0.position } )
         
-        if partyIsNearPositions(enemyPositions) && enemiesOnCurrentFloor.first?.hasAttacked == false {
-            partyMembers.frontLeft.takeDamage(1)
-            enemiesOnCurrentFloor.first?.hasAttacked = true
-        }
+        if let enemy = enemiesOnCurrentFloor.first {
+            if partyIsNearPositions(enemyPositions) && enemy.cooldownExpires <= time {
+                partyMembers.frontLeft.takeDamage(1)
+                enemiesOnCurrentFloor.first?.cooldownExpires = time.addingTimeInterval(enemy.cooldown)
+            }
+        }        
     }
     
     private func partyIsNearPositions(_ enemyPositions: Set<Coordinate>) -> Bool {
