@@ -71,3 +71,4 @@ What is there to find? The answer to the ultimate secret: what came before? the 
 
 ## 🍅 Pomodoro 15
 - ✅ replace manual url string manipulation with Foundation function
+- ✅ solve tech debt entries
