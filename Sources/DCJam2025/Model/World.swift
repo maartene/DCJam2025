@@ -145,7 +145,8 @@ extension World: Equatable {
         lhs.partyPosition == rhs.partyPosition &&
         lhs.partyHeading == rhs.partyHeading &&
         lhs.floors == rhs.floors &&
-        lhs.currentFloorIndex == rhs.currentFloorIndex
+        lhs.currentFloorIndex == rhs.currentFloorIndex &&
+        lhs.enemies == rhs.enemies
     }
 }
 

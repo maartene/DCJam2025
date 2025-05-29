@@ -30,7 +30,7 @@ import Testing
         #expect(world == expectedWorld)
     }
 
-    @Test("Create a world with a multiple floors when moer than one floorplan is provided") func multipleFloorWorld() {
+    @Test("Create a world with a multiple floors when more than one floorplan is provided") func multipleFloorWorld() {
         let floorplan1 =
         """
         #####
@@ -66,7 +66,7 @@ import Testing
                 ["#", ".", ".", ".", "#"],
                 ["#", "#", "#", "#", "#"]
             ])
-        ], partyStartPosition: Coordinate(x: 2, y: 2))
+        ], partyStartPosition: Coordinate(x: 2, y: 2), enemies: [[],[]])
 
         #expect(world == expectedWorld)
     }
@@ -96,5 +96,18 @@ import Testing
         let world = makeWorld(from: [floorplan])
 
         #expect(world.currentFloor.description == floorplan)
+    }
+    
+    @Test("Enemies are bound to the floor they are placed on") func enemiesAreBoundToAFloor() {
+        let world = makeWorld(from: [
+            ".<s",
+            ".."
+            ])
+        
+        #expect(world.enemiesOnCurrentFloor.isEmpty == false)
+        
+        world.moveParty(.right)
+        
+        #expect(world.enemiesOnCurrentFloor.isEmpty)
     }
 }

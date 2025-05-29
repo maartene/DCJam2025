@@ -37,19 +37,6 @@ import Foundation
 
         #expect(hpOfPartyMembersBeforeAttack == hpOfPartyMembersAfterUpdate)
     }
-    
-    @Test("Enemies are bound to the floor they are placed on") func enemiesAreBoundToAFloor() {
-        let world = makeWorld(from: [
-            ".<s",
-            ".."
-            ])
-        
-        #expect(world.enemiesOnCurrentFloor.isEmpty == false)
-        
-        world.moveParty(.right)
-        
-        #expect(world.enemiesOnCurrentFloor.isEmpty)
-    }
 
     private func sumHPOfPartyMembers(in world: World) -> Int {
         world.partyMembers
