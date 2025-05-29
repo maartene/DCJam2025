@@ -18,25 +18,24 @@ class Game {
     var sprites = [String: Texture2D]()
     var mockModel: Model!
 
-    let world = World(
-        floors: [
-            Floor([
-                ["#", "#", "#", "#", "#", "#"],
-                ["#", ".", ".", ".", "#", "#"],
-                ["#", ".", "#", ".", ".", "#"],
-                ["#", ".", "#", "#", ".", "#"],
-                ["#", "s", ".", ".", ".", "#"],
-                ["#", "#", "#", "#", "#", "#"]
-            ]),
-            Floor([
-                ["#", "#", "#", "#", "#", "#"],
-                ["#", ".", ".", ".", ".", "#"],
-                ["#", "#", "T", "#", ".", "#"],
-                ["#", "#", "#", "#", ".", "#"],
-                ["#", ".", ".", ".", ">", "#"],
-                ["#", "#", "#", "#", "#", "#"]
-            ])
-        ], partyStartPosition: Coordinate(x: 1, y: 1))
+    let world = makeWorld(from: [
+        """
+        ######
+        #S..##
+        #.#..#
+        #.##.#
+        #s..<#
+        ######
+        """,
+        """
+        ######
+        #....#
+        ##T#.#
+        ####.#
+        #...>#
+        ######        
+        """
+    ])
 
     func run() {
         InitWindow(screenWidth, screenHeight, "DCJam2025")
@@ -154,14 +153,10 @@ class Game {
     }
 
     private func drawEntities(map: Floor, vantagePoint: Coordinate) {
-        for row in map.minY...map.maxY {
-            for column in map.minX...map.maxX {
-                let coordinate = Coordinate(x: column, y: row)
-                if coordinate == Coordinate(x: 1, y: 4) {
-                    let light = light(position: coordinate, vantagePoint: vantagePoint)
-                    DrawModelEx(mockModel, coordinate.toVector3 + Vector3(x: 0, y: -0.5, z: 0), .up, 180, Vector3(x: 0.5, y: 0.5, z: 0.5), .white * light)
-                }
-            }
+        for enemyOnCurrentFloor in world.enemiesOnCurrentFloor {
+            let coordinate = enemyOnCurrentFloor.position
+            let light = light(position: coordinate, vantagePoint: vantagePoint)
+            DrawModelEx(mockModel, coordinate.toVector3 + Vector3(x: 0, y: -0.5, z: 0), .up, 180, Vector3(x: 0.5, y: 0.5, z: 0.5), .white * light)
         }
     }
 
