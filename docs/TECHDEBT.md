@@ -1,13 +1,15 @@
 # TECHDEBT
 
 ## ⚠️ TODO
+- principal obsession in `partyMemberIndex`
 - enemies should be part of floor definition -> requires update to `makeWorld(from:)`
 - `spawnEnemy` in `World` should be removed
-- message chain in `LostConditionTests` because `World` exposes array with partymembers
+
 - array with partymembers should be wrapped in its own data type
 - there is duplication in `World` where multiple functions do the same check: see if player already won. Abstraction needed to conform to DRY
 
 ## 🚧 DOING
+
 
 ## ✅ DONE
 - no test coverage for conversion of coordinate spaces, while this might be valuable. Maybe property based testing?
@@ -21,3 +23,4 @@
         - [X] Update needs to work on enemy positions
         - [X] `spawnEnemy` should create a new Enemy
 - Extract conditional in update
+- message chain in `LostConditionTests` because `World` exposes array with partymembers

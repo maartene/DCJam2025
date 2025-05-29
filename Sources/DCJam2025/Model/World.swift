@@ -105,10 +105,20 @@ final class World {
 
         partyHeading = partyHeading.rotatedCounterClockwise()
     }
+    
+    func spawnEnemy(at coordinate: Coordinate) {
+        enemies.insert(Enemy(position: coordinate))
+    }
+    
+    func damage(partyMemberIndex: Int, amount: Int) {
+        partyMembers[partyMemberIndex].takeDamage(amount)
+    }
 
     private func updateVisitedTiles() {
         visitedTilesOnFloor[currentFloorIndex] = visitedTilesOnCurrentFloor.union(partyPosition.squareAround)
     }
+    
+    // MARK: update
     
     func update(at time: Date) {
         let enemyPositions = Set(enemies.map { $0.position })
@@ -120,10 +130,6 @@ final class World {
     
     private func partyIsNearPositions(_ enemyPositions: Set<Coordinate>) -> Bool {
         return enemyPositions.intersection(partyPosition.squareAround).isEmpty == false
-    }
-
-    func spawnEnemy(at coordinate: Coordinate) {
-        enemies.insert(Enemy(position: coordinate))
     }
 }
 

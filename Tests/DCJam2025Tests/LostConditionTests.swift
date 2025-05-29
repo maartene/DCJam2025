@@ -9,6 +9,7 @@ import Testing
 @testable import DCJam2025
 
 @Suite("The lose condition for this world should") struct LostConditionTests {
+    
     @Test("be 'defeated' when all party members are rendered unconcious") func loseWhenAllPartyMembersAreUnconscious() {
         let world = makeWorldWithUnconciousPlayers()
 
@@ -18,9 +19,9 @@ import Testing
     @Test("be 'inProgress' when at least one party member is not unconcious") func notLostWhenAtLeastOnePartyMemberIsAlive() {
         let world = World(map: Floor())
 
-        world.partyMembers[0].takeDamage(Int.max)
-        world.partyMembers[1].takeDamage(Int.max)
-        world.partyMembers[2].takeDamage(Int.max)
+        world.damage(partyMemberIndex: 0, amount: Int.max)
+        world.damage(partyMemberIndex: 1, amount: Int.max)
+        world.damage(partyMemberIndex: 2, amount: Int.max)
 
         #expect(world.state != .defeated)
     }
@@ -44,10 +45,10 @@ import Testing
     private func makeWorldWithUnconciousPlayers() -> World {
         let world = World(map: Floor())
 
-        world.partyMembers[0].takeDamage(Int.max)
-        world.partyMembers[1].takeDamage(Int.max)
-        world.partyMembers[2].takeDamage(Int.max)
-        world.partyMembers[3].takeDamage(Int.max)
+        world.damage(partyMemberIndex: 0, amount: Int.max)
+        world.damage(partyMemberIndex: 1, amount: Int.max)
+        world.damage(partyMemberIndex: 2, amount: Int.max)
+        world.damage(partyMemberIndex: 3, amount: Int.max)
 
         return world
     }
