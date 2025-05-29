@@ -15,6 +15,25 @@ class Enemy {
     init(position: Coordinate) {
         self.position = position
     }
+
+    func act(in world: World, at time: Date) {
+        if enemyIsNearParty(in: world) && enemyCooldownHasExpired(at: time) {
+            attackParty(in: world, at: time)
+        }
+    }
+
+    private func enemyIsNearParty(in world: World) -> Bool {
+        world.partyPosition.squareAround.contains(position)
+    }
+
+    private func enemyCooldownHasExpired(at time: Date) -> Bool {
+        cooldownExpires <= time
+    }
+
+    private func attackParty(in world: World, at time: Date) {
+        world.partyMembers.frontLeft.takeDamage(1)
+        cooldownExpires = time.addingTimeInterval(cooldown)
+    }
 }
 
 extension Enemy: Hashable {

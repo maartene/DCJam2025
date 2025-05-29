@@ -117,7 +117,7 @@ final class World {
     // MARK: update
     func update(at time: Date) {
         for enemy in enemiesOnCurrentFloor {
-            act(enemy, time)
+            enemy.act(in: self, at: time)
         }
     }
 
