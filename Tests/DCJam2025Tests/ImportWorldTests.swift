@@ -106,7 +106,7 @@ import Testing
         
         #expect(world.enemiesOnCurrentFloor.isEmpty == false)
         
-        world.moveParty(.right)
+        world.executeCommand(.move(direction: .right))
         
         #expect(world.enemiesOnCurrentFloor.isEmpty)
     }

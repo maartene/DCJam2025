@@ -29,7 +29,7 @@ import Testing
 
     @Test("When the party moves, new tiles added to the visited world") func newTilesVisited() {
         let world = World(map: Floor())
-        world.moveParty(.right)
+        world.executeCommand(.move(direction: .right))
 
         let expectedVisitedTiles: Set = [
             Coordinate(x: -1, y: -1),
@@ -59,12 +59,12 @@ import Testing
             ])
         ])
 
-        world.moveParty(.right)
-        world.moveParty(.right)
+        world.executeCommand(.move(direction: .right))
+        world.executeCommand(.move(direction: .right))
 
         let vistedTilesOnFloor1 = world.visitedTilesOnCurrentFloor.count
 
-        world.moveParty(.right)
+        world.executeCommand(.move(direction: .right))
 
         #expect(world.visitedTilesOnCurrentFloor.count < vistedTilesOnFloor1)
     }

@@ -29,7 +29,7 @@ import Testing
     @Test("not allow movement when in the lose condition state") func losingGameMakesMovementImpossible() {
         let world = makeWorldWithUnconciousPlayers()
 
-        world.moveParty(.forward)
+        world.executeCommand(.move(direction: .forward))
 
         #expect(world.partyPosition == Coordinate(x: 0, y: 0))
     }

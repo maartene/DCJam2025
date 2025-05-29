@@ -10,7 +10,7 @@ import Testing
     ]) func movePartyForward(testcase: (direction: MovementDirection, expectedPosition: Coordinate)) {
         let world = World(map: Floor())
 
-        world.moveParty(testcase.direction)
+        world.executeCommand(.move(direction: testcase.direction))
 
         #expect(world.partyPosition == testcase.expectedPosition)
     }
@@ -18,8 +18,8 @@ import Testing
     @Test("get to coordinate (0,2) when it moves forward twice") func movePartyForwardTwice() {
         let world = World(map: Floor())
 
-        world.moveParty(.forward)
-        world.moveParty(.forward)
+        world.executeCommand(.move(direction: .forward))
+        world.executeCommand(.move(direction: .forward))
 
         #expect(world.partyPosition == Coordinate(x: 0, y: 2))
     }
@@ -27,10 +27,10 @@ import Testing
     @Test("stays in the same position, when you move forward first, then right, then back and finally left") func moveInACircle() {
         let world = World(map: Floor())
 
-        world.moveParty(.forward)
-        world.moveParty(.right)
-        world.moveParty(.backwards)
-        world.moveParty(.left)
+        world.executeCommand(.move(direction: .forward))
+        world.executeCommand(.move(direction: .right))
+        world.executeCommand(.move(direction: .backwards))
+        world.executeCommand(.move(direction: .left))
 
         #expect(world.partyPosition == Coordinate(x: 0, y: 0))
     }
@@ -44,7 +44,7 @@ import Testing
     ]) func movementTakesHeadingIntoAccount(testcase: (startPosition: Coordinate, heading: CompassDirection, movementDirection: MovementDirection, expectedPosition: Coordinate)) {
         let world = World(map: Floor(), partyStartPosition: testcase.startPosition, partyStartHeading: testcase.heading)
 
-        world.moveParty(testcase.movementDirection)
+        world.executeCommand(.move(direction: testcase.movementDirection))
 
         #expect(world.partyPosition == testcase.expectedPosition)
     }
@@ -57,7 +57,7 @@ import Testing
         ])
         let world = World(map: map, partyStartPosition: Coordinate(x: 0, y: 1))
 
-        world.moveParty(.forward)
+        world.executeCommand(.move(direction: .forward))
 
         #expect(world.partyPosition == Coordinate(x: 0, y: 1))
     }
@@ -117,7 +117,7 @@ import Testing
 
         let world = World(floors: floors)
 
-        world.moveParty(.right)
+        world.executeCommand(.move(direction: .right))
 
         #expect(world.currentFloor == floors[1])
     }
@@ -130,9 +130,9 @@ import Testing
 
         let world = World(floors: floors)
 
-        world.moveParty(.right)
-        world.moveParty(.left)
-        world.moveParty(.right)
+        world.executeCommand(.move(direction: .right))
+        world.executeCommand(.move(direction: .left))
+        world.executeCommand(.move(direction: .right))
 
         #expect(world.currentFloor == floors[0])
     }

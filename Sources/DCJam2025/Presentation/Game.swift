@@ -67,10 +67,10 @@ class Game {
 
     private func processKeyInput() {
         let inputActionMap = [
-            KEY_W: { self.world.moveParty(.forward) },
-            KEY_D: { self.world.moveParty(.left) },
-            KEY_A: { self.world.moveParty(.right) },
-            KEY_S: { self.world.moveParty(.backwards) },
+            KEY_W: { self.world.executeCommand(.move(direction: .forward)) },
+            KEY_D: { self.world.executeCommand(.move(direction: .left)) },
+            KEY_A: { self.world.executeCommand(.move(direction: .right)) },
+            KEY_S: { self.world.executeCommand(.move(direction: .backwards)) },
             KEY_Q: { self.world.turnPartyClockwise() },
             KEY_E: { self.world.turnPartyCounterClockwise() }
         ]
