@@ -3,7 +3,6 @@
 ## ⚠️ TODO
 - enemies should be part of floor definition -> requires update to `makeWorld(from:)`
 - `spawnEnemy` in `World` should be removed
-- `enemies` in `World` should not just be a coordinate, and also wrapped in its own data type
 - message chain in `LostConditionTests` because `World` exposes array with partymembers
 - array with partymembers should be wrapped in its own data type
 - there is duplication in `World` where multiple functions do the same check: see if player already won. Abstraction needed to conform to DRY
@@ -17,3 +16,7 @@
 - should not be able to rotate when goal is reached
 - minX, minY, maxX and maxY are constants, so can be generated only once
 - missing tests in Floor
+- `enemies` in `World` should not just be a coordinate, and also wrapped in its own data type
+    - [X] Enemy needs to conform to `Hashable`
+        - [X] Update needs to work on enemy positions
+        - [X] `spawnEnemy` should create a new Enemy

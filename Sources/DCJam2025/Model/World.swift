@@ -19,7 +19,7 @@ final class World {
     private var currentFloorIndex = 0
     private var floors: [Floor]
     private var visitedTilesOnFloor = [Int: Set<Coordinate>]()
-    private var enemies = Set<Coordinate>()
+    private var enemies = Set<Enemy>()
 
     let partyMembers = [
         PartyMember(),
@@ -111,13 +111,15 @@ final class World {
     }
 
     func update(at time: Date) {
-        if enemies.intersection(partyPosition.squareAround).isEmpty == false {
+        let enemyPositions = Set(enemies.map { $0.position })
+        
+        if enemyPositions.intersection(partyPosition.squareAround).isEmpty == false {
             partyMembers[0].takeDamage(1)
         }
     }
 
     func spawnEnemy(at coordinate: Coordinate) {
-        enemies.insert(coordinate)
+        enemies.insert(Enemy(position: coordinate))
     }
 }
 
