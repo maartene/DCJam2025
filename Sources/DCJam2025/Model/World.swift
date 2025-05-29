@@ -117,9 +117,13 @@ final class World {
     // MARK: update
     func update(at time: Date) {
         for enemy in enemiesOnCurrentFloor {
-            if enemyIsNearParty(enemy) && enemyCooldownHasExpired(enemy, time: time) {
-                attackParty(by: enemy, at: time)
-            }
+            act(enemy, time)
+        }
+    }
+
+    private func act(_ enemy: Enemy, _ time: Date) {
+        if enemyIsNearParty(enemy) && enemyCooldownHasExpired(enemy, time: time) {
+            attackParty(by: enemy, at: time)
         }
     }
 
