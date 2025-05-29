@@ -109,13 +109,17 @@ final class World {
     private func updateVisitedTiles() {
         visitedTilesOnFloor[currentFloorIndex] = visitedTilesOnCurrentFloor.union(partyPosition.squareAround)
     }
-
+    
     func update(at time: Date) {
         let enemyPositions = Set(enemies.map { $0.position })
         
-        if enemyPositions.intersection(partyPosition.squareAround).isEmpty == false {
+        if partyIsNearPositions(enemyPositions) {
             partyMembers[0].takeDamage(1)
         }
+    }
+    
+    private func partyIsNearPositions(_ enemyPositions: Set<Coordinate>) -> Bool {
+        return enemyPositions.intersection(partyPosition.squareAround).isEmpty == false
     }
 
     func spawnEnemy(at coordinate: Coordinate) {

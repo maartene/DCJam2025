@@ -20,3 +20,4 @@
     - [X] Enemy needs to conform to `Hashable`
         - [X] Update needs to work on enemy positions
         - [X] `spawnEnemy` should create a new Enemy
+- Extract conditional in update
