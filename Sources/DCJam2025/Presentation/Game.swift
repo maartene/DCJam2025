@@ -67,28 +67,19 @@ class Game {
     }
 
     private func processKeyInput() {
-        if isKeyPressed(KEY_W) {
-            world.moveParty(.forward)
-        }
-
-        if isKeyPressed(KEY_D) {
-            world.moveParty(.left)
-        }
-
-        if isKeyPressed(KEY_A) {
-            world.moveParty(.right)
-        }
-
-        if isKeyPressed(KEY_S) {
-            world.moveParty(.backwards)
-        }
-
-        if isKeyPressed(KEY_Q) {
-            world.turnPartyClockwise()
-        }
-
-        if isKeyPressed(KEY_E) {
-            world.turnPartyCounterClockwise()
+        let inputActionMap = [
+            KEY_W: { self.world.moveParty(.forward) },
+            KEY_D: { self.world.moveParty(.left) },
+            KEY_A: { self.world.moveParty(.right) },
+            KEY_S: { self.world.moveParty(.backwards) },
+            KEY_Q: { self.world.turnPartyClockwise() },
+            KEY_E: { self.world.turnPartyCounterClockwise() }
+        ]
+        
+        for keyAction in inputActionMap {
+            if isKeyPressed(keyAction.key) {
+                keyAction.value()
+            }
         }
     }
 
