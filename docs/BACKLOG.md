@@ -17,7 +17,7 @@
     - ✅ During update
     - ✅ Only when they are within melee range
     - ✅ Only when their cooldown expires
-    - Attack a random party member in the front of the party
+    - Attack a random (alive) party member in the front of the party
     
 - Ranged enemies should
     - Be able to attack all party members individually
@@ -32,6 +32,7 @@
 
 - Enemies as models
     - ✅ Show a 3D model
+    - Should show where sprite is looking (probably requires approval testing)
 
 - Party members should have some interesting aspects, at least a name and a portrait.
 

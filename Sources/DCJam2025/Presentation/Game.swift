@@ -61,6 +61,7 @@ class Game {
     }
 
     private func update() {
+        world.update(at: Date())
         processKeyInput()
         updateCamera()
     }
@@ -99,6 +100,7 @@ class Game {
         drawMinimap(world: world)
         DrawFPS(10, 400)
         DrawText("\(world.state)", 10, 380, 12, .white)
+        drawParty(world.partyMembers)
         EndDrawing()
     }
 
@@ -183,6 +185,13 @@ class Game {
             DrawTexture(
                 playerSprite, drawPartyTextureInfo.displayX, drawPartyTextureInfo.displayY, .white)
         }
+    }
+
+    private func drawParty(_ partyMembers: PartyMembers) {
+        DrawText("HP: \(partyMembers.frontLeft.currentHP)", 900, 30, 32, .red)
+        DrawText("HP: \(partyMembers.frontRight.currentHP)", 1100, 30, 32, .red)
+        DrawText("HP: \(partyMembers.backLeft.currentHP)", 900, 60, 32, .red)
+        DrawText("HP: \(partyMembers.backRight.currentHP)", 1100, 60, 32, .red)
     }
 
     private func loadImages() {

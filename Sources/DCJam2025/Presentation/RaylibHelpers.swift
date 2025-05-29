@@ -23,6 +23,10 @@ extension Color {
     static var blue: Color {
         Color(r: 0, g: 0, b: 255, a: 255)
     }
+
+    static var red: Color {
+        Color(r: 255, g: 0, b: 0, a: 255)
+    }
 }
 
 enum CameraProjection {
