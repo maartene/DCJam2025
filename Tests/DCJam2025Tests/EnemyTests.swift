@@ -61,6 +61,17 @@ import Foundation
 
         #expect(sumHPOfPartyMembers(in: world) < hpOfPartyMembersAfterFirstAttack)
     }
+    
+    @Test("only attacks alive party members") func enemiesOnlyAttackAlivePartyMembers() {
+        let enemy = Enemy(position: Coordinate(x: 1, y: 0))
+        let world = World(floors: [Floor()], enemies: [[enemy]])
+        world.partyMembers.frontLeft.takeDamage(Int.max)
+        let originalHPForFrontRightPartyMember = world.partyMembers.frontRight.currentHP
+        
+        world.update(at: Date())
+        
+        #expect(world.partyMembers.frontRight.currentHP < originalHPForFrontRightPartyMember)
+    }
 
     private func sumHPOfPartyMembers(in world: World) -> Int {
         world.partyMembers.frontLeft.currentHP +

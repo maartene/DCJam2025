@@ -20,4 +20,8 @@ struct PartyMembers {
     var hasAlivePartyMember: Bool {
         members.filter { $0.isAlive }.isEmpty == false
     }
+    
+    var frontRow: [PartyMember] {
+        [frontLeft, frontRight]
+    }
 }

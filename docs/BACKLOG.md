@@ -13,11 +13,11 @@
 
 - ✅ Lose condition: when all party members are rendered uncontious, you lose
 
-- 🚧 Melee Enemies can damage players
+- ✅ Melee Enemies can damage players
     - ✅ During update
     - ✅ Only when they are within melee range
     - ✅ Only when their cooldown expires
-    - Attack a random (alive) party member in the front of the party
+    - ✅ Attack a random (alive) party member in the front of the party
     
 - Ranged enemies should
     - Be able to attack all party members individually

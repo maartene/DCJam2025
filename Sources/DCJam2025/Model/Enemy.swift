@@ -31,7 +31,10 @@ class Enemy {
     }
 
     private func attackParty(in world: World, at time: Date) {
-        world.partyMembers.frontLeft.takeDamage(1)
+        let aliveFrontRowPartyMembers = world.partyMembers.frontRow
+            .filter { $0.isAlive }
+        
+        aliveFrontRowPartyMembers.randomElement()?.takeDamage(1)
         cooldownExpires = time.addingTimeInterval(cooldown)
     }
 }
