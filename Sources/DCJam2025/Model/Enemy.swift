@@ -81,3 +81,12 @@ final class RangedEnemy: Enemy {
         cooldownExpires = time.addingTimeInterval(cooldown)
     }
 }
+
+extension Enemy {
+    static func makeMeleeEnemy(at position: Coordinate) -> MeleeEnemy {
+        MeleeEnemy(position: position)
+    }
+    static func makeRangedEnemy(at position: Coordinate) -> RangedEnemy {
+        RangedEnemy(position: position)
+    }
+}
