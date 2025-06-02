@@ -9,7 +9,7 @@ import Testing
 import Foundation
 @testable import DCJam2025
 
-@Suite("During update, enemies should") struct EnemyTests {
+@Suite("During update, melee enemies should") struct MeleeEnemyTests {
     @Test("attack party members when they are close enough") func enemiesAttackPartyMembers() {
         let world = makeWorld(from: [
             ".s"
@@ -72,11 +72,34 @@ import Foundation
         
         #expect(world.partyMembers.frontRight.currentHP < originalHPForFrontRightPartyMember)
     }
+}
 
-    private func sumHPOfPartyMembers(in world: World) -> Int {
-        world.partyMembers.frontLeft.currentHP +
-        world.partyMembers.frontRight.currentHP +
-        world.partyMembers.backLeft.currentHP +
-        world.partyMembers.backRight.currentHP
+@Suite("Ranged enemies should") struct RangedEnemyTests {
+    @Test("attack party members in the back row") func rangedEnemiesAttackPartyMembersInTheBackRow() {
+        let world = makeWorld(from: [
+            ".r"
+        ])
+
+        world.partyMembers.frontLeft.takeDamage(Int.max)
+        world.partyMembers.frontRight.takeDamage(Int.max)
+        
+        let originalHPForPartyMembersInBackRow = sumHPOfPartyMembersInBackRow(in: world)
+
+        world.update(at: Date())
+        
+        #expect(sumHPOfPartyMembersInBackRow(in: world) < originalHPForPartyMembersInBackRow)
     }
+}
+
+private func sumHPOfPartyMembers(in world: World) -> Int {
+    world.partyMembers.frontLeft.currentHP +
+    world.partyMembers.frontRight.currentHP +
+    world.partyMembers.backLeft.currentHP +
+    world.partyMembers.backRight.currentHP
+}
+
+private func sumHPOfPartyMembersInBackRow(in world: World) -> Int {
+    world.partyMembers.backRow
+    .map { $0.currentHP }
+    .reduce(0, +)
 }

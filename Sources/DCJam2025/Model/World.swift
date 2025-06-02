@@ -159,7 +159,9 @@ func makeWorld(from floorplans: [String]) -> World {
                 if mapArray[row][column] == "s" {
                     enemiesOnFloor.insert(Enemy(position: Coordinate(x: column, y: row)))
                 }
-                
+                if mapArray[row][column] == "r" {
+                    enemiesOnFloor.insert(RangedEnemy(position: Coordinate(x: column, y: row)))
+                }
             }
         }
         

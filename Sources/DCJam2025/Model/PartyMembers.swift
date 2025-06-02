@@ -24,4 +24,12 @@ struct PartyMembers {
     var frontRow: [PartyMember] {
         [frontLeft, frontRight]
     }
+
+    var backRow: [PartyMember] {
+        [backLeft, backRight]
+    }
+
+    var all: [PartyMember] {
+        members
+    }
 }

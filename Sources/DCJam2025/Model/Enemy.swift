@@ -48,3 +48,27 @@ extension Enemy: Hashable {
         hasher.combine(ObjectIdentifier(self))
     }
 }
+
+class RangedEnemy: Enemy {
+    override func act(in world: World, at time: Date) {
+        if enemyIsNearParty(in: world) && enemyCooldownHasExpired(at: time) {
+            attackParty(in: world, at: time)
+        }
+    }
+
+    private func enemyIsNearParty(in world: World) -> Bool {
+        world.partyPosition.squareAround.contains(position)
+    }
+
+    private func enemyCooldownHasExpired(at time: Date) -> Bool {
+        cooldownExpires <= time
+    }
+
+    private func attackParty(in world: World, at time: Date) {
+        let alivePartyMembers = world.partyMembers.all
+            .filter { $0.isAlive }
+        
+        alivePartyMembers.randomElement()?.takeDamage(1)
+        cooldownExpires = time.addingTimeInterval(cooldown)
+    }
+}
