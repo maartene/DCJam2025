@@ -84,3 +84,6 @@ What is there to find? The answer to the ultimate secret: what came before? the 
 
 ## 🍅 Pomodoro 18
 - ✅ Magic numbers in Enemy.swift
+- ✅ Factory methods for enemy types
+- ✅ Ranged enemies do less damage than melee enemies
+
