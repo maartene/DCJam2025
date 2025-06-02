@@ -91,14 +91,25 @@ import Foundation
     }
 
     @Test("attack enemies that are out of melee range") func rangedEnemiesAttackPartyMembersThatAreOutOfMeleeRange() {
-        let world = World(floors: [Floor()], enemies: [
-            [RangedEnemy(position: Coordinate(x: 10, y: 0))]
-        ])        
+        let world = makeWorld(from: [
+            "..r"
+        ])       
         let originalHPOfPartyMember = sumHPOfPartyMembers(in: world)
 
         world.update(at: Date())
         
-        #expect(sumHPOfPartyMembersInBackRow(in: world) < originalHPOfPartyMember)
+        #expect(sumHPOfPartyMembers(in: world) < originalHPOfPartyMember)
+    }
+
+    @Test("cannot attack enemies that are out of range") func rangedEnemiesCannotAttackPartyMembersThatAreOutOfRange() {
+        let world = makeWorld(from: [
+            "....r"
+        ])       
+        let originalHPOfPartyMember = sumHPOfPartyMembers(in: world)
+
+        world.update(at: Date())
+        
+        #expect(sumHPOfPartyMembers(in: world) == originalHPOfPartyMember)
     }
 }
 

@@ -24,8 +24,9 @@ class Enemy {
         cooldownExpires <= time
     }
 
-    internal func enemyIsNearParty(in world: World) -> Bool {
-        world.partyPosition.squareAround.contains(position)
+    internal func partyIsInRange(in world: World, range: Int) -> Bool {
+        let manhattanDistance = abs(world.partyPosition.x - position.x) + abs(world.partyPosition.y - position.y)
+        return manhattanDistance <= range
     }
 }
 
@@ -40,8 +41,13 @@ extension Enemy: Hashable {
 }
 
 final class MeleeEnemy: Enemy {
+    
+    override init(position: Coordinate) {
+        super.init(position: position)
+    }
+
     override func act(in world: World, at time: Date) {
-        if enemyIsNearParty(in: world) && enemyCooldownHasExpired(at: time) {
+        if partyIsInRange(in: world, range: 1) && enemyCooldownHasExpired(at: time) {
             attackParty(in: world, at: time)
         }
     }
@@ -49,7 +55,7 @@ final class MeleeEnemy: Enemy {
     private func attackParty(in world: World, at time: Date) {
         let aliveFrontRowPartyMembers = world.partyMembers.frontRow
             .filter { $0.isAlive }
-        
+
         aliveFrontRowPartyMembers.randomElement()?.takeDamage(1)
         cooldownExpires = time.addingTimeInterval(cooldown)
     }
@@ -57,7 +63,7 @@ final class MeleeEnemy: Enemy {
 
 final class RangedEnemy: Enemy {
     override func act(in world: World, at time: Date) {
-        if enemyIsNearParty(in: world) && enemyCooldownHasExpired(at: time) {
+        if partyIsInRange(in: world, range: 3) && enemyCooldownHasExpired(at: time) {
             attackParty(in: world, at: time)
         }
     }

@@ -2,6 +2,7 @@
 
 ## ⚠️ TODO
 - Is a KeyPath the right way of describing the position of a party member?
+- Magic numbers for range in Enemy.swift
 
 ## 🚧 DOING
 
