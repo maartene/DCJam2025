@@ -158,7 +158,10 @@ class Game {
         for enemyOnCurrentFloor in world.enemiesOnCurrentFloor {
             let coordinate = enemyOnCurrentFloor.position
             let light = light(position: coordinate, vantagePoint: vantagePoint)
-            DrawModelEx(mockModel, coordinate.toVector3 + Vector3(x: 0, y: -0.5, z: 0), .up, 180, Vector3(x: 0.5, y: 0.5, z: 0.5), .white * light)
+
+            let heading = CompassDirection.east
+
+            DrawModelEx(mockModel, coordinate.toVector3 + Vector3(x: 0, y: -0.5, z: 0), .up, heading.rotation , Vector3(x: 0.5, y: 0.5, z: 0.5), .white * light)
         }
     }
 
@@ -184,6 +187,15 @@ class Game {
         if let playerSprite = sprites[drawPartyTextureInfo.spriteName] {
             DrawTexture(
                 playerSprite, drawPartyTextureInfo.displayX, drawPartyTextureInfo.displayY, .white)
+        }
+
+        let drawEnemyTextureInfo = getSpriteAndPositionForPartyAtPosition(
+            world.enemiesOnCurrentFloor.first!.position, heading: .east, on: world.currentFloor, offsetX: 10,
+            offsetY: 10)
+
+        if let enemySprite = sprites[drawEnemyTextureInfo.spriteName] {
+            DrawTexture(
+                enemySprite, drawEnemyTextureInfo.displayX, drawEnemyTextureInfo.displayY, .red)
         }
     }
 
@@ -224,5 +236,20 @@ class Game {
         }
 
         return LoadModel(modelURL.path(percentEncoded: false))
+    }
+}
+
+extension CompassDirection {
+    var rotation: Float {
+        switch self {
+        case .north:
+            return 0
+        case .east:
+            return 90
+        case .south:
+            return 180
+        case .west:
+            return 270
+        }
     }
 }
