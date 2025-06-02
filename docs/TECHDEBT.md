@@ -5,9 +5,7 @@
 
 
 ## 🚧 DOING
-- Magic numbers for range in Enemy.swift
-    - [X] Range
-    - [ ] Damage
+
 
 ## ✅ DONE
 - no test coverage for conversion of coordinate spaces, while this might be valuable. Maybe property based testing?
@@ -29,3 +27,6 @@
 - there is duplication in `World` where multiple functions do the same check: see if player already won. Abstraction needed to conform to DRY
 - Convenience initiazer is not needed and is a risk if it is not updated in sync with the regular initiazer.
 - Feature envy in World.update on Enemy
+- Magic numbers for range in Enemy.swift
+    - [X] Range
+    - [X] Damage

@@ -21,7 +21,7 @@
     
 - Ranged enemies should
     - ✅ Be able to attack all party members individually
-    - Have different damage amount
+    - ✅ Have different damage amount
     
 - Magic enemies should
     - Be able to attack more than one party member at a time (i.e. AoE)

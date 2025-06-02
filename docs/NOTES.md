@@ -81,3 +81,6 @@ What is there to find? The answer to the ultimate secret: what came before? the 
 ## 🍅 Pomodoro 17
 - ✅ Ranged enemies can attack back row
 - ✅ Ranged enemies can attack further away
+
+## 🍅 Pomodoro 18
+- ✅ Magic numbers in Enemy.swift

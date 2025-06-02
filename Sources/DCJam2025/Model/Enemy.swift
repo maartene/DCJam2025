@@ -42,6 +42,7 @@ extension Enemy: Hashable {
 
 final class MeleeEnemy: Enemy {
     private static let MELEE_RANGE = 1
+    private static let MELEE_DAMAGE = 2
     
     override init(position: Coordinate) {
         super.init(position: position)
@@ -57,13 +58,14 @@ final class MeleeEnemy: Enemy {
         let aliveFrontRowPartyMembers = world.partyMembers.frontRow
             .filter { $0.isAlive }
 
-        aliveFrontRowPartyMembers.randomElement()?.takeDamage(1)
+        aliveFrontRowPartyMembers.randomElement()?.takeDamage(Self.MELEE_DAMAGE)
         cooldownExpires = time.addingTimeInterval(cooldown)
     }
 }
 
 final class RangedEnemy: Enemy {
     private static let RANGED_ATTACK_RANGE = 3
+    private static let RANGED_ATTACK_DAMAGE = 1
 
     override func act(in world: World, at time: Date) {
         if partyIsInRange(in: world, range: Self.RANGED_ATTACK_RANGE) && enemyCooldownHasExpired(at: time) {
@@ -75,7 +77,7 @@ final class RangedEnemy: Enemy {
         let alivePartyMembers = world.partyMembers.all
             .filter { $0.isAlive }
         
-        alivePartyMembers.randomElement()?.takeDamage(1)
+        alivePartyMembers.randomElement()?.takeDamage(Self.RANGED_ATTACK_DAMAGE)
         cooldownExpires = time.addingTimeInterval(cooldown)
     }
 }

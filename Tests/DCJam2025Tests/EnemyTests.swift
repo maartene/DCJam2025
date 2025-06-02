@@ -111,6 +111,21 @@ import Foundation
         
         #expect(sumHPOfPartyMembers(in: world) == originalHPOfPartyMember)
     }
+
+    @Test("deal less damage than a melee enemy") func rangedEnemiesDealLessDamageThanMeleeEnemies() {
+        let world1 = makeWorld(from: [
+            ".s",
+        ])
+
+        let world2 = makeWorld(from: [
+            ".r",
+        ])
+        
+        world1.update(at: Date())
+        world2.update(at: Date())
+
+        #expect(sumHPOfPartyMembers(in: world1) < sumHPOfPartyMembers(in: world2))
+    }
 }
 
 private func sumHPOfPartyMembers(in world: World) -> Int {
