@@ -89,6 +89,17 @@ import Foundation
         
         #expect(sumHPOfPartyMembersInBackRow(in: world) < originalHPForPartyMembersInBackRow)
     }
+
+    @Test("attack enemies that are out of melee range") func rangedEnemiesAttackPartyMembersThatAreOutOfMeleeRange() {
+        let world = World(floors: [Floor()], enemies: [
+            [RangedEnemy(position: Coordinate(x: 10, y: 0))]
+        ])        
+        let originalHPOfPartyMember = sumHPOfPartyMembers(in: world)
+
+        world.update(at: Date())
+        
+        #expect(sumHPOfPartyMembersInBackRow(in: world) < originalHPOfPartyMember)
+    }
 }
 
 private func sumHPOfPartyMembers(in world: World) -> Int {
