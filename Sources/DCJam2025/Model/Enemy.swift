@@ -12,9 +12,9 @@ class Enemy {
         self.position = position
     }
 
-    let cooldown = 0.75
-    var position: Coordinate
+    private(set) var position: Coordinate
     var cooldownExpires = Date()
+    let cooldown = 0.75
 
     func act(in world: World, at time: Date) {
         // This method should be overridden by subclasses
@@ -41,13 +41,14 @@ extension Enemy: Hashable {
 }
 
 final class MeleeEnemy: Enemy {
+    private static let MELEE_RANGE = 1
     
     override init(position: Coordinate) {
         super.init(position: position)
     }
 
     override func act(in world: World, at time: Date) {
-        if partyIsInRange(in: world, range: 1) && enemyCooldownHasExpired(at: time) {
+        if partyIsInRange(in: world, range: Self.MELEE_RANGE) && enemyCooldownHasExpired(at: time) {
             attackParty(in: world, at: time)
         }
     }
@@ -62,8 +63,10 @@ final class MeleeEnemy: Enemy {
 }
 
 final class RangedEnemy: Enemy {
+    private static let RANGED_ATTACK_RANGE = 3
+
     override func act(in world: World, at time: Date) {
-        if partyIsInRange(in: world, range: 3) && enemyCooldownHasExpired(at: time) {
+        if partyIsInRange(in: world, range: Self.RANGED_ATTACK_RANGE) && enemyCooldownHasExpired(at: time) {
             attackParty(in: world, at: time)
         }
     }

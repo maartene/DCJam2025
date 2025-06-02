@@ -20,7 +20,7 @@
     - ✅ Attack a random (alive) party member in the front of the party
     
 - Ranged enemies should
-    - Be able to attack all party members individually
+    - ✅ Be able to attack all party members individually
     - Have different damage amount
     
 - Magic enemies should

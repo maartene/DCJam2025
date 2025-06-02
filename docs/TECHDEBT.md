@@ -2,10 +2,12 @@
 
 ## ⚠️ TODO
 - Is a KeyPath the right way of describing the position of a party member?
-- Magic numbers for range in Enemy.swift
+
 
 ## 🚧 DOING
-
+- Magic numbers for range in Enemy.swift
+    - [X] Range
+    - [ ] Damage
 
 ## ✅ DONE
 - no test coverage for conversion of coordinate spaces, while this might be valuable. Maybe property based testing?
