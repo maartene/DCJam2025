@@ -147,3 +147,17 @@ struct MeleeAttackStrategy {
         return manhattanDistance <= range
     }
 }
+
+struct RangedAttackStrategy {
+    let range = 2
+    
+    func getValidTargets(in world: World) -> [PartyMember] {
+        world.partyMembers.all
+            .filter { $0.isAlive }
+    }
+    
+    func partyIsInRange(in world: World, enemyPosition: Coordinate) -> Bool {
+        let manhattanDistance = abs(world.partyPosition.x - enemyPosition.x) + abs(world.partyPosition.y - enemyPosition.y)
+        return manhattanDistance <= range
+    }
+}

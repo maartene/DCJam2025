@@ -16,6 +16,11 @@
                         - [X] move `partyIsInRange` to `MeleeAttackStrategy`
             - [X] use `makeMeleeEnemy` in tests
         - [ ] Remove `RangedEnemy` class
+            - [ ] `makeRangedEnemy` should create an `Enemy` instance
+                - [ ] Inject `RangedAttackStrategy` into `Enemy`
+                    - [X] Create `RangedAttackStrategy`
+                    - [ ] An `Enemy` needs to accept all types of AttackStrategies
+                        - [ ] Introduce `AttackStrategy` protocol
 
 ## ✅ DONE
 - no test coverage for conversion of coordinate spaces, while this might be valuable. Maybe property based testing?
