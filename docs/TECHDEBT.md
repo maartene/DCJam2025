@@ -6,7 +6,7 @@
 
 ## 🚧 DOING
 - [ ] Strategy pattern for Enemies
-    - [ ] Make `Enemy` a final class
+    - [X] Make `Enemy` a final class
         - [X] Remove `MeleeEnemy` class
             - [X] `makeMeleeEnemy` should create an `Enemy` instance
                 - [X] Inject `MeleeAttackStrategy` into `Enemy`

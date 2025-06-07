@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Enemy {
+final class Enemy {
     private(set) var position: Coordinate
     private(set) var heading: CompassDirection
     private var cooldownExpires = Date()
