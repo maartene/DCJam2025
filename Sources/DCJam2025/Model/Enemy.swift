@@ -31,7 +31,7 @@ final class Enemy {
             return
         }
         
-        guard partyIsInRange(in: world) else {
+        guard attackStrategy.partyIsInRange(in: world, enemyPosition: position) else {
             return
         }
         
@@ -42,13 +42,8 @@ final class Enemy {
     internal func enemyCooldownHasExpired(at time: Date) -> Bool {
         cooldownExpires <= time
     }
-
-    internal func partyIsInRange(in world: World) -> Bool {
-        let manhattanDistance = abs(world.partyPosition.x - position.x) + abs(world.partyPosition.y - position.y)
-        return manhattanDistance <= attackStrategy.range
-    }
     
-    internal func isFacingParty(in world: World) -> Bool {
+    func isFacingParty(in world: World) -> Bool {
         // naive raycast approach
         for i in 0 ..< 20 {
             if position + (heading.forward * i) == world.partyPosition {
@@ -107,6 +102,13 @@ protocol AttackStrategy {
     func getValidTargets(in world: World) -> [PartyMember]
 }
 
+extension AttackStrategy {
+    func partyIsInRange(in world: World, enemyPosition: Coordinate) -> Bool {
+        let manhattanDistance = abs(world.partyPosition.x - enemyPosition.x) + abs(world.partyPosition.y - enemyPosition.y)
+        return manhattanDistance <= range
+    }
+}
+
 struct MeleeAttackStrategy: AttackStrategy {
     let range = 1
     let damage = 2
@@ -114,11 +116,6 @@ struct MeleeAttackStrategy: AttackStrategy {
     func getValidTargets(in world: World) -> [PartyMember] {
         world.partyMembers.frontRow
             .filter { $0.isAlive }
-    }
-    
-    func partyIsInRange(in world: World, enemyPosition: Coordinate) -> Bool {
-        let manhattanDistance = abs(world.partyPosition.x - enemyPosition.x) + abs(world.partyPosition.y - enemyPosition.y)
-        return manhattanDistance <= range
     }
 }
 
@@ -129,10 +126,5 @@ struct RangedAttackStrategy: AttackStrategy {
     func getValidTargets(in world: World) -> [PartyMember] {
         world.partyMembers.all
             .filter { $0.isAlive }
-    }
-    
-    func partyIsInRange(in world: World, enemyPosition: Coordinate) -> Bool {
-        let manhattanDistance = abs(world.partyPosition.x - enemyPosition.x) + abs(world.partyPosition.y - enemyPosition.y)
-        return manhattanDistance <= range
     }
 }
