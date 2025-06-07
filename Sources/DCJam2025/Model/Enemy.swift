@@ -95,15 +95,6 @@ extension Enemy: Hashable {
     }
 }
 
-final class RangedEnemy: Enemy {
-    private static let RANGED_ATTACK_RANGE = 3
-    private static let RANGED_ATTACK_DAMAGE = 1
-
-    init(position: Coordinate, heading: CompassDirection) {
-        super.init(position: position, heading: heading, range: Self.RANGED_ATTACK_RANGE, damage: Self.RANGED_ATTACK_DAMAGE, attackStrategy: RangedAttackStrategy())
-    }
-}
-
 extension Enemy {
     static func makeMeleeEnemy(at position: Coordinate, heading: CompassDirection = .west) -> Enemy {
         Enemy(position: position, heading: heading, range: 1, damage: 1, attackStrategy: MeleeAttackStrategy())

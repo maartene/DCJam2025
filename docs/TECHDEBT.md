@@ -15,7 +15,7 @@
                         - [X] move `range` into `MeleeAttackStrategy`
                         - [X] move `partyIsInRange` to `MeleeAttackStrategy`
             - [X] use `makeMeleeEnemy` in tests
-        - [ ] Remove `RangedEnemy` class
+        - [X] Remove `RangedEnemy` class
             - [X] `makeRangedEnemy` should create an `Enemy` instance
                 - [X] Inject `RangedAttackStrategy` into `Enemy`
                     - [X] Create `RangedAttackStrategy`
