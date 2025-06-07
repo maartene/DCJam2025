@@ -95,15 +95,6 @@ extension Enemy: Hashable {
     }
 }
 
-final class MeleeEnemy: Enemy {
-    private static let MELEE_RANGE = 1
-    private static let MELEE_DAMAGE = 2
-    
-    init(position: Coordinate, heading: CompassDirection) {
-        super.init(position: position, heading: heading, range: Self.MELEE_RANGE, damage: Self.MELEE_DAMAGE, attackStrategy: MeleeAttackStrategy())
-    }
-}
-
 final class RangedEnemy: Enemy {
     private static let RANGED_ATTACK_RANGE = 3
     private static let RANGED_ATTACK_DAMAGE = 1
