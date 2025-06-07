@@ -8,6 +8,14 @@
 import Foundation
 
 class Enemy {
+    private(set) var position: Coordinate
+    private(set) var heading: CompassDirection
+    private var cooldownExpires = Date()
+    let cooldown = 0.75
+    private let range: Int
+    private let damage: Int
+    private let attackStrategy = MeleeAttackStrategy()
+
     init(position: Coordinate, heading: CompassDirection, range: Int, damage: Int) {
         self.position = position
         self.heading = heading
@@ -15,13 +23,7 @@ class Enemy {
         self.damage = damage
     }
 
-    private(set) var position: Coordinate
-    private(set) var heading: CompassDirection
-    private var cooldownExpires = Date()
-    let cooldown = 0.75
-    private let range: Int
-    private let damage: Int
-
+    
     func act(in world: World, at time: Date) {
         guard enemyCooldownHasExpired(at: time) else {
             return
@@ -124,10 +126,15 @@ final class RangedEnemy: Enemy {
 }
 
 extension Enemy {
-    static func makeMeleeEnemy(at position: Coordinate, heading: CompassDirection = .west) -> MeleeEnemy {
+    static func makeMeleeEnemy(at position: Coordinate, heading: CompassDirection = .west) -> Enemy {
         MeleeEnemy(position: position, heading: heading)
     }
     static func makeRangedEnemy(at position: Coordinate, heading: CompassDirection = .west) -> RangedEnemy {
         RangedEnemy(position: position, heading: heading)
     }
+}
+
+
+struct MeleeAttackStrategy {
+    
 }

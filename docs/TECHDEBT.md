@@ -9,6 +9,8 @@
     - [ ] Make `Enemy` a final class
         - [ ] Remove `MeleeEnemy` class
             - [ ] `makeMeleeEnemy` should create an `Enemy` instance
+                - [ ] Inject `MeleeAttackStrategy` into `Enemy`
+                    - [X] Create `MeleeAttackStrategy`
             - [X] use `makeMeleeEnemy` in tests
         - [ ] Remove `RangedEnemy` class
 
