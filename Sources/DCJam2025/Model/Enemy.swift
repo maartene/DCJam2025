@@ -12,13 +12,11 @@ final class Enemy {
     private(set) var heading: CompassDirection
     private var cooldownExpires = Date()
     let cooldown = 0.75
-    private let damage: Int
     let attackStrategy: any AttackStrategy
 
-    init(position: Coordinate, heading: CompassDirection, damage: Int, attackStrategy: any AttackStrategy) {
+    init(position: Coordinate, heading: CompassDirection, attackStrategy: any AttackStrategy) {
         self.position = position
         self.heading = heading
-        self.damage = damage
         self.attackStrategy = attackStrategy
     }
 
@@ -95,13 +93,12 @@ extension Enemy: Hashable {
 
 extension Enemy {
     static func makeMeleeEnemy(at position: Coordinate, heading: CompassDirection = .west) -> Enemy {
-        Enemy(position: position, heading: heading, damage: 1, attackStrategy: MeleeAttackStrategy())
+        Enemy(position: position, heading: heading,  attackStrategy: MeleeAttackStrategy())
     }
     static func makeRangedEnemy(at position: Coordinate, heading: CompassDirection = .west) -> Enemy {
-        Enemy(position: position, heading: heading, damage: 1, attackStrategy: RangedAttackStrategy())
+        Enemy(position: position, heading: heading, attackStrategy: RangedAttackStrategy())
     }
 }
-
 
 protocol AttackStrategy {
     var range: Int { get }

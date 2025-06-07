@@ -6,30 +6,7 @@
 - [ ] DRY: move as much from strategies into default implementations as possible
 
 ## 🚧 DOING
-- [ ] Strategy pattern for Enemies
-    - [X] Make `Enemy` a final class
-        - [X] Remove `MeleeEnemy` class
-            - [X] `makeMeleeEnemy` should create an `Enemy` instance
-                - [X] Inject `MeleeAttackStrategy` into `Enemy`
-                    - [X] Create `MeleeAttackStrategy`
-                    - [X] Remove `range` from `Enemy`
-                        - [X] move `range` into `MeleeAttackStrategy`
-                        - [X] move `partyIsInRange` to `MeleeAttackStrategy`
-            - [X] use `makeMeleeEnemy` in tests
-        - [X] Remove `RangedEnemy` class
-            - [X] `makeRangedEnemy` should create an `Enemy` instance
-                - [X] Inject `RangedAttackStrategy` into `Enemy`
-                    - [X] Create `RangedAttackStrategy`
-                    - [X] An `Enemy` needs to accept all types of AttackStrategies
-                        - [X] Introduce `AttackStrategy` protocol
-                        - [X] `AttackStrategy` protocol requires range
-                        - [X] `AttackStrategy` protocol requires getValidTargets
-                - [X] Remove override attack methods
-                    - [X] `MeleeEnemy`
-                        - [X] `AttackStrategy` needs access to damage
-                    - [X] `RangedEnemy`
-    - [X] remove `range` from `Enemy`
-        - [X] partyIsInRange should not use range
+
 
 
 ## ✅ DONE
@@ -56,3 +33,28 @@
     - [X] Range
     - [X] Damage
 - DRY in MeleeEnemy and RangedEnemy
+- [X] Strategy pattern for Enemies
+    - [X] Make `Enemy` a final class
+        - [X] Remove `MeleeEnemy` class
+            - [X] `makeMeleeEnemy` should create an `Enemy` instance
+                - [X] Inject `MeleeAttackStrategy` into `Enemy`
+                    - [X] Create `MeleeAttackStrategy`
+                    - [X] Remove `range` from `Enemy`
+                        - [X] move `range` into `MeleeAttackStrategy`
+                        - [X] move `partyIsInRange` to `MeleeAttackStrategy`
+            - [X] use `makeMeleeEnemy` in tests
+        - [X] Remove `RangedEnemy` class
+            - [X] `makeRangedEnemy` should create an `Enemy` instance
+                - [X] Inject `RangedAttackStrategy` into `Enemy`
+                    - [X] Create `RangedAttackStrategy`
+                    - [X] An `Enemy` needs to accept all types of AttackStrategies
+                        - [X] Introduce `AttackStrategy` protocol
+                        - [X] `AttackStrategy` protocol requires range
+                        - [X] `AttackStrategy` protocol requires getValidTargets
+                - [X] Remove override attack methods
+                    - [X] `MeleeEnemy`
+                        - [X] `AttackStrategy` needs access to damage
+                    - [X] `RangedEnemy`
+    - [X] remove `range` from `Enemy`
+        - [X] partyIsInRange should not use range
+    - [X] remove `damage` from `Enemy`
