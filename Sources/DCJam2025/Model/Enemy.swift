@@ -79,7 +79,9 @@ class Enemy {
     }
     
     func attackParty(in world: World, at time: Date) {
-        print("[WARNING] calling attackParty from abstract class Enemy")
+        let potentialTargets = attackStrategy.getValidTargets(in: world)
+            
+        potentialTargets.randomElement()?.takeDamage(attackStrategy.damage)
     }
 }
 
@@ -99,12 +101,6 @@ final class MeleeEnemy: Enemy {
     
     init(position: Coordinate, heading: CompassDirection) {
         super.init(position: position, heading: heading, range: Self.MELEE_RANGE, damage: Self.MELEE_DAMAGE, attackStrategy: MeleeAttackStrategy())
-    }
-    
-    override func attackParty(in world: World, at time: Date) {
-        let aliveFrontRowPartyMembers = attackStrategy.getValidTargets(in: world)
-
-        aliveFrontRowPartyMembers.randomElement()?.takeDamage(Self.MELEE_DAMAGE)
     }
 }
 
@@ -137,12 +133,14 @@ extension Enemy {
 
 protocol AttackStrategy {
     var range: Int { get }
+    var damage: Int { get }
     
     func getValidTargets(in world: World) -> [PartyMember]
 }
 
 struct MeleeAttackStrategy: AttackStrategy {
     let range = 1
+    let damage = 2
     
     func getValidTargets(in world: World) -> [PartyMember] {
         world.partyMembers.frontRow
@@ -157,6 +155,7 @@ struct MeleeAttackStrategy: AttackStrategy {
 
 struct RangedAttackStrategy: AttackStrategy {
     let range = 2
+    let damage = 1
     
     func getValidTargets(in world: World) -> [PartyMember] {
         world.partyMembers.all
