@@ -26,7 +26,7 @@ import Foundation
 
     @Test("not attack party members when they are not close enough") func enemiesDontAttackPartyMembersOutOfRange() {
         let world = World(floors: [Floor()], enemies: [
-            [MeleeEnemy(position: Coordinate(x: 10, y: 0), heading: .west)]
+            [.makeMeleeEnemy(at: Coordinate(x: 10, y: 0), heading: .west)]
         ])
         
         let hpOfPartyMembersBeforeAttack = sumHPOfPartyMembers(in: world)
@@ -39,7 +39,7 @@ import Foundation
     }
 
     @Test("not attack party members if enemy is still in cooldown") func enemiesDontAttackDuringCooldown() {
-        let enemy = MeleeEnemy(position: Coordinate(x: 1, y: 0), heading: .west)
+        let enemy = Enemy.makeMeleeEnemy(at: Coordinate(x: 1, y: 0), heading: .west)
         let world = World(floors: [Floor()], enemies: [[enemy]])
         
         world.update(at: Date())
@@ -51,7 +51,7 @@ import Foundation
     }
 
     @Test("attack party members after cooldown has expired") func enemiesAttackAfterCooldownHasExpired() {
-        let enemy = MeleeEnemy(position: Coordinate(x: 1, y: 0), heading: .west)
+        let enemy = Enemy.makeMeleeEnemy(at:  Coordinate(x: 1, y: 0), heading: .west)
         let world = World(floors: [Floor()], enemies: [[enemy]])
         
         world.update(at: Date())
@@ -63,7 +63,7 @@ import Foundation
     }
     
     @Test("only attacks alive party members") func enemiesOnlyAttackAlivePartyMembers() {
-        let enemy = MeleeEnemy(position: Coordinate(x: 1, y: 0), heading: .west)
+        let enemy = Enemy.makeMeleeEnemy(at:  Coordinate(x: 1, y: 0), heading: .west)
         let world = World(floors: [Floor()], enemies: [[enemy]])
         world.partyMembers.frontLeft.takeDamage(Int.max)
         let originalHPForFrontRightPartyMember = world.partyMembers.frontRight.currentHP

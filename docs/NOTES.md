@@ -87,3 +87,9 @@ What is there to find? The answer to the ultimate secret: what came before? the 
 - ✅ Factory methods for enemy types
 - ✅ Ranged enemies do less damage than melee enemies
 
+## 🍅 Pomodoro 19
+- ✅ Enemies have heading
+- ✅ And take this into account when attacking
+
+## 🍅 Pomodoro 20
+- 🚧 Migrate Enemy from inheritance to Strategy pattern

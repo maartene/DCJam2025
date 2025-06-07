@@ -4,9 +4,13 @@
 - Is a KeyPath the right way of describing the position of a party member?
 - Determining if party is in line of sight of enemy uses a naive raycast approach. this could be easier.
 
-
 ## 🚧 DOING
-
+- [ ] Strategy pattern for Enemies
+    - [ ] Make `Enemy` a final class
+        - [ ] Remove `MeleeEnemy` class
+            - [ ] `makeMeleeEnemy` should create an `Enemy` instance
+            - [X] use `makeMeleeEnemy` in tests
+        - [ ] Remove `RangedEnemy` class
 
 ## ✅ DONE
 - no test coverage for conversion of coordinate spaces, while this might be valuable. Maybe property based testing?
