@@ -73,15 +73,20 @@ final class MeleeEnemy: Enemy {
     private static let MELEE_DAMAGE = 2
     
     override func act(in world: World, at time: Date) {
-        if partyIsInRange(in: world, range: Self.MELEE_RANGE) && enemyCooldownHasExpired(at: time) && isFacingParty(in: world) {
-            attackParty(in: world, at: time)
+        guard enemyCooldownHasExpired(at: time) else {
             return
         }
         
-        if enemyCooldownHasExpired(at: time) {
-            // rotate towards party
+        guard isFacingParty(in: world) else {
             rotateTowardsParty(in: world, at: time)
+            return
         }
+        
+        guard partyIsInRange(in: world, range: Self.MELEE_RANGE) else {
+            return
+        }
+        
+        attackParty(in: world, at: time)
     }
     
     private func attackParty(in world: World, at time: Date) {
@@ -98,9 +103,20 @@ final class RangedEnemy: Enemy {
     private static let RANGED_ATTACK_DAMAGE = 1
 
     override func act(in world: World, at time: Date) {
-        if partyIsInRange(in: world, range: Self.RANGED_ATTACK_RANGE) && enemyCooldownHasExpired(at: time) {
-            attackParty(in: world, at: time)
+        guard enemyCooldownHasExpired(at: time) else {
+            return
         }
+        
+        guard isFacingParty(in: world) else {
+            rotateTowardsParty(in: world, at: time)
+            return
+        }
+        
+        guard partyIsInRange(in: world, range: Self.RANGED_ATTACK_RANGE) else {
+            return
+        }
+        
+        attackParty(in: world, at: time)
     }
 
     private func attackParty(in world: World, at time: Date) {
