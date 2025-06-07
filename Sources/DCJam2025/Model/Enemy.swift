@@ -14,7 +14,7 @@ class Enemy {
     let cooldown = 0.75
     private let range: Int
     private let damage: Int
-    private let attackStrategy = MeleeAttackStrategy()
+    let attackStrategy = MeleeAttackStrategy()
 
     init(position: Coordinate, heading: CompassDirection, range: Int, damage: Int) {
         self.position = position
@@ -101,8 +101,7 @@ final class MeleeEnemy: Enemy {
     }
     
     override func attackParty(in world: World, at time: Date) {
-        let aliveFrontRowPartyMembers = world.partyMembers.frontRow
-            .filter { $0.isAlive }
+        let aliveFrontRowPartyMembers = attackStrategy.getValidTargets(in: world)
 
         aliveFrontRowPartyMembers.randomElement()?.takeDamage(Self.MELEE_DAMAGE)
     }
@@ -136,5 +135,15 @@ extension Enemy {
 
 
 struct MeleeAttackStrategy {
+    let range = 1
     
+    func getValidTargets(in world: World) -> [PartyMember] {
+        world.partyMembers.frontRow
+            .filter { $0.isAlive }
+    }
+    
+    func partyIsInRange(in world: World, enemyPosition: Coordinate) -> Bool {
+        let manhattanDistance = abs(world.partyPosition.x - enemyPosition.x) + abs(world.partyPosition.y - enemyPosition.y)
+        return manhattanDistance <= range
+    }
 }
