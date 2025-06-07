@@ -12,14 +12,12 @@ final class Enemy {
     private(set) var heading: CompassDirection
     private var cooldownExpires = Date()
     let cooldown = 0.75
-    private let range: Int
     private let damage: Int
     let attackStrategy: any AttackStrategy
 
-    init(position: Coordinate, heading: CompassDirection, range: Int, damage: Int, attackStrategy: any AttackStrategy) {
+    init(position: Coordinate, heading: CompassDirection, damage: Int, attackStrategy: any AttackStrategy) {
         self.position = position
         self.heading = heading
-        self.range = range
         self.damage = damage
         self.attackStrategy = attackStrategy
     }
@@ -35,7 +33,7 @@ final class Enemy {
             return
         }
         
-        guard partyIsInRange(in: world, range: range) else {
+        guard partyIsInRange(in: world) else {
             return
         }
         
@@ -47,9 +45,9 @@ final class Enemy {
         cooldownExpires <= time
     }
 
-    internal func partyIsInRange(in world: World, range: Int) -> Bool {
+    internal func partyIsInRange(in world: World) -> Bool {
         let manhattanDistance = abs(world.partyPosition.x - position.x) + abs(world.partyPosition.y - position.y)
-        return manhattanDistance <= range
+        return manhattanDistance <= attackStrategy.range
     }
     
     internal func isFacingParty(in world: World) -> Bool {
@@ -97,10 +95,10 @@ extension Enemy: Hashable {
 
 extension Enemy {
     static func makeMeleeEnemy(at position: Coordinate, heading: CompassDirection = .west) -> Enemy {
-        Enemy(position: position, heading: heading, range: 1, damage: 1, attackStrategy: MeleeAttackStrategy())
+        Enemy(position: position, heading: heading, damage: 1, attackStrategy: MeleeAttackStrategy())
     }
     static func makeRangedEnemy(at position: Coordinate, heading: CompassDirection = .west) -> Enemy {
-        Enemy(position: position, heading: heading, range: 3, damage: 1, attackStrategy: RangedAttackStrategy())
+        Enemy(position: position, heading: heading, damage: 1, attackStrategy: RangedAttackStrategy())
     }
 }
 
