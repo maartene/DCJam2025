@@ -14,13 +14,14 @@ class Enemy {
     let cooldown = 0.75
     private let range: Int
     private let damage: Int
-    let attackStrategy = MeleeAttackStrategy()
+    let attackStrategy: any AttackStrategy
 
-    init(position: Coordinate, heading: CompassDirection, range: Int, damage: Int) {
+    init(position: Coordinate, heading: CompassDirection, range: Int, damage: Int, attackStrategy: any AttackStrategy) {
         self.position = position
         self.heading = heading
         self.range = range
         self.damage = damage
+        self.attackStrategy = attackStrategy
     }
 
     
@@ -97,7 +98,7 @@ final class MeleeEnemy: Enemy {
     private static let MELEE_DAMAGE = 2
     
     init(position: Coordinate, heading: CompassDirection) {
-        super.init(position: position, heading: heading, range: Self.MELEE_RANGE, damage: Self.MELEE_DAMAGE)
+        super.init(position: position, heading: heading, range: Self.MELEE_RANGE, damage: Self.MELEE_DAMAGE, attackStrategy: MeleeAttackStrategy())
     }
     
     override func attackParty(in world: World, at time: Date) {
@@ -112,7 +113,7 @@ final class RangedEnemy: Enemy {
     private static let RANGED_ATTACK_DAMAGE = 1
 
     init(position: Coordinate, heading: CompassDirection) {
-        super.init(position: position, heading: heading, range: Self.RANGED_ATTACK_RANGE, damage: Self.RANGED_ATTACK_DAMAGE)
+        super.init(position: position, heading: heading, range: Self.RANGED_ATTACK_RANGE, damage: Self.RANGED_ATTACK_DAMAGE, attackStrategy: RangedAttackStrategy())
     }
 
     override func attackParty(in world: World, at time: Date) {
@@ -134,7 +135,13 @@ extension Enemy {
 }
 
 
-struct MeleeAttackStrategy {
+protocol AttackStrategy {
+    var range: Int { get }
+    
+    func getValidTargets(in world: World) -> [PartyMember]
+}
+
+struct MeleeAttackStrategy: AttackStrategy {
     let range = 1
     
     func getValidTargets(in world: World) -> [PartyMember] {
@@ -148,7 +155,7 @@ struct MeleeAttackStrategy {
     }
 }
 
-struct RangedAttackStrategy {
+struct RangedAttackStrategy: AttackStrategy {
     let range = 2
     
     func getValidTargets(in world: World) -> [PartyMember] {

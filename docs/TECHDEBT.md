@@ -20,7 +20,10 @@
                 - [ ] Inject `RangedAttackStrategy` into `Enemy`
                     - [X] Create `RangedAttackStrategy`
                     - [ ] An `Enemy` needs to accept all types of AttackStrategies
-                        - [ ] Introduce `AttackStrategy` protocol
+                        - [X] Introduce `AttackStrategy` protocol
+                        - [X] `AttackStrategy` protocol requires range
+                        - [X] `AttackStrategy` protocol requires getValidTargets
+        - [ ] DRY: move as much from strategies into default implementations as possible
 
 ## ✅ DONE
 - no test coverage for conversion of coordinate spaces, while this might be valuable. Maybe property based testing?
