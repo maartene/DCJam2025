@@ -17,13 +17,27 @@ class Enemy {
 
     private(set) var position: Coordinate
     private(set) var heading: CompassDirection
-    var cooldownExpires = Date()
+    private var cooldownExpires = Date()
     let cooldown = 0.75
     private let range: Int
     private let damage: Int
 
     func act(in world: World, at time: Date) {
-        // This method should be overridden by subclasses
+        guard enemyCooldownHasExpired(at: time) else {
+            return
+        }
+        
+        guard isFacingParty(in: world) else {
+            rotateTowardsParty(in: world, at: time)
+            return
+        }
+        
+        guard partyIsInRange(in: world, range: range) else {
+            return
+        }
+        
+        attackParty(in: world, at: time)
+        cooldownExpires = time.addingTimeInterval(cooldown)
     }
 
     internal func enemyCooldownHasExpired(at time: Date) -> Bool {
@@ -60,6 +74,10 @@ class Enemy {
         
         heading = originalHeading
     }
+    
+    func attackParty(in world: World, at time: Date) {
+        print("[WARNING] calling attackParty from abstract class Enemy")
+    }
 }
 
 extension Enemy: Hashable {
@@ -80,29 +98,11 @@ final class MeleeEnemy: Enemy {
         super.init(position: position, heading: heading, range: Self.MELEE_RANGE, damage: Self.MELEE_DAMAGE)
     }
     
-    override func act(in world: World, at time: Date) {
-        guard enemyCooldownHasExpired(at: time) else {
-            return
-        }
-        
-        guard isFacingParty(in: world) else {
-            rotateTowardsParty(in: world, at: time)
-            return
-        }
-        
-        guard partyIsInRange(in: world, range: Self.MELEE_RANGE) else {
-            return
-        }
-        
-        attackParty(in: world, at: time)
-    }
-    
-    private func attackParty(in world: World, at time: Date) {
+    override func attackParty(in world: World, at time: Date) {
         let aliveFrontRowPartyMembers = world.partyMembers.frontRow
             .filter { $0.isAlive }
 
         aliveFrontRowPartyMembers.randomElement()?.takeDamage(Self.MELEE_DAMAGE)
-        cooldownExpires = time.addingTimeInterval(cooldown)
     }
 }
 
@@ -113,30 +113,13 @@ final class RangedEnemy: Enemy {
     init(position: Coordinate, heading: CompassDirection) {
         super.init(position: position, heading: heading, range: Self.RANGED_ATTACK_RANGE, damage: Self.RANGED_ATTACK_DAMAGE)
     }
-    
-    override func act(in world: World, at time: Date) {
-        guard enemyCooldownHasExpired(at: time) else {
-            return
-        }
-        
-        guard isFacingParty(in: world) else {
-            rotateTowardsParty(in: world, at: time)
-            return
-        }
-        
-        guard partyIsInRange(in: world, range: Self.RANGED_ATTACK_RANGE) else {
-            return
-        }
-        
-        attackParty(in: world, at: time)
-    }
 
-    private func attackParty(in world: World, at time: Date) {
+    override func attackParty(in world: World, at time: Date) {
         let alivePartyMembers = world.partyMembers.all
             .filter { $0.isAlive }
         
         alivePartyMembers.randomElement()?.takeDamage(Self.RANGED_ATTACK_DAMAGE)
-        cooldownExpires = time.addingTimeInterval(cooldown)
+        
     }
 }
 

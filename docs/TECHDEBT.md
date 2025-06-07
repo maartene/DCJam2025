@@ -3,7 +3,7 @@
 ## ⚠️ TODO
 - Is a KeyPath the right way of describing the position of a party member?
 - Determining if party is in line of sight of enemy uses a naive raycast approach. this could be easier.
-- DRY in MeleeEnemy and RangedEnemy
+
 
 ## 🚧 DOING
 
@@ -31,3 +31,4 @@
 - Magic numbers for range in Enemy.swift
     - [X] Range
     - [X] Damage
+- DRY in MeleeEnemy and RangedEnemy

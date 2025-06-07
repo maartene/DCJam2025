@@ -32,7 +32,7 @@
 
 - Enemies as models
     - ✅ Show a 3D model
-    - Should show where sprite is looking (probably requires approval testing)
+    - ✅ Should show where sprite is looking (probably requires approval testing)
 
 - Party members should have some interesting aspects, at least a name and a portrait.
 
