@@ -23,7 +23,7 @@
                         - [X] Introduce `AttackStrategy` protocol
                         - [X] `AttackStrategy` protocol requires range
                         - [X] `AttackStrategy` protocol requires getValidTargets
-                - [ ] Remove override attack methods
+                - [X] Remove override attack methods
                     - [X] `MeleeEnemy`
                         - [X] `AttackStrategy` needs access to damage
                     - [ ] `RangedEnemy`

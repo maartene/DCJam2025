@@ -102,14 +102,6 @@ final class RangedEnemy: Enemy {
     init(position: Coordinate, heading: CompassDirection) {
         super.init(position: position, heading: heading, range: Self.RANGED_ATTACK_RANGE, damage: Self.RANGED_ATTACK_DAMAGE, attackStrategy: RangedAttackStrategy())
     }
-
-    override func attackParty(in world: World, at time: Date) {
-        let alivePartyMembers = world.partyMembers.all
-            .filter { $0.isAlive }
-        
-        alivePartyMembers.randomElement()?.takeDamage(Self.RANGED_ATTACK_DAMAGE)
-        
-    }
 }
 
 extension Enemy {
