@@ -8,7 +8,7 @@
 - [ ] Strategy pattern for Enemies
     - [ ] Make `Enemy` a final class
         - [ ] Remove `MeleeEnemy` class
-            - [ ] `makeMeleeEnemy` should create an `Enemy` instance
+            - [X] `makeMeleeEnemy` should create an `Enemy` instance
                 - [X] Inject `MeleeAttackStrategy` into `Enemy`
                     - [X] Create `MeleeAttackStrategy`
                     - [X] Remove `range` from `Enemy`

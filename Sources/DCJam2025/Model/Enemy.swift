@@ -123,7 +123,7 @@ final class RangedEnemy: Enemy {
 
 extension Enemy {
     static func makeMeleeEnemy(at position: Coordinate, heading: CompassDirection = .west) -> Enemy {
-        MeleeEnemy(position: position, heading: heading)
+        Enemy(position: position, heading: heading, range: 1, damage: 1, attackStrategy: MeleeAttackStrategy())
     }
     static func makeRangedEnemy(at position: Coordinate, heading: CompassDirection = .west) -> RangedEnemy {
         RangedEnemy(position: position, heading: heading)
