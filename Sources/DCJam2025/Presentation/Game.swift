@@ -159,7 +159,7 @@ class Game {
             let coordinate = enemyOnCurrentFloor.position
             let light = light(position: coordinate, vantagePoint: vantagePoint)
 
-            let heading = CompassDirection.east
+            let heading = enemyOnCurrentFloor.heading
 
             DrawModelEx(mockModel, coordinate.toVector3 + Vector3(x: 0, y: -0.5, z: 0), .up, heading.rotation , Vector3(x: 0.5, y: 0.5, z: 0.5), .white * light)
         }
@@ -190,7 +190,7 @@ class Game {
         }
 
         let drawEnemyTextureInfo = getSpriteAndPositionForPartyAtPosition(
-            world.enemiesOnCurrentFloor.first!.position, heading: .east, on: world.currentFloor, offsetX: 10,
+            world.enemiesOnCurrentFloor.first!.position, heading: world.enemiesOnCurrentFloor.first!.heading, on: world.currentFloor, offsetX: 10,
             offsetY: 10)
 
         if let enemySprite = sprites[drawEnemyTextureInfo.spriteName] {

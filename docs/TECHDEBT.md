@@ -2,7 +2,7 @@
 
 ## ⚠️ TODO
 - Is a KeyPath the right way of describing the position of a party member?
-
+- Determining if party is in line of sight of enemy uses a naive raycast approach. this could be easier.
 
 ## 🚧 DOING
 

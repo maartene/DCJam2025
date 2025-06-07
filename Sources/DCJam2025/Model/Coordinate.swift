@@ -18,6 +18,10 @@ struct Coordinate {
     static func -(lhs: Coordinate, rhs: Coordinate) -> Coordinate {
         Coordinate(x: lhs.x - rhs.x, y: lhs.y - rhs.y)
     }
+    
+    static func *(vector: Coordinate, scalar: Int) -> Coordinate {
+        Coordinate(x: vector.x * scalar, y: vector.y * scalar)
+    }
 
     func distanceTo(_ coordinate: Coordinate) -> Double {
         let vector = coordinate - self
