@@ -108,8 +108,8 @@ extension Enemy {
     static func makeMeleeEnemy(at position: Coordinate, heading: CompassDirection = .west) -> Enemy {
         Enemy(position: position, heading: heading, range: 1, damage: 1, attackStrategy: MeleeAttackStrategy())
     }
-    static func makeRangedEnemy(at position: Coordinate, heading: CompassDirection = .west) -> RangedEnemy {
-        RangedEnemy(position: position, heading: heading)
+    static func makeRangedEnemy(at position: Coordinate, heading: CompassDirection = .west) -> Enemy {
+        Enemy(position: position, heading: heading, range: 3, damage: 1, attackStrategy: RangedAttackStrategy())
     }
 }
 
@@ -137,7 +137,7 @@ struct MeleeAttackStrategy: AttackStrategy {
 }
 
 struct RangedAttackStrategy: AttackStrategy {
-    let range = 2
+    let range = 3
     let damage = 1
     
     func getValidTargets(in world: World) -> [PartyMember] {

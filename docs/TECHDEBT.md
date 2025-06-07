@@ -16,7 +16,7 @@
                         - [X] move `partyIsInRange` to `MeleeAttackStrategy`
             - [X] use `makeMeleeEnemy` in tests
         - [ ] Remove `RangedEnemy` class
-            - [ ] `makeRangedEnemy` should create an `Enemy` instance
+            - [X] `makeRangedEnemy` should create an `Enemy` instance
                 - [X] Inject `RangedAttackStrategy` into `Enemy`
                     - [X] Create `RangedAttackStrategy`
                     - [X] An `Enemy` needs to accept all types of AttackStrategies
@@ -26,7 +26,7 @@
                 - [X] Remove override attack methods
                     - [X] `MeleeEnemy`
                         - [X] `AttackStrategy` needs access to damage
-                    - [ ] `RangedEnemy`
+                    - [X] `RangedEnemy`
         - [ ] DRY: move as much from strategies into default implementations as possible
 
 ## ✅ DONE
