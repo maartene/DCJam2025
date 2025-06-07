@@ -3,7 +3,7 @@
 ## ⚠️ TODO
 - Is a KeyPath the right way of describing the position of a party member?
 - Determining if party is in line of sight of enemy uses a naive raycast approach. this could be easier.
-- [ ] DRY: move as much from strategies into default implementations as possible
+
 
 ## 🚧 DOING
 
@@ -58,3 +58,4 @@
     - [X] remove `range` from `Enemy`
         - [X] partyIsInRange should not use range
     - [X] remove `damage` from `Enemy`
+- [X] DRY: move as much from strategies into default implementations as possible
