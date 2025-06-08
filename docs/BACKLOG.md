@@ -24,11 +24,11 @@
     - ✅ Have different damage amount
     
 - Magic enemies should
-    - 🚧 Be able to attack more than one party member at a time (i.e. AoE)
+    - ✅ Be able to attack more than one party member at a time (i.e. AoE)
+        - ✅ All party members
+        - Based on initial target
 
-- Enemies as sprites
-    - ✅ Show a static sprite
-    - Should show where sprite is looking (probably requires approval testing)
+- 🚧 Enemies should move until they are in range of party
 
 - Enemies as models
     - ✅ Show a 3D model
@@ -43,3 +43,7 @@
 - UI to spice stuff up
 
 - Sound
+
+- Enemies as sprites
+    - ✅ Show a static sprite
+    - Should show where sprite is looking (probably requires approval testing)

@@ -161,6 +161,18 @@ import Foundation
     }
 }
 
+@Suite("Enemies should try and move towards party to get near them") struct EnemyMovementTests {
+    @Test("Enemies move towards party") func enemiesMoveTowardsParty() throws {
+        let world = makeWorld(from: [
+            "..s"
+        ])
+        let enemy = try #require(world.enemiesOnCurrentFloor.first)
+        
+        world.update(at: Date())
+        
+        #expect(enemy.position == Coordinate(x: 1, y: 0))
+    }
+}
 
 // MARK: Helper functions
 

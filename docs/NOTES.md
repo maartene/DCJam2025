@@ -92,4 +92,7 @@ What is there to find? The answer to the ultimate secret: what came before? the 
 - ✅ And take this into account when attacking
 
 ## 🍅 Pomodoro 20
-- 🚧 Migrate Enemy from inheritance to Strategy pattern
+- ✅ Migrate Enemy from inheritance to Strategy pattern
+
+## 🍅 Pomodoro 21
+- ✅ Implement magic enemies
