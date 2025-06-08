@@ -26,13 +26,13 @@ final class Enemy {
             return
         }
         
-        guard isFacingParty(in: world) else {
-            rotateTowardsParty(in: world, at: time)
+        guard attackStrategy.partyIsInRange(in: world, enemyPosition: position) else {
+            moveForward()
             return
         }
         
-        guard attackStrategy.partyIsInRange(in: world, enemyPosition: position) else {
-            moveForward()
+        guard isFacingParty(in: world) else {
+            rotateTowardsParty(in: world, at: time)
             return
         }
         
