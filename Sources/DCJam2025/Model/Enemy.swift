@@ -27,7 +27,7 @@ final class Enemy {
         }
         
         guard attackStrategy.partyIsInRange(in: world, enemyPosition: position) else {
-            moveForward()
+            move()
             return
         }
         
@@ -69,7 +69,7 @@ final class Enemy {
         heading = originalHeading
     }
     
-    private func moveForward() {
+    private func move() {
         position += heading.toCoordinate
     }
     
