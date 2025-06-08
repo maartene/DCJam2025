@@ -71,7 +71,11 @@ final class Enemy {
     private func attackParty(in world: World, at time: Date) {
         let potentialTargets = attackStrategy.getValidTargets(in: world)
             
-        potentialTargets.randomElement()?.takeDamage(attackStrategy.damage)
+        if attackStrategy is MagicAttackStrategy {
+            potentialTargets.forEach { $0.takeDamage(attackStrategy.damage) }
+        } else {
+            potentialTargets.randomElement()?.takeDamage(attackStrategy.damage)
+        }
         cooldownExpires = time.addingTimeInterval(cooldown)
     }
 }
@@ -92,5 +96,8 @@ extension Enemy {
     }
     static func makeRangedEnemy(at position: Coordinate, heading: CompassDirection = .west) -> Enemy {
         Enemy(position: position, heading: heading, attackStrategy: RangedAttackStrategy())
+    }
+    static func makeMagicEnemy(at position: Coordinate, heading: CompassDirection = .west) -> Enemy {
+        Enemy(position: position, heading: heading, attackStrategy: MagicAttackStrategy())
     }
 }

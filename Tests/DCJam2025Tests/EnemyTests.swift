@@ -141,6 +141,29 @@ import Foundation
     }
 }
 
+@Suite("Magic enemies should") struct MagicEnemyTests {
+    @Test("Hit multiple party members") func magicEnemiesHitMultiplePartyMembers() {
+        let world = makeWorld(from: [
+            """
+            .e
+            """
+        ])
+        let originalHpOfPartyMembers = world.partyMembers.all.map { $0.currentHP }
+        
+        world.update(at: Date())
+        
+        let hpOfPartyMembersAfterAttack = world.partyMembers.all.map { $0.currentHP }
+        
+        let numberOfPartyMembersWithLessHP = zip(originalHpOfPartyMembers, hpOfPartyMembersAfterAttack)
+            .filter { $0.0 > $0.1 }
+            .count
+        #expect(numberOfPartyMembersWithLessHP > 1)
+    }
+}
+
+
+// MARK: Helper functions
+
 private func sumHPOfPartyMembers(in world: World) -> Int {
     world.partyMembers.frontLeft.currentHP +
     world.partyMembers.frontRight.currentHP +
@@ -153,3 +176,4 @@ private func sumHPOfPartyMembersInBackRow(in world: World) -> Int {
     .map { $0.currentHP }
     .reduce(0, +)
 }
+

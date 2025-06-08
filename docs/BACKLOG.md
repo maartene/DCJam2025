@@ -24,7 +24,7 @@
     - ✅ Have different damage amount
     
 - Magic enemies should
-    - Be able to attack more than one party member at a time (i.e. AoE)
+    - 🚧 Be able to attack more than one party member at a time (i.e. AoE)
 
 - Enemies as sprites
     - ✅ Show a static sprite

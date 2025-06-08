@@ -38,3 +38,13 @@ struct RangedAttackStrategy: AttackStrategy {
             .filter { $0.isAlive }
     }
 }
+
+struct MagicAttackStrategy: AttackStrategy {
+    let range = 2
+    let damage = 1
+    
+    func getValidTargets(in world: World) -> [PartyMember] {
+        world.partyMembers.all
+            .filter { $0.isAlive }
+    }
+}

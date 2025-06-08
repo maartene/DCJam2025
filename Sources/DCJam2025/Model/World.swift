@@ -162,6 +162,9 @@ func makeWorld(from floorplans: [String]) -> World {
                 if mapArray[row][column] == "r" {
                     enemiesOnFloor.insert(Enemy.makeRangedEnemy(at: Coordinate(x: column, y: row)))
                 }
+                if mapArray[row][column] == "e" {
+                    enemiesOnFloor.insert(Enemy.makeMagicEnemy(at: Coordinate(x: column, y: row)))
+                }
             }
         }
         
