@@ -69,13 +69,7 @@ final class Enemy {
     }
     
     private func attackParty(in world: World, at time: Date) {
-        let potentialTargets = attackStrategy.getValidTargets(in: world)
-            
-        if attackStrategy is MagicAttackStrategy {
-            potentialTargets.forEach { $0.takeDamage(attackStrategy.damage) }
-        } else {
-            potentialTargets.randomElement()?.takeDamage(attackStrategy.damage)
-        }
+        attackStrategy.damageTargets(in: world)
         cooldownExpires = time.addingTimeInterval(cooldown)
     }
 }

@@ -10,12 +10,18 @@ protocol AttackStrategy {
     var damage: Int { get }
     
     func getValidTargets(in world: World) -> [PartyMember]
+    func damageTargets(in world: World)
 }
 
 extension AttackStrategy {
     func partyIsInRange(in world: World, enemyPosition: Coordinate) -> Bool {
         let manhattanDistance = abs(world.partyPosition.x - enemyPosition.x) + abs(world.partyPosition.y - enemyPosition.y)
         return manhattanDistance <= range
+    }
+    
+    func damageTargets(in world: World) {
+        let potentialTargets = getValidTargets(in: world)
+        potentialTargets.randomElement()?.takeDamage(damage)
     }
 }
 
@@ -46,5 +52,10 @@ struct MagicAttackStrategy: AttackStrategy {
     func getValidTargets(in world: World) -> [PartyMember] {
         world.partyMembers.all
             .filter { $0.isAlive }
+    }
+    
+    func damageTargets(in world: World) {
+        let potentialTargets = getValidTargets(in: world)
+        potentialTargets.forEach { $0.takeDamage(damage) }
     }
 }
