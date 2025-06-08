@@ -156,14 +156,15 @@ func makeWorld(from floorplans: [String]) -> World {
         var enemiesOnFloor = Set<Enemy>()
         for row in 0 ..< mapArray.count {
             for column in 0 ..< mapArray[row].count {
-                if mapArray[row][column] == "s" {
+                switch mapArray[row][column] {
+                case "s":
                     enemiesOnFloor.insert(Enemy.makeMeleeEnemy(at: Coordinate(x: column, y: row)))
-                }
-                if mapArray[row][column] == "r" {
+                case "r":
                     enemiesOnFloor.insert(Enemy.makeRangedEnemy(at: Coordinate(x: column, y: row)))
-                }
-                if mapArray[row][column] == "e" {
+                case "e":
                     enemiesOnFloor.insert(Enemy.makeMagicEnemy(at: Coordinate(x: column, y: row)))
+                default:
+                    break
                 }
             }
         }
