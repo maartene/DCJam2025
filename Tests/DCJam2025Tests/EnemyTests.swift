@@ -201,6 +201,21 @@ import Foundation
         #expect(enemy.position == Coordinate(x: 2, y: 1))
         time += enemy.cooldown
     }
+
+    @Test("Increase cooldown after rotating") func rotatingConsumesCooldown() throws {
+        let world = makeWorld(from: [
+            """
+            ...
+            s..
+            """
+        ])
+        let enemy = try #require(world.enemiesOnCurrentFloor.first)
+        let originalHPOfPartyMembers = sumHPOfPartyMembers(in: world)
+        world.update(at: Date())
+        world.update(at: Date())
+
+        #expect(sumHPOfPartyMembers(in: world) == originalHPOfPartyMembers)
+    }
 }
 
 // MARK: Helper functions
