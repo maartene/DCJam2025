@@ -27,7 +27,7 @@ final class Enemy {
         }
         
         guard attackStrategy.partyIsInRange(in: world, enemyPosition: position) else {
-            move()
+            move(in: world, at: time)
             return
         }
         
@@ -44,20 +44,28 @@ final class Enemy {
     }
     
     private func isFacingParty(in world: World) -> Bool {
+        isFacingCoordinate(world.partyPosition)
+    }
+
+    private func isFacingCoordinate(_ coordinate: Coordinate) -> Bool {
         // naive raycast approach
         for i in 0 ..< 20 {
-            if position + (heading.forward * i) == world.partyPosition {
+            if position + (heading.forward * i) == coordinate {
                 return true
             }
         }
         return false
     }
-    
+
     private func rotateTowardsParty(in world: World, at time: Date) {
+        rotateTowardsCoordinate(world.partyPosition, at: time)
+    }
+    
+    private func rotateTowardsCoordinate(_ coordinate: Coordinate, at time: Date) {
         let originalHeading = heading
         
         for _ in 0 ..< 4 {
-            if isFacingParty(in: world) {
+            if isFacingCoordinate(coordinate) {
                 cooldownExpires = time.addingTimeInterval(cooldown)
                 print("New heading: \(heading)")
                 return
@@ -69,8 +77,19 @@ final class Enemy {
         heading = originalHeading
     }
     
-    private func move() {
-        position += heading.toCoordinate
+    private func move(in world: World, at time: Date) {
+        let path = world.pathToParty(from: position) 
+
+        guard let nextPosition = path.first(where: { $0.distanceTo(position) == 1 } ) else {
+            return
+        }
+
+        guard isFacingCoordinate(nextPosition) else {
+            rotateTowardsCoordinate(nextPosition, at: time)
+            return 
+        }
+
+        position = nextPosition
     }
     
     private func attackParty(in world: World, at time: Date) {

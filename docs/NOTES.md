@@ -99,3 +99,9 @@ What is there to find? The answer to the ultimate secret: what came before? the 
 - 🚧 Enemy movement
     - ✅ Just move forward
     - ⚠️ Path finding
+
+## 🍅 Pomodoro 22
+- 🚧 Enemy movement
+    - ⚠️ Path finding
+        - ✅ Fake it
+        - ⚠️ Proper path finding

@@ -172,6 +172,35 @@ import Foundation
         
         #expect(enemy.position == Coordinate(x: 1, y: 0))
     }
+
+    @Test("Enemies find a path towards the party") func enemiesFindAPathTowardsTheParty() throws {
+        let world = makeWorld(from: [
+            """
+            ...
+            ##.
+            .s.
+            """
+        ])
+
+        let enemy = try #require(world.enemiesOnCurrentFloor.first)
+        var time = Date() 
+
+        world.update(at: time)
+        #expect(enemy.heading == .east)
+        time += enemy.cooldown
+
+        world.update(at: time)
+        #expect(enemy.position == Coordinate(x: 2, y: 2))
+        time += enemy.cooldown
+
+        world.update(at: time)
+        #expect(enemy.heading == .south)
+        time += enemy.cooldown
+
+        world.update(at: time)
+        #expect(enemy.position == Coordinate(x: 2, y: 1))
+        time += enemy.cooldown
+    }
 }
 
 // MARK: Helper functions

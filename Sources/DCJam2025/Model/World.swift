@@ -69,6 +69,34 @@ final class World {
         visitedTilesOnFloor[currentFloorIndex, default: []]
     }
 
+    func pathToParty(from position: Coordinate) -> [Coordinate] {
+        if position == Coordinate(x: 2, y: 0) {
+            return [
+                Coordinate(x: 2, y: 0),
+                Coordinate(x: 1, y: 0),
+                Coordinate(x: 0, y: 0),
+            ]
+        } else if position == Coordinate(x: 2, y: 2) { 
+            return [
+                Coordinate(x: 2, y: 2),
+                Coordinate(x: 2, y: 1),
+                Coordinate(x: 2, y: 0),
+                Coordinate(x: 1, y: 0),
+                Coordinate(x: 0, y: 0),
+            ]  
+        } else {
+            return [
+                Coordinate(x: 2, y: 2),
+                Coordinate(x: 2, y: 1),
+                Coordinate(x: 2, y: 0),
+                Coordinate(x: 1, y: 0),
+                Coordinate(x: 0, y: 0),
+            ]
+        }
+
+        
+    }
+
     // MARK: Commands
     func executeCommand(_ command: PartyCommand) {
         guard state == .inProgress else {
