@@ -89,6 +89,7 @@ final class Enemy {
             return 
         }
 
+        cooldownExpires = time.addingTimeInterval(cooldown)
         position = nextPosition
     }
     

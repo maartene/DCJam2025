@@ -209,7 +209,19 @@ import Foundation
             s..
             """
         ])
-        let enemy = try #require(world.enemiesOnCurrentFloor.first)
+
+        let originalHPOfPartyMembers = sumHPOfPartyMembers(in: world)
+        world.update(at: Date())
+        world.update(at: Date())
+
+        #expect(sumHPOfPartyMembers(in: world) == originalHPOfPartyMembers)
+    }
+
+    @Test("Increase cooldown after moving") func movingConsumesCooldown() throws {
+        let world = makeWorld(from: [
+            "..s"
+        ])
+
         let originalHPOfPartyMembers = sumHPOfPartyMembers(in: world)
         world.update(at: Date())
         world.update(at: Date())
