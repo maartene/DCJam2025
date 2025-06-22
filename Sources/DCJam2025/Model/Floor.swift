@@ -31,7 +31,6 @@ struct Floor {
         for row in 0 ..< mapArray.count {
             for column in 0 ..< mapArray[0].count {
                 readTiles[Coordinate(x: column, y: row)] = Tile.characterToTile(mapArray[row][column])
-                
             }
         }
 
@@ -39,7 +38,7 @@ struct Floor {
 
         minX = 0
         minY = 0
-        maxX = (mapArray.first?.count ?? 0) - 1
+        maxX = (mapArray.first?.count ?? 1) - 1
         maxY = mapArray.count - 1
     }
 
