@@ -1,11 +1,10 @@
 # TECHDEBT
 
 ## ⚠️ TODO
-- Movement tests in `EnemyMovementTests` use hard coded paths, these should be generated using a path finding algorithm like Dijkstra or BFS
 - Is a KeyPath the right way of describing the position of a party member?
 - Determining if party is in line of sight of enemy uses a naive raycast approach. this could be easier more elegant.
 - Rotating towards party is based on trial and error: rotate, see if facing party. otherwise repeat. this could be based on dot product
-
+- `Floor` uses `min#` and `max#`. But `min#` is always 0 and` `max#` is always size - 1. Maybe its better to just use a size?
 
 ## 🚧 DOING
 
@@ -61,3 +60,4 @@
         - [X] partyIsInRange should not use range
     - [X] remove `damage` from `Enemy`
 - [X] DRY: move as much from strategies into default implementations as possible
+- Movement tests in `EnemyMovementTests` use hard coded paths, these should be generated using a path finding algorithm like Dijkstra or BFS

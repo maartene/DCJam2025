@@ -27,9 +27,11 @@ struct Floor {
 
     init(_ mapArray: [[Character]] = [[]]) {
         var readTiles = [Coordinate: Tile]()
+        
         for row in 0 ..< mapArray.count {
             for column in 0 ..< mapArray[0].count {
                 readTiles[Coordinate(x: column, y: row)] = Tile.characterToTile(mapArray[row][column])
+                
             }
         }
 
@@ -37,8 +39,8 @@ struct Floor {
 
         minX = 0
         minY = 0
-        maxX = tiles.keys.map { $0.x }.max() ?? 0
-        maxY = tiles.keys.map { $0.y }.max() ?? 0
+        maxX = (mapArray.first?.count ?? 0) - 1
+        maxY = mapArray.count - 1
     }
 
     func tileAt(_ coordinate: Coordinate) -> Tile {

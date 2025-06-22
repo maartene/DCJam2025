@@ -55,6 +55,15 @@ struct Coordinate {
             $0 + self
         })
     }
+    
+    var neighbours: [Coordinate] {
+        [
+            Coordinate(x: 1, y: 0),
+            Coordinate(x: -1, y: 0),
+            Coordinate(x: 0, y: +1),
+            Coordinate(x: 0, y: -1)
+        ].map { $0 + self }
+    }
 }
 
 extension Coordinate: Equatable { }

@@ -70,31 +70,62 @@ final class World {
     }
 
     func pathToParty(from position: Coordinate) -> [Coordinate] {
-        if position == Coordinate(x: 2, y: 0) {
-            return [
-                Coordinate(x: 2, y: 0),
-                Coordinate(x: 1, y: 0),
-                Coordinate(x: 0, y: 0),
-            ]
-        } else if position == Coordinate(x: 2, y: 2) { 
-            return [
-                Coordinate(x: 2, y: 2),
-                Coordinate(x: 2, y: 1),
-                Coordinate(x: 2, y: 0),
-                Coordinate(x: 1, y: 0),
-                Coordinate(x: 0, y: 0),
-            ]  
-        } else {
-            return [
-                Coordinate(x: 2, y: 2),
-                Coordinate(x: 2, y: 1),
-                Coordinate(x: 2, y: 0),
-                Coordinate(x: 1, y: 0),
-                Coordinate(x: 0, y: 0),
-            ]
+        let bfs = BFS(from: position, to: partyPosition)
+        return getPath(from: position, to: partyPosition, using: bfs)
+    }
+    
+    private func BFS(from start: Coordinate, to destination: Coordinate) -> [Coordinate: Int] {
+        let floor = currentFloor
+        
+        // Queue for BFS and a set to keep track of visited points
+        var queue: [(Coordinate, Int)] = [(start, 0)]  // (current point, distance)
+        var visited = [start : 0]
+
+        while queue.isEmpty == false {
+            let (current, distance) = queue.removeFirst()
+
+            // Check if current point is the destination
+            if current == destination {
+                return visited
+            }
+
+            // Try to move in all directions
+            for neighbour in current.neighbours {
+                // Check if its within grid and not an occupied location
+                if neighbour.x >= floor.minX, neighbour.y >= floor.minY, neighbour.x <= floor.maxX, neighbour.y <= floor.maxY,
+                   floor.tileAt(neighbour) != .wall, visited.keys.contains(neighbour) == false
+                {
+                    let distanceForNeighbour = distance + 1
+                    queue.append((neighbour, distanceForNeighbour))
+                    visited[neighbour] = distanceForNeighbour
+                }
+            }
+        }
+        return [:]
+    }
+    
+    private func getPath(from start: Coordinate, to destination: Coordinate, using map: [Coordinate: Int]) -> [Coordinate] {
+        var result = [Coordinate]()
+        
+        guard map.keys.contains(start), map.keys.contains(destination) else {
+            return []
         }
 
+        var current = destination
+        while current != start {
+            let neighbourDistances = current.neighbours
+                .compactMap { ($0, map[$0]) }
+            
+            guard let newCurrent = neighbourDistances.min(by: { $0.1 ?? Int.max < $1.1 ?? Int.max }) else {
+                return []
+            }
+            
+            result.append(current)
+            
+            current = newCurrent.0
+        }
         
+        return result.reversed()
     }
 
     // MARK: Commands
@@ -232,4 +263,18 @@ enum PartyCommand {
     case move(direction: MovementDirection)
     case turnClockwise
     case turnCounterClockwise
+}
+
+func printMap(map: [Coordinate: Int]) {
+    for row in 0 ..< 10 {
+        var line = ""
+        for column in 0 ..< 10 {
+            if let count = map[Coordinate(x: column, y: row)] {
+                line += String(count)
+            } else {
+                line += "."
+            }
+        }
+        print(line)
+    }
 }
