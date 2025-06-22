@@ -28,7 +28,7 @@
         - ✅ All party members
         - Based on initial target
 
-- 🚧 Enemies should move until they are in range of party
+- ✅ Enemies should move until they are in range of party
 
 - Enemies as models
     - ✅ Show a 3D model

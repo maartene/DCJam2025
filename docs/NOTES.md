@@ -105,3 +105,9 @@ What is there to find? The answer to the ultimate secret: what came before? the 
     - ⚠️ Path finding
         - ✅ Fake it
         - ⚠️ Proper path finding
+
+## 🍅 Pomodoro 23
+- ✅ Enemy movement
+    - ✅ Path finding
+        - ✅ Fake it
+        - ✅ Proper path finding
