@@ -119,3 +119,6 @@ What is there to find? The answer to the ultimate secret: what came before? the 
         - Taking cooldown into account
         - Left and right arms
     - Specific party member attacks with ranged attack
+- ⚠️ Manage enemy health
+    - ✅ Take damage
+    - State: alive or dead

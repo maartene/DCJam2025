@@ -1,6 +1,7 @@
 # TECHDEBT
 
 ## ⚠️ TODO
+- Duplication of logic between Enemy and World (Party)
 - Is a KeyPath the right way of describing the position of a party member?
 - Determining if party is in line of sight of enemy uses a naive raycast approach. this could be easier more elegant.
 - Rotating towards party is based on trial and error: rotate, see if facing party. otherwise repeat. this could be based on dot product

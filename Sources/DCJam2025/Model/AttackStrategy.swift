@@ -15,7 +15,7 @@ protocol AttackStrategy {
 
 extension AttackStrategy {
     func partyIsInRange(in world: World, enemyPosition: Coordinate) -> Bool {
-        let manhattanDistance = abs(world.partyPosition.x - enemyPosition.x) + abs(world.partyPosition.y - enemyPosition.y)
+        let manhattanDistance = world.partyPosition.manhattanDistanceTo(enemyPosition)
         return manhattanDistance <= range
     }
     
