@@ -13,6 +13,7 @@ final class Enemy {
     private var cooldownExpires = Date()
     let cooldown = 0.75
     private let attackStrategy: any AttackStrategy
+    var hp = 3
 
     init(position: Coordinate, heading: CompassDirection, attackStrategy: any AttackStrategy) {
         self.position = position
@@ -20,7 +21,10 @@ final class Enemy {
         self.attackStrategy = attackStrategy
     }
 
-    
+    func damage(amount: Int) {
+        hp -= amount
+    }
+
     func act(in world: World, at time: Date) {
         guard enemyCooldownHasExpired(at: time) else {
             return

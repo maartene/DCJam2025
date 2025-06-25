@@ -87,6 +87,8 @@ final class World {
             partyHeading = partyHeading.rotatedClockwise()
         case .turnCounterClockwise:
             partyHeading = partyHeading.rotatedCounterClockwise()
+        case .attack:
+            attackEnemies()
         }
     }
     
@@ -117,6 +119,12 @@ final class World {
     
     private func updateVisitedTiles() {
         visitedTilesOnFloor[currentFloorIndex] = visitedTilesOnCurrentFloor.union(partyPosition.squareAround)
+    }
+
+    private func attackEnemies() {
+        enemiesOnCurrentFloor.forEach {
+            $0.damage(amount: 2)
+        }
     }
     
     // MARK: update
@@ -209,6 +217,7 @@ enum PartyCommand {
     case move(direction: MovementDirection)
     case turnClockwise
     case turnCounterClockwise
+    case attack
 }
 
 func printMap(map: [Coordinate: Int]) {

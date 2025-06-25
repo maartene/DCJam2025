@@ -111,3 +111,11 @@ What is there to find? The answer to the ultimate secret: what came before? the 
     - ✅ Path finding
         - ✅ Fake it
         - ✅ Proper path finding
+
+## 🍅 Pomodoro 24
+- 🚧 Party members can attack
+    - Simple melee attack from 'the party' (to show damaging enemies)
+    - Specific party member attacks
+        - Taking cooldown into account
+        - Left and right arms
+    - Specific party member attacks with ranged attack
