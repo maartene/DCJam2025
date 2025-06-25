@@ -64,6 +64,10 @@ struct Coordinate {
             Coordinate(x: 0, y: -1)
         ].map { $0 + self }
     }
+
+    func manhattanDistanceTo(_ other: Coordinate) -> Int {
+        abs(x - other.x) + abs(y - other.y)
+    }
 }
 
 extension Coordinate: Equatable { }

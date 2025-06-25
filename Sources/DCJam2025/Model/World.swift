@@ -123,8 +123,7 @@ final class World {
 
     private func attackEnemies() {
         enemiesOnCurrentFloor.forEach {
-            let manhattanDistance = abs(partyPosition.x - $0.position.x) + abs(partyPosition.y - $0.position.y)
-            if manhattanDistance <= 1 {
+            if partyPosition.manhattanDistanceTo($0.position) <= 1 {
                 $0.damage(amount: 2)
             }            
         }
