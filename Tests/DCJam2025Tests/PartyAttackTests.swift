@@ -12,7 +12,7 @@ import Testing
         
         let hpOfEnemyBeforeAttack = enemy.hp
         
-        world.executeCommand(.attack)
+        world.executeCommand(.attack(from: \.frontLeft))
         
         #expect(enemy.hp < hpOfEnemyBeforeAttack)
     }
@@ -26,8 +26,22 @@ import Testing
         
         let hpOfEnemyBeforeAttack = enemy.hp
         
-        world.executeCommand(.attack)
+        world.executeCommand(.attack(from: \.frontRight))
         
         #expect(enemy.hp == hpOfEnemyBeforeAttack)
+    }
+    
+    @Test("should be able to make a melee attack from the front row") func meleeAttackFromFrontRowDamagesEnemy() throws {
+        let world = makeWorld(from: [
+            ".s"
+        ])
+        
+        let enemy = try #require(world.enemiesOnCurrentFloor.first)
+        
+        let hpOfEnemyBeforeAttack = enemy.hp
+        
+        world.executeCommand(.attack(from: \.frontLeft))
+        
+        #expect(enemy.hp < hpOfEnemyBeforeAttack)
     }
 }

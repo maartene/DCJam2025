@@ -87,7 +87,7 @@ final class World {
             partyHeading = partyHeading.rotatedClockwise()
         case .turnCounterClockwise:
             partyHeading = partyHeading.rotatedCounterClockwise()
-        case .attack:
+        case .attack(_):
             attackEnemies()
         }
     }
@@ -219,7 +219,7 @@ enum PartyCommand {
     case move(direction: MovementDirection)
     case turnClockwise
     case turnCounterClockwise
-    case attack
+    case attack(from: KeyPath<PartyMembers, PartyMember>)
 }
 
 func printMap(map: [Coordinate: Int]) {
