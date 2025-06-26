@@ -87,8 +87,8 @@ final class World {
             partyHeading = partyHeading.rotatedClockwise()
         case .turnCounterClockwise:
             partyHeading = partyHeading.rotatedCounterClockwise()
-        case .attack(_):
-            attackEnemies()
+        case .attack(let partyMember):
+            partyMembers[keyPath: partyMember].attack(potentialTargets: enemiesOnCurrentFloor, partyPosition: partyPosition)
         }
     }
 
@@ -115,14 +115,6 @@ final class World {
     
     private func updateVisitedTiles() {
         visitedTilesOnFloor[currentFloorIndex] = visitedTilesOnCurrentFloor.union(partyPosition.squareAround)
-    }
-
-    private func attackEnemies() {
-        enemiesOnCurrentFloor.forEach {
-            if partyPosition.manhattanDistanceTo($0.position) <= 1 {
-                $0.damage(amount: 2)
-            }            
-        }
     }
     
     // MARK: update

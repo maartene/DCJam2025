@@ -15,4 +15,12 @@ final class PartyMember {
     func takeDamage(_ amount: Int) {
         currentHP -= amount
     }
+    
+    func attack(potentialTargets: Set<Enemy>, partyPosition: Coordinate) {
+        potentialTargets.forEach {
+            if partyPosition.manhattanDistanceTo($0.position) <= 1 {
+                $0.damage(amount: 2)
+            }
+        }
+    }
 }
