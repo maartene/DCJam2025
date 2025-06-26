@@ -5,7 +5,7 @@
 //  Created by Maarten Engels on 07/06/2025.
 //
 
-protocol AttackStrategy {
+protocol AttackPartyStrategy {
     var range: Int { get }
     var damage: Int { get }
     
@@ -13,7 +13,7 @@ protocol AttackStrategy {
     func damageTargets(in world: World)
 }
 
-extension AttackStrategy {
+extension AttackPartyStrategy {
     func partyIsInRange(in world: World, enemyPosition: Coordinate) -> Bool {
         let manhattanDistance = world.partyPosition.manhattanDistanceTo(enemyPosition)
         return manhattanDistance <= range
@@ -25,7 +25,7 @@ extension AttackStrategy {
     }
 }
 
-struct MeleeAttackStrategy: AttackStrategy {
+struct MeleeAttackStrategy: AttackPartyStrategy {
     let range = 1
     let damage = 2
     
@@ -35,7 +35,7 @@ struct MeleeAttackStrategy: AttackStrategy {
     }
 }
 
-struct RangedAttackStrategy: AttackStrategy {
+struct RangedAttackStrategy: AttackPartyStrategy {
     let range = 3
     let damage = 1
     
@@ -45,7 +45,7 @@ struct RangedAttackStrategy: AttackStrategy {
     }
 }
 
-struct MagicAttackStrategy: AttackStrategy {
+struct MagicAttackStrategy: AttackPartyStrategy {
     let range = 2
     let damage = 1
     

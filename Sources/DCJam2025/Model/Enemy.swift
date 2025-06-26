@@ -12,10 +12,10 @@ final class Enemy {
     private(set) var heading: CompassDirection
     private var cooldownExpires = Date()
     let cooldown = 0.75
-    private let attackStrategy: any AttackStrategy
+    private let attackStrategy: any AttackPartyStrategy
     var hp = 3
 
-    init(position: Coordinate, heading: CompassDirection, attackStrategy: any AttackStrategy) {
+    init(position: Coordinate, heading: CompassDirection, attackStrategy: any AttackPartyStrategy) {
         self.position = position
         self.heading = heading
         self.attackStrategy = attackStrategy

@@ -215,7 +215,7 @@ enum PartyCommand {
     case move(direction: MovementDirection)
     case turnClockwise
     case turnCounterClockwise
-    case attack(from: KeyPath<PartyMembers, PartyMember>)
+    case attack(attacker: KeyPath<PartyMembers, PartyMember>)
 }
 
 func printMap(map: [Coordinate: Int]) {
