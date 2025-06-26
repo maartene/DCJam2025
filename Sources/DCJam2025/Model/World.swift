@@ -91,10 +91,6 @@ final class World {
             attackEnemies()
         }
     }
-    
-    func damage(position: KeyPath<PartyMembers, PartyMember>, amount: Int) {
-        partyMembers[keyPath: position].takeDamage(amount)
-    }
 
     private func performMovement(direction: MovementDirection) {
         let newPosition = partyPosition + direction.toCompassDirection(facing: partyHeading).toCoordinate
