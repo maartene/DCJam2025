@@ -122,3 +122,18 @@ What is there to find? The answer to the ultimate secret: what came before? the 
 - ⚠️ Manage enemy health
     - ✅ Take damage
     - State: alive or dead
+
+## 🍅 Pomodoro 25
+- 🚧 Party members can attack
+    - ✅ Simple melee attack from 'the party' (to show damaging enemies)
+    - Specific party member attacks
+        - 🚧 Melee attacks are only possible from the front row
+            - ✅ Can attack from front-row
+            - Cannot attack from other row
+        - Melee attacks have a range
+        - Taking cooldown into account
+        - Left and right arms
+    - Specific party member attacks with ranged attack
+- ⚠️ Manage enemy health
+    - ✅ Take damage
+    - State: alive or dead
