@@ -24,12 +24,7 @@ struct PartyMembers {
             members[3]
         }
     }
-    
-    //var frontLeft: PartyMember { members[0] }
-    //var frontRight: PartyMember { members[1] }
-    var backLeft: PartyMember { members[2] }
-    var backRight: PartyMember { members[3] }
-    
+        
     var hasAlivePartyMember: Bool {
         members.filter { $0.isAlive }.isEmpty == false
     }
@@ -39,7 +34,7 @@ struct PartyMembers {
     }
 
     var backRow: [PartyMember] {
-        [backLeft, backRight]
+        [getMember(at: .backLeft), getMember(at: .backRight)]
     }
 
     var all: [PartyMember] {
