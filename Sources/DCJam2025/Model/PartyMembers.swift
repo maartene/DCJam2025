@@ -24,7 +24,18 @@ struct PartyMembers {
             members[3]
         }
     }
-        
+    
+    func getMembers(grouping: PartyPositionGroup) -> [PartyMember] {
+        return switch grouping {
+        case .frontRow:
+            [getMember(at: .frontLeft), getMember(at: .frontRight)]
+        case .backRow:
+            [getMember(at: .backLeft), getMember(at: .backRight)]
+        case .all:
+            members
+        }
+    }
+    
     var hasAlivePartyMember: Bool {
         members.filter { $0.isAlive }.isEmpty == false
     }
@@ -47,4 +58,10 @@ enum SinglePartyPosition {
     case frontRight
     case backLeft
     case backRight
+}
+
+enum PartyPositionGroup {
+    case frontRow
+    case backRow
+    case all
 }
