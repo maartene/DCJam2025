@@ -44,4 +44,18 @@ import Testing
         
         #expect(enemy.hp < hpOfEnemyBeforeAttack)
     }
+    
+    @Test("should not be able to make a melee attack from the back row") func meleeAttackFromBackRowDoesNotDamageEnemy() throws {
+        let world = makeWorld(from: [
+            ".s"
+        ])
+        
+        let enemy = try #require(world.enemiesOnCurrentFloor.first)
+        
+        let hpOfEnemyBeforeAttack = enemy.hp
+        
+        world.executeCommand(.attack(attacker: \.backLeft))
+        
+        #expect(enemy.hp == hpOfEnemyBeforeAttack)
+    }
 }

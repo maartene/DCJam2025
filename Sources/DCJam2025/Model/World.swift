@@ -88,7 +88,9 @@ final class World {
         case .turnCounterClockwise:
             partyHeading = partyHeading.rotatedCounterClockwise()
         case .attack(let partyMember):
-            partyMembers[keyPath: partyMember].attack(potentialTargets: enemiesOnCurrentFloor, partyPosition: partyPosition)
+            if partyMembers.frontRow.contains(where: { partyMembers[keyPath: partyMember] === $0 }) {
+                partyMembers[keyPath: partyMember].attack(potentialTargets: enemiesOnCurrentFloor, partyPosition: partyPosition)
+            }
         }
     }
 
