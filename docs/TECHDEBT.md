@@ -11,6 +11,7 @@
     - [ ] remove frontLeft/right
         - [X] frontRow uses getMember 
             - [X] add a getMember function
+        - [X] drawParty uses getMember
 
 ## ✅ DONE
 - no test coverage for conversion of coordinate spaces, while this might be valuable. Maybe property based testing?
