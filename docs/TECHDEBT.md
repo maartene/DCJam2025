@@ -5,6 +5,7 @@
 - Rotating towards party is based on trial and error: rotate, see if facing party. otherwise repeat. this could be based on dot product
 - Duplication of logic between Enemy and World (Party)
     - Is it possible to re-use attack strategy?
+- remove the @testable from the import statement in the tests
 
 ## 🚧 DOING
 

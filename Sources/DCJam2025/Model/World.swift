@@ -119,7 +119,8 @@ final class World {
     
     // MARK: update
     func update(at time: Date) {
-        for enemy in enemiesOnCurrentFloor {
+        let aliveEnemies = enemiesOnCurrentFloor.filter { $0.isAlive }
+        for enemy in aliveEnemies {
             enemy.act(in: self, at: time)
         }
     }

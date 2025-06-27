@@ -21,6 +21,10 @@ final class Enemy {
         self.attackStrategy = attackStrategy
     }
 
+    var isAlive: Bool {
+        hp > 0
+    }
+    
     func damage(amount: Int) {
         hp -= amount
     }
