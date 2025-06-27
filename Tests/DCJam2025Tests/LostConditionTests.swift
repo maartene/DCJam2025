@@ -44,10 +44,8 @@ import Testing
     private func makeWorldWithUnconciousPlayers() -> World {
         let world = worldWithSingleFloor
 
-        world.partyMembers.getMember(at: .frontLeft).takeDamage(Int.max)
-        world.partyMembers.getMember(at: .frontRight).takeDamage(Int.max)
-        world.partyMembers.getMember(at: .backLeft).takeDamage(Int.max)
-        world.partyMembers.getMember(at: .backRight).takeDamage(Int.max)
+        let partyMembers = world.partyMembers.getMembers(grouping: .all)
+        partyMembers.forEach { $0.takeDamage(Int.max) }
 
         return world
     }

@@ -88,9 +88,7 @@ final class World {
         case .turnCounterClockwise:
             partyHeading = partyHeading.rotatedCounterClockwise()
         case .attack(let attacker):
-            if attacker == .frontLeft || attacker == .frontRight {
-                partyMembers.getMember(at: attacker).attack(potentialTargets: enemiesOnCurrentFloor, partyPosition: partyPosition)
-            }
+            partyMembers.attack(from: attacker, in: self)
         }
     }
 

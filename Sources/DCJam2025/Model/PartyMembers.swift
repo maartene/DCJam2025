@@ -39,6 +39,14 @@ struct PartyMembers {
     var hasAlivePartyMember: Bool {
         members.filter { $0.isAlive }.isEmpty == false
     }
+    
+    func attack(from attackPosition: SinglePartyPosition, in world: World) {
+        if attackPosition == .frontLeft || attackPosition == .frontRight {
+            let attacker = getMember(at: attackPosition)
+            attacker.attack(potentialTargets: world.enemiesOnCurrentFloor, partyPosition: world.partyPosition)
+        }
+
+    }
 }
 
 enum SinglePartyPosition {
