@@ -87,10 +87,10 @@ final class World {
             partyHeading = partyHeading.rotatedClockwise()
         case .turnCounterClockwise:
             partyHeading = partyHeading.rotatedCounterClockwise()
-        case .attack(let partyMember):
-            if partyMembers.frontRow.contains(where: { partyMembers[keyPath: partyMember] === $0 }) {
-                partyMembers[keyPath: partyMember].attack(potentialTargets: enemiesOnCurrentFloor, partyPosition: partyPosition)
-            }
+//        case .attack(let partyMember):
+//            if partyMembers.frontRow.contains(where: { partyMembers[keyPath: partyMember] === $0 }) {
+//                partyMembers[keyPath: partyMember].attack(potentialTargets: enemiesOnCurrentFloor, partyPosition: partyPosition)
+//            }
         case .attackNew(let attacker):
             if attacker == .frontLeft || attacker == .frontRight {
                 partyMembers.getMember(at: attacker).attack(potentialTargets: enemiesOnCurrentFloor, partyPosition: partyPosition)
@@ -213,7 +213,7 @@ enum PartyCommand {
     case move(direction: MovementDirection)
     case turnClockwise
     case turnCounterClockwise
-    case attack(attacker: KeyPath<PartyMembers, PartyMember>)
+    //case attack(attacker: KeyPath<PartyMembers, PartyMember>)
     case attackNew(attacker: SinglePartyPosition)
 }
 

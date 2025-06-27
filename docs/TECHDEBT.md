@@ -16,6 +16,7 @@
         - [ ]  meleeAttackFromBackRowDoesNotDamageEnemy needs to not use the keypath solution
             - [ ] attack needs to take an SinglePartyPosition as associate value
                 - [X] add a new attackNew value and use a SinglePartyPosition
+                - [X] Tests use the new enum case
 
 ## ✅ DONE
 - no test coverage for conversion of coordinate spaces, while this might be valuable. Maybe property based testing?
