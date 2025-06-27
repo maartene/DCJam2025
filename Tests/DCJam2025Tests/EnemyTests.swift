@@ -65,12 +65,12 @@ import Foundation
     @Test("only attacks alive party members") func enemiesOnlyAttackAlivePartyMembers() {
         let enemy = Enemy.makeMeleeEnemy(at:  Coordinate(x: 1, y: 0), heading: .west)
         let world = World(floors: [Floor()], enemies: [[enemy]])
-        world.partyMembers.frontLeft.takeDamage(Int.max)
-        let originalHPForFrontRightPartyMember = world.partyMembers.frontRight.currentHP
+        world.partyMembers.getMember(at: .frontLeft).takeDamage(Int.max)
+        let originalHPForFrontRightPartyMember = world.partyMembers.getMember(at: .frontRight).currentHP
         
         world.update(at: Date())
         
-        #expect(world.partyMembers.frontRight.currentHP < originalHPForFrontRightPartyMember)
+        #expect(world.partyMembers.getMember(at: .frontRight).currentHP < originalHPForFrontRightPartyMember)
     }
     
     @Test("rotates towards a party when its not facing party") func enemiesRotateTowardsPartyWhenItsNotFacingParty() throws {
@@ -93,8 +93,8 @@ import Foundation
             ".r"
         ])
 
-        world.partyMembers.frontLeft.takeDamage(Int.max)
-        world.partyMembers.frontRight.takeDamage(Int.max)
+        world.partyMembers.getMember(at: .frontLeft).takeDamage(Int.max)
+        world.partyMembers.getMember(at: .frontRight).takeDamage(Int.max)
         
         let originalHPForPartyMembersInBackRow = sumHPOfPartyMembersInBackRow(in: world)
 
@@ -233,10 +233,9 @@ import Foundation
 // MARK: Helper functions
 
 private func sumHPOfPartyMembers(in world: World) -> Int {
-    world.partyMembers.frontLeft.currentHP +
-    world.partyMembers.frontRight.currentHP +
-    world.partyMembers.backLeft.currentHP +
-    world.partyMembers.backRight.currentHP
+    world.partyMembers.all
+        .map { $0.currentHP }
+        .reduce(0, +)
 }
 
 private func sumHPOfPartyMembersInBackRow(in world: World) -> Int {

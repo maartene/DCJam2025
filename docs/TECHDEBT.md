@@ -8,11 +8,11 @@
 
 ## 🚧 DOING
 - Is a KeyPath the right way of describing the position of a party member?
-    - [ ] remove frontLeft/right
+    - [X] remove frontLeft/right
         - [X] frontRow uses getMember 
             - [X] add a getMember function
         - [X] drawParty uses getMember
-        - [ ] test notLostWhenAtLeastOnePartyMemberIsAlive needs to use getMember
+        - [X] test notLostWhenAtLeastOnePartyMemberIsAlive needs to use getMember
         - [X]  meleeAttackFromBackRowDoesNotDamageEnemy needs to not use the keypath solution
             - [X] attack needs to take an SinglePartyPosition as associate value
                 - [X] add a new attackNew value and use a SinglePartyPosition
