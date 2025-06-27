@@ -12,6 +12,19 @@ struct PartyMembers {
         self.members = members
     }
     
+    func getMember(at position: SinglePartyPosition) -> PartyMember {
+        return switch position {
+        case .frontLeft:
+            members[0]
+        case .frontRight:
+            members[1]
+        case .backLeft:
+            members[2]
+        case .backRight:
+            members[3]
+        }
+    }
+    
     var frontLeft: PartyMember { members[0] }
     var frontRight: PartyMember { members[1] }
     var backLeft: PartyMember { members[2] }
@@ -22,7 +35,7 @@ struct PartyMembers {
     }
     
     var frontRow: [PartyMember] {
-        [frontLeft, frontRight]
+        [getMember(at: .frontLeft), getMember(at: .frontRight)]
     }
 
     var backRow: [PartyMember] {
@@ -32,4 +45,11 @@ struct PartyMembers {
     var all: [PartyMember] {
         members
     }
+}
+
+enum SinglePartyPosition {
+    case frontLeft
+    case frontRight
+    case backLeft
+    case backRight
 }
