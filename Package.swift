@@ -23,6 +23,9 @@ let package = Package(
             ],
             cSettings: [
                 .define("RAYGUI_IMPLEMENTATION")
+            ],
+            swiftSettings: [
+                .unsafeFlags(["-Xfrontend", "-validate-tbd-against-ir=none"])
             ]
         ),
         .testTarget(
