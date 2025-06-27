@@ -149,7 +149,9 @@ What is there to find? The answer to the ultimate secret: what came before? the 
         - Taking cooldown into account
         - Left and right arms
     - Specific party member attacks with ranged attack
-- ⚠️ Manage enemy health
+- ✅ Manage enemy health
     - ✅ Take damage
-    - State: alive or dead
+    - ✅ State: alive or dead
+- ✅ Use regular enums instead of keypaths to determine party member(s)
+- ✅ Party member frontLeft can attack
 

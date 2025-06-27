@@ -155,7 +155,9 @@ class Game {
     }
 
     private func drawEntities(map: Floor, vantagePoint: Coordinate) {
-        for enemyOnCurrentFloor in world.enemiesOnCurrentFloor {
+        let enemiesToDraw = world.enemiesOnCurrentFloor
+            .filter { $0.isAlive }
+        for enemyOnCurrentFloor in enemiesToDraw {
             let coordinate = enemyOnCurrentFloor.position
             let light = light(position: coordinate, vantagePoint: vantagePoint)
 
