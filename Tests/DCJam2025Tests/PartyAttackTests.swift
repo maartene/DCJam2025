@@ -12,7 +12,7 @@ import Testing
         
         let hpOfEnemyBeforeAttack = enemy.hp
         
-        world.executeCommand(.attackNew(attacker: .frontLeft))
+        world.executeCommand(.attack(attacker: .frontLeft))
         
         #expect(enemy.hp < hpOfEnemyBeforeAttack)
     }
@@ -26,7 +26,7 @@ import Testing
         
         let hpOfEnemyBeforeAttack = enemy.hp
         
-        world.executeCommand(.attackNew(attacker: .frontRight))
+        world.executeCommand(.attack(attacker: .frontRight))
         
         #expect(enemy.hp == hpOfEnemyBeforeAttack)
     }
@@ -40,7 +40,7 @@ import Testing
         
         let hpOfEnemyBeforeAttack = enemy.hp
         
-        world.executeCommand(.attackNew(attacker: .frontLeft))
+        world.executeCommand(.attack(attacker: .frontLeft))
         
         #expect(enemy.hp < hpOfEnemyBeforeAttack)
     }
@@ -54,7 +54,7 @@ import Testing
         
         let hpOfEnemyBeforeAttack = enemy.hp
         
-        world.executeCommand(.attackNew(attacker: .backLeft))
+        world.executeCommand(.attack(attacker: .backLeft))
         
         #expect(enemy.hp == hpOfEnemyBeforeAttack)
     }

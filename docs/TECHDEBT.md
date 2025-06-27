@@ -13,8 +13,8 @@
             - [X] add a getMember function
         - [X] drawParty uses getMember
         - [ ] test notLostWhenAtLeastOnePartyMemberIsAlive needs to use getMember
-        - [ ]  meleeAttackFromBackRowDoesNotDamageEnemy needs to not use the keypath solution
-            - [ ] attack needs to take an SinglePartyPosition as associate value
+        - [X]  meleeAttackFromBackRowDoesNotDamageEnemy needs to not use the keypath solution
+            - [X] attack needs to take an SinglePartyPosition as associate value
                 - [X] add a new attackNew value and use a SinglePartyPosition
                 - [X] Tests use the new enum case
 

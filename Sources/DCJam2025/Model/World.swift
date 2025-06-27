@@ -87,11 +87,7 @@ final class World {
             partyHeading = partyHeading.rotatedClockwise()
         case .turnCounterClockwise:
             partyHeading = partyHeading.rotatedCounterClockwise()
-//        case .attack(let partyMember):
-//            if partyMembers.frontRow.contains(where: { partyMembers[keyPath: partyMember] === $0 }) {
-//                partyMembers[keyPath: partyMember].attack(potentialTargets: enemiesOnCurrentFloor, partyPosition: partyPosition)
-//            }
-        case .attackNew(let attacker):
+        case .attack(let attacker):
             if attacker == .frontLeft || attacker == .frontRight {
                 partyMembers.getMember(at: attacker).attack(potentialTargets: enemiesOnCurrentFloor, partyPosition: partyPosition)
             }
@@ -129,6 +125,13 @@ final class World {
             enemy.act(in: self, at: time)
         }
     }
+}
+
+enum PartyCommand {
+    case move(direction: MovementDirection)
+    case turnClockwise
+    case turnCounterClockwise
+    case attack(attacker: SinglePartyPosition)
 }
 
 extension World: Equatable {
@@ -209,13 +212,6 @@ func makeWorld(from floorplans: [String]) -> World {
     }
 }
 
-enum PartyCommand {
-    case move(direction: MovementDirection)
-    case turnClockwise
-    case turnCounterClockwise
-    //case attack(attacker: KeyPath<PartyMembers, PartyMember>)
-    case attackNew(attacker: SinglePartyPosition)
-}
 
 func printMap(map: [Coordinate: Int]) {
     for row in 0 ..< 10 {
