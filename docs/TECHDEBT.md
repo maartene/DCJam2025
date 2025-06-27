@@ -12,6 +12,10 @@
         - [X] frontRow uses getMember 
             - [X] add a getMember function
         - [X] drawParty uses getMember
+        - [ ] test notLostWhenAtLeastOnePartyMemberIsAlive needs to use getMember
+        - [ ]  meleeAttackFromBackRowDoesNotDamageEnemy needs to not use the keypath solution
+            - [ ] attack needs to take an SinglePartyPosition as associate value
+                - [X] add a new attackNew value and use a SinglePartyPosition
 
 ## ✅ DONE
 - no test coverage for conversion of coordinate spaces, while this might be valuable. Maybe property based testing?
