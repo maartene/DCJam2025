@@ -19,8 +19,8 @@
                 - [X] Tests use the new enum case
     - [X] Remove backLeft/right
     - [ ] Remove frontRow
-        - [ ] MeleeAttackStrategy needs to use getMembers
-            - [ ] Introduce getMembers function
+        - [X] MeleeAttackStrategy needs to use getMembers
+            - [X] Introduce getMembers function
 
 ## ✅ DONE
 - no test coverage for conversion of coordinate spaces, while this might be valuable. Maybe property based testing?

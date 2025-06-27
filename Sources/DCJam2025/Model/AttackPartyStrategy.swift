@@ -30,7 +30,7 @@ struct MeleeAttackStrategy: AttackPartyStrategy {
     let damage = 2
     
     func getValidTargets(in world: World) -> [PartyMember] {
-        world.partyMembers.frontRow
+        world.partyMembers.getMembers(grouping: .frontRow)
             .filter { $0.isAlive }
     }
 }
@@ -40,7 +40,7 @@ struct RangedAttackStrategy: AttackPartyStrategy {
     let damage = 1
     
     func getValidTargets(in world: World) -> [PartyMember] {
-        world.partyMembers.all
+        world.partyMembers.getMembers(grouping: .all)
             .filter { $0.isAlive }
     }
 }
@@ -50,7 +50,7 @@ struct MagicAttackStrategy: AttackPartyStrategy {
     let damage = 1
     
     func getValidTargets(in world: World) -> [PartyMember] {
-        world.partyMembers.all
+        world.partyMembers.getMembers(grouping: .all)
             .filter { $0.isAlive }
     }
     
