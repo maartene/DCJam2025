@@ -39,18 +39,6 @@ struct PartyMembers {
     var hasAlivePartyMember: Bool {
         members.filter { $0.isAlive }.isEmpty == false
     }
-    
-    var frontRow: [PartyMember] {
-        [getMember(at: .frontLeft), getMember(at: .frontRight)]
-    }
-
-    var backRow: [PartyMember] {
-        [getMember(at: .backLeft), getMember(at: .backRight)]
-    }
-
-    var all: [PartyMember] {
-        members
-    }
 }
 
 enum SinglePartyPosition {

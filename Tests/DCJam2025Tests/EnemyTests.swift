@@ -148,11 +148,11 @@ import Foundation
             .e
             """
         ])
-        let originalHpOfPartyMembers = world.partyMembers.all.map { $0.currentHP }
+        let originalHpOfPartyMembers = world.partyMembers.getMembers(grouping: .all).map { $0.currentHP }
         
         world.update(at: Date())
         
-        let hpOfPartyMembersAfterAttack = world.partyMembers.all.map { $0.currentHP }
+        let hpOfPartyMembersAfterAttack = world.partyMembers.getMembers(grouping: .all).map { $0.currentHP }
         
         let numberOfPartyMembersWithLessHP = zip(originalHpOfPartyMembers, hpOfPartyMembersAfterAttack)
             .filter { $0.0 > $0.1 }
@@ -233,13 +233,13 @@ import Foundation
 // MARK: Helper functions
 
 private func sumHPOfPartyMembers(in world: World) -> Int {
-    world.partyMembers.all
+    world.partyMembers.getMembers(grouping: .all)
         .map { $0.currentHP }
         .reduce(0, +)
 }
 
 private func sumHPOfPartyMembersInBackRow(in world: World) -> Int {
-    world.partyMembers.backRow
+    world.partyMembers.getMembers(grouping: .backRow)
     .map { $0.currentHP }
     .reduce(0, +)
 }
