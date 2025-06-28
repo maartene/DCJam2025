@@ -75,7 +75,7 @@ final class World {
     }
 
     // MARK: Commands
-    func executeCommand(_ command: PartyCommand) {
+    func executeCommand(_ command: PartyCommand, at time: Date) {
         guard state == .inProgress else {
             return
         }
@@ -88,7 +88,7 @@ final class World {
         case .turnCounterClockwise:
             partyHeading = partyHeading.rotatedCounterClockwise()
         case .attack(let attacker):
-            partyMembers.attack(from: attacker, in: self)
+            partyMembers.attack(from: attacker, in: self, at: time)
         }
     }
 

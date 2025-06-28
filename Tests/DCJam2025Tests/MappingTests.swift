@@ -6,6 +6,7 @@
 //
 
 import Testing
+import Foundation
 @testable import DCJam2025
 
 @Suite("The party should keep track of the tiles it found") struct MappingTests {
@@ -28,7 +29,7 @@ import Testing
     }
 
     @Test("When the party moves, new tiles added to the visited world") func newTilesVisited() {
-        worldWithSingleFloor.executeCommand(.move(direction: .right))
+        worldWithSingleFloor.executeCommand(.move(direction: .right), at: Date())
 
         let expectedVisitedTiles: Set = [
             Coordinate(x: -1, y: -1),
@@ -58,12 +59,12 @@ import Testing
             ])
         ])
 
-        world.executeCommand(.move(direction: .right))
-        world.executeCommand(.move(direction: .right))
+        world.executeCommand(.move(direction: .right), at: Date())
+        world.executeCommand(.move(direction: .right), at: Date())
 
         let vistedTilesOnFloor1 = world.visitedTilesOnCurrentFloor.count
 
-        world.executeCommand(.move(direction: .right))
+        world.executeCommand(.move(direction: .right), at: Date())
 
         #expect(world.visitedTilesOnCurrentFloor.count < vistedTilesOnFloor1)
     }

@@ -6,6 +6,7 @@
 //
 
 import Testing
+import Foundation
 @testable import DCJam2025
 
 @Suite("The wincondition for this world should") struct WinConditionTests {
@@ -20,21 +21,21 @@ import Testing
     }
 
     @Test("be 'won' when the party reaches the target tile") func wonGame() {
-        worldWithTarget.executeCommand(.move(direction: .right))
+        worldWithTarget.executeCommand(.move(direction: .right), at: Date())
 
         #expect(worldWithTarget.state == .won)
     }
 
     @Test("not allow movement when the party reaches the target") func winningGameMakesMovementImpossible() {
-        worldWithTarget.executeCommand(.move(direction: .right))
-        worldWithTarget.executeCommand(.move(direction: .left))
+        worldWithTarget.executeCommand(.move(direction: .right), at: Date())
+        worldWithTarget.executeCommand(.move(direction: .left), at: Date())
 
         #expect(worldWithTarget.partyPosition == Coordinate(x: 1, y: 0))
     }
 
     @Test("not allow rotation when the party reaches the target") func winningGameMakesRotationImpossible() {
-        worldWithTarget.executeCommand(.move(direction: .right))
-        worldWithTarget.executeCommand(.turnClockwise)
+        worldWithTarget.executeCommand(.move(direction: .right), at: Date())
+        worldWithTarget.executeCommand(.turnClockwise, at: Date())
 
         #expect(worldWithTarget.partyHeading == .north)
     }

@@ -6,6 +6,7 @@
 //
 
 import Testing
+import Foundation
 @testable import DCJam2025
 
 @Suite("Creating a new world from a set of floorplans should") struct ImportWorldTests {
@@ -106,7 +107,7 @@ import Testing
         
         #expect(world.enemiesOnCurrentFloor.isEmpty == false)
         
-        world.executeCommand(.move(direction: .right))
+        world.executeCommand(.move(direction: .right), at: Date())
         
         #expect(world.enemiesOnCurrentFloor.isEmpty)
     }

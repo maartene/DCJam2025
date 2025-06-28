@@ -12,7 +12,7 @@ import Testing
         
         let hpOfEnemyBeforeAttack = enemy.hp
         
-        world.executeCommand(.attack(attacker: .frontLeft))
+        world.executeCommand(.attack(attacker: .frontLeft), at: Date())
         
         #expect(enemy.hp < hpOfEnemyBeforeAttack)
     }
@@ -26,7 +26,7 @@ import Testing
         
         let hpOfEnemyBeforeAttack = enemy.hp
         
-        world.executeCommand(.attack(attacker: .frontRight))
+        world.executeCommand(.attack(attacker: .frontRight), at: Date())
         
         #expect(enemy.hp == hpOfEnemyBeforeAttack)
     }
@@ -40,7 +40,7 @@ import Testing
         
         let hpOfEnemyBeforeAttack = enemy.hp
         
-        world.executeCommand(.attack(attacker: .frontLeft))
+        world.executeCommand(.attack(attacker: .frontLeft), at: Date())
         
         #expect(enemy.hp < hpOfEnemyBeforeAttack)
     }
@@ -54,7 +54,22 @@ import Testing
         
         let hpOfEnemyBeforeAttack = enemy.hp
         
-        world.executeCommand(.attack(attacker: .backLeft))
+        world.executeCommand(.attack(attacker: .backLeft), at: Date())
+        
+        #expect(enemy.hp == hpOfEnemyBeforeAttack)
+    }
+    
+    @Test("should not be able to make a melee attack when in cooldown") func meleeAttackWhenInCooldownDoesNotDamageEnemy() throws {
+        let world = makeWorld(from: [
+            ".s"
+        ])
+        
+        let enemy = try #require(world.enemiesOnCurrentFloor.first)
+        world.executeCommand(.attack(attacker: .frontLeft), at: Date())
+        
+        let hpOfEnemyBeforeAttack = enemy.hp
+
+        world.executeCommand(.attack(attacker: .frontLeft), at: Date())
         
         #expect(enemy.hp == hpOfEnemyBeforeAttack)
     }

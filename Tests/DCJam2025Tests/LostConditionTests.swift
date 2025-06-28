@@ -6,6 +6,7 @@
 //
 
 import Testing
+import Foundation
 @testable import DCJam2025
 
 @Suite("The lose condition for this world should") struct LostConditionTests {
@@ -28,7 +29,7 @@ import Testing
     @Test("not allow movement when in the lose condition state") func losingGameMakesMovementImpossible() {
         let world = makeWorldWithUnconciousPlayers()
 
-        world.executeCommand(.move(direction: .forward))
+        world.executeCommand(.move(direction: .forward), at: Date())
 
         #expect(world.partyPosition == Coordinate(x: 0, y: 0))
     }
@@ -36,7 +37,7 @@ import Testing
     @Test("not allow rotation when the party reaches the target") func losingGameMakesRotationImpossible() {
         let world = makeWorldWithUnconciousPlayers()
 
-        world.executeCommand(.turnCounterClockwise)
+        world.executeCommand(.turnCounterClockwise, at: Date())
 
         #expect(world.partyHeading == .north)
     }

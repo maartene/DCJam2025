@@ -68,12 +68,12 @@ class Game {
 
     private func processKeyInput() {
         let inputActionMap = [
-            KEY_W: { self.world.executeCommand(.move(direction: .forward)) },
-            KEY_D: { self.world.executeCommand(.move(direction: .left)) },
-            KEY_A: { self.world.executeCommand(.move(direction: .right)) },
-            KEY_S: { self.world.executeCommand(.move(direction: .backwards)) },
-            KEY_Q: { self.world.executeCommand(.turnClockwise) },
-            KEY_E: { self.world.executeCommand(.turnCounterClockwise) }
+            KEY_W: { self.world.executeCommand(.move(direction: .forward), at: Date()) },
+            KEY_D: { self.world.executeCommand(.move(direction: .left), at: Date()) },
+            KEY_A: { self.world.executeCommand(.move(direction: .right), at: Date()) },
+            KEY_S: { self.world.executeCommand(.move(direction: .backwards), at: Date()) },
+            KEY_Q: { self.world.executeCommand(.turnClockwise, at: Date()) },
+            KEY_E: { self.world.executeCommand(.turnCounterClockwise, at: Date()) }
         ]
         
         for keyAction in inputActionMap {
@@ -204,7 +204,7 @@ class Game {
     private func drawParty(_ partyMembers: PartyMembers) {
         DrawText("HP: \(partyMembers[.frontLeft].currentHP)", 900, 30, 32, .red)
         if (GuiButton(Rectangle(x: 900, y: 40, width: 100, height: 20), "Attack")) == 1 {
-            world.executeCommand(.attack(attacker: .frontLeft))
+            world.executeCommand(.attack(attacker: .frontLeft), at: Date())
         }
         DrawText("HP: \(partyMembers[.frontRight].currentHP)", 1100, 30, 32, .red)
         DrawText("HP: \(partyMembers[.backLeft].currentHP)", 900, 60, 32, .red)

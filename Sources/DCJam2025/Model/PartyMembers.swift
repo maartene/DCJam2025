@@ -5,6 +5,8 @@
 //  Created by Maarten Engels on 29/05/2025.
 //
 
+import Foundation
+
 struct PartyMembers {
     private let members: [PartyMember]
     
@@ -44,10 +46,10 @@ struct PartyMembers {
         members.filter { $0.isAlive }.isEmpty == false
     }
     
-    func attack(from attackPosition: SinglePartyPosition, in world: World) {
+    func attack(from attackPosition: SinglePartyPosition, in world: World, at time: Date) {
         if attackPosition == .frontLeft || attackPosition == .frontRight {
             let attacker = getMember(at: attackPosition)
-            attacker.attack(potentialTargets: world.enemiesOnCurrentFloor, partyPosition: world.partyPosition)
+            attacker.attack(potentialTargets: world.enemiesOnCurrentFloor, partyPosition: world.partyPosition, at: time)
         }
 
     }

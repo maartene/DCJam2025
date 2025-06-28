@@ -1,4 +1,5 @@
 import Testing
+import Foundation
 @testable import DCJam2025
 
 @Suite("Party movement should") struct PartyMovementTests {
@@ -10,23 +11,23 @@ import Testing
         (MovementDirection.left, Coordinate(x: -1, y: 0)),
         (MovementDirection.right, Coordinate(x: 1, y: 0))
     ]) func movePartyForward(testcase: (direction: MovementDirection, expectedPosition: Coordinate)) {
-        worldWithSingleFloor.executeCommand(.move(direction: testcase.direction))
+        worldWithSingleFloor.executeCommand(.move(direction: testcase.direction), at: Date())
 
         #expect(worldWithSingleFloor.partyPosition == testcase.expectedPosition)
     }
 
     @Test("get to coordinate (0,2) when it moves forward twice") func movePartyForwardTwice() {
-        worldWithSingleFloor.executeCommand(.move(direction: .forward))
-        worldWithSingleFloor.executeCommand(.move(direction: .forward))
+        worldWithSingleFloor.executeCommand(.move(direction: .forward), at: Date())
+        worldWithSingleFloor.executeCommand(.move(direction: .forward), at: Date())
 
         #expect(worldWithSingleFloor.partyPosition == Coordinate(x: 0, y: 2))
     }
 
     @Test("stays in the same position, when you move forward first, then right, then back and finally left") func moveInACircle() {
-        worldWithSingleFloor.executeCommand(.move(direction: .forward))
-        worldWithSingleFloor.executeCommand(.move(direction: .right))
-        worldWithSingleFloor.executeCommand(.move(direction: .backwards))
-        worldWithSingleFloor.executeCommand(.move(direction: .left))
+        worldWithSingleFloor.executeCommand(.move(direction: .forward), at: Date())
+        worldWithSingleFloor.executeCommand(.move(direction: .right), at: Date())
+        worldWithSingleFloor.executeCommand(.move(direction: .backwards), at: Date())
+        worldWithSingleFloor.executeCommand(.move(direction: .left), at: Date())
 
         #expect(worldWithSingleFloor.partyPosition == Coordinate(x: 0, y: 0))
     }
@@ -40,7 +41,7 @@ import Testing
     ]) func movementTakesHeadingIntoAccount(testcase: (startPosition: Coordinate, heading: CompassDirection, movementDirection: MovementDirection, expectedPosition: Coordinate)) {
         let world = World(floors: [Floor()], partyStartPosition: testcase.startPosition, partyStartHeading: testcase.heading)
 
-        world.executeCommand(.move(direction: testcase.movementDirection))
+        world.executeCommand(.move(direction: testcase.movementDirection), at: Date())
 
         #expect(world.partyPosition == testcase.expectedPosition)
     }
@@ -53,7 +54,7 @@ import Testing
         ])
         let world = World(floors: [map], partyStartPosition: Coordinate(x: 0, y: 1))
 
-        world.executeCommand(.move(direction: .forward))
+        world.executeCommand(.move(direction: .forward), at: Date())
 
         #expect(world.partyPosition == Coordinate(x: 0, y: 1))
     }
@@ -67,21 +68,21 @@ import Testing
     }
 
     @Test("face east when it turns clockwise") func turnClockwiseOnce() {
-        worldWithSingleFloor.executeCommand(.turnClockwise)
+        worldWithSingleFloor.executeCommand(.turnClockwise, at: Date())
 
         #expect(worldWithSingleFloor.partyHeading == .east)
     }
 
     @Test("face west when it turns clockwise three times") func turnClockwiseThreeTimes() {
-        worldWithSingleFloor.executeCommand(.turnClockwise)
-        worldWithSingleFloor.executeCommand(.turnClockwise)
-        worldWithSingleFloor.executeCommand(.turnClockwise)
+        worldWithSingleFloor.executeCommand(.turnClockwise, at: Date())
+        worldWithSingleFloor.executeCommand(.turnClockwise, at: Date())
+        worldWithSingleFloor.executeCommand(.turnClockwise, at: Date())
 
         #expect(worldWithSingleFloor.partyHeading == .west)
     }
 
     @Test("face west when it turns counter clockwise once") func turnCounterClockwise() {
-        worldWithSingleFloor.executeCommand(.turnCounterClockwise)
+        worldWithSingleFloor.executeCommand(.turnCounterClockwise, at: Date())
 
         #expect(worldWithSingleFloor.partyHeading == .west)
     }
@@ -107,7 +108,7 @@ import Testing
 
         let world = World(floors: floors)
 
-        world.executeCommand(.move(direction: .right))
+        world.executeCommand(.move(direction: .right), at: Date())
 
         #expect(world.currentFloor == floors[1])
     }
@@ -120,9 +121,9 @@ import Testing
 
         let world = World(floors: floors)
 
-        world.executeCommand(.move(direction: .right))
-        world.executeCommand(.move(direction: .left))
-        world.executeCommand(.move(direction: .right))
+        world.executeCommand(.move(direction: .right), at: Date())
+        world.executeCommand(.move(direction: .left), at: Date())
+        world.executeCommand(.move(direction: .right), at: Date())
 
         #expect(world.currentFloor == floors[0])
     }
