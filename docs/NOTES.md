@@ -157,4 +157,5 @@ What is there to find? The answer to the ultimate secret: what came before? the 
 
 ## 🍅 Pomodoro 27
 - ✅ Subscript `PartyMembers`
-- 🚧 Cooldown for party attacks
+- ✅ Cooldown for party attacks
+- ✅ Show cooldown in game view
