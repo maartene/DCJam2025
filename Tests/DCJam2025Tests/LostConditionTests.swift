@@ -18,9 +18,9 @@ import Testing
     }
 
     @Test("be 'inProgress' when at least one party member is not unconcious") func notLostWhenAtLeastOnePartyMemberIsAlive() {
-        worldWithSingleFloor.partyMembers.getMember(at: .frontLeft).takeDamage(Int.max)
-        worldWithSingleFloor.partyMembers.getMember(at: .frontRight).takeDamage(Int.max)
-        worldWithSingleFloor.partyMembers.getMember(at: .backLeft).takeDamage(Int.max)
+        worldWithSingleFloor.partyMembers[.frontLeft].takeDamage(Int.max)
+        worldWithSingleFloor.partyMembers[.frontRight].takeDamage(Int.max)
+        worldWithSingleFloor.partyMembers[.backLeft].takeDamage(Int.max)
 
         #expect(worldWithSingleFloor.state != .defeated)
     }

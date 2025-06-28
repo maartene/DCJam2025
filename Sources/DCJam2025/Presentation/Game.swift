@@ -202,13 +202,13 @@ class Game {
     }
 
     private func drawParty(_ partyMembers: PartyMembers) {
-        DrawText("HP: \(partyMembers.getMember(at: .frontLeft).currentHP)", 900, 30, 32, .red)
+        DrawText("HP: \(partyMembers[.frontLeft].currentHP)", 900, 30, 32, .red)
         if (GuiButton(Rectangle(x: 900, y: 40, width: 100, height: 20), "Attack")) == 1 {
             world.executeCommand(.attack(attacker: .frontLeft))
         }
-        DrawText("HP: \(partyMembers.getMember(at: .frontRight).currentHP)", 1100, 30, 32, .red)
-        DrawText("HP: \(partyMembers.getMember(at: .backLeft).currentHP)", 900, 60, 32, .red)
-        DrawText("HP: \(partyMembers.getMember(at: .backRight).currentHP)", 1100, 60, 32, .red)
+        DrawText("HP: \(partyMembers[.frontRight].currentHP)", 1100, 30, 32, .red)
+        DrawText("HP: \(partyMembers[.backLeft].currentHP)", 900, 60, 32, .red)
+        DrawText("HP: \(partyMembers[.backRight].currentHP)", 1100, 60, 32, .red)
     }
 
     private func loadImages() {

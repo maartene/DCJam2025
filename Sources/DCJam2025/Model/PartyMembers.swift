@@ -12,7 +12,11 @@ struct PartyMembers {
         self.members = members
     }
     
-    func getMember(at position: SinglePartyPosition) -> PartyMember {
+    subscript(position: SinglePartyPosition) -> PartyMember {
+        getMember(at: position)
+    }
+    
+    private func getMember(at position: SinglePartyPosition) -> PartyMember {
         return switch position {
         case .frontLeft:
             members[0]
