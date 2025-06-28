@@ -191,24 +191,35 @@ class Game {
                 playerSprite, drawPartyTextureInfo.displayX, drawPartyTextureInfo.displayY, .white)
         }
 
-        let drawEnemyTextureInfo = getSpriteAndPositionForPartyAtPosition(
-            world.enemiesOnCurrentFloor.first!.position, heading: world.enemiesOnCurrentFloor.first!.heading, on: world.currentFloor, offsetX: 10,
-            offsetY: 10)
+        if let enemy = world.enemiesOnCurrentFloor.first, enemy.isAlive {
+            let drawEnemyTextureInfo = getSpriteAndPositionForPartyAtPosition(
+                enemy.position, heading: enemy.heading, on: world.currentFloor, offsetX: 10,
+                offsetY: 10)
 
-        if let enemySprite = sprites[drawEnemyTextureInfo.spriteName] {
-            DrawTexture(
-                enemySprite, drawEnemyTextureInfo.displayX, drawEnemyTextureInfo.displayY, .red)
+            if let enemySprite = sprites[drawEnemyTextureInfo.spriteName] {
+                DrawTexture(
+                    enemySprite, drawEnemyTextureInfo.displayX, drawEnemyTextureInfo.displayY, .red)
+            }
         }
     }
 
     private func drawParty(_ partyMembers: PartyMembers) {
+        GuiSetState(GuiState.normal)
         DrawText("HP: \(partyMembers[.frontLeft].currentHP)", 900, 30, 32, .red)
-        if (GuiButton(Rectangle(x: 900, y: 40, width: 100, height: 20), "Attack")) == 1 {
-            world.executeCommand(.attack(attacker: .frontLeft), at: Date())
+        
+        if world.partyMembers[.frontLeft].cooldownHasExpired(at: Date()) {
+            if (GuiButton(Rectangle(x: 900, y: 60, width: 100, height: 20), "Attack")) == 1 {
+                world.executeCommand(.attack(attacker: .frontLeft), at: Date())
+            }
+        } else {
+            GuiSetState(GuiState.disabled)
+            GuiButton(Rectangle(x: 900, y: 60, width: 100, height: 20), "Attack")
         }
+        GuiSetState(GuiState.normal)
+        
         DrawText("HP: \(partyMembers[.frontRight].currentHP)", 1100, 30, 32, .red)
-        DrawText("HP: \(partyMembers[.backLeft].currentHP)", 900, 60, 32, .red)
-        DrawText("HP: \(partyMembers[.backRight].currentHP)", 1100, 60, 32, .red)
+        DrawText("HP: \(partyMembers[.backLeft].currentHP)", 900, 90, 32, .red)
+        DrawText("HP: \(partyMembers[.backRight].currentHP)", 1100, 90, 32, .red)
     }
 
     private func loadImages() {

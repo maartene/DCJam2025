@@ -54,3 +54,10 @@ extension Vector3 {
 func isKeyPressed(_ key: KeyboardKey) -> Bool {
     IsKeyPressed(Int32(key.rawValue))
 }
+
+enum GuiState {
+    static let normal: Int32 = 0
+    static let hovered: Int32 = 1
+    static let pressed: Int32 = 2
+    static let disabled: Int32 = 3
+}
