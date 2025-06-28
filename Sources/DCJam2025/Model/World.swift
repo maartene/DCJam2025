@@ -34,13 +34,13 @@ final class World {
         self.partyPosition = partyStartPosition
         self.partyHeading = partyStartHeading
         self.enemies = [:]
-        
+
         var floorIndex = 0
         for enemiesOnFloor in enemies {
             self.enemies[floorIndex] = Set(enemiesOnFloor)
             floorIndex += 1
         }
-        
+
         updateVisitedTiles()
     }
 
@@ -48,7 +48,7 @@ final class World {
     var currentFloor: Floor {
         floors[currentFloorIndex]
     }
-    
+
     var enemiesOnCurrentFloor: Set<Enemy> {
         enemies[currentFloorIndex, default: []]
     }
@@ -79,7 +79,7 @@ final class World {
         guard state == .inProgress else {
             return
         }
-        
+
         switch command {
         case .move(direction: let direction):
             performMovement(direction: direction)
@@ -112,11 +112,11 @@ final class World {
 
         updateVisitedTiles()
     }
-    
+
     private func updateVisitedTiles() {
         visitedTilesOnFloor[currentFloorIndex] = visitedTilesOnCurrentFloor.union(partyPosition.squareAround)
     }
-    
+
     // MARK: update
     func update(at time: Date) {
         let aliveEnemies = enemiesOnCurrentFloor.filter { $0.isAlive }
@@ -160,10 +160,10 @@ func makeWorld(from floorplans: [String]) -> World {
 
         return (floor, startPosition)
     }
-    
+
     func convertFloorPlanToEnemies(_ floorplan: String) -> Set<Enemy> {
         let mapArray = convertStringTomapArray(floorplan)
-        
+
         var enemiesOnFloor = Set<Enemy>()
         for row in 0 ..< mapArray.count {
             for column in 0 ..< mapArray[row].count {
@@ -179,7 +179,7 @@ func makeWorld(from floorplans: [String]) -> World {
                 }
             }
         }
-        
+
         return enemiesOnFloor
     }
 
@@ -210,7 +210,6 @@ func makeWorld(from floorplans: [String]) -> World {
         return nil
     }
 }
-
 
 func printMap(map: [Coordinate: Int]) {
     for row in 0 ..< 10 {

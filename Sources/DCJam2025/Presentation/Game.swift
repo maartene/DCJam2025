@@ -33,7 +33,7 @@ class Game {
         ##T#.#
         ####.#
         #...>#
-        ######        
+        ######
         """
     ])
 
@@ -75,7 +75,7 @@ class Game {
             KEY_Q: { self.world.executeCommand(.turnClockwise, at: Date()) },
             KEY_E: { self.world.executeCommand(.turnCounterClockwise, at: Date()) }
         ]
-        
+
         for keyAction in inputActionMap {
             if isKeyPressed(keyAction.key) {
                 keyAction.value()
@@ -163,7 +163,7 @@ class Game {
 
             let heading = enemyOnCurrentFloor.heading
 
-            DrawModelEx(mockModel, coordinate.toVector3 + Vector3(x: 0, y: -0.5, z: 0), .up, heading.rotation , Vector3(x: 0.5, y: 0.5, z: 0.5), .white * light)
+            DrawModelEx(mockModel, coordinate.toVector3 + Vector3(x: 0, y: -0.5, z: 0), .up, heading.rotation, Vector3(x: 0.5, y: 0.5, z: 0.5), .white * light)
         }
     }
 

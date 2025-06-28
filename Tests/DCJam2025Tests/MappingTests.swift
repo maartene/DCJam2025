@@ -11,7 +11,7 @@ import Foundation
 
 @Suite("The party should keep track of the tiles it found") struct MappingTests {
     let worldWithSingleFloor = World(floors: [Floor()])
-    
+
     @Test("When the world is created, the party only knows about their direct surroundings") func newWorldMap() {
         let expectedVisitedTiles: Set = [
             Coordinate(x: -1, y: -1),

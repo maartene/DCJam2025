@@ -67,7 +67,7 @@ import Foundation
                 ["#", ".", ".", ".", "#"],
                 ["#", "#", "#", "#", "#"]
             ])
-        ], partyStartPosition: Coordinate(x: 2, y: 2), enemies: [[],[]])
+        ], partyStartPosition: Coordinate(x: 2, y: 2), enemies: [[], []])
 
         #expect(world == expectedWorld)
     }
@@ -98,17 +98,17 @@ import Foundation
 
         #expect(world.currentFloor.description == floorplan)
     }
-    
+
     @Test("Enemies are bound to the floor they are placed on") func enemiesAreBoundToAFloor() {
         let world = makeWorld(from: [
             ".<s",
             ".."
             ])
-        
+
         #expect(world.enemiesOnCurrentFloor.isEmpty == false)
-        
+
         world.executeCommand(.move(direction: .right), at: Date())
-        
+
         #expect(world.enemiesOnCurrentFloor.isEmpty)
     }
 }

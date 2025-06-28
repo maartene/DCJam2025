@@ -11,7 +11,7 @@ import Foundation
 
 @Suite("The lose condition for this world should") struct LostConditionTests {
     let worldWithSingleFloor = World(floors: [Floor()])
-    
+
     @Test("be 'defeated' when all party members are rendered unconcious") func loseWhenAllPartyMembersAreUnconscious() {
         let world = makeWorldWithUnconciousPlayers()
 

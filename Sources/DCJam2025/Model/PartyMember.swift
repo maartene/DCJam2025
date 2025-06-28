@@ -12,7 +12,6 @@ final class PartyMember {
     private var cooldownExpires = Date()
     private var cooldown = 1.0
 
-
     var isAlive: Bool {
         currentHP > 0
     }
@@ -20,12 +19,16 @@ final class PartyMember {
     func takeDamage(_ amount: Int) {
         currentHP -= amount
     }
-    
+
+    func cooldownHasExpired(at time: Date) -> Bool {
+        time >= cooldownExpires
+    }
+
     func attack(potentialTargets: Set<Enemy>, partyPosition: Coordinate, at time: Date) {
-        guard time >= cooldownExpires else {
+        guard cooldownHasExpired(at: time) else {
             return
         }
-        
+
         potentialTargets.forEach {
             if partyPosition.manhattanDistanceTo($0.position) <= 1 {
                 $0.damage(amount: 2)

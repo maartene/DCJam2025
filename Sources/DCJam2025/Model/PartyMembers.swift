@@ -9,15 +9,15 @@ import Foundation
 
 struct PartyMembers {
     private let members: [PartyMember]
-    
+
     init(members: [PartyMember]) {
         self.members = members
     }
-    
+
     subscript(position: SinglePartyPosition) -> PartyMember {
         getMember(at: position)
     }
-    
+
     private func getMember(at position: SinglePartyPosition) -> PartyMember {
         return switch position {
         case .frontLeft:
@@ -30,7 +30,7 @@ struct PartyMembers {
             members[3]
         }
     }
-    
+
     func getMembers(grouping: PartyPositionGroup) -> [PartyMember] {
         return switch grouping {
         case .frontRow:
@@ -41,11 +41,11 @@ struct PartyMembers {
             members
         }
     }
-    
+
     var hasAlivePartyMember: Bool {
         members.filter { $0.isAlive }.isEmpty == false
     }
-    
+
     func attack(from attackPosition: SinglePartyPosition, in world: World, at time: Date) {
         if attackPosition == .frontLeft || attackPosition == .frontRight {
             let attacker = getMember(at: attackPosition)

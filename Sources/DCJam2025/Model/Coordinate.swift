@@ -14,7 +14,7 @@ struct Coordinate {
     static func +(lhs: Coordinate, rhs: Coordinate) -> Coordinate {
         Coordinate(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
     }
-    
+
     static func +=(lhs: inout Coordinate, rhs: Coordinate) {
         lhs = lhs + rhs
     }
@@ -22,7 +22,7 @@ struct Coordinate {
     static func -(lhs: Coordinate, rhs: Coordinate) -> Coordinate {
         Coordinate(x: lhs.x - rhs.x, y: lhs.y - rhs.y)
     }
-    
+
     static func *(vector: Coordinate, scalar: Int) -> Coordinate {
         Coordinate(x: vector.x * scalar, y: vector.y * scalar)
     }
@@ -55,7 +55,7 @@ struct Coordinate {
             $0 + self
         })
     }
-    
+
     var neighbours: [Coordinate] {
         [
             Coordinate(x: 1, y: 0),

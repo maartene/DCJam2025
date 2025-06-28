@@ -4,7 +4,7 @@ import Foundation
 
 @Suite("Party movement should") struct PartyMovementTests {
     let worldWithSingleFloor = World(floors: [Floor()])
-    
+
     @Test("get to the expected coordinate, when it moves in a specified direction", arguments: [
         (MovementDirection.forward, Coordinate(x: 0, y: 1)),
         (MovementDirection.backwards, Coordinate(x: 0, y: -1)),
@@ -62,7 +62,7 @@ import Foundation
 
 @Suite("Party rotation should") struct PartyRotationTests {
     let worldWithSingleFloor = World(floors: [Floor()])
-    
+
     @Test("face north when the new world is created") func partyInNewWorldFacesNorth() {
         #expect(worldWithSingleFloor.partyHeading == .north)
     }

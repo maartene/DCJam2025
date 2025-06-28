@@ -8,7 +8,7 @@
 protocol AttackPartyStrategy {
     var range: Int { get }
     var damage: Int { get }
-    
+
     func getValidTargets(in world: World) -> [PartyMember]
     func damageTargets(in world: World)
 }
@@ -18,7 +18,7 @@ extension AttackPartyStrategy {
         let manhattanDistance = world.partyPosition.manhattanDistanceTo(enemyPosition)
         return manhattanDistance <= range
     }
-    
+
     func damageTargets(in world: World) {
         let potentialTargets = getValidTargets(in: world)
         potentialTargets.randomElement()?.takeDamage(damage)
@@ -28,7 +28,7 @@ extension AttackPartyStrategy {
 struct MeleeAttackStrategy: AttackPartyStrategy {
     let range = 1
     let damage = 2
-    
+
     func getValidTargets(in world: World) -> [PartyMember] {
         world.partyMembers.getMembers(grouping: .frontRow)
             .filter { $0.isAlive }
@@ -38,7 +38,7 @@ struct MeleeAttackStrategy: AttackPartyStrategy {
 struct RangedAttackStrategy: AttackPartyStrategy {
     let range = 3
     let damage = 1
-    
+
     func getValidTargets(in world: World) -> [PartyMember] {
         world.partyMembers.getMembers(grouping: .all)
             .filter { $0.isAlive }
@@ -48,12 +48,12 @@ struct RangedAttackStrategy: AttackPartyStrategy {
 struct MagicAttackStrategy: AttackPartyStrategy {
     let range = 2
     let damage = 1
-    
+
     func getValidTargets(in world: World) -> [PartyMember] {
         world.partyMembers.getMembers(grouping: .all)
             .filter { $0.isAlive }
     }
-    
+
     func damageTargets(in world: World) {
         let potentialTargets = getValidTargets(in: world)
         potentialTargets.forEach { $0.takeDamage(damage) }

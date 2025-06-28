@@ -13,7 +13,7 @@ import Foundation
     let worldWithTarget = World(floors: [Floor([
         ["S", "T"]
     ])])
-    
+
     @Test("be 'inProgress' for a new World") func newGame() {
         let world = World(floors: [Floor()])
 
