@@ -12,6 +12,9 @@ let package = Package(
         .library(name: "raylib", targets: ["raylib"]),
         .executable(name: "DCJam2025", targets: ["DCJam2025"])
     ],
+    dependencies: [
+        .package(url: "https://github.com/suzannaratcliff/swift-testing.git", branch: "suzannaratcliff/enable-severity")
+    ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
@@ -31,7 +34,8 @@ let package = Package(
         .testTarget(
             name: "DCJam2025Tests",
             dependencies: [
-                "DCJam2025"
+                "DCJam2025",
+                .product(name: "Testing", package: "swift-testing")
             ]),
         .systemLibrary(
             name: "raylib", pkgConfig: "raylib",
