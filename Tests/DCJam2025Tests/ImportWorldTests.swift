@@ -7,7 +7,7 @@
 
 import Testing
 import Foundation
-@testable import DCJam2025
+import DCJam2025
 
 @Suite("Creating a new world from a set of floorplans should") struct ImportWorldTests {
     @Test("Create a world with a single floor when a single floorplan is provided") func singleFloorWorld() {

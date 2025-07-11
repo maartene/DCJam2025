@@ -14,8 +14,8 @@ public final class World {
         case defeated
     }
 
-    private(set) var partyPosition: Coordinate
-    private(set) var partyHeading: CompassDirection
+    public private(set) var partyPosition: Coordinate
+    public private(set) var partyHeading: CompassDirection
     private var currentFloorIndex = 0
     private var floors: [Floor]
     private var visitedTilesOnFloor = [Int: Set<Coordinate>]()
@@ -45,7 +45,7 @@ public final class World {
     }
 
     // Queries
-    var currentFloor: Floor {
+    public var currentFloor: Floor {
         floors[currentFloorIndex]
     }
 
@@ -75,7 +75,7 @@ public final class World {
     }
 
     // MARK: Commands
-    func executeCommand(_ command: PartyCommand, at time: Date) {
+    public func executeCommand(_ command: PartyCommand, at time: Date) {
         guard state == .inProgress else {
             return
         }
@@ -126,7 +126,7 @@ public final class World {
     }
 }
 
-enum PartyCommand {
+public enum PartyCommand {
     case move(direction: MovementDirection)
     case turnClockwise
     case turnCounterClockwise
