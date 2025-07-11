@@ -254,7 +254,3 @@ private func sumHPOfPartyMembersInBackRow(in world: World) -> Int {
     .map { $0.currentHP }
     .reduce(0, +)
 }
-
-@Test func warningTest() {
-    Issue.record("My comment", severity: .warning)
-}
