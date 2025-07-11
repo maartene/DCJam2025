@@ -23,6 +23,8 @@
     - [X] LostConditionTests
     - [X] MappingTests
         - [X] make visitedTilesOnCurrentFloor public
+    - [X] MovementTests
+    - [ ] PartyAttackTests
             
 
 
