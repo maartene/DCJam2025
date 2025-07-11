@@ -73,4 +73,19 @@ import Testing
 
         #expect(enemy.hp == hpOfEnemyBeforeAttack)
     }
+    
+    @Test("should not be able to make a melee attack when KOd") func meleeAttackWhenKoDoesNotDamageEnemy() throws {
+        let world = makeWorld(from: [
+            ".s"
+        ])
+
+        let enemy = try #require(world.enemiesOnCurrentFloor.first)
+        world.partyMembers[.frontRight].takeDamage(Int.max)
+
+        let hpOfEnemyBeforeAttack = enemy.hp
+        
+        world.executeCommand(.attack(attacker: .frontRight), at: Date())
+
+        #expect(enemy.hp == hpOfEnemyBeforeAttack)
+    }
 }

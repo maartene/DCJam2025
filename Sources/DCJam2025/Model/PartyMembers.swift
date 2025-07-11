@@ -47,8 +47,13 @@ struct PartyMembers {
     }
 
     func attack(from attackPosition: SinglePartyPosition, in world: World, at time: Date) {
+        let attacker = getMember(at: attackPosition)
+        
+        guard attacker.isAlive else {
+            return
+        }
+        
         if attackPosition == .frontLeft || attackPosition == .frontRight {
-            let attacker = getMember(at: attackPosition)
             attacker.attack(potentialTargets: world.enemiesOnCurrentFloor, partyPosition: world.partyPosition, at: time)
         }
 

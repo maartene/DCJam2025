@@ -159,3 +159,6 @@ What is there to find? The answer to the ultimate secret: what came before? the 
 - ✅ Subscript `PartyMembers`
 - ✅ Cooldown for party attacks
 - ✅ Show cooldown in game view
+
+## 🍅 Pomodoro 28
+- ✅ KOd party members cannot attack
