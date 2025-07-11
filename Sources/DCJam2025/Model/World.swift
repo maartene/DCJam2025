@@ -65,7 +65,7 @@ public final class World {
         return .inProgress
     }
 
-    var visitedTilesOnCurrentFloor: Set<Coordinate> {
+    public var visitedTilesOnCurrentFloor: Set<Coordinate> {
         visitedTilesOnFloor[currentFloorIndex, default: []]
     }
 

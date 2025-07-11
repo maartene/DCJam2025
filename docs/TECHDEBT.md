@@ -21,7 +21,8 @@
             - [X] make Floor public
     - [X] ImportWorldTests
     - [X] LostConditionTests
-    - [ ] MappingTests
+    - [X] MappingTests
+        - [X] make visitedTilesOnCurrentFloor public
             
 
 
