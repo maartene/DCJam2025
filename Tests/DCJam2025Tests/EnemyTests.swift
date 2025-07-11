@@ -5,7 +5,7 @@
 //  Created by Maarten Engels on 24/04/2025.
 //
 
-import Testing
+@_spi(Experimental) import Testing
 import Foundation
 import Model
 
@@ -253,4 +253,8 @@ private func sumHPOfPartyMembersInBackRow(in world: World) -> Int {
     world.partyMembers.getMembers(grouping: .backRow)
     .map { $0.currentHP }
     .reduce(0, +)
+}
+
+@Test func warningTest() {
+    Issue.record("My comment", severity: .warning)
 }

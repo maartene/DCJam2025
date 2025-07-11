@@ -206,21 +206,32 @@ class Game {
 
     private func drawParty(_ partyMembers: PartyMembers) {
         GuiSetState(GuiState.normal)
-        DrawText("HP: \(partyMembers[.frontLeft].currentHP)", 900, 30, 32, .red)
         
-        if world.partyMembers[.frontLeft].cooldownHasExpired(at: Date()) {
-            if (GuiButton(Rectangle(x: 900, y: 60, width: 100, height: 20), "Attack")) == 1 {
-                world.executeCommand(.attack(attacker: .frontLeft), at: Date())
+        DrawText("HP: \(partyMembers[.frontLeft].currentHP)", 900, 30, 32, .red)
+        drawAttackButtonFor(.frontLeft, position: Vector2(x: 900, y: 60), size: Vector2(x: 100, y: 20))
+        
+        DrawText("HP: \(partyMembers[.frontRight].currentHP)", 1100, 30, 32, .red)
+        drawAttackButtonFor(.frontRight, position: Vector2(x: 1100, y: 60), size: Vector2(x: 100, y: 20))
+
+        DrawText("HP: \(partyMembers[.backLeft].currentHP)", 900, 90, 32, .red)
+        drawAttackButtonFor(.backLeft, position: Vector2(x: 900, y: 120), size: Vector2(x: 100, y: 20))
+        
+        DrawText("HP: \(partyMembers[.backRight].currentHP)", 1100, 90, 32, .red)
+        drawAttackButtonFor(.backRight, position: Vector2(x: 1100, y: 120), size: Vector2(x: 100, y: 20))
+    }
+
+    private func drawAttackButtonFor(_ memberPosition: SinglePartyPosition, position: Vector2, size: Vector2) {
+        let saveGuiState = GuiGetState()
+        let buttonRectangle = Rectangle(x: position.x, y: position.y, width: size.x, height: size.y)
+        if world.partyMembers[memberPosition].cooldownHasExpired(at: Date()) {
+            if (GuiButton(buttonRectangle, "Attack")) == 1 {
+                world.executeCommand(.attack(attacker: memberPosition), at: Date())
             }
         } else {
             GuiSetState(GuiState.disabled)
-            GuiButton(Rectangle(x: 900, y: 60, width: 100, height: 20), "Attack")
+            GuiButton(buttonRectangle, "Attack")
         }
-        GuiSetState(GuiState.normal)
-        
-        DrawText("HP: \(partyMembers[.frontRight].currentHP)", 1100, 30, 32, .red)
-        DrawText("HP: \(partyMembers[.backLeft].currentHP)", 900, 90, 32, .red)
-        DrawText("HP: \(partyMembers[.backRight].currentHP)", 1100, 90, 32, .red)
+        GuiSetState(saveGuiState)
     }
 
     private func loadImages() {
