@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-@testable import DCJam2025
+import DCJam2025
 
 @Suite("The party should be able to perform attacks") struct PartyAttackTests {
     @Test("and damage an enemy when it is close enough") func partyAttacksEnemies() throws {

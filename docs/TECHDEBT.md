@@ -24,7 +24,16 @@
     - [X] MappingTests
         - [X] make visitedTilesOnCurrentFloor public
     - [X] MovementTests
-    - [ ] PartyAttackTests
+    - [X] PartyAttackTests
+    - [X] VizualizationTests
+        - [X] Make target public
+        - [X] Make light public
+        - [X] Make colors public
+            - [X] make `*` operator public
+        - [X] getSpriteAndPositionForTileAtPosition
+        - [X] getSpriteAndPositionForPartyAtPosition
+        
+    
             
 
 

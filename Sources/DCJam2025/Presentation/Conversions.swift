@@ -7,12 +7,12 @@
 
 import raylib
 
-func light(position: Coordinate, vantagePoint: Coordinate) -> Float {
+public func light(position: Coordinate, vantagePoint: Coordinate) -> Float {
     let distance = position.distanceTo(vantagePoint)
     return min(Float(1.0) / Float(distance), Float(1.0))
 }
 
-func target(from position: Coordinate, heading: CompassDirection) -> Coordinate {
+public func target(from position: Coordinate, heading: CompassDirection) -> Coordinate {
     position + heading.forward
 }
 
@@ -23,7 +23,7 @@ extension Coordinate {
 }
 
 extension Color {
-    static func * (color: Color, scalar: Float) -> Color {
+    public static func * (color: Color, scalar: Float) -> Color {
         let r = Float(color.r) * scalar
         let g = Float(color.g) * scalar
         let b = Float(color.b) * scalar
@@ -32,7 +32,7 @@ extension Color {
     }
 }
 
-func getSpriteAndPositionForTileAtPosition(
+public func getSpriteAndPositionForTileAtPosition(
     _ position: Coordinate, on floor: Floor, offsetX: Int32 = 0, offsetY: Int32 = 0
 ) -> (spriteName: String, displayX: Int32, displayY: Int32) {
     let spriteSize: Int32 = 16
@@ -52,7 +52,7 @@ func getSpriteAndPositionForTileAtPosition(
     return (spriteName, correctedX, correctedY)
 }
 
-func getSpriteAndPositionForPartyAtPosition(
+public func getSpriteAndPositionForPartyAtPosition(
     _ position: Coordinate, heading: CompassDirection, on floor: Floor, offsetX: Int32 = 0,
     offsetY: Int32 = 0
 ) -> (spriteName: String, displayX: Int32, displayY: Int32) {
