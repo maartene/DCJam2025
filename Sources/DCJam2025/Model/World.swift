@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class World {
+public final class World {
     enum WorldState {
         case inProgress
         case won
@@ -118,7 +118,7 @@ final class World {
     }
 
     // MARK: update
-    func update(at time: Date) {
+    public func update(at time: Date) {
         let aliveEnemies = enemiesOnCurrentFloor.filter { $0.isAlive }
         for enemy in aliveEnemies {
             enemy.act(in: self, at: time)
@@ -134,7 +134,7 @@ enum PartyCommand {
 }
 
 extension World: Equatable {
-    static func == (lhs: World, rhs: World) -> Bool {
+    public static func == (lhs: World, rhs: World) -> Bool {
         lhs.partyPosition == rhs.partyPosition &&
         lhs.partyHeading == rhs.partyHeading &&
         lhs.floors == rhs.floors &&
@@ -143,7 +143,7 @@ extension World: Equatable {
     }
 }
 
-func makeWorld(from floorplans: [String]) -> World {
+public func makeWorld(from floorplans: [String]) -> World {
     let convertedFloorplans = floorplans.map { convertFloorPlanToFloorAndStartposition($0) }
     let enemies = floorplans.map { convertFloorPlanToEnemies($0) }
     let floors = convertedFloorplans.map { $0.floor }
