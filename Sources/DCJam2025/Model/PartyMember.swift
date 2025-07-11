@@ -7,16 +7,16 @@
 
 import Foundation
 
-final class PartyMember {
-    private(set) var currentHP = 10
+public final class PartyMember {
+    public private(set) var currentHP = 10
     private var cooldownExpires = Date()
     private var cooldown = 1.0
 
-    var isAlive: Bool {
+    public var isAlive: Bool {
         currentHP > 0
     }
 
-    func takeDamage(_ amount: Int) {
+    public func takeDamage(_ amount: Int) {
         currentHP -= amount
     }
 

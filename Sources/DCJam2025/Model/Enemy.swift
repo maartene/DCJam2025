@@ -7,13 +7,13 @@
 
 import Foundation
 
-final class Enemy {
-    private(set) var position: Coordinate
-    private(set) var heading: CompassDirection
+public final class Enemy {
+    public private(set) var position: Coordinate
+    public private(set) var heading: CompassDirection
     private var cooldownExpires = Date()
-    let cooldown = 0.75
+    public let cooldown = 0.75
     private let attackStrategy: any AttackPartyStrategy
-    var hp = 3
+    public private(set) var hp = 3
 
     init(position: Coordinate, heading: CompassDirection, attackStrategy: any AttackPartyStrategy) {
         self.position = position
@@ -21,11 +21,11 @@ final class Enemy {
         self.attackStrategy = attackStrategy
     }
 
-    var isAlive: Bool {
+    public var isAlive: Bool {
         hp > 0
     }
 
-    func damage(amount: Int) {
+    public func damage(amount: Int) {
         hp -= amount
     }
 
@@ -108,23 +108,23 @@ final class Enemy {
 }
 
 extension Enemy: Hashable {
-    static func == (lhs: Enemy, rhs: Enemy) -> Bool {
+    public static func == (lhs: Enemy, rhs: Enemy) -> Bool {
         lhs === rhs
     }
 
-    func hash(into hasher: inout Hasher) {
+    public func hash(into hasher: inout Hasher) {
         hasher.combine(ObjectIdentifier(self))
     }
 }
 
 extension Enemy {
-    static func makeMeleeEnemy(at position: Coordinate, heading: CompassDirection = .west) -> Enemy {
+    public static func makeMeleeEnemy(at position: Coordinate, heading: CompassDirection = .west) -> Enemy {
         Enemy(position: position, heading: heading, attackStrategy: MeleeAttackStrategy())
     }
-    static func makeRangedEnemy(at position: Coordinate, heading: CompassDirection = .west) -> Enemy {
+    public static func makeRangedEnemy(at position: Coordinate, heading: CompassDirection = .west) -> Enemy {
         Enemy(position: position, heading: heading, attackStrategy: RangedAttackStrategy())
     }
-    static func makeMagicEnemy(at position: Coordinate, heading: CompassDirection = .west) -> Enemy {
+    public static func makeMagicEnemy(at position: Coordinate, heading: CompassDirection = .west) -> Enemy {
         Enemy(position: position, heading: heading, attackStrategy: MagicAttackStrategy())
     }
 }

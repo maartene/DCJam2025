@@ -26,7 +26,7 @@ enum MovementDirection {
     }
 }
 
-enum CompassDirection {
+public enum CompassDirection: Sendable {
     case north
     case east
     case south

@@ -7,10 +7,15 @@
 
 import Foundation
 
-struct Coordinate {
-    var x: Int
-    var y: Int
+public struct Coordinate: Sendable {
+    public let x: Int
+    public let y: Int
 
+    public init(x: Int, y: Int) {
+        self.x = x
+        self.y = y
+    }
+    
     static func +(lhs: Coordinate, rhs: Coordinate) -> Coordinate {
         Coordinate(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
     }

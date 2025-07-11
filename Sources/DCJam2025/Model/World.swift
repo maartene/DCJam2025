@@ -8,7 +8,7 @@
 import Foundation
 
 public final class World {
-    enum WorldState {
+    public enum WorldState {
         case inProgress
         case won
         case defeated
@@ -21,7 +21,7 @@ public final class World {
     private var visitedTilesOnFloor = [Int: Set<Coordinate>]()
     private var enemies: [Int: Set<Enemy>]
 
-    let partyMembers = PartyMembers(members: [
+    public let partyMembers = PartyMembers(members: [
         PartyMember(),
         PartyMember(),
         PartyMember(),
@@ -29,7 +29,7 @@ public final class World {
     ])
 
     // Initializers
-    init(floors: [Floor], partyStartPosition: Coordinate = Coordinate(x: 0, y: 0), partyStartHeading: CompassDirection = CompassDirection.north, enemies: [Set<Enemy>] = [[]]) {
+    public init(floors: [Floor], partyStartPosition: Coordinate = Coordinate(x: 0, y: 0), partyStartHeading: CompassDirection = CompassDirection.north, enemies: [Set<Enemy>] = [[]]) {
         self.floors = floors
         self.partyPosition = partyStartPosition
         self.partyHeading = partyStartHeading
@@ -49,11 +49,11 @@ public final class World {
         floors[currentFloorIndex]
     }
 
-    var enemiesOnCurrentFloor: Set<Enemy> {
+    public var enemiesOnCurrentFloor: Set<Enemy> {
         enemies[currentFloorIndex, default: []]
     }
 
-    var state: WorldState {
+    public var state: WorldState {
         if partyMembers.hasAlivePartyMember == false {
             return .defeated
         }

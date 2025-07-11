@@ -17,7 +17,7 @@ enum Tile: Character {
     }
 }
 
-struct Floor {
+public struct Floor {
     private var tiles = [Coordinate: Tile]()
 
     let minX: Int
@@ -25,7 +25,7 @@ struct Floor {
     let maxX: Int
     let maxY: Int
 
-    init(_ mapArray: [[Character]] = [[]]) {
+    public init(_ mapArray: [[Character]] = [[]]) {
         var readTiles = [Coordinate: Tile]()
 
         for row in 0 ..< mapArray.count {
@@ -107,7 +107,7 @@ struct Floor {
 extension Floor: Equatable { }
 
 extension Floor: CustomStringConvertible {
-    var description: String {
+    public var description: String {
         var lines = [String]()
         for y in minY ... maxY {
             var line = ""

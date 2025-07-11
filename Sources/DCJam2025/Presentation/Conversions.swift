@@ -17,7 +17,7 @@ func target(from position: Coordinate, heading: CompassDirection) -> Coordinate 
 }
 
 extension Coordinate {
-    var toVector3: Vector3 {
+    public var toVector3: Vector3 {
         Vector3(x: Float(x), y: 0, z: Float(y))
     }
 }

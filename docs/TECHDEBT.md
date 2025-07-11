@@ -15,6 +15,10 @@
             - [X] make `World` public
         - [X] make `update` public
         - [ ] make World initializer public
+            - [X] make CompassDirection public
+            - [X] make Coordinate initializer public
+                - [ ] make toVector3 public
+            - [X] make Floor public
             
 
 
