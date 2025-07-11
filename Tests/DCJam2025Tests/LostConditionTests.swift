@@ -7,7 +7,7 @@
 
 import Testing
 import Foundation
-@testable import DCJam2025
+import DCJam2025
 
 @Suite("The lose condition for this world should") struct LostConditionTests {
     let worldWithSingleFloor = World(floors: [Floor()])
