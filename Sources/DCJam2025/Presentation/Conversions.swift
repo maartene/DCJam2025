@@ -6,6 +6,7 @@
 //
 
 import raylib
+import Model
 
 public func light(position: Coordinate, vantagePoint: Coordinate) -> Float {
     let distance = position.distanceTo(vantagePoint)

@@ -20,7 +20,7 @@ public final class PartyMember {
         currentHP -= amount
     }
 
-    func cooldownHasExpired(at time: Date) -> Bool {
+    public func cooldownHasExpired(at time: Date) -> Bool {
         time >= cooldownExpires
     }
 

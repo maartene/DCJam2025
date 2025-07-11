@@ -5,7 +5,7 @@
 //  Created by Maarten Engels on 11/04/2025.
 //
 
-enum Tile: Character {
+public enum Tile: Character {
     case floor = "."
     case wall = "#"
     case stairsUp = "<"
@@ -20,10 +20,10 @@ enum Tile: Character {
 public struct Floor {
     private var tiles = [Coordinate: Tile]()
 
-    let minX: Int
-    let minY: Int
-    let maxX: Int
-    let maxY: Int
+    public let minX: Int
+    public let minY: Int
+    public let maxX: Int
+    public let maxY: Int
 
     public init(_ mapArray: [[Character]] = [[]]) {
         var readTiles = [Coordinate: Tile]()
@@ -42,7 +42,7 @@ public struct Floor {
         maxY = mapArray.count - 1
     }
 
-    func tileAt(_ coordinate: Coordinate) -> Tile {
+    public func tileAt(_ coordinate: Coordinate) -> Tile {
         tiles[coordinate, default: .floor]
     }
 

@@ -7,7 +7,7 @@
 
 import Testing
 import Foundation
-import DCJam2025
+import Model
 
 @Suite("The wincondition for this world should") struct WinConditionTests {
     let worldWithTarget = World(floors: [Floor([

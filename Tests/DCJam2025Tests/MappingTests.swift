@@ -7,7 +7,7 @@
 
 import Testing
 import Foundation
-import DCJam2025
+import Model
 
 @Suite("The party should keep track of the tiles it found") struct MappingTests {
     let worldWithSingleFloor = World(floors: [Floor()])

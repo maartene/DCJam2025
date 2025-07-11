@@ -8,6 +8,7 @@
 import Testing
 import raylib
 import DCJam2025
+import Model
 
 @Suite("Converting between game logic structures and visual representations should") struct ConversionGameLogicAndVizualizationTests {
 

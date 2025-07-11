@@ -7,6 +7,7 @@
 
 import Foundation
 import raylib
+import Model
 
 class Game {
     let screenWidth: Int32 = 1280

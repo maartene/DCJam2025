@@ -93,7 +93,7 @@ public enum CompassDirection: Sendable {
         }
     }
 
-    var forward: Coordinate {
+    public var forward: Coordinate {
         MovementDirection.forward.toCompassDirection(facing: self).toCoordinate
     }
 }

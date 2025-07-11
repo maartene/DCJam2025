@@ -162,3 +162,5 @@ What is there to find? The answer to the ultimate secret: what came before? the 
 
 ## 🍅 Pomodoro 28
 - ✅ KOd party members cannot attack
+- ✅ Remove @testable import from tests
+- ✅ Move into Model seperate package

@@ -1,6 +1,6 @@
 import Testing
 import Foundation
-import DCJam2025
+import Model
 
 @Suite("Party movement should") struct PartyMovementTests {
     let worldWithSingleFloor = World(floors: [Floor()])
