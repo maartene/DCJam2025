@@ -37,6 +37,8 @@
 - Party members should have some interesting aspects, at least a name and a portrait.
 
 - Party members should be able to attack as well
+    - With two hands
+    - With seperate cooldowns
 
 - More intesting maps (10 levels would be cool)
 
