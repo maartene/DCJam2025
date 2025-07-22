@@ -5,7 +5,7 @@
 //  Created by Maarten Engels on 11/04/2025.
 //
 
-enum MovementDirection {
+public enum MovementDirection: Sendable {
     case forward
     case backwards
     case left
@@ -26,7 +26,7 @@ enum MovementDirection {
     }
 }
 
-enum CompassDirection {
+public enum CompassDirection: Sendable {
     case north
     case east
     case south
@@ -93,7 +93,7 @@ enum CompassDirection {
         }
     }
 
-    var forward: Coordinate {
+    public var forward: Coordinate {
         MovementDirection.forward.toCompassDirection(facing: self).toCoordinate
     }
 }

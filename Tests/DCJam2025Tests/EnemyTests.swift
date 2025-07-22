@@ -7,7 +7,7 @@
 
 import Testing
 import Foundation
-@testable import DCJam2025
+import Model
 
 @Suite("During update, melee enemies should") struct MeleeEnemyTests {
     @Test("attack party members when they are close enough") func enemiesAttackPartyMembers() {

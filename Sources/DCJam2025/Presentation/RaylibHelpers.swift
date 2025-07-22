@@ -8,23 +8,23 @@
 import raylib
 
 extension Color {
-    static var white: Color {
+    public static var white: Color {
         Color(r: 255, g: 255, b: 255, a: 255)
     }
 
-    static var darkGray: Color {
+    public static var darkGray: Color {
         Color(r: 50, g: 50, b: 50, a: 255)
     }
 
-    static var black: Color {
+    public static var black: Color {
         Color(r: 50, g: 50, b: 50, a: 255)
     }
 
-    static var blue: Color {
+    public static var blue: Color {
         Color(r: 0, g: 0, b: 255, a: 255)
     }
 
-    static var red: Color {
+    public static var red: Color {
         Color(r: 255, g: 0, b: 0, a: 255)
     }
 }

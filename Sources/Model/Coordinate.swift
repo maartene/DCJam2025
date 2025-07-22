@@ -7,32 +7,37 @@
 
 import Foundation
 
-struct Coordinate {
-    var x: Int
-    var y: Int
+public struct Coordinate: Sendable {
+    public let x: Int
+    public let y: Int
 
-    static func +(lhs: Coordinate, rhs: Coordinate) -> Coordinate {
+    public init(x: Int, y: Int) {
+        self.x = x
+        self.y = y
+    }
+    
+    public static func +(lhs: Coordinate, rhs: Coordinate) -> Coordinate {
         Coordinate(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
     }
 
-    static func +=(lhs: inout Coordinate, rhs: Coordinate) {
+    public static func +=(lhs: inout Coordinate, rhs: Coordinate) {
         lhs = lhs + rhs
     }
 
-    static func -(lhs: Coordinate, rhs: Coordinate) -> Coordinate {
+    public static func -(lhs: Coordinate, rhs: Coordinate) -> Coordinate {
         Coordinate(x: lhs.x - rhs.x, y: lhs.y - rhs.y)
     }
 
-    static func *(vector: Coordinate, scalar: Int) -> Coordinate {
+    public static func *(vector: Coordinate, scalar: Int) -> Coordinate {
         Coordinate(x: vector.x * scalar, y: vector.y * scalar)
     }
 
-    func distanceTo(_ coordinate: Coordinate) -> Double {
+    public func distanceTo(_ coordinate: Coordinate) -> Double {
         let vector = coordinate - self
         return vector.magnitude
     }
 
-    var magnitude: Double {
+    public var magnitude: Double {
         sqrt(Double(x*x + y*y))
     }
 

@@ -7,14 +7,14 @@
 
 import Foundation
 
-struct PartyMembers {
+public struct PartyMembers {
     private let members: [PartyMember]
 
     init(members: [PartyMember]) {
         self.members = members
     }
 
-    subscript(position: SinglePartyPosition) -> PartyMember {
+    public subscript(position: SinglePartyPosition) -> PartyMember {
         getMember(at: position)
     }
 
@@ -31,7 +31,7 @@ struct PartyMembers {
         }
     }
 
-    func getMembers(grouping: PartyPositionGroup) -> [PartyMember] {
+    public func getMembers(grouping: PartyPositionGroup) -> [PartyMember] {
         return switch grouping {
         case .frontRow:
             [getMember(at: .frontLeft), getMember(at: .frontRight)]
@@ -42,27 +42,32 @@ struct PartyMembers {
         }
     }
 
-    var hasAlivePartyMember: Bool {
+    public var hasAlivePartyMember: Bool {
         members.filter { $0.isAlive }.isEmpty == false
     }
 
-    func attack(from attackPosition: SinglePartyPosition, in world: World, at time: Date) {
+    public func attack(from attackPosition: SinglePartyPosition, in world: World, at time: Date) {
+        let attacker = getMember(at: attackPosition)
+        
+        guard attacker.isAlive else {
+            return
+        }
+        
         if attackPosition == .frontLeft || attackPosition == .frontRight {
-            let attacker = getMember(at: attackPosition)
             attacker.attack(potentialTargets: world.enemiesOnCurrentFloor, partyPosition: world.partyPosition, at: time)
         }
 
     }
 }
 
-enum SinglePartyPosition {
+public enum SinglePartyPosition {
     case frontLeft
     case frontRight
     case backLeft
     case backRight
 }
 
-enum PartyPositionGroup {
+public enum PartyPositionGroup {
     case frontRow
     case backRow
     case all
