@@ -8,9 +8,14 @@
 import Foundation
 
 public final class PartyMember {
+    public let name: String
     public private(set) var currentHP = 10
     private var cooldownExpires = Date()
     private var cooldown = 1.0
+
+    init (name: String) {
+        self.name = name
+    }
 
     public var isAlive: Bool {
         currentHP > 0

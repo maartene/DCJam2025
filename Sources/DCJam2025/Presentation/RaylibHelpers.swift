@@ -61,3 +61,9 @@ enum GuiState {
     static let pressed: Int32 = 2
     static let disabled: Int32 = 3
 }
+
+extension Vector2 {
+    static func +(lhs: Vector2, rhs: Vector2) -> Vector2 {
+        Vector2(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
+    }
+}

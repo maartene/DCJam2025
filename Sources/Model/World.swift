@@ -22,10 +22,10 @@ public final class World {
     private var enemies: [Int: Set<Enemy>]
 
     public let partyMembers = PartyMembers(members: [
-        PartyMember(),
-        PartyMember(),
-        PartyMember(),
-        PartyMember()
+        PartyMember(name: "Loretta"),
+        PartyMember(name: "Leroy"),
+        PartyMember(name: "Lenny"),
+        PartyMember(name: "Ludo")
     ])
 
     // Initializers

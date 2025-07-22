@@ -206,18 +206,32 @@ class Game {
 
     private func drawParty(_ partyMembers: PartyMembers) {
         GuiSetState(GuiState.normal)
-        
-        DrawText("HP: \(partyMembers[.frontLeft].currentHP)", 900, 30, 32, .red)
-        drawAttackButtonFor(.frontLeft, position: Vector2(x: 900, y: 60), size: Vector2(x: 100, y: 20))
-        
-        DrawText("HP: \(partyMembers[.frontRight].currentHP)", 1100, 30, 32, .red)
-        drawAttackButtonFor(.frontRight, position: Vector2(x: 1100, y: 60), size: Vector2(x: 100, y: 20))
 
-        DrawText("HP: \(partyMembers[.backLeft].currentHP)", 900, 90, 32, .red)
-        drawAttackButtonFor(.backLeft, position: Vector2(x: 900, y: 120), size: Vector2(x: 100, y: 20))
+        drawPartyMember(.frontLeft, position: Vector2(x: 900, y: 10))
+        drawPartyMember(.frontRight, position: Vector2(x: 1070, y: 10))
+        drawPartyMember(.backLeft, position: Vector2(x: 900, y: 120))
+        drawPartyMember(.backRight, position: Vector2(x: 1070, y: 120))
+    }
+
+    private func drawPartyMember(_ memberPosition: SinglePartyPosition, position: Vector2) {
+        let partyMember = world.partyMembers[memberPosition]
+        let x = Int32(position.x)
+        let y = Int32(position.y)
+        let fontSize: Int32 = 24
+        let row2YOffset: Int32 = 25
+        let row3YOffset = Float(row2YOffset * 2)
+        let attackButtonSize = Vector2(x: 70, y: 40)
+        let row3XOffset: Float = attackButtonSize.x + 10
         
-        DrawText("HP: \(partyMembers[.backRight].currentHP)", 1100, 90, 32, .red)
-        drawAttackButtonFor(.backRight, position: Vector2(x: 1100, y: 120), size: Vector2(x: 100, y: 20))
+        let padding: Int32 = 7
+
+        DrawRectangle(x - padding, y - padding, Int32(attackButtonSize.x) * 2 + 20, padding + row2YOffset + row2YOffset + padding + Int32(attackButtonSize.y), .darkGray)
+
+        DrawText(partyMember.name, x, y, fontSize, .white)
+        DrawText("HP: \(partyMember.currentHP)", x, y + row2YOffset, fontSize, .red)
+
+        drawAttackButtonFor(memberPosition, position: position + Vector2(x: 0, y: row3YOffset), size: attackButtonSize)
+        drawAttackButtonFor(memberPosition, position: position + Vector2(x: row3XOffset, y: row3YOffset), size: attackButtonSize)
     }
 
     private func drawAttackButtonFor(_ memberPosition: SinglePartyPosition, position: Vector2, size: Vector2) {
