@@ -1,6 +1,7 @@
 # TECHDEBT
 
 ## ⚠️ TODO
+- `PartyMember.setAttackStrategyToMelee` is there only for testing purposes
 - Determining if party is in line of sight of enemy uses a naive raycast approach. this could be easier more elegant.
 - Rotating towards party is based on trial and error: rotate, see if facing party. otherwise repeat. this could be based on dot product
 - Duplication of logic between Enemy and World (Party)

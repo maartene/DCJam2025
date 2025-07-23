@@ -12,10 +12,11 @@ public final class PartyMember: Damageable {
     public private(set) var currentHP = 10
     private var cooldownExpires = Date()
     private var cooldown = 1.0
-    let attackStrategy = MeleeAttackMobStrategy()
+    private(set) var attackStrategy: any AttackMobStrategy
 
-    init (name: String) {
+    init (name: String, attackStrategy: AttackMobStrategy) {
         self.name = name
+        self.attackStrategy = attackStrategy
     }
 
     public var isAlive: Bool {
@@ -42,5 +43,23 @@ public final class PartyMember: Damageable {
         attackStrategy.damageTargets(in: world)
         
         cooldownExpires = time.addingTimeInterval(cooldown)
+    }
+}
+
+extension PartyMember {
+    public static func makeMeleePartyMember(name: String) -> PartyMember {
+        PartyMember(name: name, attackStrategy: MeleeAttackMobStrategy())
+    }
+    public static func makeRangedPartyMember(name: String) -> PartyMember {
+        PartyMember(name: name, attackStrategy: RangedAttackMobStrategy())
+    }
+    public static func makeMagicPartyMember(name: String) -> PartyMember {
+        PartyMember(name: name, attackStrategy: MagicAttackMobStrategy())
+    }
+}
+
+extension PartyMember {
+    public func setAttackStrategyToMelee() {
+        attackStrategy = MeleeAttackMobStrategy()
     }
 }

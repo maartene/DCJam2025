@@ -11,11 +11,6 @@ protocol AttackMobStrategy: AttackStrategy {
 
 extension AttackMobStrategy {
     var allowedPartyPositions: PartyPositionGroup { .all }
-}
-
-struct MeleeAttackMobStrategy: AttackMobStrategy {
-    let range = 1
-    let damage = 2
     
     func getValidTargets(in world: World) -> [Damageable] {
         let partyPosition = world.partyPosition
@@ -23,6 +18,21 @@ struct MeleeAttackMobStrategy: AttackMobStrategy {
             partyPosition.manhattanDistanceTo($0.position) <= range
         }
     }
+}
+
+struct MeleeAttackMobStrategy: AttackMobStrategy {
+    let range = 1
+    let damage = 2
     
     let allowedPartyPositions: PartyPositionGroup = .frontRow
+}
+
+struct RangedAttackMobStrategy: AttackMobStrategy {
+    let range = 3
+    let damage = 1
+}
+
+struct MagicAttackMobStrategy: AttackMobStrategy {
+    let range = 2
+    let damage = 1
 }

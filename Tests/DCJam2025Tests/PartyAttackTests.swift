@@ -49,7 +49,8 @@ import Model
         let world = makeWorld(from: [
             ".s"
         ])
-
+        world.partyMembers[.backLeft].setAttackStrategyToMelee()
+        
         let enemy = try #require(world.enemiesOnCurrentFloor.first)
 
         let hpOfEnemyBeforeAttack = enemy.hp
@@ -87,5 +88,20 @@ import Model
         world.executeCommand(.attack(attacker: .frontRight), at: Date())
 
         #expect(enemy.hp == hpOfEnemyBeforeAttack)
+    }
+}
+
+@Suite("Ranged party members should") struct RangedPartyMembersShould {
+    @Test("hit enemies further away") func hitEnemiesFurtherAway() throws {
+        let world = makeWorld(from: [
+            "...s"
+        ])
+        
+        let enemy = try #require(world.enemiesOnCurrentFloor.first)
+        let hpOfEnemyBeforeAttack = enemy.hp
+        
+        world.executeCommand(.attack(attacker: .backLeft), at: Date())
+        
+        #expect(enemy.hp < hpOfEnemyBeforeAttack)
     }
 }
