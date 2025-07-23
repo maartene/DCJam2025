@@ -13,12 +13,13 @@ public final class Enemy: Damageable {
     private var cooldownExpires = Date()
     public let cooldown = 0.75
     private let attackStrategy: any AttackPartyStrategy
-    public private(set) var hp = 3
+    public private(set) var hp: Int
 
-    init(position: Coordinate, heading: CompassDirection, attackStrategy: any AttackPartyStrategy) {
+    init(position: Coordinate, heading: CompassDirection, attackStrategy: any AttackPartyStrategy, hp: Int = 3) {
         self.position = position
         self.heading = heading
         self.attackStrategy = attackStrategy
+        self.hp = hp
     }
 
     public var isAlive: Bool {
@@ -126,5 +127,8 @@ extension Enemy {
     }
     public static func makeMagicEnemy(at position: Coordinate, heading: CompassDirection = .west) -> Enemy {
         Enemy(position: position, heading: heading, attackStrategy: MagicAttackPartyStrategy())
+    }
+    public static func makePracticeDummy(at position: Coordinate, heading: CompassDirection = .west) -> Enemy {
+        Enemy(position: position, heading: heading, attackStrategy: DummyAttackStrategy(), hp: 100)
     }
 }

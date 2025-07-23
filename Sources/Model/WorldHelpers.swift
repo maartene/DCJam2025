@@ -36,6 +36,8 @@ public func makeWorld(from floorplans: [String]) -> World {
                     enemiesOnFloor.insert(Enemy.makeRangedEnemy(at: Coordinate(x: column, y: row)))
                 case "e":
                     enemiesOnFloor.insert(Enemy.makeMagicEnemy(at: Coordinate(x: column, y: row)))
+                case "p":
+                    enemiesOnFloor.insert(Enemy.makePracticeDummy(at: Coordinate(x: column, y: row)))
                 default:
                     break
                 }

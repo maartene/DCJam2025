@@ -172,6 +172,22 @@ import Model
     }
 }
 
+@Suite("Practice dummies should") struct PracticeDummyTests {
+    @Test("not attack") func notAttack() {
+        let world = makeWorld(from: [
+            """
+            .p
+            """
+        ])
+        
+        let originalHpOfPartyMembers = sumHPOfPartyMembers(in: world)
+
+        world.update(at: Date())
+        
+        #expect(sumHPOfPartyMembers(in: world) == originalHpOfPartyMembers)
+    }
+}
+
 @Suite("Enemies should try and move towards party to get near them") struct EnemyMovementTests {
     @Test("Enemies move towards party") func enemiesMoveTowardsParty() throws {
         let world = makeWorld(from: [

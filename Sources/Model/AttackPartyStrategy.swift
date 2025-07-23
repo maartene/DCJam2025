@@ -48,3 +48,14 @@ struct MagicAttackPartyStrategy: AttackPartyStrategy {
         potentialTargets.forEach { $0.takeDamage(damage) }
     }
 }
+
+struct DummyAttackStrategy: AttackPartyStrategy {
+    func getValidTargets(in world: World) -> [any Damageable] {
+        []
+    }
+    
+    let range = 0
+    let damage = 0
+    
+    
+}
