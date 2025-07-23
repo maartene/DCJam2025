@@ -7,11 +7,12 @@
 
 import Foundation
 
-public final class PartyMember {
+public final class PartyMember: Damageable {
     public let name: String
     public private(set) var currentHP = 10
     private var cooldownExpires = Date()
     private var cooldown = 1.0
+    let attackStrategy = MeleeAttackMobStrategy()
 
     init (name: String) {
         self.name = name
@@ -29,16 +30,39 @@ public final class PartyMember {
         time >= cooldownExpires
     }
 
-    func attack(potentialTargets: Set<Enemy>, partyPosition: Coordinate, at time: Date) {
+    func attack(in world: World, at time: Date) {
         guard cooldownHasExpired(at: time) else {
             return
         }
-
-        potentialTargets.forEach {
-            if partyPosition.manhattanDistanceTo($0.position) <= 1 {
-                $0.damage(amount: 2)
-            }
+        
+        guard isAlive else {
+            return
         }
+        
+        attackStrategy.damageTargets(in: world)
+        
         cooldownExpires = time.addingTimeInterval(cooldown)
     }
+}
+
+protocol AttackMobStrategy: AttackStrategy {
+    var allowedPartyPositions: PartyPositionGroup { get }
+}
+
+extension AttackMobStrategy {
+    var allowedPartyPositions: PartyPositionGroup { .all }
+}
+
+struct MeleeAttackMobStrategy: AttackMobStrategy {
+    let range = 1
+    let damage = 2
+    
+    func getValidTargets(in world: World) -> [Damageable] {
+        let partyPosition = world.partyPosition
+        return world.enemiesOnCurrentFloor.filter {
+            partyPosition.manhattanDistanceTo($0.position) <= range
+        }
+    }
+    
+    let allowedPartyPositions: PartyPositionGroup = .frontRow
 }

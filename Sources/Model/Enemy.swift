@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class Enemy {
+public final class Enemy: Damageable {
     public private(set) var position: Coordinate
     public private(set) var heading: CompassDirection
     private var cooldownExpires = Date()
@@ -25,7 +25,7 @@ public final class Enemy {
         hp > 0
     }
 
-    public func damage(amount: Int) {
+    public func takeDamage(_ amount: Int) {
         hp -= amount
     }
 
@@ -119,12 +119,12 @@ extension Enemy: Hashable {
 
 extension Enemy {
     public static func makeMeleeEnemy(at position: Coordinate, heading: CompassDirection = .west) -> Enemy {
-        Enemy(position: position, heading: heading, attackStrategy: MeleeAttackStrategy())
+        Enemy(position: position, heading: heading, attackStrategy: MeleeAttackPartyStrategy())
     }
     public static func makeRangedEnemy(at position: Coordinate, heading: CompassDirection = .west) -> Enemy {
-        Enemy(position: position, heading: heading, attackStrategy: RangedAttackStrategy())
+        Enemy(position: position, heading: heading, attackStrategy: RangedAttackPartyStrategy())
     }
     public static func makeMagicEnemy(at position: Coordinate, heading: CompassDirection = .west) -> Enemy {
-        Enemy(position: position, heading: heading, attackStrategy: MagicAttackStrategy())
+        Enemy(position: position, heading: heading, attackStrategy: MagicAttackPartyStrategy())
     }
 }

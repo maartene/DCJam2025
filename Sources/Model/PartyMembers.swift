@@ -48,15 +48,12 @@ public struct PartyMembers {
 
     public func attack(from attackPosition: SinglePartyPosition, in world: World, at time: Date) {
         let attacker = getMember(at: attackPosition)
-        
-        guard attacker.isAlive else {
+
+        guard attacker.attackStrategy.allowedPartyPositions.toSinglePartyPositions.contains(attackPosition) else {
             return
         }
         
-        if attackPosition == .frontLeft || attackPosition == .frontRight {
-            attacker.attack(potentialTargets: world.enemiesOnCurrentFloor, partyPosition: world.partyPosition, at: time)
-        }
-
+        attacker.attack(in: world, at: time)
     }
 }
 
@@ -71,4 +68,15 @@ public enum PartyPositionGroup {
     case frontRow
     case backRow
     case all
+    
+    var toSinglePartyPositions: [SinglePartyPosition] {
+        switch self {
+            case .frontRow:
+            return [.frontLeft, .frontRight]
+        case .backRow:
+            return [.backLeft, .backRight]
+        case .all:
+            return [.frontLeft, .frontRight, .backLeft, .backRight]
+        }
+    }
 }

@@ -89,7 +89,7 @@ import Model
     @Test("dead enemies don't attack") func deadEnemiesDontAttack() {
         let enemy = Enemy.makeMeleeEnemy(at: Coordinate(x: 1, y: 0), heading: .west)
         let world = World(floors: [Floor()], enemies: [[enemy]])
-        enemy.damage(amount: Int.max)
+        enemy.takeDamage(Int.max)
         let hpOfPartyMembersBeforeAttack = sumHPOfPartyMembers(in: world)
 
         world.update(at: Date())
