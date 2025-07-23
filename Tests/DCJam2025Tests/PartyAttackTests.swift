@@ -105,3 +105,21 @@ import Model
         #expect(enemy.hp < hpOfEnemyBeforeAttack)
     }
 }
+
+@Suite("Magic party members should") struct MagicPartyMembersShould {
+    @Test("hit enemies further away") func hitMultipleEnemiesAtOnce() throws {
+        let world = makeWorld(from: [
+            ".ss"
+        ])
+        
+        let hpOfEnemies = world.enemiesOnCurrentFloor.reduce(into: [:]) { result, enemy in
+            result[enemy] = enemy.hp
+        }
+        
+        world.executeCommand(.attack(attacker: .backRight), at: Date())
+        
+        for enemy in world.enemiesOnCurrentFloor {
+            #expect(enemy.hp < hpOfEnemies[enemy, default: 0])
+        }
+    }
+}

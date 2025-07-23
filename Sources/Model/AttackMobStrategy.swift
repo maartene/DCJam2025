@@ -35,4 +35,9 @@ struct RangedAttackMobStrategy: AttackMobStrategy {
 struct MagicAttackMobStrategy: AttackMobStrategy {
     let range = 2
     let damage = 1
+    
+    func damageTargets(in world: World) {
+        let potentialTargets = getValidTargets(in: world)
+        potentialTargets.forEach { $0.takeDamage(damage) }
+    }
 }
