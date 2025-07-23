@@ -1,12 +1,11 @@
 # TECHDEBT
 
 ## ⚠️ TODO
-- the UI will require more helper functions to draw the right buttons
 - Determining if party is in line of sight of enemy uses a naive raycast approach. this could be easier more elegant.
 - Rotating towards party is based on trial and error: rotate, see if facing party. otherwise repeat. this could be based on dot product
 - Duplication of logic between Enemy and World (Party)
     - Is it possible to re-use attack strategy?
-- Similarity between health of enemy and party members
+    - Similarity between health of enemy and party members
 
 ## 🚧 DOING
 
@@ -63,3 +62,4 @@
         - [X] getSpriteAndPositionForTileAtPosition
         - [X] getSpriteAndPositionForPartyAtPosition
     - [X] WinConditionTests
+- the UI will require more helper functions to draw the right buttons
