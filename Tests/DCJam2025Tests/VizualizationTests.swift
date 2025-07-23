@@ -118,6 +118,21 @@ import Model
         #expect((Color.blue * 0.1).a == 255)
         #expect((Color(r: 123, g: 34, b: 57, a: 100) * 0.3).a == 100)
     }
+    
+    @Test("Determine the color of HP bar", arguments: [
+        (100, 100, Color.green),
+        (50, 100, .green),
+        (30, 100, .yellow),
+        (10, 100, .red),
+        (0, 100, .red),
+        (10, 10, .green),
+        (50, 10, .green),
+        (3, 10, .yellow),
+        (1, 10, .red),
+        (0, 10, .red)
+    ]) func determineHPBarColor(testcase: (currentHP: Int, maxHP: Int, expectedColor: Color)) {
+        #expect(hpBarColor(currentHP: testcase.currentHP, maxHP: testcase.maxHP) == testcase.expectedColor)
+    }
 }
 
 @Suite("Minimap conversions") struct MinimapConversions {

@@ -58,6 +58,15 @@ extension Color {
     }
 }
 
+extension Color: @retroactive Equatable {
+    public static func == (lhs: Color, rhs: Color) -> Bool {
+        lhs.a == rhs.a &&
+        lhs.r == rhs.r &&
+        lhs.g == rhs.g &&
+        lhs.b == rhs.b
+    }
+}
+
 enum CameraProjection {
     static var PERSPECTIVE: Int32 { 0 }
 }
