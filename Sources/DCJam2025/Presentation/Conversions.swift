@@ -73,3 +73,11 @@ public func getSpriteAndPositionForPartyAtPosition(
 
     return (spriteName, correctedX, correctedY)
 }
+
+public func hpBarColor(currentHP: Int, maxHP: Int) -> Color {
+    return switch Float(currentHP) / Float(maxHP) {
+    case 0 ..< 0.25: Color.red
+    case 0.25 ..< 0.45: Color.yellow
+    default: Color.green
+    }
+}

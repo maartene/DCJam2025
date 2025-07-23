@@ -207,10 +207,10 @@ class Game {
     private func drawParty(_ partyMembers: PartyMembers) {
         GuiSetState(GuiState.normal)
 
-        drawPartyMember(.frontLeft, position: Vector2(x: 900, y: 10))
-        drawPartyMember(.frontRight, position: Vector2(x: 1070, y: 10))
-        drawPartyMember(.backLeft, position: Vector2(x: 900, y: 120))
-        drawPartyMember(.backRight, position: Vector2(x: 1070, y: 120))
+        drawPartyMember(.frontLeft, position: Vector2(x: 890, y: 10))
+        drawPartyMember(.frontRight, position: Vector2(x: 890 + 185 + 10, y: 10))
+        drawPartyMember(.backLeft, position: Vector2(x: 890, y: 170))
+        drawPartyMember(.backRight, position: Vector2(x: 890 + 185 + 10, y: 170))
     }
 
     private func drawPartyMember(_ memberPosition: SinglePartyPosition, position: Vector2) {
@@ -218,20 +218,22 @@ class Game {
         let x = Int32(position.x)
         let y = Int32(position.y)
         let fontSize: Int32 = 24
-        let row2YOffset: Int32 = 25
-        let row3YOffset = Float(row2YOffset * 2)
-        let attackButtonSize = Vector2(x: 70, y: 40)
-        let row3XOffset: Float = attackButtonSize.x + 10
         
-        let padding: Int32 = 7
+        DrawRectangle(x, y, 185, 150, .blue)
+        
+        DrawText(partyMember.name, x + 5, y, fontSize, .white)
+        
+        if let portrait = sprites[partyMember.name] {
+            DrawTexture(portrait, x + 5, y + 25, .white)
+        }
+        
+        let attackButtonSize = Vector2(x: 70, y: 40)
 
-        DrawRectangle(x - padding, y - padding, Int32(attackButtonSize.x) * 2 + 20, padding + row2YOffset + row2YOffset + padding + Int32(attackButtonSize.y), .darkGray)
-
-        DrawText(partyMember.name, x, y, fontSize, .white)
-        DrawText("HP: \(partyMember.currentHP)", x, y + row2YOffset, fontSize, .red)
-
-        drawAttackButtonFor(memberPosition, position: position + Vector2(x: 0, y: row3YOffset), size: attackButtonSize)
-        drawAttackButtonFor(memberPosition, position: position + Vector2(x: row3XOffset, y: row3YOffset), size: attackButtonSize)
+        
+        drawAttackButtonFor(memberPosition, position: position + Vector2(x: 5 + 100 + 5, y: 25), size: attackButtonSize)
+        drawAttackButtonFor(memberPosition, position: position + Vector2(x: 5 + 100 + 5, y: 25 + attackButtonSize.y), size: attackButtonSize)
+        
+        drawHPBar(currentHP: partyMember.currentHP, maxHP: 10, position: position + Vector2(x: 5, y: 130))
     }
 
     private func drawAttackButtonFor(_ memberPosition: SinglePartyPosition, position: Vector2, size: Vector2) {
@@ -247,6 +249,22 @@ class Game {
         }
         GuiSetState(saveGuiState)
     }
+    
+    private func drawHPBar(currentHP: Int, maxHP: Int, position: Vector2) {
+        // label:
+        let x = Int32(position.x)
+        let y = Int32(position.y)
+        DrawText("HP: ", x, y, 16, .white)
+        
+        // outer bar:
+        DrawRectangleV(position + Vector2(x: 30, y: 0), Vector2(x: 145, y: 15), .white)
+        
+        // inner bar:
+        let maxWidth: Float = 145 - 4
+        let size = Float(currentHP) / Float(maxHP) * maxWidth
+        
+        DrawRectangleV(position + Vector2(x: 30 + 2, y: 2), Vector2(x: size, y: 15 - 4), hpBarColor(currentHP: currentHP, maxHP: maxHP))
+    }
 
     private func loadImages() {
         let imageNames = [
@@ -259,7 +277,11 @@ class Game {
             "stairsUp",
             "stairsDown",
             // Sprites
-            "orc"
+            "orc",
+            "Loretta",
+            "Ludo",
+            "Lenny",
+            "Leroy"
         ]
 
         imageNames.forEach {
