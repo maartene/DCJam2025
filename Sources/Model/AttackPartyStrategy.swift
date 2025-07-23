@@ -54,7 +54,7 @@ struct DummyAttackStrategy: AttackPartyStrategy {
         []
     }
     
-    let range = 0
+    let range = 1
     let damage = 0
     
     

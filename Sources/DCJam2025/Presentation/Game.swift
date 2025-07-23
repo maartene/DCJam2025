@@ -219,7 +219,7 @@ class Game {
         let y = Int32(position.y)
         let fontSize: Int32 = 24
         
-        DrawRectangle(x, y, 185, 150, .blue)
+        DrawRectangle(x, y, 185, 150, .darkGray)
         
         DrawText(partyMember.name, x + 5, y, fontSize, .white)
         
