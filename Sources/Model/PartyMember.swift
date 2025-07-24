@@ -16,15 +16,13 @@ public final class PartyMember: Damageable {
     public private(set) var currentHP = 10
     private var cooldownExpires = Date()
     private var cooldown = 1.0
-    private(set) var attackStrategy: any AttackMobStrategy
     private(set) var primaryHand: any AttackMobStrategy
     private(set) var secondaryHand: any AttackMobStrategy
 
-    init (name: String, attackStrategy: AttackMobStrategy) {
+    init (name: String, primaryHand: AttackMobStrategy, secondaryHand: AttackMobStrategy) {
         self.name = name
-        self.attackStrategy = attackStrategy
-        self.primaryHand = attackStrategy
-        self.secondaryHand = attackStrategy
+        self.primaryHand = primaryHand
+        self.secondaryHand = secondaryHand
     }
 
     public var isAlive: Bool {
@@ -65,18 +63,19 @@ public final class PartyMember: Damageable {
 
 extension PartyMember {
     public static func makeMeleePartyMember(name: String) -> PartyMember {
-        PartyMember(name: name, attackStrategy: MeleeAttackMobStrategy())
+        PartyMember(name: name, primaryHand: MeleeAttackMobStrategy(), secondaryHand: MeleeAttackMobStrategy())
     }
     public static func makeRangedPartyMember(name: String) -> PartyMember {
-        PartyMember(name: name, attackStrategy: RangedAttackMobStrategy())
+        PartyMember(name: name, primaryHand: RangedAttackMobStrategy(), secondaryHand: RangedAttackMobStrategy())
     }
     public static func makeMagicPartyMember(name: String) -> PartyMember {
-        PartyMember(name: name, attackStrategy: MagicAttackMobStrategy())
+        PartyMember(name: name, primaryHand: MagicAttackMobStrategy(), secondaryHand: MagicAttackMobStrategy())
     }
 }
 
 extension PartyMember {
     public func setAttackStrategyToMelee() {
-        attackStrategy = MeleeAttackMobStrategy()
+        primaryHand = MeleeAttackMobStrategy()
+        secondaryHand = MeleeAttackMobStrategy()
     }
 }
