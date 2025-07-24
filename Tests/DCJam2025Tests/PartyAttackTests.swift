@@ -12,7 +12,7 @@ import Model
 
         let hpOfEnemyBeforeAttack = enemy.hp
 
-        world.executeCommand(.attack(attacker: .frontLeft), at: Date())
+        world.executeCommand(.executeHandAbility(user: .frontLeft, hand: .primary), at: Date())
 
         #expect(enemy.hp < hpOfEnemyBeforeAttack)
     }
@@ -26,7 +26,7 @@ import Model
 
         let hpOfEnemyBeforeAttack = enemy.hp
 
-        world.executeCommand(.attack(attacker: .frontRight), at: Date())
+        world.executeCommand(.executeHandAbility(user: .frontRight, hand: .primary), at: Date())
 
         #expect(enemy.hp == hpOfEnemyBeforeAttack)
     }
@@ -40,7 +40,7 @@ import Model
 
         let hpOfEnemyBeforeAttack = enemy.hp
 
-        world.executeCommand(.attack(attacker: .frontLeft), at: Date())
+        world.executeCommand(.executeHandAbility(user: .frontLeft, hand: .primary), at: Date())
 
         #expect(enemy.hp < hpOfEnemyBeforeAttack)
     }
@@ -55,7 +55,7 @@ import Model
 
         let hpOfEnemyBeforeAttack = enemy.hp
 
-        world.executeCommand(.attack(attacker: .backLeft), at: Date())
+        world.executeCommand(.executeHandAbility(user: .backLeft, hand: .primary), at: Date())
 
         #expect(enemy.hp == hpOfEnemyBeforeAttack)
     }
@@ -66,11 +66,11 @@ import Model
         ])
 
         let enemy = try #require(world.enemiesOnCurrentFloor.first)
-        world.executeCommand(.attack(attacker: .frontLeft), at: Date())
+        world.executeCommand(.executeHandAbility(user: .frontLeft, hand: .primary), at: Date())
 
         let hpOfEnemyBeforeAttack = enemy.hp
 
-        world.executeCommand(.attack(attacker: .frontLeft), at: Date())
+        world.executeCommand(.executeHandAbility(user: .frontLeft, hand: .primary), at: Date())
 
         #expect(enemy.hp == hpOfEnemyBeforeAttack)
     }
@@ -85,7 +85,7 @@ import Model
 
         let hpOfEnemyBeforeAttack = enemy.hp
         
-        world.executeCommand(.attack(attacker: .frontRight), at: Date())
+        world.executeCommand(.executeHandAbility(user: .frontRight, hand: .primary), at: Date())
 
         #expect(enemy.hp == hpOfEnemyBeforeAttack)
     }
@@ -100,7 +100,7 @@ import Model
         let enemy = try #require(world.enemiesOnCurrentFloor.first)
         let hpOfEnemyBeforeAttack = enemy.hp
         
-        world.executeCommand(.attack(attacker: .backLeft), at: Date())
+        world.executeCommand(.executeHandAbility(user: .backLeft, hand: .primary), at: Date())
         
         #expect(enemy.hp < hpOfEnemyBeforeAttack)
     }
@@ -116,7 +116,7 @@ import Model
             result[enemy] = enemy.hp
         }
         
-        world.executeCommand(.attack(attacker: .backRight), at: Date())
+        world.executeCommand(.executeHandAbility(user: .backRight, hand: .primary), at: Date())
         
         for enemy in world.enemiesOnCurrentFloor {
             #expect(enemy.hp < hpOfEnemies[enemy, default: 0])

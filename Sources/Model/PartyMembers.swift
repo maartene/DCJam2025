@@ -55,6 +55,16 @@ public struct PartyMembers {
         
         attacker.attack(in: world, at: time)
     }
+
+    public func executeHandAbility(from userPosition: SinglePartyPosition, hand: PartyMember.Hand, in world: World, at time: Date) {
+        let user = getMember(at: userPosition)
+
+        guard user.attackStrategy.allowedPartyPositions.toSinglePartyPositions.contains(userPosition) else {
+            return
+        }
+        
+        user.executeHandAbility(hand: hand, in: world, at: time)
+    }
 }
 
 public enum SinglePartyPosition {
