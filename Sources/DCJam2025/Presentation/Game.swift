@@ -228,20 +228,19 @@ class Game {
         }
         
         let attackButtonSize = Vector2(x: 70, y: 40)
-
         
-        drawAttackButtonFor(memberPosition, position: position + Vector2(x: 5 + 100 + 5, y: 25), size: attackButtonSize)
-        drawAttackButtonFor(memberPosition, position: position + Vector2(x: 5 + 100 + 5, y: 25 + attackButtonSize.y), size: attackButtonSize)
+        drawAttackButtonFor(memberPosition, hand: .primary, position: position + Vector2(x: 5 + 100 + 5, y: 25), size: attackButtonSize)
+        drawAttackButtonFor(memberPosition, hand: .secondary, position: position + Vector2(x: 5 + 100 + 5, y: 25 + attackButtonSize.y), size: attackButtonSize)
         
         drawHPBar(currentHP: partyMember.currentHP, maxHP: 10, position: position + Vector2(x: 5, y: 130))
     }
 
-    private func drawAttackButtonFor(_ memberPosition: SinglePartyPosition, position: Vector2, size: Vector2) {
+    private func drawAttackButtonFor(_ memberPosition: SinglePartyPosition, hand: PartyMember.Hand, position: Vector2, size: Vector2) {
         let saveGuiState = GuiGetState()
         let buttonRectangle = Rectangle(x: position.x, y: position.y, width: size.x, height: size.y)
         if world.partyMembers[memberPosition].cooldownHasExpired(at: Date()) {
             if (GuiButton(buttonRectangle, "Attack")) == 1 {
-                world.executeCommand(.attack(attacker: memberPosition), at: Date())
+                world.executeCommand(.executeHandAbility(user: memberPosition, hand: hand), at: Date())
             }
         } else {
             GuiSetState(GuiState.disabled)
