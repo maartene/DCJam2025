@@ -87,8 +87,6 @@ public final class World {
             partyHeading = partyHeading.rotatedClockwise()
         case .turnCounterClockwise:
             partyHeading = partyHeading.rotatedCounterClockwise()
-        case .attack(let attacker):
-            partyMembers.attack(from: attacker, in: self, at: time)
         case .executeHandAbility(let user, let hand):
             partyMembers.executeHandAbility(from: user, hand: hand, in: self, at: time)
         }
@@ -132,7 +130,6 @@ public enum PartyCommand {
     case move(direction: MovementDirection)
     case turnClockwise
     case turnCounterClockwise
-    case attack(attacker: SinglePartyPosition)
     case executeHandAbility(user: SinglePartyPosition, hand: PartyMember.Hand)
 }
 
