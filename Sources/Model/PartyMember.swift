@@ -18,7 +18,7 @@ public final class PartyMember: Damageable {
         Hand.primary: Date(),
         Hand.secondary: Date(),
         ]
-    private var cooldown = 1.0
+    private var cooldown = 2.0
     private(set) var primaryHand: any AttackMobStrategy
     private(set) var secondaryHand: any AttackMobStrategy
 

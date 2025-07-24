@@ -168,3 +168,8 @@ What is there to find? The answer to the ultimate secret: what came before? the 
 ## 🍅 Pomodoro 29 and 30
 - ✅ Improved the look of party members: portraits, health bars and multiple buttons
 - ✅ Add ability for partymembers to be ranged or magic
+
+## 🍅 Pomodoro 31
+- ✅ Two hands!
+    - ✅ Act indipendently
+    - ✅ Their own cooldown
