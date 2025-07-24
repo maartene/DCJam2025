@@ -49,7 +49,9 @@ public struct PartyMembers {
     public func executeHandAbility(from userPosition: SinglePartyPosition, hand: PartyMember.Hand, in world: World, at time: Date) {
         let user = getMember(at: userPosition)
 
-        guard user.attackStrategy.allowedPartyPositions.toSinglePartyPositions.contains(userPosition) else {
+        let ability = user.abilityForHand(hand: hand)
+
+        guard ability.allowedPartyPositions.toSinglePartyPositions.contains(userPosition) else {
             return
         }
         

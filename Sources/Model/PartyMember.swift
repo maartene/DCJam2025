@@ -39,11 +39,15 @@ public final class PartyMember: Damageable {
         time >= cooldownExpires
     }
 
-    func executeHandAbility(hand: Hand, in world: World, at time: Date) {
-        let attackStrategy = switch hand {
+    func abilityForHand(hand: Hand) -> AttackMobStrategy {
+        switch hand {
             case .primary: primaryHand
             case .secondary: secondaryHand
         }
+    }
+
+    func executeHandAbility(hand: Hand, in world: World, at time: Date) {
+        let attackStrategy = abilityForHand(hand: hand)
 
         guard cooldownHasExpired(at: time) else {
             return
