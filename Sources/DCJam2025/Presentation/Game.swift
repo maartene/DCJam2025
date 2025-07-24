@@ -238,7 +238,7 @@ class Game {
     private func drawAttackButtonFor(_ memberPosition: SinglePartyPosition, hand: PartyMember.Hand, position: Vector2, size: Vector2) {
         let saveGuiState = GuiGetState()
         let buttonRectangle = Rectangle(x: position.x, y: position.y, width: size.x, height: size.y)
-        if world.partyMembers[memberPosition].cooldownHasExpired(at: Date()) {
+        if world.partyMembers[memberPosition].cooldownHasExpired(for: hand, at: Date()) {
             if (GuiButton(buttonRectangle, "Attack")) == 1 {
                 world.executeCommand(.executeHandAbility(user: memberPosition, hand: hand), at: Date())
             }

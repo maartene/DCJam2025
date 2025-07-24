@@ -14,7 +14,10 @@ public final class PartyMember: Damageable {
 
     public let name: String
     public private(set) var currentHP = 10
-    private var cooldownExpires = Date()
+    private var cooldownExpires = [
+        Hand.primary: Date(),
+        Hand.secondary: Date(),
+        ]
     private var cooldown = 1.0
     private(set) var primaryHand: any AttackMobStrategy
     private(set) var secondaryHand: any AttackMobStrategy
@@ -33,8 +36,8 @@ public final class PartyMember: Damageable {
         currentHP -= amount
     }
 
-    public func cooldownHasExpired(at time: Date) -> Bool {
-        time >= cooldownExpires
+    public func cooldownHasExpired(for hand: Hand, at time: Date) -> Bool {
+        time >= cooldownExpires[hand]!
     }
 
     func abilityForHand(hand: Hand) -> AttackMobStrategy {
@@ -47,7 +50,7 @@ public final class PartyMember: Damageable {
     func executeHandAbility(hand: Hand, in world: World, at time: Date) {
         let attackStrategy = abilityForHand(hand: hand)
 
-        guard cooldownHasExpired(at: time) else {
+        guard cooldownHasExpired(for: hand, at: time) else {
             return
         }
         
@@ -57,7 +60,7 @@ public final class PartyMember: Damageable {
         
         attackStrategy.damageTargets(in: world)
         
-        cooldownExpires = time.addingTimeInterval(cooldown)
+        cooldownExpires[hand] = time.addingTimeInterval(cooldown)
     }
 }
 

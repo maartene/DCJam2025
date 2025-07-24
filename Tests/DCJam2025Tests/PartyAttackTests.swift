@@ -89,6 +89,21 @@ import Model
 
         #expect(enemy.hp == hpOfEnemyBeforeAttack)
     }
+
+    @Test("should be able to attack with secondary hand after primary hand attacked") func secondaryHandCanAlsoAttack() throws {
+        let world = makeWorld(from: [
+            ".s"
+        ])
+
+        let enemy = try #require(world.enemiesOnCurrentFloor.first)
+        world.executeCommand(.executeHandAbility(user: .frontLeft, hand: .primary), at: Date())
+        
+        let hpOfEnemyBeforeAttack = enemy.hp
+        
+        world.executeCommand(.executeHandAbility(user: .frontLeft, hand: .secondary), at: Date())
+
+        #expect(enemy.hp < hpOfEnemyBeforeAttack)
+    }
 }
 
 @Suite("Ranged party members should") struct RangedPartyMembersShould {
