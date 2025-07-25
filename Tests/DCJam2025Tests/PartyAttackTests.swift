@@ -107,6 +107,12 @@ import Model
 }
 
 @Suite("Ranged party members should") struct RangedPartyMembersShould {
+    @Test("use a two handed weapon") func shouldUseATwoHandedWeapon() {
+        let partyMember = PartyMember.makeRangedPartyMember(name: "Foo")
+
+        #expect(partyMember.canExecuteAbility(for: .secondary, at: Date()) == false)
+    }
+
     @Test("hit enemies further away") func hitEnemiesFurtherAway() throws {
         let world = makeWorld(from: [
             "...s"

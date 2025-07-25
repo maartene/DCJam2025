@@ -40,6 +40,11 @@ public final class PartyMember: Damageable {
         time >= cooldownExpires[hand]!
     }
 
+    public func canExecuteAbility(for hand: Hand, at time: Date) -> Bool {
+        cooldownHasExpired(for: hand, at: time) &&
+        abilityForHand(hand: hand).allowedHands.contains(hand)
+    }
+
     func abilityForHand(hand: Hand) -> AttackMobStrategy {
         switch hand {
             case .primary: primaryHand

@@ -7,10 +7,14 @@
 
 protocol AttackMobStrategy: AttackStrategy {
     var allowedPartyPositions: PartyPositionGroup { get }
+    var allowedHands: [PartyMember.Hand] { get }
 }
 
 extension AttackMobStrategy {
     var allowedPartyPositions: PartyPositionGroup { .all }
+    var allowedHands: [PartyMember.Hand] {
+        [.primary, .secondary] 
+    }
     
     func getValidTargets(in world: World) -> [Damageable] {
         let partyPosition = world.partyPosition
@@ -30,6 +34,7 @@ struct MeleeAttackMobStrategy: AttackMobStrategy {
 struct RangedAttackMobStrategy: AttackMobStrategy {
     let range = 3
     let damage = 1
+    let allowedHands = [PartyMember.Hand.primary]
 }
 
 struct MagicAttackMobStrategy: AttackMobStrategy {
