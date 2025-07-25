@@ -36,7 +36,7 @@ public final class PartyMember: Damageable {
         currentHP -= amount
     }
 
-    public func cooldownHasExpired(for hand: Hand, at time: Date) -> Bool {
+    private func cooldownHasExpired(for hand: Hand, at time: Date) -> Bool {
         time >= cooldownExpires[hand]!
     }
 
