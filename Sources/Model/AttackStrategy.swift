@@ -5,7 +5,7 @@
 //  Created by Maarten Engels on 23/07/2025.
 //
 
-protocol AttackStrategy {
+public protocol AttackStrategy {
     var range: Int { get }
     var damage: Int { get }
 
@@ -20,6 +20,6 @@ extension AttackStrategy {
     }
 }
 
-protocol Damageable {
+public protocol Damageable {
     func takeDamage(_ amount: Int)
 }

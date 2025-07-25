@@ -5,9 +5,10 @@
 //  Created by Maarten Engels on 23/07/2025.
 //
 
-protocol AttackMobStrategy: AttackStrategy {
+public protocol AttackMobStrategy: AttackStrategy {
     var allowedPartyPositions: PartyPositionGroup { get }
     var allowedHands: [PartyMember.Hand] { get }
+    var weaponType: WeaponType { get }
 }
 
 extension AttackMobStrategy {
@@ -22,6 +23,10 @@ extension AttackMobStrategy {
             partyPosition.manhattanDistanceTo($0.position) <= range
         }
     }
+
+    var weaponType: WeaponType {
+        .bareHands
+    }
 }
 
 struct MeleeAttackMobStrategy: AttackMobStrategy {
@@ -35,6 +40,7 @@ struct RangedAttackMobStrategy: AttackMobStrategy {
     let range = 3
     let damage = 1
     let allowedHands = [PartyMember.Hand.primary]
+    let weaponType: WeaponType = .bow
 }
 
 struct MagicAttackMobStrategy: AttackMobStrategy {
@@ -45,4 +51,9 @@ struct MagicAttackMobStrategy: AttackMobStrategy {
         let potentialTargets = getValidTargets(in: world)
         potentialTargets.forEach { $0.takeDamage(damage) }
     }
+}
+
+public enum WeaponType {
+    case bareHands
+    case bow
 }

@@ -39,7 +39,7 @@
 - Party members should be able to attack as well
     - ✅ With two hands
     - ✅ With seperate cooldowns
-    - Single handed as well as dual handed weapons
+    - ✅ Single handed as well as dual handed weapons
 
 - More intesting maps (10 levels would be cool)
 
