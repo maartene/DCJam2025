@@ -19,10 +19,10 @@ public final class PartyMember: Damageable {
         Hand.secondary: Date(),
         ]
     private var cooldown = 2.0
-    public private(set) var primaryHand: any AttackMobStrategy
-    public private(set) var secondaryHand: any AttackMobStrategy
+    public private(set) var primaryHand: any Weapon
+    public private(set) var secondaryHand: any Weapon
 
-    init (name: String, primaryHand: AttackMobStrategy, secondaryHand: AttackMobStrategy) {
+    init (name: String, primaryHand: Weapon, secondaryHand: Weapon) {
         self.name = name
         self.primaryHand = primaryHand
         self.secondaryHand = secondaryHand
@@ -45,7 +45,7 @@ public final class PartyMember: Damageable {
         abilityForHand(hand: hand).allowedHands.contains(hand)
     }
 
-    func abilityForHand(hand: Hand) -> AttackMobStrategy {
+    func abilityForHand(hand: Hand) -> Weapon {
         switch hand {
             case .primary: primaryHand
             case .secondary: secondaryHand

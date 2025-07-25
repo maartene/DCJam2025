@@ -5,13 +5,13 @@
 //  Created by Maarten Engels on 23/07/2025.
 //
 
-public protocol AttackMobStrategy: AttackStrategy {
+public protocol Weapon: AttackStrategy {
     var allowedPartyPositions: PartyPositionGroup { get }
     var allowedHands: [PartyMember.Hand] { get }
     var weaponType: WeaponType { get }
 }
 
-extension AttackMobStrategy {
+extension Weapon {
     var allowedPartyPositions: PartyPositionGroup { .all }
     var allowedHands: [PartyMember.Hand] {
         [.primary, .secondary] 
@@ -29,21 +29,21 @@ extension AttackMobStrategy {
     }
 }
 
-struct MeleeAttackMobStrategy: AttackMobStrategy {
+struct MeleeAttackMobStrategy: Weapon {
     let range = 1
     let damage = 2
     
     let allowedPartyPositions: PartyPositionGroup = .frontRow
 }
 
-struct RangedAttackMobStrategy: AttackMobStrategy {
+struct RangedAttackMobStrategy: Weapon {
     let range = 3
     let damage = 1
     let allowedHands = [PartyMember.Hand.primary]
     let weaponType: WeaponType = .bow
 }
 
-struct MagicAttackMobStrategy: AttackMobStrategy {
+struct MagicAttackMobStrategy: Weapon {
     let range = 2
     let damage = 1
     
