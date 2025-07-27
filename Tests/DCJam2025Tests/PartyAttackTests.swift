@@ -5,6 +5,14 @@ import Model
 @Suite("The party should be able to perform attacks") struct PartyAttackTests {
     @Suite("Given a melee attack") struct MeleeAttacks {
         @Suite("when enemy is close enough") struct PartyIsCloseEnough {
+            @Test("can attack an enemy") func canAttackEnemy() {
+                let world = makeWorld(from: [
+                    ".s"
+                ])
+                
+                #expect(world.partyMembers[.frontLeft].canExecuteAbility(for: .primary, at: Date()))
+            }
+            
             @Test("should damage an enemy") func enemyDamagesParty() throws {
                 let world = makeWorld(from: [
                     ".s"

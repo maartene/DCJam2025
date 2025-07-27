@@ -45,7 +45,11 @@ public final class PartyMember: Damageable {
             return false
         }
         
-        return weaponForHand(hand: hand).twoHanded && hand == .primary
+        if weaponForHand(hand: hand).twoHanded && hand == .secondary {
+            return false
+        }
+        
+        return true
     }
     
     public func weaponForHand(hand: Hand) -> Weapon {
