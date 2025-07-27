@@ -173,3 +173,6 @@ What is there to find? The answer to the ultimate secret: what came before? the 
 - ✅ Two hands!
     - ✅ Act indipendently
     - ✅ Their own cooldown
+
+## 🍅 Pomodoro 32
+- ✅ Introduce weapons
