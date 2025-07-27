@@ -66,7 +66,7 @@ class Game {
         loadImages()
 
         mockModel = loadModel("Skeleton_Warrior", withExtension: "obj")
-        stairsModel = loadModel("stairs_wide", withExtension: "obj")
+        stairsModel = loadModel("stairs", withExtension: "obj")
 
         while WindowShouldClose() == false {
             update()
@@ -150,9 +150,9 @@ class Game {
         case .wall:
             drawWallAt(coordinate, vantagePoint: vantagePoint)
         case .stairsUp:
-            drawStairsUpAt(coordinate)
+            drawStairsUpAt(coordinate, vantagePoint: vantagePoint)
         case .stairsDown:
-            drawStairsDownAt(coordinate)
+            drawStairsDownAt(coordinate, vantagePoint: vantagePoint)
         case .target:
             drawTargetAt(coordinate)
         default:
@@ -165,13 +165,14 @@ class Game {
         DrawCubeV(coordinate.toVector3, .one, .darkGray * light)
     }
 
-    private func drawStairsUpAt(_ coordinate: Coordinate) {
-        DrawModelEx(stairsModel, coordinate.toVector3, .up, 0, .one, .white)
-        DrawCubeV(coordinate.toVector3, .one, Color(r: 200, g: 0, b: 0, a: 128))
+    private func drawStairsUpAt(_ coordinate: Coordinate, vantagePoint: Coordinate) {
+        let light = light(position: coordinate, vantagePoint: vantagePoint)
+        DrawModelEx(stairsModel, coordinate.toVector3 + Vector3(x: 0, y: -0.5, z: 0.5), .up, 180, Vector3(x: 0.25, y: 0.25, z: 0.25), .white * light)
     }
 
-    private func drawStairsDownAt(_ coordinate: Coordinate) {
-        DrawCubeV(coordinate.toVector3, .one, Color(r: 0, g: 200, b: 0, a: 128))
+    private func drawStairsDownAt(_ coordinate: Coordinate, vantagePoint: Coordinate) {
+        let light = light(position: coordinate, vantagePoint: vantagePoint)
+        DrawModelEx(stairsModel, coordinate.toVector3 + Vector3(x: 0, y: -1.5, z: 0.5), .up, 180, Vector3(x: 0.25, y: 0.25, z: 0.25), .white * light)
     }
 
     private func drawTargetAt(_ coordinate: Coordinate) {
