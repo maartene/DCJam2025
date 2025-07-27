@@ -47,13 +47,6 @@ public final class PartyMember: Damageable {
         
         return weaponForHand(hand: hand).twoHanded && hand == .primary
     }
-
-    func abilityForHand(hand: Hand) -> AttackMobStrategy {
-        switch hand {
-        case .primary: primaryHand.attackStrategy
-        case .secondary: secondaryHand.attackStrategy
-        }
-    }
     
     public func weaponForHand(hand: Hand) -> Weapon {
         switch hand {
@@ -82,7 +75,7 @@ public final class PartyMember: Damageable {
     }
 
     func executeHandAbility(hand: Hand, in world: World, at time: Date) {
-        let attackStrategy = abilityForHand(hand: hand)
+        let attackStrategy = weaponForHand(hand: hand).attackStrategy
 
         guard cooldownHasExpired(for: hand, at: time) else {
             return
