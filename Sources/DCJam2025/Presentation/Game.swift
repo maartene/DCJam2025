@@ -18,6 +18,7 @@ class Game {
 
     var sprites = [String: Texture2D]()
     var mockModel: Model!
+    var stairsModel: Model!
 
     let world = makeWorld(from: [
         """
@@ -45,6 +46,7 @@ class Game {
         loadImages()
 
         mockModel = loadModel("Skeleton_Warrior", withExtension: "obj")
+        stairsModel = loadModel("stairs_wide", withExtension: "obj")
 
         while WindowShouldClose() == false {
             update()
@@ -144,6 +146,7 @@ class Game {
     }
 
     private func drawStairsUpAt(_ coordinate: Coordinate) {
+        DrawModelEx(stairsModel, coordinate.toVector3, .up, 0, .one, .white)
         DrawCubeV(coordinate.toVector3, .one, Color(r: 200, g: 0, b: 0, a: 128))
     }
 
