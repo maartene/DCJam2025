@@ -156,7 +156,7 @@ class Game {
         case .target:
             drawTargetAt(coordinate)
         default:
-            break
+            drawFloorAt(coordinate, vantagePoint: vantagePoint)
         }
     }
 
@@ -177,6 +177,11 @@ class Game {
 
     private func drawTargetAt(_ coordinate: Coordinate) {
         DrawCubeV(coordinate.toVector3, .one, Color(r: 0, g: 0, b: 200, a: 128))
+    }
+
+    private func drawFloorAt(_ coordinate: Coordinate, vantagePoint: Coordinate) {
+        let light = light(position: coordinate, vantagePoint: vantagePoint)
+        DrawPlane(coordinate.toVector3 + Vector3(x: 0, y: -0.5, z: 0), Vector2(x: 1, y: 1), .darkGray * light)
     }
 
     private func drawEntities(map: Floor, vantagePoint: Coordinate) {
