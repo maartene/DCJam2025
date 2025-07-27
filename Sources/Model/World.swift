@@ -52,6 +52,11 @@ public final class World {
     public var enemiesOnCurrentFloor: Set<Enemy> {
         enemies[currentFloorIndex, default: []]
     }
+    
+    public var aliveEnemiesOnCurrentFloor: Set<Enemy> {
+        enemies[currentFloorIndex, default: []]
+            .filter { $0.isAlive }
+    }
 
     public var state: WorldState {
         if partyMembers.hasAlivePartyMember == false {
@@ -95,7 +100,7 @@ public final class World {
     private func performMovement(direction: MovementDirection) {
         let newPosition = partyPosition + direction.toCompassDirection(facing: partyHeading).toCoordinate
 
-        let occupiedPositionsByEnemies = enemiesOnCurrentFloor.map { $0.position }
+        let occupiedPositionsByEnemies = aliveEnemiesOnCurrentFloor.map { $0.position }
         guard occupiedPositionsByEnemies.contains(newPosition) == false else {
             return
         }
@@ -124,8 +129,7 @@ public final class World {
 
     // MARK: update
     public func update(at time: Date) {
-        let aliveEnemies = enemiesOnCurrentFloor.filter { $0.isAlive }
-        for enemy in aliveEnemies {
+        for enemy in aliveEnemiesOnCurrentFloor {
             enemy.act(in: self, at: time)
         }
     }

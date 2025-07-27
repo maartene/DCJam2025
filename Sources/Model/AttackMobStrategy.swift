@@ -18,7 +18,7 @@ extension AttackMobStrategy {
     
     func getValidTargets(in world: World) -> [Damageable] {
         let partyPosition = world.partyPosition
-        return world.enemiesOnCurrentFloor.filter {
+        return world.aliveEnemiesOnCurrentFloor.filter {
             partyPosition.manhattanDistanceTo($0.position) <= range
         }
     }
