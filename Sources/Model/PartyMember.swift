@@ -53,6 +53,11 @@ public final class PartyMember: Damageable {
     }
     
     public func equipWeapon(_ weapon: Weapon, in hand: Hand) {
+        if primaryHand.twoHanded {
+            primaryHand = .bareHands
+            secondaryHand = .bareHands
+        }
+        
         if weapon.twoHanded {
             primaryHand = weapon
             secondaryHand = weapon
