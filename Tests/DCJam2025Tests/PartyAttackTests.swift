@@ -97,7 +97,7 @@ import Model
             let world = makeWorld(from: [
                 ".s"
             ])
-            world.partyMembers[.backLeft].setAttackStrategyToMelee()
+            world.partyMembers[.backLeft].equipWeapon(.bareHands, in: .primary)
             
             let enemy = try #require(world.enemiesOnCurrentFloor.first)
             

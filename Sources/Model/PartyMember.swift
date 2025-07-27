@@ -8,7 +8,7 @@
 import Foundation
 
 public final class PartyMember: Damageable {
-    public enum Hand {
+    public enum Hand: Sendable {
         case primary, secondary
     }
 
@@ -19,10 +19,10 @@ public final class PartyMember: Damageable {
         Hand.secondary: Date(),
         ]
     private var cooldown = 2.0
-    public private(set) var primaryHand: any Weapon
-    public private(set) var secondaryHand: any Weapon
+    public private(set) var primaryHand: Weapon
+    public private(set) var secondaryHand: Weapon
 
-    init (name: String, primaryHand: Weapon, secondaryHand: Weapon) {
+    init (name: String, primaryHand: Weapon = .bareHands, secondaryHand: Weapon = .bareHands) {
         self.name = name
         self.primaryHand = primaryHand
         self.secondaryHand = secondaryHand
@@ -45,10 +45,24 @@ public final class PartyMember: Damageable {
         abilityForHand(hand: hand).allowedHands.contains(hand)
     }
 
-    func abilityForHand(hand: Hand) -> Weapon {
+    func abilityForHand(hand: Hand) -> AttackMobStrategy {
         switch hand {
-            case .primary: primaryHand
-            case .secondary: secondaryHand
+        case .primary: primaryHand.attackStrategy
+        case .secondary: secondaryHand.attackStrategy
+        }
+    }
+    
+    public func equipWeapon(_ weapon: Weapon, in hand: Hand) {
+        if weapon.twoHanded {
+            primaryHand = weapon
+            secondaryHand = weapon
+        } else {
+            switch hand {
+            case .primary:
+                primaryHand = weapon
+            case .secondary:
+                primaryHand = weapon
+            }
         }
     }
 
@@ -71,19 +85,16 @@ public final class PartyMember: Damageable {
 
 extension PartyMember {
     public static func makeMeleePartyMember(name: String) -> PartyMember {
-        PartyMember(name: name, primaryHand: MeleeAttackMobStrategy(), secondaryHand: MeleeAttackMobStrategy())
+        PartyMember(name: name)
     }
     public static func makeRangedPartyMember(name: String) -> PartyMember {
-        PartyMember(name: name, primaryHand: RangedAttackMobStrategy(), secondaryHand: RangedAttackMobStrategy())
+        let newPartyMember = PartyMember(name: name)
+        newPartyMember.equipWeapon(.bow, in: .primary)
+        return newPartyMember
     }
     public static func makeMagicPartyMember(name: String) -> PartyMember {
-        PartyMember(name: name, primaryHand: MagicAttackMobStrategy(), secondaryHand: MagicAttackMobStrategy())
-    }
-}
-
-extension PartyMember {
-    public func setAttackStrategyToMelee() {
-        primaryHand = MeleeAttackMobStrategy()
-        secondaryHand = MeleeAttackMobStrategy()
+        let newPartyMember = PartyMember(name: name)
+        newPartyMember.equipWeapon(.staff, in: .primary)
+        return newPartyMember
     }
 }

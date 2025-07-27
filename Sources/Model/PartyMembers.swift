@@ -66,7 +66,7 @@ public enum SinglePartyPosition {
     case backRight
 }
 
-public enum PartyPositionGroup {
+public enum PartyPositionGroup: Sendable {
     case frontRow
     case backRow
     case all
