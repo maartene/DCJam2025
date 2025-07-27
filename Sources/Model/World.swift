@@ -95,6 +95,11 @@ public final class World {
     private func performMovement(direction: MovementDirection) {
         let newPosition = partyPosition + direction.toCompassDirection(facing: partyHeading).toCoordinate
 
+        let occupiedPositionsByEnemies = enemiesOnCurrentFloor.map { $0.position }
+        guard occupiedPositionsByEnemies.contains(newPosition) == false else {
+            return
+        }
+        
         switch currentFloor.tileAt(newPosition) {
         case .floor:
             partyPosition = newPosition

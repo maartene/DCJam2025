@@ -176,3 +176,6 @@ What is there to find? The answer to the ultimate secret: what came before? the 
 
 ## 🍅 Pomodoro 32
 - ✅ Introduce weapons
+
+## 🍅 Pomodoro 33
+- Should not be able to move through enemies.

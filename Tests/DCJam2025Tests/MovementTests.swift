@@ -58,6 +58,16 @@ import Model
 
         #expect(world.partyPosition == Coordinate(x: 0, y: 1))
     }
+    
+    @Test("not move through enemies") func cannotMoveThroughEnemies() {
+        let world = makeWorld(from: [
+            ".s"
+        ])
+        
+        world.executeCommand(.move(direction: .right), at: Date())
+        
+        #expect(world.partyPosition == Coordinate(x: 0, y: 0))
+    }
 }
 
 @Suite("Party rotation should") struct PartyRotationTests {
