@@ -24,8 +24,8 @@ public final class World {
     public let partyMembers = PartyMembers(members: [
         PartyMember.makeMeleePartyMember(name: "Loretta"),
         PartyMember.makeMeleePartyMember(name: "Leroy"),
-        PartyMember.makeRangedPartyMember(name: "Lenny"),
-        PartyMember.makeMagicPartyMember(name: "Ludo")
+        PartyMember.makeRanger(name: "Lenny"),
+        PartyMember.makeMage(name: "Ludo")
     ])
 
     // Initializers

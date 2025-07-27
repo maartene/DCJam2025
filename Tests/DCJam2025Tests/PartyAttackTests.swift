@@ -111,7 +111,7 @@ import Model
     
     @Suite("Given a ranged attack") struct RangedAttacks {
         @Test("should use a two handed weapon") func shouldUseATwoHandedWeapon() {
-            let partyMember = PartyMember.makeRangedPartyMember(name: "Foo")
+            let partyMember = PartyMember.makeRanger(name: "Foo")
 
             #expect(partyMember.canExecuteAbility(for: .secondary, at: Date()) == false)
         }

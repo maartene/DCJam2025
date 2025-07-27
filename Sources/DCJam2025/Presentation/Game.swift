@@ -238,13 +238,16 @@ class Game {
     private func drawAttackButtonFor(_ memberPosition: SinglePartyPosition, hand: PartyMember.Hand, position: Vector2, size: Vector2) {
         let saveGuiState = GuiGetState()
         let buttonRectangle = Rectangle(x: position.x, y: position.y, width: size.x, height: size.y)
-        if world.partyMembers[memberPosition].canExecuteAbility(for: hand, at: Date()) {
-            if (GuiButton(buttonRectangle, "Attack")) == 1 {
+        let partyMember = world.partyMembers[memberPosition]
+        let attackName = partyMember.weaponForHand(hand: hand).name
+        
+        if partyMember.canExecuteAbility(for: hand, at: Date()) {
+            if (GuiButton(buttonRectangle, attackName)) == 1 {
                 world.executeCommand(.executeHandAbility(user: memberPosition, hand: hand), at: Date())
             }
         } else {
             GuiSetState(GuiState.disabled)
-            GuiButton(buttonRectangle, "Attack")
+            GuiButton(buttonRectangle, attackName)
         }
         GuiSetState(saveGuiState)
     }

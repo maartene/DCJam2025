@@ -41,14 +41,24 @@ public final class PartyMember: Damageable {
     }
 
     public func canExecuteAbility(for hand: Hand, at time: Date) -> Bool {
-        cooldownHasExpired(for: hand, at: time) &&
-        abilityForHand(hand: hand).allowedHands.contains(hand)
+        guard cooldownHasExpired(for: hand, at: time) else {
+            return false
+        }
+        
+        return weaponForHand(hand: hand).twoHanded && hand == .primary
     }
 
     func abilityForHand(hand: Hand) -> AttackMobStrategy {
         switch hand {
         case .primary: primaryHand.attackStrategy
         case .secondary: secondaryHand.attackStrategy
+        }
+    }
+    
+    public func weaponForHand(hand: Hand) -> Weapon {
+        switch hand {
+        case .primary: primaryHand
+        case .secondary: secondaryHand
         }
     }
     
@@ -92,12 +102,12 @@ extension PartyMember {
     public static func makeMeleePartyMember(name: String) -> PartyMember {
         PartyMember(name: name)
     }
-    public static func makeRangedPartyMember(name: String) -> PartyMember {
+    public static func makeRanger(name: String) -> PartyMember {
         let newPartyMember = PartyMember(name: name)
         newPartyMember.equipWeapon(.bow, in: .primary)
         return newPartyMember
     }
-    public static func makeMagicPartyMember(name: String) -> PartyMember {
+    public static func makeMage(name: String) -> PartyMember {
         let newPartyMember = PartyMember(name: name)
         newPartyMember.equipWeapon(.staff, in: .primary)
         return newPartyMember

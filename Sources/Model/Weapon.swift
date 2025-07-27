@@ -6,7 +6,7 @@
 //
 
 public struct Weapon: Sendable {
-    let name: String
+    public let name: String
     let attackStrategy: any AttackMobStrategy
     let twoHanded: Bool
     
