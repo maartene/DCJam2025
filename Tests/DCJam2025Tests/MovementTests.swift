@@ -58,6 +58,29 @@ import Model
 
         #expect(world.partyPosition == Coordinate(x: 0, y: 1))
     }
+    
+    @Test("not move through enemies") func cannotMoveThroughEnemies() {
+        let world = makeWorld(from: [
+            ".s"
+        ])
+        
+        world.executeCommand(.move(direction: .right), at: Date())
+        
+        #expect(world.partyPosition == Coordinate(x: 0, y: 0))
+    }
+    
+    @Test("move through enemies that are KOd") func moveThroughKOdEnemies() throws {
+        let world = makeWorld(from: [
+            ".s"
+        ])
+        
+        let enemy = try #require(world.enemiesOnCurrentFloor.first)
+        enemy.takeDamage(Int.max)
+        
+        world.executeCommand(.move(direction: .right), at: Date())
+        
+        #expect(world.partyPosition == Coordinate(x: 1, y: 0))
+    }
 }
 
 @Suite("Party rotation should") struct PartyRotationTests {

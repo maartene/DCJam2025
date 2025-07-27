@@ -24,8 +24,8 @@ public final class World {
     public let partyMembers = PartyMembers(members: [
         PartyMember.makeMeleePartyMember(name: "Loretta"),
         PartyMember.makeMeleePartyMember(name: "Leroy"),
-        PartyMember.makeRangedPartyMember(name: "Lenny"),
-        PartyMember.makeMagicPartyMember(name: "Ludo")
+        PartyMember.makeRanger(name: "Lenny"),
+        PartyMember.makeMage(name: "Ludo")
     ])
 
     // Initializers
@@ -51,6 +51,11 @@ public final class World {
 
     public var enemiesOnCurrentFloor: Set<Enemy> {
         enemies[currentFloorIndex, default: []]
+    }
+    
+    public var aliveEnemiesOnCurrentFloor: Set<Enemy> {
+        enemies[currentFloorIndex, default: []]
+            .filter { $0.isAlive }
     }
 
     public var state: WorldState {
@@ -95,6 +100,11 @@ public final class World {
     private func performMovement(direction: MovementDirection) {
         let newPosition = partyPosition + direction.toCompassDirection(facing: partyHeading).toCoordinate
 
+        let occupiedPositionsByEnemies = aliveEnemiesOnCurrentFloor.map { $0.position }
+        guard occupiedPositionsByEnemies.contains(newPosition) == false else {
+            return
+        }
+        
         switch currentFloor.tileAt(newPosition) {
         case .floor:
             partyPosition = newPosition
@@ -119,8 +129,7 @@ public final class World {
 
     // MARK: update
     public func update(at time: Date) {
-        let aliveEnemies = enemiesOnCurrentFloor.filter { $0.isAlive }
-        for enemy in aliveEnemies {
+        for enemy in aliveEnemiesOnCurrentFloor {
             enemy.act(in: self, at: time)
         }
     }

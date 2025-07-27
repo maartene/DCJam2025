@@ -173,3 +173,14 @@ What is there to find? The answer to the ultimate secret: what came before? the 
 - ✅ Two hands!
     - ✅ Act indipendently
     - ✅ Their own cooldown
+
+## 🍅 Pomodoro 32
+- ✅ Introduce weapons
+
+## 🍅 Pomodoro 33
+- ✅ Should not be able to move through enemies.
+- ✅ Unless they are KOd
+
+
+❌ Minimap shows only one enemy
+❌ regardless if theres LoS
