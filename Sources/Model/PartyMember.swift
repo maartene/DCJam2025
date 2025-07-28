@@ -92,7 +92,7 @@ public final class PartyMember: Damageable {
         guard isAlive else {
             return
         }
-        
+                
         attackStrategy.damageTargets(in: world)
         
         cooldownExpires[hand] = time.addingTimeInterval(cooldown)
