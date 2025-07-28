@@ -34,7 +34,7 @@
     - ✅ Show a 3D model
     - ✅ Should show where sprite is looking (probably requires approval testing)
 
-- Party members should have some interesting aspects, at least a name and a portrait.
+- ✅ Party members should have some interesting aspects, at least a name and a portrait.
 
 - Party members should be able to attack as well
     - ✅ With two hands

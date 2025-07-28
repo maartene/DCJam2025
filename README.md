@@ -35,5 +35,6 @@ Run the project using:
 * Contains [raylib by Ramon Santamaria (Zlib license)](https://github.com/raysan5/raylib). 
 * Contains [raygui by Ramon Santamaria (Zlib license)](https://github.com/raysan5/raygui). 
 * Contains [KayKit - Character Pack : Skeletons](https://kaylousberg.itch.io/kaykit-skeletons)
+* Contains [KayKit - Dungeon Remastered Pack](https://kaylousberg.itch.io/kaykit-dungeon-remastered)
 * Contains placeholder Skeleton image from [Tiny RPG Character Asset Pack v1.03](https://zerie.itch.io/tiny-rpg-character-asset-pack)
 * Copyright 2025, Maarten Engels - thedreamweb.eu
