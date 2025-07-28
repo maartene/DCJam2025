@@ -181,6 +181,10 @@ What is there to find? The answer to the ultimate secret: what came before? the 
 - ✅ Should not be able to move through enemies.
 - ✅ Unless they are KOd
 
+## 🍅 Pomodoro 34
+- ✅ Party attacks in LoS
+- ✅ Floors en Ceilings
+- ✅ Minimap shows all enemies
 
-❌ Minimap shows only one enemy
-❌ regardless if theres LoS
+❌ Minimap shows enemies regardless if theres LoS
+❌ Enemies start moving to play regardless of LoS

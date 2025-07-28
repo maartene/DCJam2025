@@ -234,7 +234,7 @@ class Game {
                 playerSprite, drawPartyTextureInfo.displayX, drawPartyTextureInfo.displayY, .white)
         }
 
-        if let enemy = world.enemiesOnCurrentFloor.first, enemy.isAlive {
+        for enemy in world.aliveEnemiesOnCurrentFloor {
             let drawEnemyTextureInfo = getSpriteAndPositionForPartyAtPosition(
                 enemy.position, heading: enemy.heading, on: world.currentFloor, offsetX: 10,
                 offsetY: 10)
