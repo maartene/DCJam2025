@@ -61,7 +61,7 @@ class Game {
 
     func run() {
         InitWindow(screenWidth, screenHeight, "DCJam2025")
-        SetTargetFPS(30)
+        SetTargetFPS(60)
 
         loadImages()
 
@@ -157,6 +157,7 @@ class Game {
             drawTargetAt(coordinate)
         default:
             drawFloorAt(coordinate, vantagePoint: vantagePoint)
+            drawCeilingAt(coordinate, vantagePoint: vantagePoint)
         }
     }
 
@@ -173,6 +174,7 @@ class Game {
     private func drawStairsDownAt(_ coordinate: Coordinate, vantagePoint: Coordinate) {
         let light = light(position: coordinate, vantagePoint: vantagePoint)
         DrawModelEx(stairsModel, coordinate.toVector3 + Vector3(x: 0, y: -1.5, z: 0.5), .up, 180, Vector3(x: 0.25, y: 0.25, z: 0.25), .white * light)
+        drawCeilingAt(coordinate, vantagePoint: vantagePoint)
     }
 
     private func drawTargetAt(_ coordinate: Coordinate) {
@@ -182,6 +184,17 @@ class Game {
     private func drawFloorAt(_ coordinate: Coordinate, vantagePoint: Coordinate) {
         let light = light(position: coordinate, vantagePoint: vantagePoint)
         DrawPlane(coordinate.toVector3 + Vector3(x: 0, y: -0.5, z: 0), Vector2(x: 1, y: 1), .darkGray * light)
+    }
+    
+    private func drawCeilingAt(_ coordinate: Coordinate, vantagePoint: Coordinate) {
+        let light = light(position: coordinate, vantagePoint: vantagePoint)
+        let center = coordinate.toVector3 + Vector3(x: 0, y: 0.5, z: 0)
+        let c1 = center + Vector3(x: -0.5, y: 0, z: -0.5)
+        let c2 = center + Vector3(x: 0.5, y: 0, z: -0.5)
+        let c3 = center + Vector3(x: -0.5, y: 0, z: 0.5)
+        let c4 = center + Vector3(x: 0.5, y: 0, z: 0.5)
+        DrawTriangle3D(c1, c2, c3, .darkGray * light)
+        DrawTriangle3D(c4, c3, c2, .darkGray * light)
     }
 
     private func drawEntities(map: Floor, vantagePoint: Coordinate) {
