@@ -45,6 +45,10 @@ public final class PartyMember: Damageable {
             return false
         }
         
+        guard isAlive else {
+            return false
+        }
+        
         if weaponForHand(hand: hand).twoHanded && hand == .secondary {
             return false
         }

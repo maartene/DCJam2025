@@ -67,6 +67,8 @@ import Model
                 
                 let hpOfEnemyBeforeAttack = enemy.hp
                 
+                #expect(world.partyMembers[.frontRight].canExecuteAbility(for: .primary, at: Date()) == false)
+                
                 world.executeCommand(.executeHandAbility(user: .frontRight, hand: .primary), at: Date())
                 
                 #expect(enemy.hp == hpOfEnemyBeforeAttack)
