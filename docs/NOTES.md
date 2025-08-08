@@ -186,5 +186,6 @@ What is there to find? The answer to the ultimate secret: what came before? the 
 - ✅ Floors en Ceilings
 - ✅ Minimap shows all enemies
 
-❌ Minimap shows enemies regardless if theres LoS
-❌ Enemies start moving to play regardless of LoS
+## 🍅 Pomodoro 35
+- ✅ Fix ❌ Minimap shows enemies regardless if theres LoS
+- ✅ Fix ❌ Enemies start moving to play regardless of LoS
