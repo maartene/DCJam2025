@@ -46,6 +46,13 @@ public struct Floor {
         tiles[coordinate, default: .floor]
     }
 
+    public func hasUnobstructedView(from c1: Coordinate, to c2: Coordinate) -> Bool {
+        let line = Coordinate.plotLine(from: c1, to: c2)
+        return line
+            .filter { tileAt($0) == .wall }
+            .isEmpty
+    }
+
     func BFS(from start: Coordinate, to destination: Coordinate) -> [Coordinate: Int] {
         // Queue for BFS and a set to keep track of visited points (including their distance)
         var queue: [(Coordinate, Int)] = [(start, 0)]  // (current point, distance)

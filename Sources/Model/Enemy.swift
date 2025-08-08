@@ -57,10 +57,7 @@ public final class Enemy: Damageable {
     }
 
     private func hasLineOfSight(_ targetPosition: Coordinate, in world: World) -> Bool {
-        let line = Coordinate.plotLine(from: position, to: targetPosition)
-        return line
-            .filter { world.currentFloor.tileAt($0) == .wall }
-            .isEmpty
+        world.currentFloor.hasUnobstructedView(from: position, to: targetPosition)
     }
 
     private func isFacingParty(in world: World) -> Bool {

@@ -234,7 +234,10 @@ class Game {
                 playerSprite, drawPartyTextureInfo.displayX, drawPartyTextureInfo.displayY, .white)
         }
 
-        for enemy in world.aliveEnemiesOnCurrentFloor {
+        let visibleEnemies = world.aliveEnemiesOnCurrentFloor
+            .filter { world.currentFloor.hasUnobstructedView(from: world.partyPosition, to: $0.position) }
+
+        for enemy in visibleEnemies {
             let drawEnemyTextureInfo = getSpriteAndPositionForPartyAtPosition(
                 enemy.position, heading: enemy.heading, on: world.currentFloor, offsetX: 10,
                 offsetY: 10)
