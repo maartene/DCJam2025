@@ -35,6 +35,10 @@ public final class Enemy: Damageable {
             return
         }
 
+        guard hasLineOfSight(world.partyPosition, in: world) else {
+            return
+        }
+
         guard attackStrategy.partyIsInRange(in: world, enemyPosition: position) else {
             move(in: world, at: time)
             return
@@ -50,6 +54,13 @@ public final class Enemy: Damageable {
 
     private func enemyCooldownHasExpired(at time: Date) -> Bool {
         cooldownExpires <= time
+    }
+
+    private func hasLineOfSight(_ targetPosition: Coordinate, in world: World) -> Bool {
+        let line = Coordinate.plotLine(from: position, to: targetPosition)
+        return line
+            .filter { world.currentFloor.tileAt($0) == .wall }
+            .isEmpty
     }
 
     private func isFacingParty(in world: World) -> Bool {

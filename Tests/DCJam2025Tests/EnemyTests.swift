@@ -204,7 +204,7 @@ import Model
         let world = makeWorld(from: [
             """
             ...
-            ##.
+            .#.
             .s.
             """
         ])
@@ -213,11 +213,11 @@ import Model
         var time = Date()
 
         world.update(at: time)
-        #expect(enemy.heading == .east)
+        #expect(enemy.heading == .west)
         time += enemy.cooldown
 
         world.update(at: time)
-        #expect(enemy.position == Coordinate(x: 2, y: 2))
+        #expect(enemy.position == Coordinate(x: 0, y: 2))
         time += enemy.cooldown
 
         world.update(at: time)
@@ -225,7 +225,7 @@ import Model
         time += enemy.cooldown
 
         world.update(at: time)
-        #expect(enemy.position == Coordinate(x: 2, y: 1))
+        #expect(enemy.position == Coordinate(x: 0, y: 1))
         time += enemy.cooldown
     }
 
@@ -254,6 +254,22 @@ import Model
         world.update(at: Date())
 
         #expect(sumHPOfPartyMembers(in: world) == originalHPOfPartyMembers)
+    }
+
+    @Test("not move towards the party when there is no line of sight") func enemiesOnlyMoveWithLineOfSight() throws {
+        let world = makeWorld(from: [
+            """
+            .#.s
+            ....
+            """
+        ])
+
+        let enemy = try #require(world.enemiesOnCurrentFloor.first)
+
+        world.update(at: Date())
+        world.update(at: Date().addingTimeInterval(enemy.cooldown))
+        
+        #expect(enemy.position == Coordinate(x: 3, y: 0))
     }
 }
 
