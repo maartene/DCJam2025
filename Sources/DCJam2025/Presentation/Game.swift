@@ -158,17 +158,14 @@ class Game {
 
         BeginMode3D(camera)
         //drawMap(world.currentFloor, vantagePoint: world.partyPosition)
-        drawEntities(map: world.currentFloor, vantagePoint: world.partyPosition)
-    
-        pointLight = CreateLight(1, world.partyPosition.toVector3, Vector3(x: 0, y: 0, z: 0), .white, shader)
+        
+        pointLight = CreateLight(1, world.partyPosition.toVector3, Vector3(x: 0, y: 0, z: 0), Color(r: 200, g: 150, b: 100, a: 255) * 0.8, shader)
 
         UpdateLightValues(shader, pointLight)
 
         BeginShaderMode(shader);
-
-            DrawCube(Vector3(x: 1, y: 0, z: 1), 1.0, 1.0, 2.0, .white);
             drawMap(world.currentFloor, vantagePoint: world.partyPosition)
-
+            drawEntities(map: world.currentFloor, vantagePoint: world.partyPosition)
         EndShaderMode();
 
         EndMode3D()
@@ -202,34 +199,29 @@ class Game {
     }
 
     private func drawWallAt(_ coordinate: Coordinate, vantagePoint: Coordinate) {
-        let light = light(position: coordinate, vantagePoint: vantagePoint)
         guard let wallModel = models["wall"] else {
             return
         }
         wallModel.materials[0].shader = shader;
 
-        //DrawCube((coordinate.toVector3), 1.0, 1.0, 1.0, .white);
         DrawModelEx(wallModel, coordinate.toVector3, .up, 0, Vector3(x: 0.25, y: 0.25, z: 0.25), .white)
     }
 
     private func drawStairsUpAt(_ coordinate: Coordinate, vantagePoint: Coordinate) {
-        let light = light(position: coordinate, vantagePoint: vantagePoint)
-        
         guard let stairsModel = models["stairs"] else {
             return
         }
         
-        DrawModelEx(stairsModel, coordinate.toVector3 + Vector3(x: 0, y: -0.5, z: 0.5), .up, 180, Vector3(x: 0.25, y: 0.25, z: 0.25), .white * light)
+        stairsModel.materials[0].shader = shader;
+        DrawModelEx(stairsModel, coordinate.toVector3 + Vector3(x: 0, y: -0.5, z: 0.5), .up, 180, Vector3(x: 0.25, y: 0.25, z: 0.25), .white)
     }
 
     private func drawStairsDownAt(_ coordinate: Coordinate, vantagePoint: Coordinate) {
-        let light = light(position: coordinate, vantagePoint: vantagePoint)
-        
         guard let stairsModel = models["stairs"] else {
             return
         }
-        
-        DrawModelEx(stairsModel, coordinate.toVector3 + Vector3(x: 0, y: -1.5, z: 0.5), .up, 180, Vector3(x: 0.25, y: 0.25, z: 0.25), .white * light)
+        stairsModel.materials[0].shader = shader;
+        DrawModelEx(stairsModel, coordinate.toVector3 + Vector3(x: 0, y: -1.5, z: 0.5), .up, 180, Vector3(x: 0.25, y: 0.25, z: 0.25), .white)
         drawCeilingAt(coordinate, vantagePoint: vantagePoint)
     }
 
@@ -238,27 +230,24 @@ class Game {
     }
 
     private func drawFloorAt(_ coordinate: Coordinate, vantagePoint: Coordinate) {
-        let light = light(position: coordinate, vantagePoint: vantagePoint)
-        
         guard let floorModel = models["floor_wood_large"] else {
             return
         }
-        
-        DrawModelEx(floorModel, coordinate.toVector3 + Vector3(x: 0, y: -0.5, z: 0), .up, 0, Vector3(x: 0.25, y: 0.25, z: 0.25), .white * light)
+        floorModel.materials[0].shader = shader;
+        DrawModelEx(floorModel, coordinate.toVector3 + Vector3(x: 0, y: -0.5, z: 0), .up, 0, Vector3(x: 0.25, y: 0.25, z: 0.25), .white)
         
 //        DrawPlane(coordinate.toVector3 + Vector3(x: 0, y: -0.5, z: 0), Vector2(x: 1, y: 1), .darkGray * light)
     }
     
     private func drawCeilingAt(_ coordinate: Coordinate, vantagePoint: Coordinate) {
-        let light = light(position: coordinate, vantagePoint: vantagePoint)
-        
         guard let ceilingModel = models["ceiling_tile"] else {
             return
         }
+        ceilingModel.materials[0].shader = shader
         
         let rotation: Float = coordinate.y.isMultiple(of: 2) || coordinate.x.isMultiple(of: 2) ? 0 : 90
         
-        DrawModelEx(ceilingModel, coordinate.toVector3 + Vector3(x: 0, y: 0.5, z: 0), .init(x: 0, y: 1, z: 0), rotation, Vector3(x: 0.25, y: 0.25, z: 0.25), .white * light)
+        DrawModelEx(ceilingModel, coordinate.toVector3 + Vector3(x: 0, y: 0.5, z: 0), .init(x: 0, y: 1, z: 0), rotation, Vector3(x: 0.25, y: 0.25, z: 0.25), .white)
     }
 
     private func drawEntities(map: Floor, vantagePoint: Coordinate) {
@@ -266,15 +255,15 @@ class Game {
             .filter { $0.isAlive }
         for enemyOnCurrentFloor in enemiesToDraw {
             let coordinate = enemyOnCurrentFloor.position
-            let light = light(position: coordinate, vantagePoint: vantagePoint)
 
             let heading = enemyOnCurrentFloor.heading
             
             guard let mockModel = models["Skeleton_Warrior"] else {
                 return
             }
+            mockModel.materials[0].shader = shader
             
-            DrawModelEx(mockModel, coordinate.toVector3 + Vector3(x: 0, y: -0.5, z: 0), .up, heading.rotation, Vector3(x: 0.5, y: 0.5, z: 0.5), .white * light)
+            DrawModelEx(mockModel, coordinate.toVector3 + Vector3(x: 0, y: -0.5, z: 0), .up, heading.rotation, Vector3(x: 0.5, y: 0.5, z: 0.5), .white)
         }
     }
 

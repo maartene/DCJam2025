@@ -8,11 +8,6 @@
 import raylib
 import Model
 
-public func light(position: Coordinate, vantagePoint: Coordinate) -> Float {
-    let distance = position.distanceTo(vantagePoint)
-    return min(Float(1.0) / Float(distance), Float(1.0))
-}
-
 public func target(from position: Coordinate, heading: CompassDirection) -> Coordinate {
     position + heading.forward
 }
