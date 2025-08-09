@@ -1,6 +1,8 @@
 # TECHDEBT
 
 ## ⚠️ TODO
+- Shader should only be set once, not for every single model every time its drawn
+- Somehow the enemy does not seem lit
 - Structure tests in suites and subsuites
 - Rotating towards party is based on trial and error: rotate, see if facing party. otherwise repeat. this could be based on dot product
 - Duplication of logic between Enemy and World (Party)

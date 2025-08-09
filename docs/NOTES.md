@@ -192,3 +192,6 @@ What is there to find? The answer to the ultimate secret: what came before? the 
 
 ## 🍅 Pomodoro 36
 - ✅ Models for walls, floors and ceiling
+
+## 🍅 Pomodoro 37
+- ✅ Walls, floors, ceiling and stairs are lit
