@@ -17,10 +17,10 @@ class Game {
     var camera = makeCamera()
 
     var sprites = [String: Texture2D]()
-    var mockModel: Model!
-    var stairsModel: Model!
-    var wallModel: Model!
+    var models = [String: Model]()
 
+    
+    
     let world = makeWorld(from: [
         """
         #######
@@ -65,10 +65,7 @@ class Game {
         SetTargetFPS(60)
 
         loadImages()
-
-        mockModel = loadModel("Skeleton_Warrior", withExtension: "obj")
-        stairsModel = loadModel("stairs", withExtension: "obj")
-        wallModel = loadModel("wall", withExtension: "obj")
+        loadModels()
         
         while WindowShouldClose() == false {
             update()
@@ -165,21 +162,30 @@ class Game {
 
     private func drawWallAt(_ coordinate: Coordinate, vantagePoint: Coordinate) {
         let light = light(position: coordinate, vantagePoint: vantagePoint)
+        guard let wallModel = models["wall"] else {
+            return
+        }
+        
         DrawModelEx(wallModel, coordinate.toVector3, .up, 0, Vector3(x: 0.25, y: 0.25, z: 0.25), .white * light)
-//        DrawModelEx(wallModel, coordinate.toVector3 + Vector3(x: 0, y: -0.5, z: 0.5), .up, 0, Vector3(x: 0.25, y: 0.25, z: 0.25), .white * light)
-//        
-//        DrawModelEx(wallModel, coordinate.toVector3 + Vector3(x: -0.5, y: -0.5, z: 0), .up, 90, Vector3(x: 0.25, y: 0.25, z: 0.25), .white * light)
-//        DrawModelEx(wallModel, coordinate.toVector3 + Vector3(x: 0.5, y: -0.5, z: 0), .up, -90, Vector3(x: 0.25, y: 0.25, z: 0.25), .white * light)
-//        //DrawCubeV(coordinate.toVector3, .one, .darkGray * light)
     }
 
     private func drawStairsUpAt(_ coordinate: Coordinate, vantagePoint: Coordinate) {
         let light = light(position: coordinate, vantagePoint: vantagePoint)
+        
+        guard let stairsModel = models["stairs"] else {
+            return
+        }
+        
         DrawModelEx(stairsModel, coordinate.toVector3 + Vector3(x: 0, y: -0.5, z: 0.5), .up, 180, Vector3(x: 0.25, y: 0.25, z: 0.25), .white * light)
     }
 
     private func drawStairsDownAt(_ coordinate: Coordinate, vantagePoint: Coordinate) {
         let light = light(position: coordinate, vantagePoint: vantagePoint)
+        
+        guard let stairsModel = models["stairs"] else {
+            return
+        }
+        
         DrawModelEx(stairsModel, coordinate.toVector3 + Vector3(x: 0, y: -1.5, z: 0.5), .up, 180, Vector3(x: 0.25, y: 0.25, z: 0.25), .white * light)
         drawCeilingAt(coordinate, vantagePoint: vantagePoint)
     }
@@ -190,18 +196,26 @@ class Game {
 
     private func drawFloorAt(_ coordinate: Coordinate, vantagePoint: Coordinate) {
         let light = light(position: coordinate, vantagePoint: vantagePoint)
-        DrawPlane(coordinate.toVector3 + Vector3(x: 0, y: -0.5, z: 0), Vector2(x: 1, y: 1), .darkGray * light)
+        
+        guard let floorModel = models["floor_wood_large"] else {
+            return
+        }
+        
+        DrawModelEx(floorModel, coordinate.toVector3 + Vector3(x: 0, y: -0.5, z: 0), .up, 0, Vector3(x: 0.25, y: 0.25, z: 0.25), .white * light)
+        
+//        DrawPlane(coordinate.toVector3 + Vector3(x: 0, y: -0.5, z: 0), Vector2(x: 1, y: 1), .darkGray * light)
     }
     
     private func drawCeilingAt(_ coordinate: Coordinate, vantagePoint: Coordinate) {
         let light = light(position: coordinate, vantagePoint: vantagePoint)
-        let center = coordinate.toVector3 + Vector3(x: 0, y: 0.5, z: 0)
-        let c1 = center + Vector3(x: -0.5, y: 0, z: -0.5)
-        let c2 = center + Vector3(x: 0.5, y: 0, z: -0.5)
-        let c3 = center + Vector3(x: -0.5, y: 0, z: 0.5)
-        let c4 = center + Vector3(x: 0.5, y: 0, z: 0.5)
-        DrawTriangle3D(c1, c2, c3, .darkGray * light)
-        DrawTriangle3D(c4, c3, c2, .darkGray * light)
+        
+        guard let ceilingModel = models["ceiling_tile"] else {
+            return
+        }
+        
+        let rotation: Float = coordinate.y.isMultiple(of: 2) || coordinate.x.isMultiple(of: 2) ? 0 : 90
+        
+        DrawModelEx(ceilingModel, coordinate.toVector3 + Vector3(x: 0, y: 0.5, z: 0), .init(x: 0, y: 1, z: 0), rotation, Vector3(x: 0.25, y: 0.25, z: 0.25), .white * light)
     }
 
     private func drawEntities(map: Floor, vantagePoint: Coordinate) {
@@ -212,7 +226,11 @@ class Game {
             let light = light(position: coordinate, vantagePoint: vantagePoint)
 
             let heading = enemyOnCurrentFloor.heading
-
+            
+            guard let mockModel = models["Skeleton_Warrior"] else {
+                return
+            }
+            
             DrawModelEx(mockModel, coordinate.toVector3 + Vector3(x: 0, y: -0.5, z: 0), .up, heading.rotation, Vector3(x: 0.5, y: 0.5, z: 0.5), .white * light)
         }
     }
@@ -344,6 +362,20 @@ class Game {
             }
 
             sprites[$0] = LoadTexture(textureURL.path(percentEncoded: false))
+        }
+    }
+    
+    private func loadModels() {
+        let modelNames = [
+            "Skeleton_Warrior",
+            "stairs",
+            "wall",
+            "floor_wood_large",
+            "ceiling_tile"
+        ]
+        
+        modelNames.forEach {
+            models[$0] = loadModel($0, withExtension: "obj")
         }
     }
 

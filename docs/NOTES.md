@@ -189,3 +189,6 @@ What is there to find? The answer to the ultimate secret: what came before? the 
 ## 🍅 Pomodoro 35
 - ✅ Fix ❌ Minimap shows enemies regardless if theres LoS
 - ✅ Fix ❌ Enemies start moving to play regardless of LoS
+
+## 🍅 Pomodoro 36
+- ✅ Models for walls, floors and ceiling
