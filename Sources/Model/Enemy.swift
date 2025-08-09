@@ -11,7 +11,7 @@ public final class Enemy: Damageable {
     public private(set) var position: Coordinate
     public private(set) var heading: CompassDirection
     private var cooldownExpires = Date()
-    public let cooldown = 0.75
+    public let cooldown = 1.5
     private let attackStrategy: any AttackPartyStrategy
     public private(set) var hp: Int
 
