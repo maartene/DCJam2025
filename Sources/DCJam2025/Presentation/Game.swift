@@ -19,7 +19,8 @@ class Game {
     var sprites = [String: Texture2D]()
     var models = [String: Model]()
 
-    
+    var pointLight: Light!
+    var shader: Shader!
     
     let world = makeWorld(from: [
         """
@@ -66,6 +67,33 @@ class Game {
 
         loadImages()
         loadModels()
+
+
+        guard let fragURL = Bundle.module.url(forResource: "lighting", withExtension: "fs")
+        else {
+            fatalError("Could not find file lighting.fs")
+        }
+
+        guard let vertexURL = Bundle.module.url(forResource: "lighting", withExtension: "vs")
+        else {
+            fatalError("Could not find file lighting.vs")
+        }
+
+        // Load basic lighting shader
+        shader = LoadShader(vertexURL.path(percentEncoded: false),
+                                fragURL.path(percentEncoded: false));
+        // Get some required shader locations
+        shader.locs[11] = GetShaderLocation(shader, "viewPos");
+        // NOTE: "matModel" location name is automatically assigned on shader loading,
+        // no need to get the location again if using that uniform name
+        //shader.locs[SHADER_LOC_MATRIX_MODEL] = GetShaderLocation(shader, "matModel");
+
+        // Ambient light level (some basic lighting)
+        let ambientLoc = GetShaderLocation(shader, "ambient");
+        //SetShaderValue(shader, ambientLoc, [0.1, 0.1, 0.1, 1.0], 3);
+
+        pointLight = CreateLight(1, Vector3(x: 2, y: 2, z: 2), Vector3(x: 1, y: 0, z: 1), .red, shader)
+
         
         while WindowShouldClose() == false {
             update()
@@ -127,9 +155,22 @@ class Game {
     }
 
     private func draw3D() {
+
         BeginMode3D(camera)
-        drawMap(world.currentFloor, vantagePoint: world.partyPosition)
+        //drawMap(world.currentFloor, vantagePoint: world.partyPosition)
         drawEntities(map: world.currentFloor, vantagePoint: world.partyPosition)
+    
+        pointLight = CreateLight(1, world.partyPosition.toVector3, Vector3(x: 0, y: 0, z: 0), .white, shader)
+
+        UpdateLightValues(shader, pointLight)
+
+        BeginShaderMode(shader);
+
+            DrawCube(Vector3(x: 1, y: 0, z: 1), 1.0, 1.0, 2.0, .white);
+            drawMap(world.currentFloor, vantagePoint: world.partyPosition)
+
+        EndShaderMode();
+
         EndMode3D()
     }
 
@@ -165,8 +206,10 @@ class Game {
         guard let wallModel = models["wall"] else {
             return
         }
-        
-        DrawModelEx(wallModel, coordinate.toVector3, .up, 0, Vector3(x: 0.25, y: 0.25, z: 0.25), .white * light)
+        wallModel.materials[0].shader = shader;
+
+        //DrawCube((coordinate.toVector3), 1.0, 1.0, 1.0, .white);
+        DrawModelEx(wallModel, coordinate.toVector3, .up, 0, Vector3(x: 0.25, y: 0.25, z: 0.25), .white)
     }
 
     private func drawStairsUpAt(_ coordinate: Coordinate, vantagePoint: Coordinate) {

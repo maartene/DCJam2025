@@ -22,7 +22,8 @@ let package = Package(
                 .process("Resources")
             ],
             cSettings: [
-                .define("RAYGUI_IMPLEMENTATION")
+                .define("RAYGUI_IMPLEMENTATION"),
+                .define("RLIGHTS_IMPLEMENTATION")
             ],
             swiftSettings: [
                 .unsafeFlags(["-Xfrontend", "-validate-tbd-against-ir=none"])
