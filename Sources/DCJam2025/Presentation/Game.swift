@@ -19,6 +19,7 @@ class Game {
     var sprites = [String: Texture2D]()
     var mockModel: Model!
     var stairsModel: Model!
+    var wallModel: Model!
 
     let world = makeWorld(from: [
         """
@@ -67,7 +68,8 @@ class Game {
 
         mockModel = loadModel("Skeleton_Warrior", withExtension: "obj")
         stairsModel = loadModel("stairs", withExtension: "obj")
-
+        wallModel = loadModel("wall", withExtension: "obj")
+        
         while WindowShouldClose() == false {
             update()
             drawGameView()
@@ -163,7 +165,12 @@ class Game {
 
     private func drawWallAt(_ coordinate: Coordinate, vantagePoint: Coordinate) {
         let light = light(position: coordinate, vantagePoint: vantagePoint)
-        DrawCubeV(coordinate.toVector3, .one, .darkGray * light)
+        DrawModelEx(wallModel, coordinate.toVector3, .up, 0, Vector3(x: 0.25, y: 0.25, z: 0.25), .white * light)
+//        DrawModelEx(wallModel, coordinate.toVector3 + Vector3(x: 0, y: -0.5, z: 0.5), .up, 0, Vector3(x: 0.25, y: 0.25, z: 0.25), .white * light)
+//        
+//        DrawModelEx(wallModel, coordinate.toVector3 + Vector3(x: -0.5, y: -0.5, z: 0), .up, 90, Vector3(x: 0.25, y: 0.25, z: 0.25), .white * light)
+//        DrawModelEx(wallModel, coordinate.toVector3 + Vector3(x: 0.5, y: -0.5, z: 0), .up, -90, Vector3(x: 0.25, y: 0.25, z: 0.25), .white * light)
+//        //DrawCubeV(coordinate.toVector3, .one, .darkGray * light)
     }
 
     private func drawStairsUpAt(_ coordinate: Coordinate, vantagePoint: Coordinate) {
