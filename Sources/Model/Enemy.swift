@@ -65,12 +65,15 @@ public final class Enemy: Damageable {
     }
 
     private func isFacingCoordinate(_ coordinate: Coordinate) -> Bool {
-        // naive raycast approach
-        for i in 0 ..< 20 {
-            if position + (heading.forward * i) == coordinate {
-                return true
-            }
+        let difference = coordinate - position
+        let difX = difference.x.signum()
+        let difY = difference.y.signum()
+                
+        if  (difX == heading.forward.x && difY == 0) ||
+            (difY == heading.forward.y && difX == 0) {
+            return true
         }
+        
         return false
     }
 
