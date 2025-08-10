@@ -138,91 +138,32 @@ class Game {
     }
 
     private func draw3D() {
-
+        let drawables = floorToDrawables(world.currentFloor)
+        
         BeginMode3D(camera)
 
-        BeginShaderMode(shader);
-            drawMap(world.currentFloor, vantagePoint: world.partyPosition)
-            drawEntities(map: world.currentFloor, vantagePoint: world.partyPosition)
-        EndShaderMode();
+        BeginShaderMode(shader)
+        for drawable in drawables {
+            draw(drawable)
+        }
+        EndShaderMode()
 
         EndMode3D()
     }
 
-    func drawMap(_ map: Floor, vantagePoint: Coordinate) {
-        for row in map.minY...map.maxY {
-            for column in map.minX...map.maxX {
-                let coordinate = Coordinate(x: column, y: row)
-                drawTile(map.tileAt(coordinate), at: coordinate, lookingFrom: vantagePoint)
-            }
+    private func draw(_ drawable: Drawable3D) {
+        if let model = models[drawable.modelName] {
+            DrawModelEx(
+                model,
+                drawable.position,
+                drawable.up,
+                drawable.rotation,
+                drawable.scale,
+                drawable.tint
+            )
         }
-    }
-
-    private func drawTile(
-        _ tile: Tile, at coordinate: Coordinate, lookingFrom vantagePoint: Coordinate
-    ) {
-        switch tile {
-        case .wall:
-            drawWallAt(coordinate, vantagePoint: vantagePoint)
-        case .stairsUp:
-            drawStairsUpAt(coordinate, vantagePoint: vantagePoint)
-        case .stairsDown:
-            drawStairsDownAt(coordinate, vantagePoint: vantagePoint)
-        case .target:
-            drawTargetAt(coordinate)
-        default:
-            drawFloorAt(coordinate, vantagePoint: vantagePoint)
-            drawCeilingAt(coordinate, vantagePoint: vantagePoint)
-        }
-    }
-
-    private func drawWallAt(_ coordinate: Coordinate, vantagePoint: Coordinate) {
-        guard let wallModel = models["wall"] else {
-            return
-        }
-
-        DrawModelEx(wallModel, coordinate.toVector3, .up, 0, Vector3(x: 0.25, y: 0.25, z: 0.25), .white)
-    }
-
-    private func drawStairsUpAt(_ coordinate: Coordinate, vantagePoint: Coordinate) {
-        guard let stairsModel = models["stairs"] else {
-            return
-        }
-        
-        DrawModelEx(stairsModel, coordinate.toVector3 + Vector3(x: 0, y: -0.5, z: 0.5), .up, 180, Vector3(x: 0.25, y: 0.25, z: 0.25), .white)
-    }
-
-    private func drawStairsDownAt(_ coordinate: Coordinate, vantagePoint: Coordinate) {
-        guard let stairsModel = models["stairs"] else {
-            return
-        }
-
-        DrawModelEx(stairsModel, coordinate.toVector3 + Vector3(x: 0, y: -1.5, z: 0.5), .up, 180, Vector3(x: 0.25, y: 0.25, z: 0.25), .white)
-        drawCeilingAt(coordinate, vantagePoint: vantagePoint)
-    }
-
-    private func drawTargetAt(_ coordinate: Coordinate) {
-        DrawCubeV(coordinate.toVector3, .one, Color(r: 0, g: 0, b: 200, a: 128))
-    }
-
-    private func drawFloorAt(_ coordinate: Coordinate, vantagePoint: Coordinate) {
-        guard let floorModel = models["floor_wood_large"] else {
-            return
-        }
-
-        DrawModelEx(floorModel, coordinate.toVector3 + Vector3(x: 0, y: -0.5, z: 0), .up, 0, Vector3(x: 0.25, y: 0.25, z: 0.25), .white)
     }
     
-    private func drawCeilingAt(_ coordinate: Coordinate, vantagePoint: Coordinate) {
-        guard let ceilingModel = models["ceiling_tile"] else {
-            return
-        }
-
-        let rotation: Float = coordinate.y.isMultiple(of: 2) || coordinate.x.isMultiple(of: 2) ? 0 : 90
-        
-        DrawModelEx(ceilingModel, coordinate.toVector3 + Vector3(x: 0, y: 0.5, z: 0), .init(x: 0, y: 1, z: 0), rotation, Vector3(x: 0.25, y: 0.25, z: 0.25), .white)
-    }
-
     private func drawEntities(map: Floor, vantagePoint: Coordinate) {
         let enemiesToDraw = world.enemiesOnCurrentFloor
             .filter { $0.isAlive }

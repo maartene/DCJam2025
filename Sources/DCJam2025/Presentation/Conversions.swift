@@ -76,3 +76,62 @@ public func hpBarColor(currentHP: Int, maxHP: Int) -> Color {
     default: Color.green
     }
 }
+
+public struct Drawable3D: Equatable {
+    let modelName: String
+    let position: Vector3
+    let up: Vector3
+    let rotation: Float
+    let tint: Color
+    let scale: Vector3
+    
+    static func makeWall(position: Coordinate) -> Drawable3D {
+        Drawable3D(modelName: "wall", position: position.toVector3, up: .up, rotation: 0, tint: .white, scale: .one.scale(0.25))
+    }
+    
+    static func makeFloor(position: Coordinate) -> Drawable3D {
+        Drawable3D(modelName: "floor_wood_large", position: position.toVector3 + Vector3(x: 0, y: -0.5, z: 0), up: .up, rotation: 0, tint: .white, scale: .one.scale(0.25))
+    }
+    
+    static func makeCeiling(position: Coordinate) -> Drawable3D {
+        Drawable3D(modelName: "ceiling_tile", position: position.toVector3 + Vector3(x: 0, y: 0.5, z: 0), up: .up, rotation: 0, tint: .white, scale: .one.scale(0.25))
+    }
+    
+    static func makeStairsUp(position: Coordinate) -> Drawable3D {
+        Drawable3D(modelName: "stairs", position: position.toVector3 + Vector3(x: 0, y: -0.5, z: 0.5), up: .up, rotation: 180, tint: .white, scale: .one.scale(0.25))
+    }
+    
+    static func makeStairsDown(position: Coordinate) -> Drawable3D {
+        Drawable3D(modelName: "stairs", position: position.toVector3 + Vector3(x: 0, y: -1.5, z: 0.5), up: .up, rotation: 180, tint: .white, scale: .one.scale(0.25))
+    }
+}
+
+public func floorToDrawables(_ floor: Floor) -> [Drawable3D] {
+    var result = [Drawable3D]()
+    for y in 0 ... floor.maxY {
+        for x in 0 ... floor.maxX {
+            let coordinate = Coordinate(x: x, y: y)
+            switch floor.tileAt(coordinate) {
+            case .floor:
+                result.append(.makeFloor(position: coordinate))
+                result.append(.makeCeiling(position: coordinate))
+            case .wall:
+                result.append(.makeWall(position: coordinate))
+            case .stairsUp:
+                result.append(.makeStairsUp(position: coordinate))
+            case .stairsDown:
+                result.append(.makeStairsDown(position: coordinate))
+                result.append(.makeCeiling(position: coordinate))
+            case .target:
+                break
+            }
+        }
+    }
+    return result
+}
+
+extension Vector3: @retroactive Equatable {
+    public static func == (lhs: Vector3, rhs: Vector3) -> Bool {
+        lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z
+    }
+}
