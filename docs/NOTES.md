@@ -195,3 +195,7 @@ What is there to find? The answer to the ultimate secret: what came before? the 
 
 ## 🍅 Pomodoro 37
 - ✅ Walls, floors, ceiling and stairs are lit
+
+## 🍅 Pomodoro 38
+- ✅ Light skeleton correctly
+- ✅ Add ambient lighting

@@ -70,8 +70,6 @@ class Game {
         loadImages()
         loadModels()
         
-        setupAmbientLighting()
-        
         while WindowShouldClose() == false {
             update()
             drawGameView()
@@ -419,12 +417,6 @@ class Game {
         let shaderSlot = shaderOverrideSlot[fileName, default: 0]
         model.materials[shaderSlot].shader = shader
         return model
-    }
-    
-    @inlinable func setupAmbientLighting() {
-        // Ambient light level (some basic lighting)
-        let ambientLoc = GetShaderLocation(shader, "ambient");
-        SetShaderValue(shader, ambientLoc, [255, 255, 255, 255], Int32(SHADER_UNIFORM_VEC4.rawValue));
     }
 }
 

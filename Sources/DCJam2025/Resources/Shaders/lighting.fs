@@ -29,7 +29,7 @@ struct Light {
 
 // Input lighting values
 uniform Light lights[MAX_LIGHTS];
-uniform vec4 ambient;
+//uniform vec4 ambient;
 uniform vec3 viewPos;
 
 void main()
@@ -70,7 +70,8 @@ void main()
     }
 
     finalColor = (texelColor*(tint*vec4(lightDot, 1.0)));
-    finalColor += texelColor*(ambient/10.0)*tint;
+    vec4 ambientColor = vec4(0.05, 0.05, 0.1, 0);
+    finalColor += texelColor*ambientColor*tint;
 
     // Gamma correction
     finalColor = pow(finalColor, vec4(1.0/2.2));
