@@ -104,6 +104,10 @@ public struct Drawable3D: Equatable {
     static func makeStairsDown(position: Coordinate) -> Drawable3D {
         Drawable3D(modelName: "stairs", position: position.toVector3 + Vector3(x: 0, y: -1.5, z: 0.5), up: .up, rotation: 180, tint: .white, scale: .one.scale(0.25))
     }
+    
+    static func makeTarget(position: Coordinate) -> Drawable3D {
+        Drawable3D(modelName: "chest_gold", position: position.toVector3 + Vector3(x: 0, y: -0.5, z: 0), up: .up, rotation: 180, tint: .white, scale: .one.scale(0.25))
+    }
 }
 
 public func floorToDrawables(_ floor: Floor) -> [Drawable3D] {
@@ -123,7 +127,9 @@ public func floorToDrawables(_ floor: Floor) -> [Drawable3D] {
                 result.append(.makeStairsDown(position: coordinate))
                 result.append(.makeCeiling(position: coordinate))
             case .target:
-                break
+                result.append(.makeTarget(position: coordinate))
+                result.append(.makeFloor(position: coordinate))
+                result.append(.makeCeiling(position: coordinate))
             }
         }
     }

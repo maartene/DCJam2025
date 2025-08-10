@@ -163,7 +163,7 @@ import Model
         let floor = Floor([
             ["#", ".", ".", "#"],
             ["#", "S", ">", "#"],
-            ["#", "<", ".", "#"]
+            ["#", "<", "T", "#"]
         ])
         
         let expectedDrawables = [
@@ -183,7 +183,8 @@ import Model
             Drawable3D(modelName: "stairs", position: Vector3(x: 1.0, y: -0.5, z: 2.5), up: Vector3(x: 0.0, y: 1.0, z: 0.0), rotation: 180.0, tint: Color(r: 255, g: 255, b: 255, a: 255), scale: Vector3(x: 0.25, y: 0.25, z: 0.25)),
             Drawable3D(modelName: "floor_wood_large", position: Vector3(x: 2.0, y: -0.5, z: 2.0), up: Vector3(x: 0.0, y: 1.0, z: 0.0), rotation: 0.0, tint: Color(r: 255, g: 255, b: 255, a: 255), scale: Vector3(x: 0.25, y: 0.25, z: 0.25)),
             Drawable3D(modelName: "ceiling_tile", position: Vector3(x: 2.0, y: 0.5, z: 2.0), up: Vector3(x: 0.0, y: 1.0, z: 0.0), rotation: 0.0, tint: Color(r: 255, g: 255, b: 255, a: 255), scale: Vector3(x: 0.25, y: 0.25, z: 0.25)),
-            Drawable3D(modelName: "wall", position: Vector3(x: 3.0, y: 0.0, z: 2.0), up: Vector3(x: 0.0, y: 1.0, z: 0.0), rotation: 0.0, tint: Color(r: 255, g: 255, b: 255, a: 255), scale: Vector3(x: 0.25, y: 0.25, z: 0.25))
+            Drawable3D(modelName: "wall", position: Vector3(x: 3.0, y: 0.0, z: 2.0), up: Vector3(x: 0.0, y: 1.0, z: 0.0), rotation: 0.0, tint: Color(r: 255, g: 255, b: 255, a: 255), scale: Vector3(x: 0.25, y: 0.25, z: 0.25)),
+            Drawable3D(modelName: "chest_gold", position: Vector3(x: 2.0, y: -0.5, z: 2.0), up: Vector3(x: 0.0, y: 1.0, z: 0.0), rotation: 180.0, tint: Color(r: 255, g: 255, b: 255, a: 255), scale: Vector3(x: 0.25, y: 0.25, z: 0.25)),
         ]
         
         let drawables = floorToDrawables(floor)

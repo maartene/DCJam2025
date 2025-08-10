@@ -27,7 +27,7 @@ class Game {
         #######
         #S....#
         #.....#
-        #..<..#
+        #..T..#
         #######
         """,
         """
@@ -336,7 +336,8 @@ class Game {
             "stairs",
             "wall",
             "floor_wood_large",
-            "ceiling_tile"
+            "ceiling_tile",
+            "chest_gold"
         ]
                 
         modelNames.forEach {
