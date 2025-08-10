@@ -70,6 +70,8 @@ class Game {
         loadImages()
         loadModels()
         
+        setupAmbientLighting()
+        
         while WindowShouldClose() == false {
             update()
             drawGameView()
@@ -120,8 +122,9 @@ class Game {
     }
     
     private func updateLights() {
-        pointLight = CreateLight(1, camera.position, Vector3(x: 0, y: 0, z: 0), Color(r: 200, g: 150, b: 100, a: 255) * 0.8, shader, 0)
-
+        pointLight = CreateLight(Int32(LIGHT_POINT.rawValue), camera.position, Vector3(x: 0, y: 0, z: 0), Color(r: 200, g: 150, b: 100, a: 255) * 0.8, shader, 0)
+        
+        SetShaderValue(shader, shader.locs[Int(SHADER_LOC_VECTOR_VIEW.rawValue)], [camera.position.x, camera.position.y, camera.position.z], Int32(SHADER_UNIFORM_VEC3.rawValue))
         UpdateLightValues(shader, pointLight)
     }
 
@@ -421,7 +424,7 @@ class Game {
     @inlinable func setupAmbientLighting() {
         // Ambient light level (some basic lighting)
         let ambientLoc = GetShaderLocation(shader, "ambient");
-        SetShaderValue(shader, ambientLoc, [10, 100, 30, 255], shaderUniformVec4);
+        SetShaderValue(shader, ambientLoc, [255, 255, 255, 255], Int32(SHADER_UNIFORM_VEC4.rawValue));
     }
 }
 
