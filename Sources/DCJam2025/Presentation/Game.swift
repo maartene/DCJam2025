@@ -129,7 +129,9 @@ class Game {
     private func drawGameView() {
         BeginDrawing()
         ClearBackground(.black)
+        
         draw3D()
+        
         drawMinimap(world: world)
         DrawFPS(10, 400)
         DrawText("\(world.state)", 10, 380, 12, .white)
@@ -140,15 +142,13 @@ class Game {
     private func draw3D() {
         let drawables = floorToDrawables(world.currentFloor)
         
-        BeginMode3D(camera)
-
-        BeginShaderMode(shader)
-        for drawable in drawables {
-            draw(drawable)
+        with3DDrawing(camera: camera) {
+            BeginShaderMode(shader)
+            for drawable in drawables {
+                draw(drawable)
+            }
+            EndShaderMode()
         }
-        EndShaderMode()
-
-        EndMode3D()
     }
 
     private func draw(_ drawable: Drawable3D) {

@@ -107,3 +107,9 @@ extension Vector2 {
 }
 
 let shaderUniformVec4: Int32 = 3
+
+func with3DDrawing(camera: Camera, instructions: () -> ()) {
+    BeginMode3D(camera)
+    instructions()
+    EndMode3D()
+}
