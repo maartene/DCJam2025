@@ -107,10 +107,10 @@ import Model
 
 @Suite("Minimap conversions") struct MinimapConversions {
     @Test("Determine sprite and screen position for tiles", arguments: [
-        (Coordinate(x: 1, y: 0), Int32(-20), Int32(-99), "wall", Int32(28), Int32(-51)),
-        (Coordinate(x: 1, y: 2), Int32(15), Int32(11), "stairsDown", Int32(63), Int32(27)),
-        (Coordinate(x: 3, y: 2), Int32(87), Int32(-76), "stairsUp", Int32(103), Int32(-60))
-    ]) func spriteAndScreenPositionForTiles(testcase: (position: Coordinate, xOffset: Int32, yOffset: Int32, expectedSpriteName: String, expectedScreenX: Int32, expectedScreenY: Int32)) {
+        (Coordinate(x: 1, y: 0), Int32(-20), Int32(-99), "wall", Vector2(x: 28, y: -51)),
+        (Coordinate(x: 1, y: 2), Int32(15), Int32(11), "stairsDown", Vector2(x: 63, y: 27)),
+        (Coordinate(x: 3, y: 2), Int32(87), Int32(-76), "stairsUp", Vector2(x: 103, y: -60))
+    ]) func spriteAndScreenPositionForTiles(testcase: (position: Coordinate, xOffset: Int32, yOffset: Int32, expectedSpriteName: String, expectedScreen: Vector2)) {
         let floor = Floor([
             ["#", "#", "#", "#", "#"],
             ["#", ".", ".", ".", "#"],
@@ -124,26 +124,26 @@ import Model
             Coordinate(x: 3, y: 2)
         ]
 
-        for coordinate in coordinates {
-            let xOffset = Int32.random(in: -100...100)
-            let yOffset = Int32.random(in: -100...100)
-            let info = getSpriteAndPositionForTileAtPosition(coordinate, on: floor, offsetX: xOffset, offsetY: yOffset)
-
-            print("(Coordinate(x: \(coordinate.x), y: \(coordinate.y)), Int32(\(xOffset)), Int32(\(yOffset)), \"\(info.spriteName)\", Int32(\(info.displayX)), Int32(\(info.displayY)),")
-        }
+//        for coordinate in coordinates {
+//            let xOffset = Int32.random(in: -100...100)
+//            let yOffset = Int32.random(in: -100...100)
+//            let info = getSpriteAndPositionForTileAtPosition(coordinate, on: floor, offsetX: xOffset, offsetY: yOffset)
+//
+////            print("(Coordinate(x: \(coordinate.x), y: \(coordinate.y)), Int32(\(xOffset)), Int32(\(yOffset)), \"\(info.spriteName)\", Int32(\(info.displayX)), Int32(\(info.displayY)),")
+//        }
 
         let tileSpriteInfo = getSpriteAndPositionForTileAtPosition(testcase.position, on: floor, offsetX: testcase.xOffset, offsetY: testcase.yOffset)
         #expect(tileSpriteInfo.spriteName == testcase.expectedSpriteName)
-        #expect(tileSpriteInfo.displayX == testcase.expectedScreenX)
-        #expect(tileSpriteInfo.displayY == testcase.expectedScreenY)
+        #expect(tileSpriteInfo.position == testcase.expectedScreen)
+        //#expect(tileSpriteInfo.displayY == testcase.expectedScreenY)
     }
 
     @Test("Determine sprite and screen position for party", arguments: [
-        (Coordinate(x: 1, y: 0), CompassDirection.north, Int32(-20), Int32(-99), "north", Int32(28), Int32(-51)),
-        (Coordinate(x: 1, y: 2), CompassDirection.south, Int32(15), Int32(11), "south", Int32(63), Int32(27)),
-        (Coordinate(x: 3, y: 2), CompassDirection.west, Int32(87), Int32(-76), "east", Int32(103), Int32(-60)),
-        (Coordinate(x: 3, y: 2), CompassDirection.east, Int32(87), Int32(-76), "west", Int32(103), Int32(-60))
-    ]) func spriteAndScreenPositionForParty(testcase: (position: Coordinate, heading: CompassDirection, xOffset: Int32, yOffset: Int32, expectedSpriteName: String, expectedScreenX: Int32, expectedScreenY: Int32)) {
+        (Coordinate(x: 1, y: 0), CompassDirection.north, Int32(-20), Int32(-99), "north", Vector2(x: 28, y: -51)),
+        (Coordinate(x: 1, y: 2), CompassDirection.south, Int32(15), Int32(11), "south", Vector2(x: 63, y: 27)),
+    (Coordinate(x: 3, y: 2), CompassDirection.west, Int32(87), Int32(-76), "east", Vector2(x: 103, y: -60)),
+    (Coordinate(x: 3, y: 2), CompassDirection.east, Int32(87), Int32(-76), "west", Vector2(x: 103, y:-60))
+    ]) func spriteAndScreenPositionForParty(testcase: (position: Coordinate, heading: CompassDirection, xOffset: Int32, yOffset: Int32, expectedSpriteName: String, expectedScreen: Vector2)) {
         let floor = Floor([
             ["#", ".", ".", ".", "#"],
             ["#", ".", ".", ".", "#"],
@@ -151,10 +151,9 @@ import Model
             ["#", ".", ".", ".", "#"]
         ])
 
-        let partySpriteInfo = getSpriteAndPositionForPartyAtPosition(testcase.position, heading: testcase.heading, on: floor, offsetX: testcase.xOffset, offsetY: testcase.yOffset)
+        let partySpriteInfo = getSpriteAndPositionForEntityAtPosition(testcase.position, heading: testcase.heading, on: floor, offsetX: testcase.xOffset, offsetY: testcase.yOffset)
         #expect(partySpriteInfo.spriteName == testcase.expectedSpriteName)
-        #expect(partySpriteInfo.displayX == testcase.expectedScreenX)
-        #expect(partySpriteInfo.displayY == testcase.expectedScreenY)
+        #expect(partySpriteInfo.position == testcase.expectedScreen)
     }
 }
 

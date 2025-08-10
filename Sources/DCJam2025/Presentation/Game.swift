@@ -176,36 +176,30 @@ class Game {
         let visitedTilesOnCurrentFloor = world.visitedTilesOnCurrentFloor
 
         for visitedTilesOnCurrentFloor in visitedTilesOnCurrentFloor {
-            let drawTextureInfo = getSpriteAndPositionForTileAtPosition(
+            let drawable = getSpriteAndPositionForTileAtPosition(
                 visitedTilesOnCurrentFloor, on: world.currentFloor, offsetX: minimapOffset,
                 offsetY: minimapOffset)
-            if let sprite = sprites[drawTextureInfo.spriteName] {
-                DrawTexture(
-                    sprite, drawTextureInfo.displayX, drawTextureInfo.displayY, .white)
-            }
+            draw(drawable)
         }
 
-        let drawPartyTextureInfo = getSpriteAndPositionForPartyAtPosition(
-            world.partyPosition, heading: world.partyHeading, on: world.currentFloor, offsetX: 10,
-            offsetY: 10)
+        let drawPartyTextureInfo = Drawable2D.makeParty(world, offsetX: minimapOffset, offsetY: minimapOffset)
 
-        if let playerSprite = sprites[drawPartyTextureInfo.spriteName] {
-            DrawTexture(
-                playerSprite, drawPartyTextureInfo.displayX, drawPartyTextureInfo.displayY, .white)
-        }
+        draw(drawPartyTextureInfo)
 
         let visibleEnemies = world.aliveEnemiesOnCurrentFloor
             .filter { world.currentFloor.hasUnobstructedView(from: world.partyPosition, to: $0.position) }
 
         for enemy in visibleEnemies {
-            let drawEnemyTextureInfo = getSpriteAndPositionForPartyAtPosition(
-                enemy.position, heading: enemy.heading, on: world.currentFloor, offsetX: 10,
-                offsetY: 10)
+            let drawEnemyTextureInfo = Drawable2D.makeEnemy(enemy: enemy, on: world.currentFloor, offsetX: minimapOffset, offsetY: minimapOffset)
 
-            if let enemySprite = sprites[drawEnemyTextureInfo.spriteName] {
-                DrawTexture(
-                    enemySprite, drawEnemyTextureInfo.displayX, drawEnemyTextureInfo.displayY, .red)
-            }
+            draw(drawEnemyTextureInfo)
+        }
+    }
+    
+    private func draw(_ drawable: Drawable2D) {
+        if let sprite = sprites[drawable.spriteName] {
+            DrawTextureV(
+                sprite, drawable.position, drawable.tint)
         }
     }
 

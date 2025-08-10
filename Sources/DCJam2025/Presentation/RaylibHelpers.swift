@@ -150,3 +150,15 @@ final class RayLibStateHelper {
         EndShaderMode()
     }
 }
+
+extension Vector3: @retroactive Equatable {
+    public static func == (lhs: Vector3, rhs: Vector3) -> Bool {
+        lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z
+    }
+}
+
+extension Vector2: @retroactive Equatable {
+    public static func == (lhs: Vector2, rhs: Vector2) -> Bool {
+        lhs.x == rhs.x && lhs.y == rhs.y
+    }
+}

@@ -30,7 +30,7 @@ extension Color {
 
 public func getSpriteAndPositionForTileAtPosition(
     _ position: Coordinate, on floor: Floor, offsetX: Int32 = 0, offsetY: Int32 = 0
-) -> (spriteName: String, displayX: Int32, displayY: Int32) {
+) -> Drawable2D {
     let spriteSize: Int32 = 16
 
     let tileToSpriteMap: [Tile: String] = [
@@ -40,18 +40,18 @@ public func getSpriteAndPositionForTileAtPosition(
     ]
 
     let tile = floor.tileAt(position)
-    let correctedX = Int32(floor.maxX - position.x) * spriteSize + offsetX
-    let correctedY = Int32(floor.maxY - position.y) * spriteSize + offsetY
+    let correctedX = Float(Int32(floor.maxX - position.x) * spriteSize + offsetX)
+    let correctedY = Float(Int32(floor.maxY - position.y) * spriteSize + offsetY)
 
     let spriteName = tileToSpriteMap[tile, default: "\(tile)"]
 
-    return (spriteName, correctedX, correctedY)
+    return Drawable2D(spriteName: spriteName, position: Vector2(x: correctedX, y: correctedY), tint: .white)
 }
 
-public func getSpriteAndPositionForPartyAtPosition(
+public func getSpriteAndPositionForEntityAtPosition(
     _ position: Coordinate, heading: CompassDirection, on floor: Floor, offsetX: Int32 = 0,
     offsetY: Int32 = 0
-) -> (spriteName: String, displayX: Int32, displayY: Int32) {
+) -> (spriteName: String, position: Vector2) {
     let spriteSize: Int32 = 16
 
     let headingToSpriteMap: [CompassDirection: String] = [
@@ -66,7 +66,7 @@ public func getSpriteAndPositionForPartyAtPosition(
 
     let spriteName = headingToSpriteMap[heading]!
 
-    return (spriteName, correctedX, correctedY)
+    return (spriteName, Vector2(x: Float(correctedX), y: Float(correctedY)))
 }
 
 public func hpBarColor(currentHP: Int, maxHP: Int) -> Color {
@@ -140,8 +140,32 @@ public func floorToDrawables(_ floor: Floor) -> [Drawable3D] {
     return result
 }
 
-extension Vector3: @retroactive Equatable {
-    public static func == (lhs: Vector3, rhs: Vector3) -> Bool {
-        lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z
+public struct Drawable2D {
+    let spriteName: String
+    let position: Vector2
+    let tint: Color
+    
+    
+    
+    static func makeParty(_ world: World, offsetX: Int32 = 0, offsetY: Int32 = 0) -> Drawable2D {
+        let spriteNameAndPosition = getSpriteAndPositionForEntityAtPosition(world.partyPosition, heading: world.partyHeading, on: world.currentFloor, offsetX: offsetX, offsetY: offsetY)
+
+        return Drawable2D(
+            spriteName: spriteNameAndPosition.spriteName,
+            position: spriteNameAndPosition.position,
+            tint: .white
+        )
+    }
+    
+    static func makeEnemy(enemy: Enemy, on floor: Floor, offsetX: Int32 = 0, offsetY: Int32 = 0) -> Drawable2D {
+        let spriteNameAndPosition = getSpriteAndPositionForEntityAtPosition(enemy.position, heading: enemy.heading, on: floor, offsetX: offsetX, offsetY: offsetY)
+
+        return Drawable2D(spriteName: spriteNameAndPosition.spriteName, position: spriteNameAndPosition.position, tint: .red)
     }
 }
+
+public func minimap(for world: World) -> [Drawable2D] {
+    []
+}
+
+
