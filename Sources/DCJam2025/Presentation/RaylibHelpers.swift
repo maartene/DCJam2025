@@ -105,3 +105,5 @@ extension Vector2 {
         Vector2(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
     }
 }
+
+let shaderUniformVec4: Int32 = 3

@@ -65,35 +65,10 @@ class Game {
         InitWindow(screenWidth, screenHeight, "DCJam2025")
         SetTargetFPS(60)
 
+        shader = loadShader()
+        
         loadImages()
         loadModels()
-
-
-        guard let fragURL = Bundle.module.url(forResource: "lighting", withExtension: "fs")
-        else {
-            fatalError("Could not find file lighting.fs")
-        }
-
-        guard let vertexURL = Bundle.module.url(forResource: "lighting", withExtension: "vs")
-        else {
-            fatalError("Could not find file lighting.vs")
-        }
-
-        // Load basic lighting shader
-        shader = LoadShader(vertexURL.path(percentEncoded: false),
-                                fragURL.path(percentEncoded: false));
-        // Get some required shader locations
-        shader.locs[11] = GetShaderLocation(shader, "viewPos");
-        // NOTE: "matModel" location name is automatically assigned on shader loading,
-        // no need to get the location again if using that uniform name
-        //shader.locs[SHADER_LOC_MATRIX_MODEL] = GetShaderLocation(shader, "matModel");
-
-        // Ambient light level (some basic lighting)
-        let ambientLoc = GetShaderLocation(shader, "ambient");
-        //SetShaderValue(shader, ambientLoc, [0.1, 0.1, 0.1, 1.0], 3);
-
-        pointLight = CreateLight(1, Vector3(x: 2, y: 2, z: 2), Vector3(x: 1, y: 0, z: 1), .red, shader, 0)
-
         
         while WindowShouldClose() == false {
             update()
@@ -114,6 +89,7 @@ class Game {
         world.update(at: Date())
         processKeyInput()
         updateCamera()
+        updateLights()
     }
 
     private func processKeyInput() {
@@ -142,6 +118,12 @@ class Game {
         camera.position = cameraPosition + forward.toVector3.scale(offset)
         UpdateCamera(&camera, CameraProjection.PERSPECTIVE)
     }
+    
+    private func updateLights() {
+        pointLight = CreateLight(1, camera.position, Vector3(x: 0, y: 0, z: 0), Color(r: 200, g: 150, b: 100, a: 255) * 0.8, shader, 0)
+
+        UpdateLightValues(shader, pointLight)
+    }
 
     private func drawGameView() {
         BeginDrawing()
@@ -157,11 +139,6 @@ class Game {
     private func draw3D() {
 
         BeginMode3D(camera)
-        //drawMap(world.currentFloor, vantagePoint: world.partyPosition)
-        
-        pointLight = CreateLight(1, camera.position, Vector3(x: 0, y: 0, z: 0), Color(r: 200, g: 150, b: 100, a: 255) * 0.8, shader, 0)
-
-        UpdateLightValues(shader, pointLight)
 
         BeginShaderMode(shader);
             drawMap(world.currentFloor, vantagePoint: world.partyPosition)
@@ -235,8 +212,6 @@ class Game {
         }
         floorModel.materials[0].shader = shader;
         DrawModelEx(floorModel, coordinate.toVector3 + Vector3(x: 0, y: -0.5, z: 0), .up, 0, Vector3(x: 0.25, y: 0.25, z: 0.25), .white)
-        
-//        DrawPlane(coordinate.toVector3 + Vector3(x: 0, y: -0.5, z: 0), Vector2(x: 1, y: 1), .darkGray * light)
     }
     
     private func drawCeilingAt(_ coordinate: Coordinate, vantagePoint: Coordinate) {
@@ -369,6 +344,26 @@ class Game {
         
         DrawRectangleV(position + Vector2(x: 30 + 2, y: 2), Vector2(x: size, y: 15 - 4), hpBarColor(currentHP: currentHP, maxHP: maxHP))
     }
+    
+    private func loadShader() -> Shader {
+        guard let fragURL = Bundle.module.url(forResource: "lighting", withExtension: "fs")
+        else {
+            fatalError("Could not find file lighting.fs")
+        }
+
+        guard let vertexURL = Bundle.module.url(forResource: "lighting", withExtension: "vs")
+        else {
+            fatalError("Could not find file lighting.vs")
+        }
+
+        // Load basic lighting shader
+        let shader = LoadShader(vertexURL.path(percentEncoded: false),
+                                fragURL.path(percentEncoded: false));
+        // Get some required shader locations
+        shader.locs[11] = GetShaderLocation(shader, "viewPos");
+        
+        return shader
+    }
 
     private func loadImages() {
         let imageNames = [
@@ -418,6 +413,12 @@ class Game {
         }
 
         return LoadModel(modelURL.path(percentEncoded: false))
+    }
+    
+    @inlinable func setupAmbientLighting() {
+        // Ambient light level (some basic lighting)
+        let ambientLoc = GetShaderLocation(shader, "ambient");
+        SetShaderValue(shader, ambientLoc, [10, 100, 30, 255], shaderUniformVec4);
     }
 }
 
