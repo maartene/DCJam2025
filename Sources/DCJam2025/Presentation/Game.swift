@@ -22,6 +22,8 @@ class Game {
     var pointLight: Light!
     var shader: Shader!
     
+    let rlHelper = RayLibStateHelper()
+    
     let world = makeWorld(from: [
         """
         #######
@@ -127,27 +129,25 @@ class Game {
     }
 
     private func drawGameView() {
-        BeginDrawing()
-        ClearBackground(.black)
-        
-        draw3D()
-        
-        drawMinimap(world: world)
-        DrawFPS(10, 400)
-        DrawText("\(world.state)", 10, 380, 12, .white)
-        drawParty(world.partyMembers)
-        EndDrawing()
+        rlHelper.withDrawing {
+            ClearBackground(.black)
+            
+            draw3D()
+            
+            drawMinimap(world: world)
+            DrawFPS(10, 400)
+            DrawText("\(world.state)", 10, 380, 12, .white)
+            drawParty(world.partyMembers)
+        }
     }
 
     private func draw3D() {
         let drawables = floorToDrawables(world.currentFloor)
         
-        with3DDrawing(camera: camera) {
-            BeginShaderMode(shader)
-            for drawable in drawables {
-                draw(drawable)
+        rlHelper.with3DDrawing(camera: camera) {
+            rlHelper.withShader(shader) {
+                drawables.forEach(draw)
             }
-            EndShaderMode()
         }
     }
 

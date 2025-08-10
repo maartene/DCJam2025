@@ -108,8 +108,45 @@ extension Vector2 {
 
 let shaderUniformVec4: Int32 = 3
 
-func with3DDrawing(camera: Camera, instructions: () -> ()) {
-    BeginMode3D(camera)
-    instructions()
-    EndMode3D()
+
+
+final class RayLibStateHelper {
+    enum RayLibState: Hashable {
+        case drawing
+        case drawing3D
+        case shading
+    }
+    private var states = Set<RayLibState>()
+    
+    func withDrawing(instructions: () -> ()) {
+        precondition(states.contains(.drawing) == false, "Only call `withDrawing` when not in a nested `withDrawing` call")
+        
+        BeginDrawing()
+        states.insert(.drawing)
+        instructions()
+        states.remove(.drawing)
+        EndDrawing()
+    }
+
+    func with3DDrawing(camera: Camera, instructions: () -> ()) {
+        precondition(states.contains(.drawing), "Only call `with3DDrawing` when in drawing state")
+        precondition(states.contains(.drawing3D) == false, "Only call `withDrawing` when not in a nested `with3DDrawing` call")
+        
+        BeginMode3D(camera)
+        states.insert(.drawing3D)
+        instructions()
+        states.remove(.drawing3D)
+        EndMode3D()
+    }
+
+    func withShader(_ shader: Shader, instructions: () -> ()) {
+        precondition(states.contains(.drawing3D), "Only call `with3DDrawing` when in drawing3D state")
+        precondition(states.contains(.shading) == false, "Only call `withShader` when not in a nested `withShader` call")
+        
+        BeginShaderMode(shader)
+        states.insert(.shading)
+        instructions()
+        states.remove(.shading)
+        EndShaderMode()
+    }
 }
