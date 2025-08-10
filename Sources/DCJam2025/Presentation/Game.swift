@@ -179,7 +179,6 @@ class Game {
         guard let wallModel = models["wall"] else {
             return
         }
-        wallModel.materials[0].shader = shader;
 
         DrawModelEx(wallModel, coordinate.toVector3, .up, 0, Vector3(x: 0.25, y: 0.25, z: 0.25), .white)
     }
@@ -189,7 +188,6 @@ class Game {
             return
         }
         
-        stairsModel.materials[0].shader = shader;
         DrawModelEx(stairsModel, coordinate.toVector3 + Vector3(x: 0, y: -0.5, z: 0.5), .up, 180, Vector3(x: 0.25, y: 0.25, z: 0.25), .white)
     }
 
@@ -197,7 +195,7 @@ class Game {
         guard let stairsModel = models["stairs"] else {
             return
         }
-        stairsModel.materials[0].shader = shader;
+
         DrawModelEx(stairsModel, coordinate.toVector3 + Vector3(x: 0, y: -1.5, z: 0.5), .up, 180, Vector3(x: 0.25, y: 0.25, z: 0.25), .white)
         drawCeilingAt(coordinate, vantagePoint: vantagePoint)
     }
@@ -210,7 +208,7 @@ class Game {
         guard let floorModel = models["floor_wood_large"] else {
             return
         }
-        floorModel.materials[0].shader = shader;
+
         DrawModelEx(floorModel, coordinate.toVector3 + Vector3(x: 0, y: -0.5, z: 0), .up, 0, Vector3(x: 0.25, y: 0.25, z: 0.25), .white)
     }
     
@@ -218,8 +216,7 @@ class Game {
         guard let ceilingModel = models["ceiling_tile"] else {
             return
         }
-        ceilingModel.materials[0].shader = shader
-        
+
         let rotation: Float = coordinate.y.isMultiple(of: 2) || coordinate.x.isMultiple(of: 2) ? 0 : 90
         
         DrawModelEx(ceilingModel, coordinate.toVector3 + Vector3(x: 0, y: 0.5, z: 0), .init(x: 0, y: 1, z: 0), rotation, Vector3(x: 0.25, y: 0.25, z: 0.25), .white)
@@ -236,7 +233,6 @@ class Game {
             guard let mockModel = models["Skeleton_Warrior"] else {
                 return
             }
-            mockModel.materials[1].shader = shader
             
             DrawModelEx(mockModel, coordinate.toVector3 + Vector3(x: 0, y: -0.5, z: 0), .up, heading.rotation, Vector3(x: 0.5, y: 0.5, z: 0.5), .white)
         }
@@ -400,19 +396,26 @@ class Game {
             "floor_wood_large",
             "ceiling_tile"
         ]
-        
+                
         modelNames.forEach {
             models[$0] = loadModel($0, withExtension: "obj")
         }
     }
 
     private func loadModel(_ fileName: String, withExtension ext: String) -> Model {
+        let shaderOverrideSlot = [
+            "Skeleton_Warrior": 1
+        ]
+        
         guard let modelURL = Bundle.module.url(forResource: fileName, withExtension: ext)
         else {
             fatalError("Could not find file \(fileName) . \(ext)")
         }
 
-        return LoadModel(modelURL.path(percentEncoded: false))
+        let model = LoadModel(modelURL.path(percentEncoded: false))
+        let shaderSlot = shaderOverrideSlot[fileName, default: 0]
+        model.materials[shaderSlot].shader = shader
+        return model
     }
     
     @inlinable func setupAmbientLighting() {
