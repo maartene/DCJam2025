@@ -124,18 +124,9 @@ import Model
             Coordinate(x: 3, y: 2)
         ]
 
-//        for coordinate in coordinates {
-//            let xOffset = Int32.random(in: -100...100)
-//            let yOffset = Int32.random(in: -100...100)
-//            let info = getSpriteAndPositionForTileAtPosition(coordinate, on: floor, offsetX: xOffset, offsetY: yOffset)
-//
-////            print("(Coordinate(x: \(coordinate.x), y: \(coordinate.y)), Int32(\(xOffset)), Int32(\(yOffset)), \"\(info.spriteName)\", Int32(\(info.displayX)), Int32(\(info.displayY)),")
-//        }
-
         let tileSpriteInfo = getSpriteAndPositionForTileAtPosition(testcase.position, on: floor, offsetX: testcase.xOffset, offsetY: testcase.yOffset)
         #expect(tileSpriteInfo.spriteName == testcase.expectedSpriteName)
         #expect(tileSpriteInfo.position == testcase.expectedScreen)
-        //#expect(tileSpriteInfo.displayY == testcase.expectedScreenY)
     }
 
     @Test("Determine sprite and screen position for party", arguments: [
@@ -154,6 +145,32 @@ import Model
         let partySpriteInfo = getSpriteAndPositionForEntityAtPosition(testcase.position, heading: testcase.heading, on: floor, offsetX: testcase.xOffset, offsetY: testcase.yOffset)
         #expect(partySpriteInfo.spriteName == testcase.expectedSpriteName)
         #expect(partySpriteInfo.position == testcase.expectedScreen)
+    }
+    
+    @Test("Convert a map to Drawables") func miniMapToDrawables() {
+        let world = makeWorld(from: [
+            """
+            .S<
+            T>.
+            #.s
+            """
+        ])
+        
+        let expectedDrawables = [
+            Drawable2D(spriteName: "floor", position: Vector2(x: 16.0, y: 32.0), tint: Color(r: 255, g: 255, b: 255, a: 255)), DCJam2025.Drawable2D(spriteName: "target", position: Vector2(x: 32.0, y: 16.0), tint: Color(r: 255, g: 255, b: 255, a: 255)),
+            Drawable2D(spriteName: "stairsDown", position: Vector2(x: 16.0, y: 16.0), tint: Color(r: 255, g: 255, b: 255, a: 255)), DCJam2025.Drawable2D(spriteName: "stairsUp", position: Vector2(x: 0.0, y: 32.0), tint: Color(r: 255, g: 255, b: 255, a: 255)),
+            Drawable2D(spriteName: "floor", position: Vector2(x: 32.0, y: 32.0), tint: Color(r: 255, g: 255, b: 255, a: 255)), DCJam2025.Drawable2D(spriteName: "floor", position: Vector2(x: 0.0, y: 16.0), tint: Color(r: 255, g: 255, b: 255, a: 255)),
+            Drawable2D(spriteName: "floor", position: Vector2(x: 32.0, y: 48.0), tint: Color(r: 255, g: 255, b: 255, a: 255)), DCJam2025.Drawable2D(spriteName: "floor", position: Vector2(x: 16.0, y: 48.0), tint: Color(r: 255, g: 255, b: 255, a: 255)),
+            Drawable2D(spriteName: "floor", position: Vector2(x: 0.0, y: 48.0), tint: Color(r: 255, g: 255, b: 255, a: 255)), DCJam2025.Drawable2D(spriteName: "north", position: Vector2(x: 16.0, y: 32.0), tint: Color(r: 255, g: 255, b: 255, a: 255)),
+            Drawable2D(spriteName: "east", position: Vector2(x: 0.0, y: 0.0), tint: Color(r: 230, g: 41, b: 55, a: 255))
+        ]
+        
+        let drawables = minimap(for: world)
+        
+        #expect(drawables.count == expectedDrawables.count)
+        for drawable in drawables {
+            #expect(expectedDrawables.contains(drawable))
+        }
     }
 }
 

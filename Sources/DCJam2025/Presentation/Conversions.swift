@@ -140,12 +140,10 @@ public func floorToDrawables(_ floor: Floor) -> [Drawable3D] {
     return result
 }
 
-public struct Drawable2D {
+public struct Drawable2D: Equatable {
     let spriteName: String
     let position: Vector2
     let tint: Color
-    
-    
     
     static func makeParty(_ world: World, offsetX: Int32 = 0, offsetY: Int32 = 0) -> Drawable2D {
         let spriteNameAndPosition = getSpriteAndPositionForEntityAtPosition(world.partyPosition, heading: world.partyHeading, on: world.currentFloor, offsetX: offsetX, offsetY: offsetY)
@@ -164,8 +162,35 @@ public struct Drawable2D {
     }
 }
 
-public func minimap(for world: World) -> [Drawable2D] {
-    []
+public func minimap(for world: World, minimapOffset: Int32 = 0) -> [Drawable2D] {
+    var result = world.visitedTilesOnCurrentFloor
+        .map { getSpriteAndPositionForTileAtPosition(
+            $0, on: world.currentFloor, offsetX: minimapOffset,
+            offsetY: minimapOffset)
+        }
+
+    result.append(Drawable2D.makeParty(world, offsetX: minimapOffset, offsetY: minimapOffset))
+
+    let enemyDrawables = world.aliveEnemiesOnCurrentFloor
+        .filter { world.currentFloor.hasUnobstructedView(from: world.partyPosition, to: $0.position) }
+        .map { Drawable2D.makeEnemy(enemy: $0, on: world.currentFloor, offsetX: minimapOffset, offsetY: minimapOffset) }
+    
+    result.append(contentsOf: enemyDrawables)
+    
+    return result
 }
 
-
+extension CompassDirection {
+    var rotation: Float {
+        switch self {
+        case .north:
+            return 0
+        case .east:
+            return 90
+        case .south:
+            return 180
+        case .west:
+            return 270
+        }
+    }
+}
