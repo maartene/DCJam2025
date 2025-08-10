@@ -108,6 +108,10 @@ public struct Drawable3D: Equatable {
     static func makeTarget(position: Coordinate) -> Drawable3D {
         Drawable3D(modelName: "chest_gold", position: position.toVector3 + Vector3(x: 0, y: -0.5, z: 0), up: .up, rotation: 180, tint: .white, scale: .one.scale(0.25))
     }
+    
+    static func makeEntity(_ entity: Enemy) -> Drawable3D {
+        Drawable3D(modelName: "Skeleton_Warrior", position: entity.position.toVector3 + Vector3(x: 0, y: -0.5, z: 0), up: .up, rotation: entity.heading.rotation, tint: .white, scale: .one.scale(0.5))
+    }
 }
 
 public func floorToDrawables(_ floor: Floor) -> [Drawable3D] {

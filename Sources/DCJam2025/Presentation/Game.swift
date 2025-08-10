@@ -29,7 +29,7 @@ class Game {
         #######
         #S....#
         #.....#
-        #..T..#
+        #..<..#
         #######
         """,
         """
@@ -142,7 +142,13 @@ class Game {
     }
 
     private func draw3D() {
-        let drawables = floorToDrawables(world.currentFloor)
+        var drawables = floorToDrawables(world.currentFloor)
+        
+        let enemyDrawables = world.enemiesOnCurrentFloor
+            .filter { $0.isAlive }
+            .map { Drawable3D.makeEntity($0) }
+        
+        drawables.append(contentsOf: enemyDrawables)
         
         rlHelper.with3DDrawing(camera: camera) {
             rlHelper.withShader(shader) {
@@ -161,22 +167,6 @@ class Game {
                 drawable.scale,
                 drawable.tint
             )
-        }
-    }
-    
-    private func drawEntities(map: Floor, vantagePoint: Coordinate) {
-        let enemiesToDraw = world.enemiesOnCurrentFloor
-            .filter { $0.isAlive }
-        for enemyOnCurrentFloor in enemiesToDraw {
-            let coordinate = enemyOnCurrentFloor.position
-
-            let heading = enemyOnCurrentFloor.heading
-            
-            guard let mockModel = models["Skeleton_Warrior"] else {
-                return
-            }
-            
-            DrawModelEx(mockModel, coordinate.toVector3 + Vector3(x: 0, y: -0.5, z: 0), .up, heading.rotation, Vector3(x: 0.5, y: 0.5, z: 0.5), .white)
         }
     }
 
