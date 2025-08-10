@@ -73,7 +73,7 @@ extern "C" {            // Prevents name mangling of functions
 //----------------------------------------------------------------------------------
 // Module Functions Declaration
 //----------------------------------------------------------------------------------
-Light CreateLight(int type, Vector3 position, Vector3 target, Color color, Shader shader);   // Create a light and get shader locations
+Light CreateLight(int type, Vector3 position, Vector3 target, Color color, Shader shader, int lightCount);   // Create a light and get shader locations
 void UpdateLightValues(Shader shader, Light light);         // Send light properties to shader
 
 #ifdef __cplusplus
@@ -104,11 +104,6 @@ void UpdateLightValues(Shader shader, Light light);         // Send light proper
 // ...
 
 //----------------------------------------------------------------------------------
-// Global Variables Definition
-//----------------------------------------------------------------------------------
-static int lightsCount = 0;    // Current amount of created lights
-
-//----------------------------------------------------------------------------------
 // Module specific Functions Declaration
 //----------------------------------------------------------------------------------
 // ...
@@ -118,30 +113,25 @@ static int lightsCount = 0;    // Current amount of created lights
 //----------------------------------------------------------------------------------
 
 // Create a light and get shader locations
-Light CreateLight(int type, Vector3 position, Vector3 target, Color color, Shader shader)
+Light CreateLight(int type, Vector3 position, Vector3 target, Color color, Shader shader, int lightsCount)
 {
     Light light = { 0 };
 
-    if (lightsCount < MAX_LIGHTS)
-    {
-        light.enabled = true;
-        light.type = type;
-        light.position = position;
-        light.target = target;
-        light.color = color;
+    light.enabled = true;
+    light.type = type;
+    light.position = position;
+    light.target = target;
+    light.color = color;
 
-        // NOTE: Lighting shader naming must be the provided ones
-        light.enabledLoc = GetShaderLocation(shader, TextFormat("lights[%i].enabled", lightsCount));
-        light.typeLoc = GetShaderLocation(shader, TextFormat("lights[%i].type", lightsCount));
-        light.positionLoc = GetShaderLocation(shader, TextFormat("lights[%i].position", lightsCount));
-        light.targetLoc = GetShaderLocation(shader, TextFormat("lights[%i].target", lightsCount));
-        light.colorLoc = GetShaderLocation(shader, TextFormat("lights[%i].color", lightsCount));
+    // NOTE: Lighting shader naming must be the provided ones
+    light.enabledLoc = GetShaderLocation(shader, TextFormat("lights[%i].enabled", lightsCount));
+    light.typeLoc = GetShaderLocation(shader, TextFormat("lights[%i].type", lightsCount));
+    light.positionLoc = GetShaderLocation(shader, TextFormat("lights[%i].position", lightsCount));
+    light.targetLoc = GetShaderLocation(shader, TextFormat("lights[%i].target", lightsCount));
+    light.colorLoc = GetShaderLocation(shader, TextFormat("lights[%i].color", lightsCount));
 
-        UpdateLightValues(shader, light);
+    UpdateLightValues(shader, light);
         
-        //lightsCount++;
-    }
-
     return light;
 }
 

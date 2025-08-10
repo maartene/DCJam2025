@@ -92,7 +92,7 @@ class Game {
         let ambientLoc = GetShaderLocation(shader, "ambient");
         //SetShaderValue(shader, ambientLoc, [0.1, 0.1, 0.1, 1.0], 3);
 
-        pointLight = CreateLight(1, Vector3(x: 2, y: 2, z: 2), Vector3(x: 1, y: 0, z: 1), .red, shader)
+        pointLight = CreateLight(1, Vector3(x: 2, y: 2, z: 2), Vector3(x: 1, y: 0, z: 1), .red, shader, 0)
 
         
         while WindowShouldClose() == false {
@@ -159,7 +159,7 @@ class Game {
         BeginMode3D(camera)
         //drawMap(world.currentFloor, vantagePoint: world.partyPosition)
         
-        pointLight = CreateLight(1, world.partyPosition.toVector3, Vector3(x: 0, y: 0, z: 0), Color(r: 200, g: 150, b: 100, a: 255) * 0.8, shader)
+        pointLight = CreateLight(1, camera.position, Vector3(x: 0, y: 0, z: 0), Color(r: 200, g: 150, b: 100, a: 255) * 0.8, shader, 0)
 
         UpdateLightValues(shader, pointLight)
 
@@ -261,7 +261,7 @@ class Game {
             guard let mockModel = models["Skeleton_Warrior"] else {
                 return
             }
-            mockModel.materials[0].shader = shader
+            mockModel.materials[1].shader = shader
             
             DrawModelEx(mockModel, coordinate.toVector3 + Vector3(x: 0, y: -0.5, z: 0), .up, heading.rotation, Vector3(x: 0.5, y: 0.5, z: 0.5), .white)
         }

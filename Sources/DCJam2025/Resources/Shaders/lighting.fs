@@ -45,7 +45,7 @@ void main()
 
     // NOTE: Implement here your fragment shader code
 
-    for (int i = 0; i < 1; i++)
+    for (int i = 0; i < MAX_LIGHTS; i++)
     {
         if (lights[i].enabled == 1)
         {
@@ -64,12 +64,9 @@ void main()
             float distance = length(lights[i].position - fragPosition);
             float NdotL = max(dot(normal, light), 0.0);
             NdotL = NdotL / distance / distance;
-            
+
             lightDot += lights[i].color.rgb*NdotL;
             
-            
-            
-
             float specCo = 0.0;
             if (NdotL > 0.0) specCo = pow(max(0.0, dot(viewD, reflect(-(light), normal))), 16.0); // 16 refers to shine
             specular += specCo;
