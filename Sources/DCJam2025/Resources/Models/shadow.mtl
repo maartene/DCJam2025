@@ -1,0 +1,10 @@
+# Blender 3.5.1 MTL File: 'shadow.blend'
+# www.blender.org
+newmtl Unlit
+Ka 1.000 1.000 1.000
+Kd 1.000 1.000 1.000
+map_Kd shadow.png
+
+newmtl Lit
+Ka 1.000 1.000 1.000
+Kd 1.000 1.000 1.000

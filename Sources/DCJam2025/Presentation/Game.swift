@@ -153,6 +153,12 @@ class Game {
         rlHelper.with3DDrawing(camera: camera) {
             rlHelper.withShader(shader) {
                 drawables.forEach(draw)
+                
+                if let model = models["shadow"] {
+                    DrawModel(model, Coordinate(x: 1, y: 1).toVector3 + Vector3(x: 0, y: -0.45, z: 0), 0.5, .black)
+                }
+                draw(.makeEntity(.makePracticeDummy(at: Coordinate(x: 1, y: 1))))
+                
             }
         }
     }
@@ -236,7 +242,8 @@ class Game {
             "wall",
             "floor_wood_large",
             "ceiling_tile",
-            "chest_gold"
+            "chest_gold",
+            "shadow"
         ]
                 
         modelNames.forEach {
@@ -246,7 +253,8 @@ class Game {
 
     private func loadModel(_ fileName: String, withExtension ext: String) -> Model {
         let shaderOverrideSlot = [
-            "Skeleton_Warrior": 1
+            "Skeleton_Warrior": 1,
+            "shadow": 1
         ]
         
         guard let modelURL = Bundle.module.url(forResource: fileName, withExtension: ext)
