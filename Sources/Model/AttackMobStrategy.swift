@@ -13,18 +13,18 @@ public protocol AttackMobStrategy: AttackStrategy, Sendable {
 extension AttackMobStrategy {
     var allowedPartyPositions: PartyPositionGroup { .all }
     var allowedHands: [PartyMember.Hand] {
-        [.primary, .secondary] 
+        [.primary, .secondary]
     }
-    
+
     func getValidTargets(in world: World) -> [Damageable] {
         let partyPosition = world.partyPosition
         let enemiesInRange = world.aliveEnemiesOnCurrentFloor.filter {
             partyPosition.manhattanDistanceTo($0.position) <= range
         }
-        
+
         let enemiesInFrontOfParty = enemiesInRange.filter {
             var position = partyPosition
-            for i in 0 ... range {
+            for _ in 0...range {
                 if $0.position == position {
                     return true
                 }
@@ -32,7 +32,7 @@ extension AttackMobStrategy {
             }
             return false
         }
-        
+
         return Array(enemiesInFrontOfParty)
     }
 }
@@ -40,7 +40,7 @@ extension AttackMobStrategy {
 struct MeleeAttackMobStrategy: AttackMobStrategy {
     let range = 1
     let damage = 2
-    
+
     let allowedPartyPositions: PartyPositionGroup = .frontRow
 }
 
@@ -53,7 +53,7 @@ struct RangedAttackMobStrategy: AttackMobStrategy {
 struct MagicAttackMobStrategy: AttackMobStrategy {
     let range = 2
     let damage = 1
-    
+
     func damageTargets(in world: World) {
         let potentialTargets = getValidTargets(in: world)
         potentialTargets.forEach { $0.takeDamage(damage) }

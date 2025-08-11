@@ -22,9 +22,5 @@ jobs:
         run: swift build
       - name: Test
         run: swift test --enable-code-coverage
-      - name: Generate coverage report
-        run: |
-          xcrun llvm-cov export -format="lcov" .build/debug/DCJam2025PackageTests.xctest/Contents/MacOS/DCJam2025PackageTests -instr-profile .build/debug/codecov/default.profdata > coverage_report.lcov
-          - name: Gather code coverage
       - name: Upload results to Codecov
         uses: codecov/codecov-action@v5
