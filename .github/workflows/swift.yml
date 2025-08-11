@@ -21,4 +21,35 @@ jobs:
       - name: Build
         run: swift build
       - name: Test
-        run: swift test
+        run: swift test --enable-code-coverage
+      - name: Generate coverage report
+        run: |
+          BIN_PATH="\$(swift build --show-bin-path)"
+          XCTEST_PATH="\$(find \${BIN_PATH} -name '*.xctest')"
+          COV_BIN=\$XCTEST_PATH
+
+          INSTR_PROFILE=.build/debug/codecov/default.profdata
+          # enrypoint.swift is used to setup the api
+          IGNORE_FILENAME_REGEX=".build|Tests|entrypoint.swift"
+
+          FORMAT="lcov"
+          OUTPUT_FILE=.build/debug/codecov/lcov.info
+
+          f="\$(basename \$XCTEST_PATH .xctest)"
+          COV_BIN="\${COV_BIN}/Contents/MacOS/\$f"
+
+          mkdir -p "\$(dirname "\$OUTPUT_FILE")"
+
+          xcrun llvm-cov report \
+              "\${COV_BIN}" \
+              -instr-profile=\$INSTR_PROFILE \
+              -ignore-filename-regex=\$IGNORE_FILENAME_REGEX \
+              -use-color
+
+          xcrun llvm-cov export \
+              "\${COV_BIN}" \
+              -instr-profile=\$INSTR_PROFILE \
+              -ignore-filename-regex=\$IGNORE_FILENAME_REGEX \
+              -format=\$FORMAT > \$OUTPUT_FILE
+      - name: Upload results to Codecov
+        uses: codecov/codecov-action@v5
