@@ -64,6 +64,7 @@ class Game {
     ])
 
     func run() {
+        SetConfigFlags(FLAG_MSAA_4X_HINT.rawValue)
         InitWindow(screenWidth, screenHeight, "DCJam2025")
         SetTargetFPS(60)
 

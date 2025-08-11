@@ -202,3 +202,4 @@ What is there to find? The answer to the ultimate secret: what came before? the 
 
 ## 🍅 Pomodoro 39
 - ✅ Add 'drop shadow' to enemies
+- ✅ And anti-aliasing
