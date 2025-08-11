@@ -56,6 +56,10 @@ extension Color {
     public static var yellow: Color {
         Color(r: 253, g: 249, b: 0, a: 255)
     }
+
+    public static var shadow: Color {
+        Color(r: 0, g: 0, b: 0, a: 128)
+    }
 }
 
 extension Color: @retroactive Equatable {

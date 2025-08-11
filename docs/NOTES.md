@@ -199,3 +199,6 @@ What is there to find? The answer to the ultimate secret: what came before? the 
 ## 🍅 Pomodoro 38
 - ✅ Light skeleton correctly
 - ✅ Add ambient lighting
+
+## 🍅 Pomodoro 39
+- ✅ Add 'drop shadow' to enemies

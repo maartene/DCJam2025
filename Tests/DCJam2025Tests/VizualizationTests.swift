@@ -214,10 +214,16 @@ import Model
     @Test("convert an enemy into a drawable") func convertEnemyIntoDrawables() {
         let enemy = Enemy.makeRangedEnemy(at: Coordinate(x: 12, y: 95))
         
-        let expectedDrawable = Drawable3D(modelName: "Skeleton_Warrior", position: Vector3(x: 12, y: -0.5, z: 95), up: .up, rotation: 270, tint: .white, scale: .one.scale(0.5))
+        let expectedDrawables = [
+            Drawable3D(modelName: "Skeleton_Warrior", position: Vector3(x: 12, y: -0.5, z: 95), up: .up, rotation: 270, tint: .white, scale: .one.scale(0.5)),
+            Drawable3D(modelName: "shadow", position: Vector3(x: 12, y: -0.487, z: 95), up: .up, rotation: 0, tint: .shadow, scale: .one.scale(0.5)),
+        ]
         
-        let drawable = Drawable3D.makeEntity(enemy)
+        let drawables = Drawable3D.makeEntity(enemy)
         
-        #expect(drawable == expectedDrawable)
+        #expect(drawables.count == expectedDrawables.count)
+        for drawable in drawables {
+            #expect(expectedDrawables.contains(drawable))
+        }
     }
 }

@@ -101,7 +101,7 @@ class Game {
             KEY_A: { self.world.executeCommand(.move(direction: .right), at: Date()) },
             KEY_S: { self.world.executeCommand(.move(direction: .backwards), at: Date()) },
             KEY_Q: { self.world.executeCommand(.turnClockwise, at: Date()) },
-            KEY_E: { self.world.executeCommand(.turnCounterClockwise, at: Date()) }
+            KEY_E: { self.world.executeCommand(.turnCounterClockwise, at: Date()) },
         ]
 
         for keyAction in inputActionMap {
@@ -146,19 +146,13 @@ class Game {
         
         let enemyDrawables = world.enemiesOnCurrentFloor
             .filter { $0.isAlive }
-            .map { Drawable3D.makeEntity($0) }
+            .flatMap { Drawable3D.makeEntity($0) }
         
         drawables.append(contentsOf: enemyDrawables)
         
         rlHelper.with3DDrawing(camera: camera) {
             rlHelper.withShader(shader) {
                 drawables.forEach(draw)
-                
-                if let model = models["shadow"] {
-                    DrawModel(model, Coordinate(x: 1, y: 1).toVector3 + Vector3(x: 0, y: -0.45, z: 0), 0.5, .black)
-                }
-                draw(.makeEntity(.makePracticeDummy(at: Coordinate(x: 1, y: 1))))
-                
             }
         }
     }
