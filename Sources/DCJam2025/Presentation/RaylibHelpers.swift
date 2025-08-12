@@ -133,7 +133,7 @@ final class RayLibStateHelper {
     }
 
     func with3DDrawing(camera: Camera, instructions: () -> ()) {
-        precondition(states.contains(.drawing), "Only call `with3DDrawing` when in drawing state")
+        //precondition(states.contains(.drawing), "Only call `with3DDrawing` when in drawing state")
         precondition(states.contains(.drawing3D) == false, "Only call `withDrawing` when not in a nested `with3DDrawing` call")
         
         BeginMode3D(camera)

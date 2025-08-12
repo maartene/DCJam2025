@@ -138,7 +138,9 @@ class Game {
             drawMinimap(world: world)
             DrawFPS(10, 400)
             DrawText("\(world.state)", 10, 380, 12, .white)
-            GUI(world: world, sprites: sprites).drawParty()
+            
+            
+            drawGUI()
         }
     }
 
@@ -181,6 +183,13 @@ class Game {
             DrawTextureV(
                 sprite, drawable.position, drawable.tint)
         }
+    }
+    
+    func drawGUI() {
+        GUI(world: world, sprites: sprites).drawParty()
+            .forEach {
+                $0.draw()
+            }
     }
     
     private func loadShader() -> Shader {
