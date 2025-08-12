@@ -16,7 +16,7 @@ public final class PartyMember: Damageable {
     public private(set) var currentHP = 10
     private var cooldownExpires = [
         Hand.primary: Date(),
-        Hand.secondary: Date(),
+        Hand.secondary: Date()
         ]
     private var cooldown = 2.0
     public private(set) var primaryHand: Weapon
@@ -44,31 +44,31 @@ public final class PartyMember: Damageable {
         guard cooldownHasExpired(for: hand, at: time) else {
             return false
         }
-        
+
         guard isAlive else {
             return false
         }
-        
+
         if weaponForHand(hand: hand).twoHanded && hand == .secondary {
             return false
         }
-        
+
         return true
     }
-    
+
     public func weaponForHand(hand: Hand) -> Weapon {
         switch hand {
         case .primary: primaryHand
         case .secondary: secondaryHand
         }
     }
-    
+
     public func equipWeapon(_ weapon: Weapon, in hand: Hand) {
         if primaryHand.twoHanded {
             primaryHand = .bareHands
             secondaryHand = .bareHands
         }
-        
+
         if weapon.twoHanded {
             primaryHand = weapon
             secondaryHand = weapon
@@ -88,13 +88,13 @@ public final class PartyMember: Damageable {
         guard cooldownHasExpired(for: hand, at: time) else {
             return
         }
-        
+
         guard isAlive else {
             return
         }
-                
+
         attackStrategy.damageTargets(in: world)
-        
+
         cooldownExpires[hand] = time.addingTimeInterval(cooldown)
     }
 }

@@ -28,7 +28,7 @@ extension Color {
 //    #define BLANK      CLITERAL(Color){ 0, 0, 0, 0 }           // Blank (Transparent)
 //    #define MAGENTA    CLITERAL(Color){ 255, 0, 255, 255 }     // Magenta
 //    #define RAYWHITE   CLITERAL(Color){ 245, 245, 245, 255 }   // My own White (raylib logo)
-    
+
     public static var white: Color {
         Color(r: 255, g: 255, b: 255, a: 255)
     }
@@ -48,11 +48,11 @@ extension Color {
     public static var red: Color {
         Color(r: 230, g: 41, b: 55, a: 255)
     }
-    
+
     public static var green: Color {
         Color(r: 0, g: 228, b: 48, a: 255)
     }
-    
+
     public static var yellow: Color {
         Color(r: 253, g: 249, b: 0, a: 255)
     }
@@ -112,8 +112,6 @@ extension Vector2 {
 
 let shaderUniformVec4: Int32 = 3
 
-
-
 final class RayLibStateHelper {
     enum RayLibState: Hashable {
         case drawing
@@ -121,10 +119,10 @@ final class RayLibStateHelper {
         case shading
     }
     private var states = Set<RayLibState>()
-    
-    func withDrawing(instructions: () -> ()) {
+
+    func withDrawing(instructions: () -> Void) {
         precondition(states.contains(.drawing) == false, "Only call `withDrawing` when not in a nested `withDrawing` call")
-        
+
         BeginDrawing()
         states.insert(.drawing)
         instructions()
@@ -132,10 +130,10 @@ final class RayLibStateHelper {
         EndDrawing()
     }
 
-    func with3DDrawing(camera: Camera, instructions: () -> ()) {
+    func with3DDrawing(camera: Camera, instructions: () -> Void) {
         precondition(states.contains(.drawing), "Only call `with3DDrawing` when in drawing state")
         precondition(states.contains(.drawing3D) == false, "Only call `withDrawing` when not in a nested `with3DDrawing` call")
-        
+
         BeginMode3D(camera)
         states.insert(.drawing3D)
         instructions()
@@ -143,10 +141,10 @@ final class RayLibStateHelper {
         EndMode3D()
     }
 
-    func withShader(_ shader: Shader, instructions: () -> ()) {
+    func withShader(_ shader: Shader, instructions: () -> Void) {
         precondition(states.contains(.drawing3D), "Only call `with3DDrawing` when in drawing3D state")
         precondition(states.contains(.shading) == false, "Only call `withShader` when not in a nested `withShader` call")
-        
+
         BeginShaderMode(shader)
         states.insert(.shading)
         instructions()

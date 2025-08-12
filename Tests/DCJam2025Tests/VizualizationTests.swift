@@ -88,7 +88,7 @@ import Model
         #expect((Color.blue * 0.1).a == 255)
         #expect((Color(r: 123, g: 34, b: 57, a: 100) * 0.3).a == 100)
     }
-    
+
     @Test("Determine the color of HP bar", arguments: [
         (100, 100, Color.green),
         (50, 100, .green),
@@ -127,7 +127,7 @@ import Model
         (Coordinate(x: 1, y: 0), CompassDirection.north, Int32(-20), Int32(-99), "north", Vector2(x: 28, y: -51)),
         (Coordinate(x: 1, y: 2), CompassDirection.south, Int32(15), Int32(11), "south", Vector2(x: 63, y: 27)),
     (Coordinate(x: 3, y: 2), CompassDirection.west, Int32(87), Int32(-76), "east", Vector2(x: 103, y: -60)),
-    (Coordinate(x: 3, y: 2), CompassDirection.east, Int32(87), Int32(-76), "west", Vector2(x: 103, y:-60))
+    (Coordinate(x: 3, y: 2), CompassDirection.east, Int32(87), Int32(-76), "west", Vector2(x: 103, y: -60))
     ]) func spriteAndScreenPositionForParty(testcase: (position: Coordinate, heading: CompassDirection, xOffset: Int32, yOffset: Int32, expectedSpriteName: String, expectedScreen: Vector2)) {
         let floor = Floor([
             ["#", ".", ".", ".", "#"],
@@ -140,7 +140,7 @@ import Model
         #expect(partySpriteInfo.spriteName == testcase.expectedSpriteName)
         #expect(partySpriteInfo.position == testcase.expectedScreen)
     }
-    
+
     @Test("Convert a map to Drawables") func miniMapToDrawables() {
         let world = makeWorld(from: [
             """
@@ -149,7 +149,7 @@ import Model
             #.s
             """
         ])
-        
+
         let expectedDrawables = [
             Drawable2D(spriteName: "floor", position: Vector2(x: 16.0, y: 32.0), tint: Color(r: 255, g: 255, b: 255, a: 255)), Drawable2D(spriteName: "target", position: Vector2(x: 32.0, y: 16.0), tint: Color(r: 255, g: 255, b: 255, a: 255)),
             Drawable2D(spriteName: "stairsDown", position: Vector2(x: 16.0, y: 16.0), tint: Color(r: 255, g: 255, b: 255, a: 255)), Drawable2D(spriteName: "stairsUp", position: Vector2(x: 0.0, y: 32.0), tint: Color(r: 255, g: 255, b: 255, a: 255)),
@@ -158,9 +158,9 @@ import Model
             Drawable2D(spriteName: "floor", position: Vector2(x: 0.0, y: 48.0), tint: Color(r: 255, g: 255, b: 255, a: 255)), Drawable2D(spriteName: "north", position: Vector2(x: 16.0, y: 32.0), tint: Color(r: 255, g: 255, b: 255, a: 255)),
             Drawable2D(spriteName: "east", position: Vector2(x: 0.0, y: 0.0), tint: Color(r: 230, g: 41, b: 55, a: 255))
         ]
-        
+
         let drawables = minimap(for: world)
-        
+
         #expect(drawables.count == expectedDrawables.count)
         for drawable in drawables {
             #expect(expectedDrawables.contains(drawable))
@@ -175,7 +175,7 @@ import Model
             ["#", "S", ">", "#"],
             ["#", "<", "T", "#"]
         ])
-        
+
         let expectedDrawables = [
             Drawable3D(modelName: "wall", position: Vector3(x: 0.0, y: 0.0, z: 0.0), up: Vector3(x: 0.0, y: 1.0, z: 0.0), rotation: 0.0, tint: Color(r: 255, g: 255, b: 255, a: 255), scale: Vector3(x: 0.25, y: 0.25, z: 0.25)),
             Drawable3D(modelName: "floor_wood_large", position: Vector3(x: 1.0, y: -0.5, z: 0.0), up: Vector3(x: 0.0, y: 1.0, z: 0.0), rotation: 0.0, tint: Color(r: 255, g: 255, b: 255, a: 255), scale: Vector3(x: 0.25, y: 0.25, z: 0.25)),
@@ -194,27 +194,27 @@ import Model
             Drawable3D(modelName: "floor_wood_large", position: Vector3(x: 2.0, y: -0.5, z: 2.0), up: Vector3(x: 0.0, y: 1.0, z: 0.0), rotation: 0.0, tint: Color(r: 255, g: 255, b: 255, a: 255), scale: Vector3(x: 0.25, y: 0.25, z: 0.25)),
             Drawable3D(modelName: "ceiling_tile", position: Vector3(x: 2.0, y: 0.5, z: 2.0), up: Vector3(x: 0.0, y: 1.0, z: 0.0), rotation: 0.0, tint: Color(r: 255, g: 255, b: 255, a: 255), scale: Vector3(x: 0.25, y: 0.25, z: 0.25)),
             Drawable3D(modelName: "wall", position: Vector3(x: 3.0, y: 0.0, z: 2.0), up: Vector3(x: 0.0, y: 1.0, z: 0.0), rotation: 0.0, tint: Color(r: 255, g: 255, b: 255, a: 255), scale: Vector3(x: 0.25, y: 0.25, z: 0.25)),
-            Drawable3D(modelName: "chest_gold", position: Vector3(x: 2.0, y: -0.5, z: 2.0), up: Vector3(x: 0.0, y: 1.0, z: 0.0), rotation: 180.0, tint: Color(r: 255, g: 255, b: 255, a: 255), scale: Vector3(x: 0.25, y: 0.25, z: 0.25)),
+            Drawable3D(modelName: "chest_gold", position: Vector3(x: 2.0, y: -0.5, z: 2.0), up: Vector3(x: 0.0, y: 1.0, z: 0.0), rotation: 180.0, tint: Color(r: 255, g: 255, b: 255, a: 255), scale: Vector3(x: 0.25, y: 0.25, z: 0.25))
         ]
-        
+
         let drawables = floorToDrawables(floor)
-        
+
         #expect(drawables.count == expectedDrawables.count)
         for drawable in drawables {
             #expect(expectedDrawables.contains(drawable))
         }
     }
-    
+
     @Test("convert an enemy into a drawable") func convertEnemyIntoDrawables() {
         let enemy = Enemy.makeRangedEnemy(at: Coordinate(x: 12, y: 95))
-        
+
         let expectedDrawables = [
             Drawable3D(modelName: "Skeleton_Warrior", position: Vector3(x: 12, y: -0.5, z: 95), up: .up, rotation: 270, tint: .white, scale: .one.scale(0.5)),
-            Drawable3D(modelName: "shadow", position: Vector3(x: 12, y: -0.487, z: 95), up: .up, rotation: 0, tint: .shadow, scale: .one.scale(0.5)),
+            Drawable3D(modelName: "shadow", position: Vector3(x: 12, y: -0.487, z: 95), up: .up, rotation: 0, tint: .shadow, scale: .one.scale(0.5))
         ]
-        
+
         let drawables = Drawable3D.makeEntity(enemy)
-        
+
         #expect(drawables.count == expectedDrawables.count)
         for drawable in drawables {
             #expect(expectedDrawables.contains(drawable))
@@ -225,14 +225,14 @@ import Model
 @Suite("GUI conversion") struct GUIConversionsTests {
     @Test("convert partymembers into drawables") func convertPartymembersIntoDrawables() {
         let world = makeWorld(from: ["."])
-        
+
         let expectedDrawablePositions = [Vector2(x: 890.0, y: 10.0), Vector2(x: 895.0, y: 10.0), Vector2(x: 1000.0, y: 35.0), Vector2(x: 1000.0, y: 75.0), Vector2(x: 895.0, y: 140.0), Vector2(x: 925.0, y: 140.0), Vector2(x: 927.0, y: 142.0), Vector2(x: 1085.0, y: 10.0), Vector2(x: 1090.0, y: 10.0), Vector2(x: 1195.0, y: 35.0), Vector2(x: 1195.0, y: 75.0), Vector2(x: 1090.0, y: 140.0), Vector2(x: 1120.0, y: 140.0), Vector2(x: 1122.0, y: 142.0), Vector2(x: 890.0, y: 170.0), Vector2(x: 895.0, y: 170.0), Vector2(x: 1000.0, y: 195.0), Vector2(x: 1000.0, y: 235.0), Vector2(x: 895.0, y: 300.0), Vector2(x: 925.0, y: 300.0), Vector2(x: 927.0, y: 302.0), Vector2(x: 1085.0, y: 170.0), Vector2(x: 1090.0, y: 170.0), Vector2(x: 1195.0, y: 195.0), Vector2(x: 1195.0, y: 235.0), Vector2(x: 1090.0, y: 300.0), Vector2(x: 1120.0, y: 300.0), Vector2(x: 1122.0, y: 302.0)]
-        
+
         let gui = GUI(world: world, sprites: [:])
         let drawables = gui.drawParty()
         let drawablePositions = drawables
             .map { $0.position }
-        
+
         #expect(drawablePositions.count == expectedDrawablePositions.count)
         for drawable in expectedDrawablePositions {
             #expect(drawablePositions.contains(drawable))

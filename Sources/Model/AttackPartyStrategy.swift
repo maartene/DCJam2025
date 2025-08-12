@@ -53,9 +53,8 @@ struct DummyAttackStrategy: AttackPartyStrategy {
     func getValidTargets(in world: World) -> [any Damageable] {
         []
     }
-    
+
     let range = 1
     let damage = 0
-    
-    
+
 }

@@ -84,31 +84,31 @@ public struct Drawable3D: Equatable {
     let rotation: Float
     let tint: Color
     let scale: Vector3
-    
+
     static func makeWall(position: Coordinate) -> Drawable3D {
         Drawable3D(modelName: "wall", position: position.toVector3, up: .up, rotation: 0, tint: .white, scale: .one.scale(0.25))
     }
-    
+
     static func makeFloor(position: Coordinate) -> Drawable3D {
         Drawable3D(modelName: "floor_wood_large", position: position.toVector3 + Vector3(x: 0, y: -0.5, z: 0), up: .up, rotation: 0, tint: .white, scale: .one.scale(0.25))
     }
-    
+
     static func makeCeiling(position: Coordinate) -> Drawable3D {
         Drawable3D(modelName: "ceiling_tile", position: position.toVector3 + Vector3(x: 0, y: 0.5, z: 0), up: .up, rotation: 0, tint: .white, scale: .one.scale(0.25))
     }
-    
+
     static func makeStairsUp(position: Coordinate) -> Drawable3D {
         Drawable3D(modelName: "stairs", position: position.toVector3 + Vector3(x: 0, y: -0.5, z: 0.5), up: .up, rotation: 180, tint: .white, scale: .one.scale(0.25))
     }
-    
+
     static func makeStairsDown(position: Coordinate) -> Drawable3D {
         Drawable3D(modelName: "stairs", position: position.toVector3 + Vector3(x: 0, y: -1.5, z: 0.5), up: .up, rotation: 180, tint: .white, scale: .one.scale(0.25))
     }
-    
+
     static func makeTarget(position: Coordinate) -> Drawable3D {
         Drawable3D(modelName: "chest_gold", position: position.toVector3 + Vector3(x: 0, y: -0.5, z: 0), up: .up, rotation: 180, tint: .white, scale: .one.scale(0.25))
     }
-    
+
     static func makeEntity(_ entity: Enemy) -> [Drawable3D] {
         [
             Drawable3D(modelName: "Skeleton_Warrior", position: entity.position.toVector3 + Vector3(x: 0, y: -0.5, z: 0), up: .up, rotation: entity.heading.rotation, tint: .white, scale: .one.scale(0.5)),
@@ -147,7 +147,7 @@ public struct Drawable2D: Equatable {
     let spriteName: String
     let position: Vector2
     let tint: Color
-    
+
     static func makeParty(_ world: World, offsetX: Int32 = 0, offsetY: Int32 = 0) -> Drawable2D {
         let spriteNameAndPosition = getSpriteAndPositionForEntityAtPosition(world.partyPosition, heading: world.partyHeading, on: world.currentFloor, offsetX: offsetX, offsetY: offsetY)
 
@@ -157,7 +157,7 @@ public struct Drawable2D: Equatable {
             tint: .white
         )
     }
-    
+
     static func makeEnemy(enemy: Enemy, on floor: Floor, offsetX: Int32 = 0, offsetY: Int32 = 0) -> Drawable2D {
         let spriteNameAndPosition = getSpriteAndPositionForEntityAtPosition(enemy.position, heading: enemy.heading, on: floor, offsetX: offsetX, offsetY: offsetY)
 
@@ -177,9 +177,9 @@ public func minimap(for world: World, minimapOffset: Int32 = 0) -> [Drawable2D] 
     let enemyDrawables = world.aliveEnemiesOnCurrentFloor
         .filter { world.currentFloor.hasUnobstructedView(from: world.partyPosition, to: $0.position) }
         .map { Drawable2D.makeEnemy(enemy: $0, on: world.currentFloor, offsetX: minimapOffset, offsetY: minimapOffset) }
-    
+
     result.append(contentsOf: enemyDrawables)
-    
+
     return result
 }
 

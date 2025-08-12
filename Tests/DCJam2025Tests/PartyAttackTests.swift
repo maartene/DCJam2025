@@ -15,64 +15,64 @@ import Model
             @Test("can attack an enemy") func canAttackEnemy() {
                 #expect(world.partyMembers[.frontLeft].canExecuteAbility(for: .primary, at: Date()))
             }
-            
+
             @Test("should damage an enemy") func enemyDamagesParty() throws {
                 let enemy = try #require(world.enemiesOnCurrentFloor.first)
-                
+
                 let hpOfEnemyBeforeAttack = enemy.hp
-                
+
                 world.executeCommand(.executeHandAbility(user: .frontLeft, hand: .primary), at: Date())
-                
+
                 #expect(enemy.hp < hpOfEnemyBeforeAttack)
             }
-            
+
             @Test("should be able to make a melee attack from the front row") func meleeAttackFromFrontRowDamagesEnemy() throws {
                 let enemy = try #require(world.enemiesOnCurrentFloor.first)
-                
+
                 let hpOfEnemyBeforeAttack = enemy.hp
-                
+
                 world.executeCommand(.executeHandAbility(user: .frontLeft, hand: .primary), at: Date())
-                
+
                 #expect(enemy.hp < hpOfEnemyBeforeAttack)
             }
-            
+
             @Test("should not be able to make a melee attack when in cooldown") func meleeAttackWhenInCooldownDoesNotDamageEnemy() throws {
                 let enemy = try #require(world.enemiesOnCurrentFloor.first)
                 world.executeCommand(.executeHandAbility(user: .frontLeft, hand: .primary), at: Date())
-                
+
                 let hpOfEnemyBeforeAttack = enemy.hp
-                
+
                 world.executeCommand(.executeHandAbility(user: .frontLeft, hand: .primary), at: Date())
-                
+
                 #expect(world.partyMembers[.frontLeft].canExecuteAbility(for: .primary, at: Date()) == false)
                 #expect(enemy.hp == hpOfEnemyBeforeAttack)
             }
-            
+
             @Test("should not be able to make a melee attack when KOd") func meleeAttackWhenKoDoesNotDamageEnemy() throws {
                 let enemy = try #require(world.enemiesOnCurrentFloor.first)
                 world.partyMembers[.frontRight].takeDamage(Int.max)
-                
+
                 let hpOfEnemyBeforeAttack = enemy.hp
-                
+
                 #expect(world.partyMembers[.frontRight].canExecuteAbility(for: .primary, at: Date()) == false)
-                
+
                 world.executeCommand(.executeHandAbility(user: .frontRight, hand: .primary), at: Date())
-                
+
                 #expect(enemy.hp == hpOfEnemyBeforeAttack)
             }
-            
+
             @Test("should be able to attack with secondary hand after primary hand attacked") func secondaryHandCanAlsoAttack() throws {
                 let enemy = try #require(world.enemiesOnCurrentFloor.first)
                 world.executeCommand(.executeHandAbility(user: .frontLeft, hand: .primary), at: Date())
-                
+
                 let hpOfEnemyBeforeAttack = enemy.hp
-                
+
                 world.executeCommand(.executeHandAbility(user: .frontLeft, hand: .secondary), at: Date())
-                
+
                 #expect(enemy.hp < hpOfEnemyBeforeAttack)
             }
         }
-        
+
         @Test("and should not damage an enemy when it is outside of range") func partyAttacksEnemiesOutOfRangeDoesNoDamage() throws {
             let world = makeWorld(from: [
                 """
@@ -81,16 +81,16 @@ import Model
                 s
                 """
             ])
-            
+
             let enemy = try #require(world.enemiesOnCurrentFloor.first)
-            
+
             let hpOfEnemyBeforeAttack = enemy.hp
-            
+
             world.executeCommand(.executeHandAbility(user: .frontRight, hand: .primary), at: Date())
-            
+
             #expect(enemy.hp == hpOfEnemyBeforeAttack)
         }
-        
+
         @Test("should not be able to make a melee attack from the back row") func meleeAttackFromBackRowDoesNotDamageEnemy() throws {
             let world = makeWorld(from: [
                 """
@@ -98,19 +98,19 @@ import Model
                 s
                 """
             ])
-            
+
             world.partyMembers[.backLeft].equipWeapon(.bareHands, in: .primary)
-            
+
             let enemy = try #require(world.enemiesOnCurrentFloor.first)
-            
+
             let hpOfEnemyBeforeAttack = enemy.hp
-                        
+
             world.executeCommand(.executeHandAbility(user: .backLeft, hand: .primary), at: Date())
-            
+
             #expect(enemy.hp == hpOfEnemyBeforeAttack)
         }
     }
-    
+
     @Suite("Given a ranged attack") struct RangedAttacks {
         @Test("should use a two handed weapon") func shouldUseATwoHandedWeapon() {
             let partyMember = PartyMember.makeRanger(name: "Foo")
@@ -126,29 +126,29 @@ import Model
                 s
                 """
             ])
-            
+
             let enemy = try #require(world.enemiesOnCurrentFloor.first)
             let hpOfEnemyBeforeAttack = enemy.hp
-            
+
             world.executeCommand(.executeHandAbility(user: .backLeft, hand: .primary), at: Date())
-            
+
             #expect(enemy.hp < hpOfEnemyBeforeAttack)
         }
-        
+
         @Test("should not hit enemies that are not in front of it") func hitEnemiesInFrontOfIt() throws {
             let world = makeWorld(from: [
                 "..s"
             ])
-            
+
             let enemy = try #require(world.enemiesOnCurrentFloor.first)
             let hpOfEnemyBeforeAttack = enemy.hp
-            
+
             world.executeCommand(.executeHandAbility(user: .backLeft, hand: .primary), at: Date())
-            
+
             #expect(enemy.hp == hpOfEnemyBeforeAttack)
         }
     }
-    
+
     @Suite("Given a magic attack") struct MagicPartyMembersShould {
         @Test("should hit multiple enemies") func hitMultipleEnemiesAtOnce() throws {
             let world = makeWorld(from: [
@@ -158,20 +158,16 @@ import Model
                 s
                 """
             ])
-            
+
             let hpOfEnemies = world.enemiesOnCurrentFloor.reduce(into: [:]) { result, enemy in
                 result[enemy] = enemy.hp
             }
-            
+
             world.executeCommand(.executeHandAbility(user: .backRight, hand: .primary), at: Date())
-            
+
             for enemy in world.enemiesOnCurrentFloor {
                 #expect(enemy.hp < hpOfEnemies[enemy, default: 0])
             }
         }
     }
 }
-
-
-
-

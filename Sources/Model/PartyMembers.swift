@@ -46,7 +46,12 @@ public struct PartyMembers {
         members.filter { $0.isAlive }.isEmpty == false
     }
 
-    public func executeHandAbility(from userPosition: SinglePartyPosition, hand: PartyMember.Hand, in world: World, at time: Date) {
+    public func executeHandAbility(
+        from userPosition: SinglePartyPosition,
+        hand: PartyMember.Hand,
+        in world: World,
+        at time: Date
+    ) {
         let user = getMember(at: userPosition)
 
         let ability = user.weaponForHand(hand: hand).attackStrategy
@@ -54,7 +59,7 @@ public struct PartyMembers {
         guard ability.allowedPartyPositions.toSinglePartyPositions.contains(userPosition) else {
             return
         }
-        
+
         user.executeHandAbility(hand: hand, in: world, at: time)
     }
 }
@@ -70,10 +75,10 @@ public enum PartyPositionGroup: Sendable {
     case frontRow
     case backRow
     case all
-    
+
     var toSinglePartyPositions: [SinglePartyPosition] {
         switch self {
-            case .frontRow:
+        case .frontRow:
             return [.frontLeft, .frontRight]
         case .backRow:
             return [.backLeft, .backRight]

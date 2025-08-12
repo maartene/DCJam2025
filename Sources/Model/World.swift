@@ -52,7 +52,7 @@ public final class World {
     public var enemiesOnCurrentFloor: Set<Enemy> {
         enemies[currentFloorIndex, default: []]
     }
-    
+
     public var aliveEnemiesOnCurrentFloor: Set<Enemy> {
         enemies[currentFloorIndex, default: []]
             .filter { $0.isAlive }
@@ -104,7 +104,7 @@ public final class World {
         guard occupiedPositionsByEnemies.contains(newPosition) == false else {
             return
         }
-        
+
         switch currentFloor.tileAt(newPosition) {
         case .floor:
             partyPosition = newPosition

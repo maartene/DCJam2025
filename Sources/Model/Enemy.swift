@@ -68,12 +68,12 @@ public final class Enemy: Damageable {
         let difference = coordinate - position
         let difX = difference.x.signum()
         let difY = difference.y.signum()
-                
+
         if  (difX == heading.forward.x && difY == 0) ||
             (difY == heading.forward.y && difX == 0) {
             return true
         }
-        
+
         return false
     }
 

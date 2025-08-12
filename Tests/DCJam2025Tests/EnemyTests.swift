@@ -49,7 +49,7 @@ import Model
 
         #expect(sumHPOfPartyMembers(in: world) == hpOfPartyMembersAfterFirstAttack)
     }
-    
+
     @Test("attack party members after cooldown has expired") func enemiesAttackAfterCooldownHasExpired() {
         let enemy = Enemy.makeMeleeEnemy(at: Coordinate(x: 1, y: 0), heading: .west)
         let world = World(floors: [Floor()], enemies: [[enemy]])
@@ -179,11 +179,11 @@ import Model
             .p
             """
         ])
-        
+
         let originalHpOfPartyMembers = sumHPOfPartyMembers(in: world)
 
         world.update(at: Date())
-        
+
         #expect(sumHPOfPartyMembers(in: world) == originalHpOfPartyMembers)
     }
 }
@@ -268,7 +268,7 @@ import Model
 
         world.update(at: Date())
         world.update(at: Date().addingTimeInterval(enemy.cooldown))
-        
+
         #expect(enemy.position == Coordinate(x: 3, y: 0))
     }
 }

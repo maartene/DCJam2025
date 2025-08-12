@@ -21,9 +21,9 @@ class Game {
 
     var pointLight: Light!
     var shader: Shader!
-    
+
     let rlHelper = RayLibStateHelper()
-    
+
     let world = makeWorld(from: [
         """
         #######
@@ -45,20 +45,20 @@ class Game {
         """,
         """
         ###############################
-        #............s#...........#.T.#        
-        ###.###.#########.#.....#.#...#        
-        #.....#.#.s.....s.#.....#.##.##        
-        #.s...#.#.........#######...s.#        
-        #.....#.###.#######.....#######        
-        #...###...#.............#.....#        
-        #.###.#.>.#.#############.....#        
-        #.....#...#.....s.......###...#        
-        #.....#####.#######.###.......#        
-        #............#..s.....#########        
-        ############.#........#....#..#        
-        #..........#.####...#.#.s.....#        
-        #..s.....s.#....#...#.........#        
-        #..........#.#..#...#.#....#..#        
+        #............s#...........#.T.#
+        ###.###.#########.#.....#.#...#
+        #.....#.#.s.....s.#.....#.##.##
+        #.s...#.#.........#######...s.#
+        #.....#.###.#######.....#######
+        #...###...#.............#.....#
+        #.###.#.>.#.#############.....#
+        #.....#...#.....s.......###...#
+        #.....#####.#######.###.......#
+        #............#..s.....#########
+        ############.#........#....#..#
+        #..........#.####...#.#.s.....#
+        #..s.....s.#....#...#.........#
+        #..........#.#..#...#.#....#..#
         ###############################
         """
     ])
@@ -69,10 +69,10 @@ class Game {
         SetTargetFPS(60)
 
         shader = loadShader()
-        
+
         loadImages()
         loadModels()
-        
+
         while WindowShouldClose() == false {
             update()
             drawGameView()
@@ -102,7 +102,7 @@ class Game {
             KEY_A: { self.world.executeCommand(.move(direction: .right), at: Date()) },
             KEY_S: { self.world.executeCommand(.move(direction: .backwards), at: Date()) },
             KEY_Q: { self.world.executeCommand(.turnClockwise, at: Date()) },
-            KEY_E: { self.world.executeCommand(.turnCounterClockwise, at: Date()) },
+            KEY_E: { self.world.executeCommand(.turnCounterClockwise, at: Date()) }
         ]
 
         for keyAction in inputActionMap {
@@ -121,10 +121,10 @@ class Game {
         camera.position = cameraPosition + forward.toVector3.scale(offset)
         UpdateCamera(&camera, CameraProjection.PERSPECTIVE)
     }
-    
+
     private func updateLights() {
         pointLight = CreateLight(Int32(LIGHT_POINT.rawValue), camera.position, Vector3(x: 0, y: 0, z: 0), Color(r: 200, g: 150, b: 100, a: 255) * 0.8, shader, 0)
-        
+
         SetShaderValue(shader, shader.locs[Int(SHADER_LOC_VECTOR_VIEW.rawValue)], [camera.position.x, camera.position.y, camera.position.z], Int32(SHADER_UNIFORM_VEC3.rawValue))
         UpdateLightValues(shader, pointLight)
     }
@@ -132,27 +132,26 @@ class Game {
     private func drawGameView() {
         rlHelper.withDrawing {
             ClearBackground(.black)
-            
+
             draw3D()
-            
+
             drawMinimap(world: world)
             DrawFPS(10, 400)
             DrawText("\(world.state)", 10, 380, 12, .white)
-            
-            
+
             drawGUI()
         }
     }
 
     private func draw3D() {
         var drawables = floorToDrawables(world.currentFloor)
-        
+
         let enemyDrawables = world.enemiesOnCurrentFloor
             .filter { $0.isAlive }
             .flatMap { Drawable3D.makeEntity($0) }
-        
+
         drawables.append(contentsOf: enemyDrawables)
-        
+
         rlHelper.with3DDrawing(camera: camera) {
             rlHelper.withShader(shader) {
                 drawables.forEach(draw)
@@ -177,21 +176,21 @@ class Game {
         minimap(for: world, minimapOffset: 10)
             .forEach { draw($0) }
     }
-    
+
     private func draw(_ drawable: Drawable2D) {
         if let sprite = sprites[drawable.spriteName] {
             DrawTextureV(
                 sprite, drawable.position, drawable.tint)
         }
     }
-    
+
     func drawGUI() {
         GUI(world: world, sprites: sprites).drawParty()
             .forEach {
                 $0.draw()
             }
     }
-    
+
     private func loadShader() -> Shader {
         guard let fragURL = Bundle.module.url(forResource: "lighting", withExtension: "fs")
         else {
@@ -205,10 +204,10 @@ class Game {
 
         // Load basic lighting shader
         let shader = LoadShader(vertexURL.path(percentEncoded: false),
-                                fragURL.path(percentEncoded: false));
+                                fragURL.path(percentEncoded: false))
         // Get some required shader locations
-        shader.locs[11] = GetShaderLocation(shader, "viewPos");
-        
+        shader.locs[11] = GetShaderLocation(shader, "viewPos")
+
         return shader
     }
 
@@ -238,7 +237,7 @@ class Game {
             sprites[$0] = LoadTexture(textureURL.path(percentEncoded: false))
         }
     }
-    
+
     private func loadModels() {
         let modelNames = [
             "Skeleton_Warrior",
@@ -249,7 +248,7 @@ class Game {
             "chest_gold",
             "shadow"
         ]
-                
+
         modelNames.forEach {
             models[$0] = loadModel($0, withExtension: "obj")
         }
@@ -260,7 +259,7 @@ class Game {
             "Skeleton_Warrior": 1,
             "shadow": 1
         ]
-        
+
         guard let modelURL = Bundle.module.url(forResource: fileName, withExtension: ext)
         else {
             fatalError("Could not find file \(fileName) . \(ext)")
