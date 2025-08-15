@@ -1,7 +1,7 @@
 import Testing
 @testable import Model
 
-struct SpyAbility {
+struct SpyAbility: Ability {
     let action: () -> ()
 
     func execute(in world: World) {
@@ -28,5 +28,14 @@ struct SpyAbility {
         ability.execute(in: world)
 
         #expect(count == 1)
+    }
+
+    @Test("be able to be combined") func combineAbilities() {
+        let ability1 = DummyAbility()
+        let ability2 = AoEAbility() 
+
+        let combinedAbility = ability1 * ability2
+
+        #expect(combinedAbility.aoeRange == 1)
     }
 }
