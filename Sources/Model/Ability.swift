@@ -56,9 +56,13 @@ struct CombinedAbility: Ability {
 
     var properties: [String: Any] {
         abilities.map { $0.properties }
-        .reduce(into: [:]) { partialResult, abilities in
-            partialResult.merge(abilities) { existing, new in
-                existing
+        .reduce(into: [:]) { partialResult, otherProperties in
+            partialResult.merge(otherProperties) { existing, new in
+                if let existingInt = existing as? Int, let newInt = new as? Int {
+                    return existingInt + newInt
+                } else {
+                    return new
+                }
             }
         }
     }

@@ -91,5 +91,15 @@ struct MockAbility: Ability {
             #expect(count1 == 1)
             #expect(count2 == 1)
         }
+
+        @Test("into an ability where similar properties are added together") func addTogetherSimilarProperties() throws {
+            let ability1 = MockAbility(properties: ["property": 1])
+            let ability2 = MockAbility(properties: ["property": 2])
+            let combinedAbility = ability1 * ability2
+
+            let property = try #require(combinedAbility["property"] as? Int)
+
+            #expect(property == 3)
+        }
     }
 }
