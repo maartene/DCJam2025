@@ -21,5 +21,6 @@ extension AttackStrategy {
 }
 
 public protocol Damageable {
+    var currentHP: Int { get }
     func takeDamage(_ amount: Int)
 }

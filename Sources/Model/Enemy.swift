@@ -13,21 +13,21 @@ public final class Enemy: Damageable {
     private var cooldownExpires = Date()
     public let cooldown = 1.5
     private let attackStrategy: any AttackPartyStrategy
-    public private(set) var hp: Int
+    public private(set) var currentHP: Int
 
     init(position: Coordinate, heading: CompassDirection, attackStrategy: any AttackPartyStrategy, hp: Int = 3) {
         self.position = position
         self.heading = heading
         self.attackStrategy = attackStrategy
-        self.hp = hp
+        self.currentHP = hp
     }
 
     public var isAlive: Bool {
-        hp > 0
+        currentHP > 0
     }
 
     public func takeDamage(_ amount: Int) {
-        hp -= amount
+        currentHP -= amount
     }
 
     func act(in world: World, at time: Date) {

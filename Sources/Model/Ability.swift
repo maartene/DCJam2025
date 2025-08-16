@@ -41,3 +41,11 @@ struct CombinedAbility: Ability {
         }
     }
 }
+
+struct HealPartyMember: Ability {
+    let position: SinglePartyPosition
+    
+    func execute(in world: World) {
+        world.partyMembers[position].takeDamage(-3)
+    }
+}
