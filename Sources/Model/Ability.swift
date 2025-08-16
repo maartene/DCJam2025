@@ -52,6 +52,6 @@ struct HealPartyMember: Ability {
     let position: SinglePartyPosition
     
     func execute(in world: World) {
-        world.partyMembers[position].takeDamage(-3)
+        world.partyMembers[position].heal(3)
     }
 }

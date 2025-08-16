@@ -35,6 +35,10 @@ public final class PartyMember: Damageable {
     public func takeDamage(_ amount: Int) {
         currentHP -= amount
     }
+    
+    public func heal(_ amount: Int) {
+        currentHP += amount
+    }
 
     private func cooldownHasExpired(for hand: Hand, at time: Date) -> Bool {
         time >= cooldownExpires[hand]!
