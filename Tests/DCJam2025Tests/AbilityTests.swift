@@ -63,14 +63,6 @@ struct MockAbility: Ability {
     }
     
     @Suite("be able to be combined") struct combineAbilities {
-        let world = makeWorld(from: [
-        """
-        ppp
-        pSp
-        ppp
-        """
-        ])
-        
         @Test("into a new ability that has properties combined") func combineProperties() throws{
             let ability1 = MockAbility(properties: ["property1": 42])
             let ability2 = MockAbility(properties: ["property2": 11])
@@ -94,17 +86,10 @@ struct MockAbility: Ability {
             }
             let combinedAbility = ability1 * ability2
             
-            combinedAbility.execute(in: world)
+            combinedAbility.execute(in: World(floors: [Floor()]))
             
             #expect(count1 == 1)
             #expect(count2 == 1)
         }
     }
-}
-
-
-func sumOfHpOfDamageableEntities<T: Damageable>(_ entities: any Collection<T>) -> Int {
-    entities
-        .map { $0.currentHP }
-        .reduce(0, +)
 }
