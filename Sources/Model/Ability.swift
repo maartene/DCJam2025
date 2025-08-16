@@ -1,4 +1,5 @@
 protocol Ability {
+    var properties: [String: Any] { get }
     func canBeExecuted(in world: World) -> Bool
     func execute(in world: World)
 }
@@ -6,6 +7,10 @@ protocol Ability {
 extension Ability { 
     static func *(lhs: Self, rhs: any Ability) -> CombinedAbility {
         CombinedAbility(abilities: [lhs, rhs])
+    }
+
+    subscript(key: String) -> Any? {
+        properties[key]
     }
 }
 
@@ -20,17 +25,19 @@ extension Ability {
 }
 
 struct DummyAbility: Ability {
+    let properties: [String : Any] = [:]
+
     func canBeExecuted(in world: World) -> Bool {
         true
     }
 }
 
 struct DamageEnemyAbility: Ability {
-    
+    let properties: [String : Any] = [:]
 }
 
 struct AddAoEAbility: Ability {
-
+    let properties: [String : Any] = [:]
 }
 
 struct CombinedAbility: Ability {
@@ -46,9 +53,19 @@ struct CombinedAbility: Ability {
             ability.execute(in: world)
         }
     }
+
+    var properties: [String: Any] {
+        abilities.map { $0.properties }
+        .reduce(into: [:]) { partialResult, abilities in
+            partialResult.merge(abilities) { existing, new in
+                existing
+            }
+        }
+    }
 }
 
 struct HealPartyMember: Ability {
+    let properties: [String : Any] = [:]
     let position: SinglePartyPosition
     
     func execute(in world: World) {

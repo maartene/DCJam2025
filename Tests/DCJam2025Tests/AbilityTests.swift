@@ -2,11 +2,17 @@ import Testing
 @testable import Model
 
 struct SpyAbility: Ability {
+    let properties: [String : Any] = [:]
+
     let action: () -> ()
 
     func execute(in world: World) {
         action()
     }
+}
+
+struct MockAbility: Ability {
+    let properties: [String: Any]
 }
 
 @Suite("Abilities should") struct AbilityTests {
@@ -65,17 +71,16 @@ struct SpyAbility: Ability {
         """
         ])
         
-        @Test("and add an AoE effect to a damage ability") func addAoE() {
-            let ability1 = DamageEnemyAbility()
-            let ability2 = AddAoEAbility()
+        @Test("into a new ability that has properties combined") func combineProperties() throws{
+            let ability1 = MockAbility(properties: ["property1": 42])
+            let ability2 = MockAbility(properties: ["property2": 11])
             let combinedAbility = ability1 * ability2
-            let hpOfEnemiesBefore = sumOfHpOfDamageableEntities(world.enemiesOnCurrentFloor)
-            
-            combinedAbility.execute(in: world)
-            
-            let hpOfEnemiesAfter = sumOfHpOfDamageableEntities(world.enemiesOnCurrentFloor)
-            
-            #expect(hpOfEnemiesAfter < hpOfEnemiesBefore)
+
+            let property1 = try #require(combinedAbility["property1"] as? Int)
+            let property2 = try #require(combinedAbility["property2"] as? Int)
+
+            #expect(property1 == 42)
+            #expect(property2 == 11)
         }
         
         @Test("into an ability that has multiple effects") func multipleEffects() {
