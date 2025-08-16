@@ -25,10 +25,19 @@ struct DummyAbility: Ability {
     }
 }
 
-struct AoEAbility: Ability {
+struct DamageEnemyAbility: Ability {
+    
+}
+
+struct AddAoEAbility: Ability {
 
 }
 
 struct CombinedAbility: Ability {
-    let aoeRange = 1
+    func execute(in world: World) {
+        let enemiesOnCurrentFloor = world.enemiesOnCurrentFloor
+        enemiesOnCurrentFloor.forEach {
+            $0.takeDamage(3)
+        }
+    }
 }

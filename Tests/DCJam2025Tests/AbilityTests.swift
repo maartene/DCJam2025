@@ -30,12 +30,31 @@ struct SpyAbility: Ability {
         #expect(count == 1)
     }
 
-    @Test("be able to be combined") func combineAbilities() {
-        let ability1 = DummyAbility()
-        let ability2 = AoEAbility() 
-
-        let combinedAbility = ability1 * ability2
-
-        #expect(combinedAbility.aoeRange == 1)
+    @Suite("be able to be combined") struct combineAbilities {
+        @Test("and add an AoE effect to a damage ability") func addAoE() {
+            let ability1 = DamageEnemyAbility()
+            let ability2 = AddAoEAbility()
+            
+            let world = makeWorld(from: [
+            """
+            ppp
+            pSp
+            ppp
+            """
+            ])
+            
+            let combinedAbility = ability1 * ability2
+            let hpOfEnemiesBefore = world.enemiesOnCurrentFloor
+                .map { $0.hp }
+                .reduce(0, +)
+            
+            combinedAbility.execute(in: world)
+            
+            let hpOfEnemiesAfter = world.enemiesOnCurrentFloor
+                .map { $0.hp }
+                .reduce(0, +)
+            
+            #expect(hpOfEnemiesAfter < hpOfEnemiesBefore)
+        }
     }
 }
