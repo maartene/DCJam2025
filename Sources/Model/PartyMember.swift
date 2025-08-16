@@ -14,6 +14,7 @@ public final class PartyMember: Damageable {
 
     public let name: String
     public private(set) var currentHP = 10
+    public let maximumHP: Int = 10
     private var cooldownExpires = [
         Hand.primary: Date(),
         Hand.secondary: Date()
@@ -38,6 +39,8 @@ public final class PartyMember: Damageable {
     
     public func heal(_ amount: Int) {
         currentHP += amount
+        
+        currentHP = min(maximumHP, currentHP)
     }
 
     private func cooldownHasExpired(for hand: Hand, at time: Date) -> Bool {

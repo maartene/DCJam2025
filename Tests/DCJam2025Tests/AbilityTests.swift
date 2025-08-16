@@ -30,7 +30,7 @@ struct SpyAbility: Ability {
         #expect(count == 1)
     }
 
-    @Suite("for single abilities") struct singleAbilities {
+    @Suite("for healing abilities") struct singleAbilities {
         let world = World(floors: [Floor()])
         @Test("be able to heal a party member") func heal() {
             let ability = HealPartyMember(position: .frontLeft)
@@ -42,6 +42,17 @@ struct SpyAbility: Ability {
             let hpAfter = world.partyMembers[.frontLeft].currentHP
             
             #expect(hpAfter > hpBefore)
+        }
+        
+        @Test("not heal more than the maximum HP") func notHealOverMaximumHP() {
+            let ability = HealPartyMember(position: .frontLeft)
+            let hpBefore = world.partyMembers[.frontLeft].currentHP
+            
+            ability.execute(in: world)
+            
+            let hpAfter = world.partyMembers[.frontLeft].currentHP
+            
+            #expect(hpAfter == hpBefore)
         }
     }
     
