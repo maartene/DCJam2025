@@ -54,8 +54,6 @@ struct SpyAbility: Ability {
         """
         ])
         
-        
-        
         @Test("and add an AoE effect to a damage ability") func addAoE() {
             let ability1 = DamageEnemyAbility()
             let ability2 = AddAoEAbility()
@@ -69,23 +67,23 @@ struct SpyAbility: Ability {
             #expect(hpOfEnemiesAfter < hpOfEnemiesBefore)
         }
         
-//        @Test("into an ability that has multiple effects") func multipleEffects() {
-//            let ability1 = DamageEnemyAbility()
-//            let ability2 = HealPartyMember(position: .frontLeft)
-//            let combinedAbility = ability1 * ability2
-//            let hpOfEnemiesBefore = sumOfHpOfDamageableEntities(world.enemiesOnCurrentFloor)
-//            world.partyMembers[.frontLeft].takeDamage(5)
-//            let hpOfPartyMemberBefore = world.partyMembers[.frontLeft].currentHP
-//            
-//            combinedAbility.execute(in: world)
-//            
-//            let hpOfEnemiesAfter = sumOfHpOfDamageableEntities(world.enemiesOnCurrentFloor)
-//            let hpOfPartyMembeAfter = world.partyMembers[.frontLeft].currentHP
-//            
-//            #expect(hpOfEnemiesAfter < hpOfEnemiesBefore)
-//            #expect(hpOfPartyMembeAfter > hpOfPartyMemberBefore)
-//            
-//        }
+        @Test("into an ability that has multiple effects") func multipleEffects() {
+            let ability1 = DamageEnemyAbility()
+            let ability2 = HealPartyMember(position: .frontLeft)
+            let combinedAbility = ability1 * ability2
+            let hpOfEnemiesBefore = sumOfHpOfDamageableEntities(world.enemiesOnCurrentFloor)
+            world.partyMembers[.frontLeft].takeDamage(5)
+            let hpOfPartyMemberBefore = world.partyMembers[.frontLeft].currentHP
+            
+            combinedAbility.execute(in: world)
+            
+            let hpOfEnemiesAfter = sumOfHpOfDamageableEntities(world.enemiesOnCurrentFloor)
+            let hpOfPartyMembeAfter = world.partyMembers[.frontLeft].currentHP
+            
+            #expect(hpOfEnemiesAfter < hpOfEnemiesBefore)
+            #expect(hpOfPartyMembeAfter > hpOfPartyMemberBefore)
+            
+        }
     }
 }
 

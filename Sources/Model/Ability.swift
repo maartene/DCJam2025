@@ -5,7 +5,7 @@ protocol Ability {
 
 extension Ability { 
     static func *(lhs: Self, rhs: any Ability) -> CombinedAbility {
-        CombinedAbility()
+        CombinedAbility(abilities: [lhs, rhs])
     }
 }
 
@@ -34,10 +34,16 @@ struct AddAoEAbility: Ability {
 }
 
 struct CombinedAbility: Ability {
+    let abilities: [any Ability]
+    
     func execute(in world: World) {
         let enemiesOnCurrentFloor = world.enemiesOnCurrentFloor
         enemiesOnCurrentFloor.forEach {
             $0.takeDamage(3)
+        }
+        
+        for ability in abilities {
+            ability.execute(in: world)
         }
     }
 }
