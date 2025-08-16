@@ -203,3 +203,10 @@ What is there to find? The answer to the ultimate secret: what came before? the 
 ## 🍅 Pomodoro 39
 - ✅ Add 'drop shadow' to enemies
 - ✅ And anti-aliasing
+
+## 🍅 Pomodoro 40
+- 🚧 Abilities that can be combined
+    - ✅ Different properties -> combination of properties
+    - ✅ Different effects -> all trigger
+    - ✅ Same property -> added together
+    - ⚠️ Refactor for object calestenics
