@@ -84,21 +84,20 @@ struct MockAbility: Ability {
         }
         
         @Test("into an ability that has multiple effects") func multipleEffects() {
-            let ability1 = DamageEnemyAbility()
-            let ability2 = HealPartyMember(position: .frontLeft)
+            var count1 = 0
+            var count2 = 0  
+            let ability1 = SpyAbility() {
+                count1 += 1
+            }
+            let ability2 = SpyAbility() {
+                count2 += 1
+            }
             let combinedAbility = ability1 * ability2
-            let hpOfEnemiesBefore = sumOfHpOfDamageableEntities(world.enemiesOnCurrentFloor)
-            world.partyMembers[.frontLeft].takeDamage(5)
-            let hpOfPartyMemberBefore = world.partyMembers[.frontLeft].currentHP
             
             combinedAbility.execute(in: world)
             
-            let hpOfEnemiesAfter = sumOfHpOfDamageableEntities(world.enemiesOnCurrentFloor)
-            let hpOfPartyMembeAfter = world.partyMembers[.frontLeft].currentHP
-            
-            #expect(hpOfEnemiesAfter < hpOfEnemiesBefore)
-            #expect(hpOfPartyMembeAfter > hpOfPartyMemberBefore)
-            
+            #expect(count1 == 1)
+            #expect(count2 == 1)
         }
     }
 }
