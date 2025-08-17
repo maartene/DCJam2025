@@ -15,15 +15,15 @@ struct MockAbility: Ability {
     let properties: [String: Any]
 }
 
-@Suite("Abilities should") struct AbilityTests {
+@Suite("All abilities should") struct AbilityTests {
     @Test("be able to be executed in the world") func beAbleToBeExecutedInTheWorld() {
         let world = World(floors: [Floor()])
         
         let ability = DummyAbility()
         
-        #expect(ability.canBeExecuted(in: world)) 
+        #expect(ability.canBeExecuted(in: world))
     }
-
+    
     @Test("when they are executed, have an effect") func affectTheWorld() {
         let world = World(floors: [Floor()])
         var count = 0
@@ -32,10 +32,54 @@ struct MockAbility: Ability {
         }
         
         ability.execute(in: world)
-
+        
         #expect(count == 1)
     }
+    
+    @Suite("be able to be combined") struct combineAbilities {
+        @Test("into a new ability that has properties combined") func combineProperties() throws{
+            let ability1 = MockAbility(properties: ["property1": 42])
+            let ability2 = MockAbility(properties: ["property2": 11])
+            let combinedAbility = ability1 * ability2
+            
+            let property1 = try #require(combinedAbility["property1"] as? Int)
+            let property2 = try #require(combinedAbility["property2"] as? Int)
+            
+            #expect(property1 == 42)
+            #expect(property2 == 11)
+        }
+        
+        @Test("into an ability that has multiple effects") func multipleEffects() {
+            var count1 = 0
+            var count2 = 0
+            let ability1 = SpyAbility() {
+                count1 += 1
+            }
+            let ability2 = SpyAbility() {
+                count2 += 1
+            }
+            let combinedAbility = ability1 * ability2
+            
+            combinedAbility.execute(in: World(floors: [Floor()]))
+            
+            #expect(count1 == 1)
+            #expect(count2 == 1)
+        }
+        
+        @Test("into an ability where similar properties are added together") func addTogetherSimilarProperties() throws {
+            let ability1 = MockAbility(properties: ["property": 1])
+            let ability2 = MockAbility(properties: ["property": 2])
+            let combinedAbility = ability1 * ability2
+            
+            let property = try #require(combinedAbility["property"] as? Int)
+            
+            #expect(property == 3)
+        }
+    }
+    
+}
 
+@Suite("Concrete abilities should") struct ConcreteAbilityTests {
     @Suite("for healing abilities") struct singleAbilities {
         let world = World(floors: [Floor()])
         @Test("be able to heal a party member") func heal() {
@@ -62,44 +106,26 @@ struct MockAbility: Ability {
         }
     }
     
-    @Suite("be able to be combined") struct combineAbilities {
-        @Test("into a new ability that has properties combined") func combineProperties() throws{
-            let ability1 = MockAbility(properties: ["property1": 42])
-            let ability2 = MockAbility(properties: ["property2": 11])
-            let combinedAbility = ability1 * ability2
-
-            let property1 = try #require(combinedAbility["property1"] as? Int)
-            let property2 = try #require(combinedAbility["property2"] as? Int)
-
-            #expect(property1 == 42)
-            #expect(property2 == 11)
-        }
-        
-        @Test("into an ability that has multiple effects") func multipleEffects() {
-            var count1 = 0
-            var count2 = 0  
-            let ability1 = SpyAbility() {
-                count1 += 1
-            }
-            let ability2 = SpyAbility() {
-                count2 += 1
-            }
-            let combinedAbility = ability1 * ability2
+    @Suite("For offensive abilities") struct OffensiveAbilities {
+        let world = makeWorld(from: [
+            """
+            ppp
+            pSp
+            ppp
+            """
+        ])
+        @Test("deal damage to a target") func dealDamageToATarget() throws {
             
-            combinedAbility.execute(in: World(floors: [Floor()]))
+            let ability = DamageEnemyAbility()
+            let target = try #require( world.enemiesOnCurrentFloor.first {
+                $0.position == Coordinate(x: 1, y: 0)
+            })
+            let hpBeforeAbility = target.currentHP
             
-            #expect(count1 == 1)
-            #expect(count2 == 1)
-        }
-
-        @Test("into an ability where similar properties are added together") func addTogetherSimilarProperties() throws {
-            let ability1 = MockAbility(properties: ["property": 1])
-            let ability2 = MockAbility(properties: ["property": 2])
-            let combinedAbility = ability1 * ability2
-
-            let property = try #require(combinedAbility["property"] as? Int)
-
-            #expect(property == 3)
+            ability.execute(in: world)
+            
+            #expect(target.currentHP < hpBeforeAbility)
         }
     }
+    
 }

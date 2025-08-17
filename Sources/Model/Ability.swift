@@ -34,6 +34,13 @@ struct DummyAbility: Ability {
 
 struct DamageEnemyAbility: Ability {
     let properties: [String : Any] = [:]
+    
+    func execute(in world: World) {
+        let enemiesOnCurrentFloor = world.enemiesOnCurrentFloor
+        enemiesOnCurrentFloor.forEach {
+            $0.takeDamage(3)
+        }
+    }
 }
 
 struct AddAoEAbility: Ability {
