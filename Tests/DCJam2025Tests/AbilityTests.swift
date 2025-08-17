@@ -167,6 +167,30 @@ struct MockAbility: Ability {
                 #expect(enemies[i].currentHP < hpBeforeAbility[i])
             }
         }
+        
+        @Test("deal damage in a range") func dealDamageInRange() throws {
+            let world = makeWorld(from: [
+                """
+                ...
+                ...
+                p..
+                """
+            ])
+            
+            let damageEnemyAbility = DamageEnemyAbility(
+                origin: world.partyPosition,
+                heading: world.partyHeading)
+            let addRangeAbility = AddRangeAbility()
+            let ability = damageEnemyAbility * addRangeAbility
+            
+            let enemy = try #require(world.enemiesOnCurrentFloor.first(where: { $0.position == Coordinate(x: 0, y: 2) } ))
+                                     
+            let hpBeforeAbility = enemy.currentHP
+            
+            ability.execute(in: world)
+            
+            #expect(enemy.currentHP < hpBeforeAbility)
+        }
     }
     
 }

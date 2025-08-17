@@ -41,6 +41,7 @@ struct DamageEnemyAbility: Ability {
         properties["origin"] = origin
         properties["heading"] = heading
         properties["aoeRange"] = 0
+        properties["range"] = 1
     }
     
     func execute(in world: World) {
@@ -92,20 +93,28 @@ struct HealPartyMember: Ability {
     }
 }
 
+struct AddRangeAbility: Ability {
+    let properties: [String : Any] = ["range": 2]
+}
+
 func damageEnemyEffect(in world: World, properties: [String: Any]) {
     let origin = properties["origin"] as! Coordinate
     let heading = properties["heading"] as! CompassDirection
     let aoeRange = properties["aoeRange"] as! Int
+    let range = properties["range"] as! Int
     
-    let target = origin + heading.forward
-    let targets = world.enemiesOnCurrentFloor
-        .filter {
-            (target.x - aoeRange ... target.x + aoeRange).contains($0.position.x) &&
-            (target.y - aoeRange ... target.y + aoeRange).contains($0.position.y)
-        }
-        .filter {
-            $0.position.manhattanDistanceTo(target) <= aoeRange
-        }
+    for currentRange in 1 ... range {
+        let target = origin + heading.forward * currentRange
+        let targets = world.enemiesOnCurrentFloor
+            .filter {
+                (target.x - aoeRange ... target.x + aoeRange).contains($0.position.x) &&
+                (target.y - aoeRange ... target.y + aoeRange).contains($0.position.y)
+            }
+            .filter {
+                $0.position.manhattanDistanceTo(target) <= aoeRange
+            }
+        targets.forEach { $0.takeDamage(3)}
+    }
             
-    targets.forEach { $0.takeDamage(3)}
+    
 }
