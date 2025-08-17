@@ -1,7 +1,8 @@
 protocol Ability {
     var properties: [String: Any] { get }
     func canBeExecuted(in world: World) -> Bool
-    func execute(in world: World, properties: [String: Any]?)
+    func execute(in world: World)
+    var effect: (World, [String: Any]) -> Void { get }
 }
 
 extension Ability { 
@@ -11,6 +12,14 @@ extension Ability {
 
     subscript(key: String) -> Any? {
         properties[key]
+    }
+    
+    func execute(in world: World) {
+        effect(world, properties)
+    }
+    
+    var effect: ((World, [String: Any]) -> Void) {
+        return { _,_ in print("Executed ability \(self)") }
     }
 }
 
@@ -22,18 +31,11 @@ extension Ability {
 
 struct DummyAbility: Ability {
     let properties: [String : Any] = [:]
-
-    func canBeExecuted(in world: World) -> Bool {
-        true
-    }
-    
-    func execute(in world: World, properties: [String : Any]?) {
-        
-    }
 }
 
 struct DamageEnemyAbility: Ability {
     private(set) var properties: [String : Any] = [:]
+    let effect = damageEnemyEffect
     
     init(origin: Coordinate, heading: CompassDirection) {
         properties["origin"] = origin
@@ -41,39 +43,19 @@ struct DamageEnemyAbility: Ability {
         properties["aoeRange"] = 0
     }
     
-    func execute(in world: World, properties: [String: Any]? = nil) {
-        let properties = properties ?? self.properties
-        
-        let origin = properties["origin"] as! Coordinate
-        let heading = properties["heading"] as! CompassDirection
-        let aoeRange = properties["aoeRange"] as! Int
-        
-        let target = origin + heading.forward
-        let targets = world.enemiesOnCurrentFloor
-            .filter {
-                (target.x - aoeRange ... target.x + aoeRange).contains($0.position.x) &&
-                (target.y - aoeRange ... target.y + aoeRange).contains($0.position.y)
-            }
-            .filter {
-                $0.position.manhattanDistanceTo(target) <= aoeRange
-            }
-                
-        targets.forEach { $0.takeDamage(3)}
+    func execute(in world: World) {
+        effect(world, properties)
     }
 }
 
 struct AddAoEAbility: Ability {
-    func execute(in world: World, properties: [String : Any]?) {
-        
-    }
-    
     let properties: [String : Any] = ["aoeRange": 1]
 }
 
 struct CombinedAbility: Ability {
     let abilities: [any Ability]
     let properties: [String: Any]
-    let effects: [(World, [String: Any]?) -> Void]
+    let effects: [(World, [String: Any]) -> Void]
     
     init(abilities: [any Ability]) {
         self.abilities = abilities
@@ -89,7 +71,7 @@ struct CombinedAbility: Ability {
                 }
             }
         
-        self.effects = abilities.map { $0.execute }
+        self.effects = abilities.map { $0.effect }
     }
     
     func execute(in world: World, properties: [String: Any]? = nil) {
@@ -105,7 +87,25 @@ struct HealPartyMember: Ability {
     let properties: [String : Any] = [:]
     let position: SinglePartyPosition
     
-    func execute(in world: World, properties: [String: Any]? = nil) {
+    func execute(in world: World) {
         world.partyMembers[position].heal(3)
     }
+}
+
+func damageEnemyEffect(in world: World, properties: [String: Any]) {
+    let origin = properties["origin"] as! Coordinate
+    let heading = properties["heading"] as! CompassDirection
+    let aoeRange = properties["aoeRange"] as! Int
+    
+    let target = origin + heading.forward
+    let targets = world.enemiesOnCurrentFloor
+        .filter {
+            (target.x - aoeRange ... target.x + aoeRange).contains($0.position.x) &&
+            (target.y - aoeRange ... target.y + aoeRange).contains($0.position.y)
+        }
+        .filter {
+            $0.position.manhattanDistanceTo(target) <= aoeRange
+        }
+            
+    targets.forEach { $0.takeDamage(3)}
 }

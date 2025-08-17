@@ -3,20 +3,17 @@ import Testing
 
 struct SpyAbility: Ability {
     let properties: [String : Any] = [:]
-
-    let action: () -> ()
-
-    func execute(in world: World, properties: [String: Any]? = nil) {
-        action()
+    let effect: (World, [String : Any]) -> Void
+    
+    init(action: @escaping () -> Void) {
+        self.effect = { _, _ in
+            action()
+        }
     }
 }
 
 struct MockAbility: Ability {
     let properties: [String: Any]
-    
-    func execute(in world: World, properties: [String : Any]?) {
-        
-    }
 }
 
 @Suite("All abilities should") struct AbilityTests {
