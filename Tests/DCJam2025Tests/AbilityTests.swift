@@ -6,13 +6,17 @@ struct SpyAbility: Ability {
 
     let action: () -> ()
 
-    func execute(in world: World) {
+    func execute(in world: World, properties: [String: Any]? = nil) {
         action()
     }
 }
 
 struct MockAbility: Ability {
     let properties: [String: Any]
+    
+    func execute(in world: World, properties: [String : Any]?) {
+        
+    }
 }
 
 @Suite("All abilities should") struct AbilityTests {
@@ -139,6 +143,32 @@ struct MockAbility: Ability {
                 }
             
             #expect(hpsAfterAbility.filter { $0.value == 1 }.count == 1)
+        }
+        
+        @Test("deal damage in AoE") func dealDamageInAoE() throws {
+            let damageEnemyAbility = DamageEnemyAbility(
+                origin: world.partyPosition,
+                heading: world.partyHeading)
+            let addAoEAbility = AddAoEAbility()
+            let ability = damageEnemyAbility * addAoEAbility
+            
+            let enemyCoordinates = [
+                Coordinate(x: 0, y: 2),
+                Coordinate(x: 1, y: 2),
+                Coordinate(x: 2, y: 2),
+            ]
+            
+            let enemies = enemyCoordinates.map { coordinate in
+                world.enemiesOnCurrentFloor.first { $0.position == coordinate }!
+            }
+            
+            let hpBeforeAbility = enemies.map(\.currentHP)
+            
+            ability.execute(in: world)
+            
+            for i in 0 ..< enemies.count {
+                #expect(enemies[i].currentHP < hpBeforeAbility[i])
+            }
         }
     }
     
