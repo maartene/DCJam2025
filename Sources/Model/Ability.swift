@@ -51,11 +51,6 @@ struct CombinedAbility: Ability {
     let abilities: [any Ability]
     
     func execute(in world: World) {
-        let enemiesOnCurrentFloor = world.enemiesOnCurrentFloor
-        enemiesOnCurrentFloor.forEach {
-            $0.takeDamage(3)
-        }
-        
         for ability in abilities {
             ability.execute(in: world)
         }
