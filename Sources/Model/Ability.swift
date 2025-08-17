@@ -33,13 +33,22 @@ struct DummyAbility: Ability {
 }
 
 struct DamageEnemyAbility: Ability {
-    let properties: [String : Any] = [:]
+    private(set) var properties: [String : Any] = [:]
+    
+    init(origin: Coordinate, heading: CompassDirection) {
+        properties["origin"] = origin
+        properties["heading"] = heading
+    }
     
     func execute(in world: World) {
-        let enemiesOnCurrentFloor = world.enemiesOnCurrentFloor
-        enemiesOnCurrentFloor.forEach {
-            $0.takeDamage(3)
-        }
+        let origin = properties["origin"] as! Coordinate
+        let heading = properties["heading"] as! CompassDirection
+        
+        let target = origin + heading.forward
+        let targets = world.enemiesOnCurrentFloor
+            .filter { $0.position == target }
+        
+        targets.forEach { $0.takeDamage(3)}
     }
 }
 

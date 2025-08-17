@@ -114,17 +114,31 @@ struct MockAbility: Ability {
             ppp
             """
         ])
+        
         @Test("deal damage to a target") func dealDamageToATarget() throws {
-            
-            let ability = DamageEnemyAbility()
+            let ability = DamageEnemyAbility(origin: world.partyPosition, heading: world.partyHeading)
             let target = try #require( world.enemiesOnCurrentFloor.first {
-                $0.position == Coordinate(x: 1, y: 0)
+                $0.position == Coordinate(x: 1, y: 2)
             })
             let hpBeforeAbility = target.currentHP
             
             ability.execute(in: world)
             
             #expect(target.currentHP < hpBeforeAbility)
+        }
+        
+        @Test("deal damage to only a single target") func dealDamageToASingleTarget() throws {
+            let ability = DamageEnemyAbility(origin: world.partyPosition, heading: world.partyHeading)
+            
+            ability.execute(in: world)
+            
+            let hpsAfterAbility = world.enemiesOnCurrentFloor
+                .map { $0.currentHP }
+                .reduce(into: [:]) { partialResult, hp in
+                    partialResult[hp, default: 0] += 1
+                }
+            
+            #expect(hpsAfterAbility.filter { $0.value == 1 }.count == 1)
         }
     }
     
