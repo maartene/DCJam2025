@@ -6,10 +6,6 @@ protocol Ability {
 }
 
 extension Ability { 
-    static func *(lhs: Self, rhs: any Ability) -> CombinedAbility {
-        CombinedAbility(abilities: [lhs, rhs])
-    }
-
     subscript(key: String) -> Any? {
         properties[key]
     }
@@ -21,6 +17,10 @@ extension Ability {
     var effect: ((World, [String: Any]) -> Void) {
         return { _,_ in print("Executed ability \(self)") }
     }
+}
+
+func combine(_ abilities: (any Ability)...) -> CombinedAbility {
+    CombinedAbility(abilities: abilities)
 }
 
 extension Ability {
@@ -54,6 +54,10 @@ struct AddAoEAbility: Ability {
 }
 
 struct CombinedAbility: Ability {
+    static func *(lhs: CombinedAbility, rhs: any Ability) -> CombinedAbility {
+        CombinedAbility(abilities: [lhs, rhs])
+    }
+
     let abilities: [any Ability]
     let properties: [String: Any]
     let effects: [(World, [String: Any]) -> Void]
@@ -115,6 +119,4 @@ func damageEnemyEffect(in world: World, properties: [String: Any]) {
             }
         targets.forEach { $0.takeDamage(3)}
     }
-            
-    
 }

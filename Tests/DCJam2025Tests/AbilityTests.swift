@@ -41,7 +41,7 @@ struct MockAbility: Ability {
         @Test("into a new ability that has properties combined") func combineProperties() throws{
             let ability1 = MockAbility(properties: ["property1": 42])
             let ability2 = MockAbility(properties: ["property2": 11])
-            let combinedAbility = ability1 * ability2
+            let combinedAbility = combine(ability1, ability2)
             
             let property1 = try #require(combinedAbility["property1"] as? Int)
             let property2 = try #require(combinedAbility["property2"] as? Int)
@@ -59,7 +59,7 @@ struct MockAbility: Ability {
             let ability2 = SpyAbility() {
                 count2 += 1
             }
-            let combinedAbility = ability1 * ability2
+            let combinedAbility = combine(ability1, ability2)
             
             combinedAbility.execute(in: World(floors: [Floor()]))
             
@@ -70,11 +70,26 @@ struct MockAbility: Ability {
         @Test("into an ability where similar properties are added together") func addTogetherSimilarProperties() throws {
             let ability1 = MockAbility(properties: ["property": 1])
             let ability2 = MockAbility(properties: ["property": 2])
-            let combinedAbility = ability1 * ability2
+            let combinedAbility = combine(ability1, ability2)
             
             let property = try #require(combinedAbility["property"] as? Int)
             
             #expect(property == 3)
+        }
+        
+        @Test("again and again") func repeatedCombination() throws {
+            let ability1 = MockAbility(properties: ["property1": 1, "property3": 5])
+            let ability2 = MockAbility(properties: ["property2": 2])
+            let ability3 = MockAbility(properties: ["property3": 3, "property1": 8])
+            let combinedAbility = combine(ability1, ability2, ability3)
+            
+            let property1 = try #require(combinedAbility["property1"] as? Int)
+            let property2 = try #require(combinedAbility["property2"] as? Int)
+            let property3 = try #require(combinedAbility["property3"] as? Int)
+            
+            #expect(property1 == 9)
+            #expect(property2 == 2)
+            #expect(property3 == 8)
         }
     }
     
@@ -147,7 +162,7 @@ struct MockAbility: Ability {
                 origin: world.partyPosition,
                 heading: world.partyHeading)
             let addAoEAbility = AddAoEAbility()
-            let ability = damageEnemyAbility * addAoEAbility
+            let ability = combine(damageEnemyAbility,  addAoEAbility)
             
             let enemyCoordinates = [
                 Coordinate(x: 0, y: 2),
@@ -181,7 +196,7 @@ struct MockAbility: Ability {
                 origin: world.partyPosition,
                 heading: world.partyHeading)
             let addRangeAbility = AddRangeAbility()
-            let ability = damageEnemyAbility * addRangeAbility
+            let ability = combine(damageEnemyAbility, addRangeAbility)
             
             let enemy = try #require(world.enemiesOnCurrentFloor.first(where: { $0.position == Coordinate(x: 0, y: 2) } ))
                                      
