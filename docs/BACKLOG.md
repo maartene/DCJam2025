@@ -36,10 +36,10 @@
 
 - ✅ Party members should have some interesting aspects, at least a name and a portrait.
 
-- Party members should be able to attack as well
-    - ✅ With two hands
-    - ✅ With seperate cooldowns
-    - ✅ Single handed as well as dual handed weapons
+- Ability system
+    - Free to mix and match abilities as you see fit (abilities can be combined)
+    - Maximum of four ability slots
+    - Level up abilities
 
 - More intesting maps (10 levels would be cool)
 
@@ -50,3 +50,13 @@
 - Enemies as sprites
     - ✅ Show a static sprite
     - Should show where sprite is looking (probably requires approval testing)
+
+
+## Abilities
+- ✅ `a`: Add attack effect to ability
+- `b`: Add DoT effect to ability
+- `d`: Add deathblow effect to ability
+- ✅ `h`: Add heal effect to ability
+- ✅ `r`: Add range to ability
+- `s`: Add potency to ability
+- ✅ `x`: Add AoE to ability

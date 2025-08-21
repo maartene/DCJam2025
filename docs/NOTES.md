@@ -210,3 +210,12 @@ What is there to find? The answer to the ultimate secret: what came before? the 
     - ✅ Different effects -> all trigger
     - ✅ Same property -> added together
     - ⚠️ Refactor for object calestenics
+
+## 🍅 Pomodoro 41
+- ✅ Use abilities in the game
+    - ✅ Party can execute abilities
+    - ✅ Get rid of legacy attack stuff (Hand, Weapon, AttackMobAbility)
+- ⚠️ Refactor for object calestenics
+- ⚠️ Should not be able to execute abilities while KOd
+- ⚠️ Assign abilities to party members
+
