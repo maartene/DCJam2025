@@ -19,9 +19,10 @@ public final class PartyMember: Damageable {
         Hand.primary: Date(),
         Hand.secondary: Date()
         ]
-    private var cooldown = 2.0
+    private let cooldown = 2.0
     public private(set) var primaryHand: Weapon
     public private(set) var secondaryHand: Weapon
+    private var cooldownExpiresNew = Date()
 
     init (name: String, primaryHand: Weapon = .bareHands, secondaryHand: Weapon = .bareHands) {
         self.name = name
@@ -106,7 +107,13 @@ public final class PartyMember: Damageable {
     }
     
     func executeAbility(_ ability: any Ability, in world: World, at time: Date) {
+        guard cooldownExpiresNew <= time else {
+            return
+        }
+        
         ability.execute(in: world)
+        
+        cooldownExpiresNew = Date().addingTimeInterval(cooldown)
     }
 }
 

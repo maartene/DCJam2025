@@ -18,5 +18,19 @@ import Model
             #expect(count == 1)
             
         }
+        
+        @Test("should not be executed when ability is in cooldown") func abilityInCooldown() {
+            let world = World(floors: [Floor()])
+            var count = 0
+            let ability = SpyAbility {
+                count += 1
+            }
+            
+            world.executeCommand(.executeAbility(user: .frontRight, ability: ability), at: Date())
+            world.executeCommand(.executeAbility(user: .frontRight, ability: ability), at: Date())
+            
+            #expect(count == 1)
+            
+        }
     }
 }
