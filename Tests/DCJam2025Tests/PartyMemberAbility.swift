@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-import Model
+@testable import Model
 
 
 
@@ -13,6 +13,10 @@ import Model
         init() {
             ability = SpyAbility {
                 self.count += 1
+            }
+            
+            for partyMember in world.partyMembers.getMembers(grouping: .all) {
+                partyMember.abilities = [ability]
             }
         }
         
@@ -35,6 +39,10 @@ import Model
             world.executeCommand(.executeAbility(user: .frontLeft, ability: ability), at: Date())
             
             #expect(count == 0)
+        }
+        
+        @Test("should not be executed if ability is not in the party members ability list") func abilityNotInAbilityList() {
+            #expect(world.partyMembers[.backLeft].canExecuteAbility(MockAbility(properties: [:]), at: Date()) == false)
         }
     }
 }

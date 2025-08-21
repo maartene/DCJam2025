@@ -13,6 +13,7 @@ public final class PartyMember: Damageable {
     public let maximumHP: Int = 10
     private let cooldown = 2.0
     private var cooldownExpiresNew = Date()
+    var abilities: [any Ability] = []
 
     init (name: String) {
         self.name = name
@@ -48,6 +49,10 @@ public final class PartyMember: Damageable {
         }
         
         guard isAlive else {
+            return false
+        }
+        
+        guard abilities.contains(where: { $0.key == ability.key }) else {
             return false
         }
         
