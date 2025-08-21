@@ -1,4 +1,5 @@
 public protocol Ability {
+    var key: String { get }
     var properties: [String: Any] { get }
     func canBeExecuted(in world: World) -> Bool
     func execute(in world: World)
@@ -30,10 +31,12 @@ extension Ability {
 }
 
 struct DummyAbility: Ability {
+    let key = ""
     let properties: [String : Any] = [:]
 }
 
 public struct DamageEnemyAbility: Ability {
+    public let key = "a"
     public private(set) var properties: [String : Any] = [:]
     public let effect = damageEnemyEffect
     
@@ -50,6 +53,7 @@ public struct DamageEnemyAbility: Ability {
 }
 
 struct AddAoEAbility: Ability {
+    public let key = "x"
     let properties: [String : Any] = ["aoeRange": 1]
 }
 
@@ -58,6 +62,7 @@ struct CombinedAbility: Ability {
         CombinedAbility(abilities: [lhs, rhs])
     }
 
+    let key: String
     let abilities: [any Ability]
     let properties: [String: Any]
     let effects: [(World, [String: Any]) -> Void]
@@ -77,6 +82,10 @@ struct CombinedAbility: Ability {
             }
         
         self.effects = abilities.map { $0.effect }
+        
+        self.key = abilities.map {
+            $0.key
+        }.joined()
     }
     
     func execute(in world: World, properties: [String: Any]? = nil) {
@@ -89,6 +98,7 @@ struct CombinedAbility: Ability {
 }
 
 struct HealPartyMember: Ability {
+    let key = "h"
     let properties: [String : Any] = [:]
     let position: SinglePartyPosition
     
@@ -98,6 +108,7 @@ struct HealPartyMember: Ability {
 }
 
 struct AddRangeAbility: Ability {
+    let key = "x"
     let properties: [String : Any] = ["range": 2]
 }
 

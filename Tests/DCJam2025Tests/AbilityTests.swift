@@ -2,6 +2,7 @@ import Testing
 @testable import Model
 
 struct SpyAbility: Ability {
+    let key: String = "spy"
     let properties: [String : Any] = [:]
     let effect: (World, [String : Any]) -> Void
     
@@ -13,7 +14,13 @@ struct SpyAbility: Ability {
 }
 
 struct MockAbility: Ability {
+    let key: String
     let properties: [String: Any]
+    
+    init(properties: [String: Any], key: String = "") {
+        self.properties = properties
+        self.key = key
+    }
 }
 
 @Suite("All abilities should") struct AbilityTests {
@@ -90,6 +97,14 @@ struct MockAbility: Ability {
             #expect(property1 == 9)
             #expect(property2 == 2)
             #expect(property3 == 8)
+        }
+        
+        @Test("and have a key that is a combination of the combined ability keys") func combinedKeys() throws {
+            let ability1 = MockAbility(properties: [:], key: "a")
+            let ability2 = MockAbility(properties: [:], key: "b")
+            let combinedAbility = combine(ability1, ability2)
+            
+            #expect(combinedAbility.key == "ab")
         }
     }
     
