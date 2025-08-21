@@ -94,6 +94,8 @@ public final class World {
             partyHeading = partyHeading.rotatedCounterClockwise()
         case .executeHandAbility(let user, let hand):
             partyMembers.executeHandAbility(from: user, hand: hand, in: self, at: time)
+        case .executeAbility(let user, let ability):
+            partyMembers.executeAbility(ability, from: user, in: self, at: time)
         }
     }
 
@@ -140,6 +142,7 @@ public enum PartyCommand {
     case turnClockwise
     case turnCounterClockwise
     case executeHandAbility(user: SinglePartyPosition, hand: PartyMember.Hand)
+    case executeAbility(user: SinglePartyPosition, ability: any Ability)
 }
 
 extension World: Equatable {

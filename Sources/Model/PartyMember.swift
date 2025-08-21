@@ -104,6 +104,10 @@ public final class PartyMember: Damageable {
 
         cooldownExpires[hand] = time.addingTimeInterval(cooldown)
     }
+    
+    func executeAbility(_ ability: any Ability, in world: World, at time: Date) {
+        ability.execute(in: world)
+    }
 }
 
 extension PartyMember {

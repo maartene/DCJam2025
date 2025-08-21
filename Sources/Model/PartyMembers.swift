@@ -62,6 +62,17 @@ public struct PartyMembers {
 
         user.executeHandAbility(hand: hand, in: world, at: time)
     }
+    
+    func executeAbility(
+        _ ability: any Ability,
+        from userPosition: SinglePartyPosition,
+        in world: World,
+        at time: Date
+    ) {
+        let user = getMember(at: userPosition)
+        
+        user.executeAbility(ability, in: world, at: time)
+    }
 }
 
 public enum SinglePartyPosition {

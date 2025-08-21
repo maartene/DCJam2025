@@ -1,4 +1,4 @@
-protocol Ability {
+public protocol Ability {
     var properties: [String: Any] { get }
     func canBeExecuted(in world: World) -> Bool
     func execute(in world: World)
