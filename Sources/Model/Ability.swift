@@ -63,13 +63,10 @@ struct CombinedAbility: Ability {
     }
 
     let key: String
-    let abilities: [any Ability]
     let properties: [String: Any]
     let effects: [(World, [String: Any]) -> Void]
     
     init(abilities: [any Ability]) {
-        self.abilities = abilities
-        
         self.properties = abilities.map { $0.properties }
             .reduce(into: [:]) { partialResult, otherProperties in
                 partialResult.merge(otherProperties) { existing, new in
