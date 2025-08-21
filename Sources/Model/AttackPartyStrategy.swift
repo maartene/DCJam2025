@@ -5,12 +5,23 @@
 //  Created by Maarten Engels on 07/06/2025.
 //
 
-protocol AttackPartyStrategy: AttackStrategy { }
+protocol AttackPartyStrategy {
+    var range: Int { get }
+    var damage: Int { get }
+
+    func getValidTargets(in world: World) -> [Damageable]
+    func damageTargets(in world: World)
+}
 
 extension AttackPartyStrategy {
     func partyIsInRange(in world: World, enemyPosition: Coordinate) -> Bool {
         let manhattanDistance = world.partyPosition.manhattanDistanceTo(enemyPosition)
         return manhattanDistance <= range
+    }
+    
+    func damageTargets(in world: World) {
+        let potentialTargets = getValidTargets(in: world)
+        potentialTargets.randomElement()?.takeDamage(damage)
     }
 }
 
