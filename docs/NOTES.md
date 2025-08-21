@@ -216,6 +216,6 @@ What is there to find? The answer to the ultimate secret: what came before? the 
     - ✅ Party can execute abilities
     - ✅ Get rid of legacy attack stuff (Hand, Weapon, AttackMobAbility)
 - ⚠️ Refactor for object calestenics
-- ⚠️ Should not be able to execute abilities while KOd
+- ✅ Should not be able to execute abilities while KOd
 - ⚠️ Assign abilities to party members
 
