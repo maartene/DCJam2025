@@ -107,13 +107,21 @@ public final class PartyMember: Damageable {
     }
     
     func executeAbility(_ ability: any Ability, in world: World, at time: Date) {
-        guard cooldownExpiresNew <= time else {
+        guard canExecuteAbility(ability, at: time) else {
             return
         }
         
         ability.execute(in: world)
         
         cooldownExpiresNew = Date().addingTimeInterval(cooldown)
+    }
+    
+    public func canExecuteAbility(_ ability: any Ability, at time: Date) -> Bool {
+        guard cooldownExpiresNew <= time else {
+            return false
+        }
+        
+        return true
     }
 }
 

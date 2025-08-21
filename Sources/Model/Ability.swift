@@ -24,7 +24,7 @@ func combine(_ abilities: (any Ability)...) -> CombinedAbility {
 }
 
 extension Ability {
-    func canBeExecuted(in world: World) -> Bool {
+    public func canBeExecuted(in world: World) -> Bool {
         true
     }
 }
@@ -33,18 +33,18 @@ struct DummyAbility: Ability {
     let properties: [String : Any] = [:]
 }
 
-struct DamageEnemyAbility: Ability {
-    private(set) var properties: [String : Any] = [:]
-    let effect = damageEnemyEffect
+public struct DamageEnemyAbility: Ability {
+    public private(set) var properties: [String : Any] = [:]
+    public let effect = damageEnemyEffect
     
-    init(origin: Coordinate, heading: CompassDirection) {
+    public init(origin: Coordinate, heading: CompassDirection) {
         properties["origin"] = origin
         properties["heading"] = heading
         properties["aoeRange"] = 0
         properties["range"] = 1
     }
     
-    func execute(in world: World) {
+    public func execute(in world: World) {
         effect(world, properties)
     }
 }

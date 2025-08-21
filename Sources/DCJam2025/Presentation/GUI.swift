@@ -119,11 +119,12 @@ struct GUI {
         }
 
         let partyMember = world.partyMembers[memberPosition]
-        let attackName = partyMember.weaponForHand(hand: hand).name
-
+        let attackName = "Mock Attack"
+        let ability = DamageEnemyAbility(origin: world.partyPosition, heading: world.partyHeading)
+        
         return [
-            GUIButton(position: position, size: size, text: attackName, enabled: partyMember.canExecuteAbility(for: hand, at: Date())) {
-                world.executeCommand(.executeHandAbility(user: memberPosition, hand: hand), at: Date())
+            GUIButton(position: position, size: size, text: attackName, enabled: partyMember.canExecuteAbility(ability, at: Date())) {
+                world.executeCommand(.executeAbility(user: memberPosition, ability: ability), at: Date())
             }
         ]
     }

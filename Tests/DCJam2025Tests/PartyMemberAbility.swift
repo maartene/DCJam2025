@@ -30,7 +30,6 @@ import Model
             world.executeCommand(.executeAbility(user: .frontRight, ability: ability), at: Date())
             
             #expect(count == 1)
-            
         }
     }
 }
