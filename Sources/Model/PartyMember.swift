@@ -12,14 +12,10 @@ public final class PartyMember: Damageable {
     public private(set) var currentHP = 10
     public let maximumHP: Int = 10
     private let cooldown = 2.0
-    public private(set) var primaryHand: Weapon
-    public private(set) var secondaryHand: Weapon
     private var cooldownExpiresNew = Date()
 
-    init (name: String, primaryHand: Weapon = .bareHands, secondaryHand: Weapon = .bareHands) {
+    init (name: String) {
         self.name = name
-        self.primaryHand = primaryHand
-        self.secondaryHand = secondaryHand
     }
 
     public var isAlive: Bool {
