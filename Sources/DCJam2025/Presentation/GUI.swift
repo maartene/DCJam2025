@@ -105,15 +105,15 @@ struct GUI {
 
         let attackButtonSize = Vector2(x: 70, y: 40)
 
-        result.append(contentsOf: drawAttackButtonFor(memberPosition, hand: .primary, position: position + Vector2(x: 5 + 100 + 5, y: 25), size: attackButtonSize))
-        result.append(contentsOf: drawAttackButtonFor(memberPosition, hand: .secondary, position: position + Vector2(x: 5 + 100 + 5, y: 25 + attackButtonSize.y), size: attackButtonSize))
+        result.append(contentsOf: drawAttackButtonFor(memberPosition, position: position + Vector2(x: 5 + 100 + 5, y: 25), size: attackButtonSize))
+        result.append(contentsOf: drawAttackButtonFor(memberPosition, position: position + Vector2(x: 5 + 100 + 5, y: 25 + attackButtonSize.y), size: attackButtonSize))
 
         result.append(contentsOf: drawHPBar(currentHP: partyMember.currentHP, maxHP: 10, position: position + Vector2(x: 5, y: 130)))
 
         return result
     }
 
-    private func drawAttackButtonFor(_ memberPosition: SinglePartyPosition, hand: PartyMember.Hand, position: Vector2, size: Vector2) -> [any GUIDrawable] {
+    private func drawAttackButtonFor(_ memberPosition: SinglePartyPosition, position: Vector2, size: Vector2) -> [any GUIDrawable] {
         guard let world else {
             return []
         }

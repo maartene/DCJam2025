@@ -45,23 +45,6 @@ public struct PartyMembers {
     public var hasAlivePartyMember: Bool {
         members.filter { $0.isAlive }.isEmpty == false
     }
-
-    public func executeHandAbility(
-        from userPosition: SinglePartyPosition,
-        hand: PartyMember.Hand,
-        in world: World,
-        at time: Date
-    ) {
-        let user = getMember(at: userPosition)
-
-        let ability = user.weaponForHand(hand: hand).attackStrategy
-
-        guard ability.allowedPartyPositions.toSinglePartyPositions.contains(userPosition) else {
-            return
-        }
-
-        user.executeHandAbility(hand: hand, in: world, at: time)
-    }
     
     func executeAbility(
         _ ability: any Ability,
