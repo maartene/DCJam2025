@@ -117,13 +117,15 @@ struct GUI {
         guard let world else {
             return []
         }
-
-        let partyMember = world.partyMembers[memberPosition]
-        let attackName = "Mock Attack"
-        let ability = DamageEnemyAbility(origin: world.partyPosition, heading: world.partyHeading)
         
+        let partyMember = world.partyMembers[memberPosition]
+        
+        guard let ability = partyMember.abilities.first else {
+            return []
+        }
+
         return [
-            GUIButton(position: position, size: size, text: attackName, enabled: partyMember.canExecuteAbility(ability, at: Date())) {
+            GUIButton(position: position, size: size, text: ability.key, enabled: partyMember.canExecuteAbility(ability, at: Date())) {
                 world.executeCommand(.executeAbility(user: memberPosition, ability: ability), at: Date())
             }
         ]

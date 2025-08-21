@@ -15,7 +15,7 @@ public final class Enemy: Damageable {
     private let attackStrategy: any AttackPartyStrategy
     public private(set) var currentHP: Int
 
-    init(position: Coordinate, heading: CompassDirection, attackStrategy: any AttackPartyStrategy, hp: Int = 3) {
+    init(position: Coordinate, heading: CompassDirection, attackStrategy: any AttackPartyStrategy, hp: Int = 4) {
         self.position = position
         self.heading = heading
         self.attackStrategy = attackStrategy

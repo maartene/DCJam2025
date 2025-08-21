@@ -13,7 +13,7 @@ public final class PartyMember: Damageable {
     public let maximumHP: Int = 10
     private let cooldown = 2.0
     private var cooldownExpiresNew = Date()
-    var abilities: [any Ability] = []
+    public var abilities: [any Ability] = []
 
     init (name: String) {
         self.name = name
@@ -62,14 +62,30 @@ public final class PartyMember: Damageable {
 
 extension PartyMember {
     public static func makeMeleePartyMember(name: String) -> PartyMember {
-        PartyMember(name: name)
+        let newPartyMember = PartyMember(name: name)
+        
+        newPartyMember.abilities = [
+            DamageEnemyAbility(origin: Coordinate(x: 0, y: 0), heading: .north)
+        ]
+        
+        return newPartyMember
     }
     public static func makeRanger(name: String) -> PartyMember {
         let newPartyMember = PartyMember(name: name)
+        
+        newPartyMember.abilities = [
+            DamageEnemyAbility(origin: Coordinate(x: 0, y: 0), heading: .north)
+        ]
+        
         return newPartyMember
     }
     public static func makeMage(name: String) -> PartyMember {
         let newPartyMember = PartyMember(name: name)
+        
+        newPartyMember.abilities = [
+            DamageEnemyAbility(origin: Coordinate(x: 0, y: 0), heading: .north)
+        ]
+        
         return newPartyMember
     }
 }
