@@ -31,5 +31,18 @@ import Model
             
             #expect(count == 1)
         }
+        
+        @Test("should not be executed when party member is KOd") func abilityWhenMemberIsKo() {
+            let world = World(floors: [Floor()])
+            var count = 0
+            let ability = SpyAbility {
+                count += 1
+            }
+            
+            world.partyMembers[.frontLeft].takeDamage(Int.max)
+            world.executeCommand(.executeAbility(user: .frontLeft, ability: ability), at: Date())
+            
+            #expect(count == 0)
+        }
     }
 }

@@ -47,6 +47,10 @@ public final class PartyMember: Damageable {
             return false
         }
         
+        guard isAlive else {
+            return false
+        }
+        
         return true
     }
 }
