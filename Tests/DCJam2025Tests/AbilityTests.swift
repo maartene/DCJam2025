@@ -190,26 +190,21 @@ struct MockAbility: Ability {
             }
         }
         
-        @Test("not deal damage when there is no clear LoS, even with AoE") func doesNotDealDamageWhenThereIsNoClearLoS() throws {
+        @Test("not deal damage with an AoE if there is no straight LoS impact position") func doesNotDealAoEDamageWhenThereIsLoSImpact() throws {
             let world = makeWorld(from: [
                 """
-                ...
                 ...
                 .p.
                 """
                 ]
             )
+            let target = try #require(world.enemiesOnCurrentFloor.first)
             
             let damageEnemyAbility = DamageEnemyAbility(
                 origin: world.partyPosition,
                 heading: world.partyHeading)
-            let addRangeAbility = AddRangeAbility()
-            let addAoEAbility = AddAoEAbility()
-            let ability = combine(damageEnemyAbility, addRangeAbility, addAoEAbility)
+            let ability = combine(damageEnemyAbility, AddAoEAbility())
             
-            let target = try #require( world.enemiesOnCurrentFloor.first {
-                $0.position == Coordinate(x: 1, y: 2)
-            })
             let hpBeforeAbility = target.currentHP
             
             ability.execute(in: world)

@@ -109,18 +109,7 @@ func damageEnemyEffect(in world: World, properties: [String: Any]) {
     let aoeRange = properties["aoeRange"] as! Int
     let range = properties["range"] as! Int
     
-    // find place of impact
-    let impactPosition = (1 ... range)
-        .map { origin + heading.forward * $0 }
-        .first { impactPosition in
-            if world.enemiesOnCurrentFloor.first(where: { $0.position == impactPosition }) != nil {
-                return true
-            }
-        
-            return false
-        }
-    
-    guard let impactPosition else {
+    guard let impactPosition = findPlaceOfImpact(origin: origin, heading: heading, range: range) else {
         return
     }
     
@@ -131,4 +120,16 @@ func damageEnemyEffect(in world: World, properties: [String: Any]) {
         .forEach {
             $0.takeDamage(3)
         }
+    
+    func findPlaceOfImpact(origin: Coordinate, heading: CompassDirection, range: Int) -> Coordinate? {
+        (1 ... range)
+            .map { origin + heading.forward * $0 }
+            .first { impactPosition in
+                if world.enemiesOnCurrentFloor.first(where: { $0.position == impactPosition }) != nil {
+                    return true
+                }
+            
+                return false
+            }
+    }
 }
