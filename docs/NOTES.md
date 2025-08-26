@@ -221,4 +221,6 @@ What is there to find? The answer to the ultimate secret: what came before? the 
 
 ## 🍅 Pomodoro 42
 - ✅ Remove `canBeExecuted` from Ability, as its not really needed yet    
-- 🚧 Refactor for object calestenics
+- ✅ Refactor for object calestenics
+- ✅ AoE heal
+- ✅ Fix ❌ only when there is first a straight LoS, can we hit with an AoE
