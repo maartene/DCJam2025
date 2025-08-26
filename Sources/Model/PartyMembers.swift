@@ -19,16 +19,7 @@ public struct PartyMembers {
     }
 
     private func getMember(at position: SinglePartyPosition) -> PartyMember {
-        return switch position {
-        case .frontLeft:
-            members[0]
-        case .frontRight:
-            members[1]
-        case .backLeft:
-            members[2]
-        case .backRight:
-            members[3]
-        }
+        members.first(where: { $0.positionInParty == position } )!
     }
 
     public func getMembers(grouping: PartyPositionGroup) -> [PartyMember] {

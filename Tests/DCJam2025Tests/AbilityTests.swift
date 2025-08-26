@@ -2,26 +2,18 @@ import Testing
 @testable import Model
 
 struct SpyAbility: Ability {
-    static func makeAbility(ownerPosition: Model.SinglePartyPosition) -> SpyAbility {
-        SpyAbility(action: { })
-    }
-    
     let key: String = "spy"
     let properties: [String : Any] = [:]
-    let effect: (World, [String : Any]) -> Void
+    let effect: (PartyMember, World, [String : Any]) -> Void
     
     init(action: @escaping () -> Void) {
-        self.effect = { _, _ in
+        self.effect = { _, _, _ in
             action()
         }
     }
 }
 
 struct MockAbility: Ability {
-    static func makeAbility(ownerPosition: Model.SinglePartyPosition) -> MockAbility {
-        MockAbility(properties: [:])
-    }
-    
     let key: String
     let properties: [String: Any]
     
@@ -31,7 +23,9 @@ struct MockAbility: Ability {
     }
 }
 
-@Suite("All abilities should") struct AbilityTests {    
+@Suite("All abilities should") struct AbilityTests {
+    let partyMember = PartyMember(name: "Foo", positionInParty: .backLeft)
+    
     @Test("when they are executed, have an effect") func affectTheWorld() {
         let world = World(floors: [Floor()])
         var count = 0
@@ -39,12 +33,14 @@ struct MockAbility: Ability {
             count += 1
         }
         
-        ability.execute(in: world)
+        ability.execute(by: partyMember, in: world)
         
         #expect(count == 1)
     }
     
     @Suite("be able to be combined") struct combineAbilities {
+        let partyMember = PartyMember(name: "Foo", positionInParty: .backLeft)
+        
         @Test("into a new ability that has properties combined") func combineProperties() throws{
             let ability1 = MockAbility(properties: ["property1": 42])
             let ability2 = MockAbility(properties: ["property2": 11])
@@ -68,7 +64,7 @@ struct MockAbility: Ability {
             }
             let combinedAbility = combine(ability1, ability2)
             
-            combinedAbility.execute(in: World(floors: [Floor()]))
+            combinedAbility.execute(by: partyMember, in: World(floors: [Floor()]))
             
             #expect(count1 == 1)
             #expect(count2 == 1)
@@ -113,12 +109,13 @@ struct MockAbility: Ability {
 @Suite("Concrete abilities should") struct ConcreteAbilityTests {
     @Suite("for healing abilities") struct singleAbilities {
         let world = World(floors: [Floor()])
+        
         @Test("be able to heal a party member") func heal() {
-            let ability = HealPartyMember(ownerPosition: .frontLeft)
+            let ability = HealPartyMember()
             world.partyMembers[.frontLeft].takeDamage(3)
             let hpBefore = world.partyMembers[.frontLeft].currentHP
             
-            ability.execute(in: world)
+            ability.execute(by: world.partyMembers[.frontLeft], in: world)
             
             let hpAfter = world.partyMembers[.frontLeft].currentHP
             
@@ -126,10 +123,10 @@ struct MockAbility: Ability {
         }
         
         @Test("not heal more than the maximum HP") func notHealOverMaximumHP() {
-            let ability = HealPartyMember(ownerPosition: .frontLeft)
+            let ability = HealPartyMember()
             let hpBefore = world.partyMembers[.frontLeft].currentHP
             
-            ability.execute(in: world)
+            ability.execute(by: world.partyMembers[.frontLeft], in: world)
             
             let hpAfter = world.partyMembers[.frontLeft].currentHP
             
@@ -137,7 +134,7 @@ struct MockAbility: Ability {
         }
         
         @Test("heal all party members with an AoE") func healAll() {
-            let ability = HealPartyMember(ownerPosition: .frontLeft)
+            let ability = HealPartyMember()
             let healAllAbility = combine(ability, AddAoEAbility())
             
             world.partyMembers.getMembers(grouping: .all)
@@ -145,7 +142,7 @@ struct MockAbility: Ability {
             
             let hpBefore = world.partyMembers.getMembers(grouping: .all).map { $0.currentHP }
             
-            healAllAbility.execute(in: world)
+            healAllAbility.execute(by: world.partyMembers[.frontRight], in: world)
             
             let hpAfter = world.partyMembers.getMembers(grouping: .all).map { $0.currentHP }
             for partyMember in zip(hpBefore, hpAfter) {
@@ -163,6 +160,10 @@ struct MockAbility: Ability {
             """
         ])
         
+        var partyMember: PartyMember {
+            world.partyMembers[.frontLeft]
+        }
+        
         @Test("deal damage to a target") func dealDamageToATarget() throws {
             let ability = DamageEnemyAbility()
             let target = try #require( world.enemiesOnCurrentFloor.first {
@@ -170,7 +171,7 @@ struct MockAbility: Ability {
             })
             let hpBeforeAbility = target.currentHP
             
-            ability.execute(in: world)
+            ability.execute(by: partyMember, in: world)
             
             #expect(target.currentHP < hpBeforeAbility)
         }
@@ -178,7 +179,7 @@ struct MockAbility: Ability {
         @Test("deal damage to only a single target") func dealDamageToASingleTarget() throws {
             let ability = DamageEnemyAbility()
             
-            ability.execute(in: world)
+            ability.execute(by: partyMember, in: world)
             
             let hpsAfterAbility = world.enemiesOnCurrentFloor
                 .map { $0.currentHP }
@@ -206,7 +207,7 @@ struct MockAbility: Ability {
             
             let hpBeforeAbility = enemies.map(\.currentHP)
             
-            ability.execute(in: world)
+            ability.execute(by: partyMember, in: world)
             
             for i in 0 ..< enemies.count {
                 #expect(enemies[i].currentHP < hpBeforeAbility[i])
@@ -228,7 +229,7 @@ struct MockAbility: Ability {
             
             let hpBeforeAbility = target.currentHP
             
-            ability.execute(in: world)
+            ability.execute(by: partyMember, in: world)
             
             #expect(target.currentHP == hpBeforeAbility)
         }
@@ -250,7 +251,7 @@ struct MockAbility: Ability {
                                      
             let hpBeforeAbility = enemy.currentHP
             
-            ability.execute(in: world)
+            ability.execute(by: partyMember, in: world)
             
             #expect(enemy.currentHP < hpBeforeAbility)
         }
@@ -271,7 +272,7 @@ struct MockAbility: Ability {
                                      
             let hpBeforeAbility = enemy.currentHP
             
-            ability.execute(in: world)
+            ability.execute(by: partyMember, in: world)
             
             #expect(enemy.currentHP == hpBeforeAbility)
         }

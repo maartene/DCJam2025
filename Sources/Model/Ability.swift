@@ -1,10 +1,8 @@
 public protocol Ability {
     var key: String { get }
     var properties: [String: Any] { get }
-    func execute(in world: World)
-    var effect: (World, [String: Any]) -> Void { get }
-    
-    static func makeAbility(ownerPosition: SinglePartyPosition) -> Self
+    func execute(by partyMember: PartyMember, in world: World)
+    var effect: (PartyMember, World, [String: Any]) -> Void { get }
 }
 
 extension Ability { 
@@ -12,12 +10,12 @@ extension Ability {
         properties[key]
     }
     
-    func execute(in world: World) {
-        effect(world, properties)
+    func execute(by partyMember: PartyMember, in world: World) {
+        effect(partyMember, world, properties)
     }
     
-    var effect: ((World, [String: Any]) -> Void) {
-        return { _,_ in print("Executed ability \(self)") }
+    var effect: ((PartyMember, World, [String: Any]) -> Void) {
+        return { partyMember, _,_ in print("\(partyMember.name) executed ability \(self)") }
     }
 }
 
@@ -27,23 +25,11 @@ func combine(_ abilities: (any Ability)...) -> CombinedAbility {
 
 // MARK: Concrete abilities
 struct DummyAbility: Ability {
-    static func makeAbility(ownerPosition: SinglePartyPosition) -> DummyAbility {
-        DummyAbility()
-    }
-    
-    private init() {
-        
-    }
-    
     let key = ""
     let properties: [String : Any] = [:]
 }
 
 public struct DamageEnemyAbility: Ability {
-    public static func makeAbility(ownerPosition: SinglePartyPosition) -> DamageEnemyAbility {
-        DamageEnemyAbility()
-    }
-    
     public let key = "a"
     
     public let properties: [String : Any]
@@ -56,28 +42,20 @@ public struct DamageEnemyAbility: Ability {
         ]
     }
     
-    public func execute(in world: World) {
-        effect(world, properties)
+    public func execute(by partyMember: PartyMember, in world: World) {
+        effect(partyMember, world, properties)
     }
 }
 
 struct AddAoEAbility: Ability {
-    static func makeAbility(ownerPosition: SinglePartyPosition) -> AddAoEAbility {
-        AddAoEAbility()
-    }
-    
     public let key = "x"
     let properties: [String : Any] = ["aoeRange": 1]
 }
 
 struct CombinedAbility: Ability {
-    static func makeAbility(ownerPosition: SinglePartyPosition) -> CombinedAbility {
-        fatalError("Don't use `makeAbility` to create a CombinedAbility, use `combine(:) instead`")
-    }
-    
     let key: String
     let properties: [String: Any]
-    let effects: [(World, [String: Any]) -> Void]
+    let effects: [(PartyMember, World, [String: Any]) -> Void]
     
     init(abilities: [any Ability]) {
         self.properties = abilities
@@ -103,44 +81,32 @@ struct CombinedAbility: Ability {
         }
     }
     
-    func execute(in world: World, properties: [String: Any]? = nil) {
+    func execute(by partyMember: PartyMember, in world: World, properties: [String: Any]? = nil) {
         let properties = properties ?? self.properties
         
         for effect in effects {
-            effect(world, properties)
+            effect(partyMember, world, properties)
         }
     }
 }
 
 struct HealPartyMember: Ability {
-    static func makeAbility(ownerPosition: SinglePartyPosition) -> HealPartyMember {
-        HealPartyMember(ownerPosition: ownerPosition)
-    }
-    
     let key = "h"
-    let properties: [String : Any]
+    let properties: [String : Any] = [:]
     public let effect = healPartyMemberEffect
     
-    init(ownerPosition: SinglePartyPosition) {
-        properties = ["ownerPosition": ownerPosition]
-    }
-    
-    func execute(in world: World) {
-        effect(world, properties)
+    func execute(by partyMember: PartyMember, in world: World) {
+        effect(partyMember, world, properties)
     }
 }
 
 struct AddRangeAbility: Ability {
-    static func makeAbility(ownerPosition: SinglePartyPosition) -> AddRangeAbility {
-        AddRangeAbility()
-    }
-    
     let key = "x"
     let properties: [String : Any] = ["range": 2]
 }
 
 // MARK: Effects
-func damageEnemyEffect(in world: World, properties: [String: Any]) {
+func damageEnemyEffect(caster: PartyMember, in world: World, properties: [String: Any]) {
     let origin = world.partyPosition
     let heading = world.partyHeading
     let aoeRange = properties["aoeRange"] as! Int
@@ -175,9 +141,9 @@ func damageEnemyEffect(in world: World, properties: [String: Any]) {
 }
 
 
-func healPartyMemberEffect(in world: World, properties: [String: Any]) {
+func healPartyMemberEffect(caster: PartyMember, in world: World, properties: [String: Any]) {
     let aoeRange = properties["aoeRange", default: 0] as! Int
-    let ownerPosition = properties["ownerPosition"] as! SinglePartyPosition
+    let ownerPosition = caster.positionInParty
     
     if aoeRange > 0 {
         world.partyMembers.getMembers(grouping: .all)

@@ -14,9 +14,11 @@ public final class PartyMember: Damageable {
     private let cooldown = 2.0
     private var cooldownExpiresNew = Date()
     public var abilities: [any Ability] = []
+    public let positionInParty: SinglePartyPosition
 
-    init (name: String) {
+    init (name: String, positionInParty: SinglePartyPosition) {
         self.name = name
+        self.positionInParty = positionInParty
     }
 
     public var isAlive: Bool {
@@ -38,7 +40,7 @@ public final class PartyMember: Damageable {
             return
         }
         
-        ability.execute(in: world)
+        ability.execute(by: self, in: world)
         
         cooldownExpiresNew = Date().addingTimeInterval(cooldown)
     }
@@ -62,29 +64,21 @@ public final class PartyMember: Damageable {
 
 extension PartyMember {
     public static func makeMeleePartyMember(name: String, position: SinglePartyPosition) -> PartyMember {
-        let newPartyMember = PartyMember(name: name)
+        let newPartyMember = PartyMember(name: name, positionInParty: position)
         
         newPartyMember.abilities = [
-            DamageEnemyAbility.makeAbility(ownerPosition: position)
+            DamageEnemyAbility()
         ]
         
         return newPartyMember
     }
     public static func makeRanger(name: String, position: SinglePartyPosition) -> PartyMember {
-        let newPartyMember = PartyMember(name: name)
-        
-        newPartyMember.abilities = [
-            DamageEnemyAbility.makeAbility(ownerPosition: position)
-        ]
+        let newPartyMember = makeMeleePartyMember(name: name, position: position)
         
         return newPartyMember
     }
     public static func makeMage(name: String, position: SinglePartyPosition) -> PartyMember {
-        let newPartyMember = PartyMember(name: name)
-        
-        newPartyMember.abilities = [
-            DamageEnemyAbility.makeAbility(ownerPosition: position)
-        ]
+        let newPartyMember = makeMeleePartyMember(name: name, position: position)
         
         return newPartyMember
     }
