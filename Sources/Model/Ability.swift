@@ -1,7 +1,6 @@
 public protocol Ability {
     var key: String { get }
     var properties: [String: Any] { get }
-    func canBeExecuted(in world: World) -> Bool
     func execute(in world: World)
     var effect: (World, [String: Any]) -> Void { get }
 }
@@ -22,12 +21,6 @@ extension Ability {
 
 func combine(_ abilities: (any Ability)...) -> CombinedAbility {
     CombinedAbility(abilities: abilities)
-}
-
-extension Ability {
-    public func canBeExecuted(in world: World) -> Bool {
-        true
-    }
 }
 
 struct DummyAbility: Ability {

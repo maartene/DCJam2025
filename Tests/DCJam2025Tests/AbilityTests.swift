@@ -23,15 +23,7 @@ struct MockAbility: Ability {
     }
 }
 
-@Suite("All abilities should") struct AbilityTests {
-    @Test("be able to be executed in the world") func beAbleToBeExecutedInTheWorld() {
-        let world = World(floors: [Floor()])
-        
-        let ability = DummyAbility()
-        
-        #expect(ability.canBeExecuted(in: world))
-    }
-    
+@Suite("All abilities should") struct AbilityTests {    
     @Test("when they are executed, have an effect") func affectTheWorld() {
         let world = World(floors: [Floor()])
         var count = 0

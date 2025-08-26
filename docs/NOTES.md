@@ -219,3 +219,6 @@ What is there to find? The answer to the ultimate secret: what came before? the 
 - ✅ Should not be able to execute abilities while KOd
 - ⚠️ Assign abilities to party members
 
+## 🍅 Pomodoro 42
+- ✅ Remove `canBeExecuted` from Ability, as its not really needed yet    
+- 🚧 Refactor for object calestenics
