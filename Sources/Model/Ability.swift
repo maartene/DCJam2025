@@ -51,23 +51,16 @@ struct AddAoEAbility: Ability {
 }
 
 struct CombinedAbility: Ability {
-    static func *(lhs: CombinedAbility, rhs: any Ability) -> CombinedAbility {
-        CombinedAbility(abilities: [lhs, rhs])
-    }
-
     let key: String
     let properties: [String: Any]
     let effects: [(World, [String: Any]) -> Void]
     
     init(abilities: [any Ability]) {
-        self.properties = abilities.map { $0.properties }
+        self.properties = abilities
+            .map { $0.properties }
             .reduce(into: [:]) { partialResult, otherProperties in
                 partialResult.merge(otherProperties) { existing, new in
-                    if let existingInt = existing as? Int, let newInt = new as? Int {
-                        return existingInt + newInt
-                    } else {
-                        return new
-                    }
+                    combineProperty(existing, new)
                 }
             }
         
@@ -76,6 +69,14 @@ struct CombinedAbility: Ability {
         self.key = abilities.map {
             $0.key
         }.joined()
+        
+        func combineProperty(_ existing: Any, _ new: Any) -> Any {
+            if let existingInt = existing as? Int, let newInt = new as? Int {
+                return existingInt + newInt
+            } else {
+                return new
+            }
+        }
     }
     
     func execute(in world: World, properties: [String: Any]? = nil) {
@@ -108,16 +109,26 @@ func damageEnemyEffect(in world: World, properties: [String: Any]) {
     let aoeRange = properties["aoeRange"] as! Int
     let range = properties["range"] as! Int
     
-    for currentRange in 1 ... range {
-        let target = origin + heading.forward * currentRange
-        let targets = world.enemiesOnCurrentFloor
-            .filter {
-                (target.x - aoeRange ... target.x + aoeRange).contains($0.position.x) &&
-                (target.y - aoeRange ... target.y + aoeRange).contains($0.position.y)
+    // find place of impact
+    let impactPosition = (1 ... range)
+        .map { origin + heading.forward * $0 }
+        .first { impactPosition in
+            if world.enemiesOnCurrentFloor.first(where: { $0.position == impactPosition }) != nil {
+                return true
             }
-            .filter {
-                $0.position.manhattanDistanceTo(target) <= aoeRange
-            }
-        targets.forEach { $0.takeDamage(3)}
+        
+            return false
+        }
+    
+    guard let impactPosition else {
+        return
     }
+    
+    world.enemiesOnCurrentFloor
+        .filter {
+            $0.position.manhattanDistanceTo(impactPosition) <= aoeRange
+        }
+        .forEach {
+            $0.takeDamage(3)
+        }
 }
