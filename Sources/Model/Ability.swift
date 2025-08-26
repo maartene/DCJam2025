@@ -2,10 +2,12 @@ public protocol Ability {
     var key: String { get }
     var properties: [String: Any] { get }
     func execute(by partyMember: PartyMember, in world: World)
-    var effect: (PartyMember, World, [String: Any]) -> Void { get }
+    var effect: EffectSignature { get }
 }
 
-extension Ability { 
+public typealias EffectSignature = (PartyMember, World, [String: Any]) -> Void
+
+extension Ability {
     subscript(key: String) -> Any? {
         properties[key]
     }
@@ -14,7 +16,7 @@ extension Ability {
         effect(partyMember, world, properties)
     }
     
-    var effect: ((PartyMember, World, [String: Any]) -> Void) {
+    var effect: EffectSignature {
         return { partyMember, _,_ in print("\(partyMember.name) executed ability \(self)") }
     }
 }
@@ -55,7 +57,7 @@ struct AddAoEAbility: Ability {
 struct CombinedAbility: Ability {
     let key: String
     let properties: [String: Any]
-    let effects: [(PartyMember, World, [String: Any]) -> Void]
+    let effects: [EffectSignature]
     
     init(abilities: [any Ability]) {
         self.properties = abilities
