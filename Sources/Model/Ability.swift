@@ -23,6 +23,7 @@ func combine(_ abilities: (any Ability)...) -> CombinedAbility {
     CombinedAbility(abilities: abilities)
 }
 
+// MARK: Concrete abilities
 struct DummyAbility: Ability {
     let key = ""
     let properties: [String : Any] = [:]
@@ -34,13 +35,12 @@ public struct DamageEnemyAbility: Ability {
     public let effect = damageEnemyEffect
     
     public init(origin: Coordinate, heading: CompassDirection) {
-        var properties: [String: Any] = [:]
-        properties["origin"] = origin
-        properties["heading"] = heading
-        properties["aoeRange"] = 0
-        properties["range"] = 1
-        
-        self.properties = properties
+        properties = [
+            "origin": origin,
+            "heading": heading,
+            "aoeRange": 0,
+            "range": 1
+        ]
     }
     
     public func execute(in world: World) {
@@ -110,6 +110,7 @@ struct AddRangeAbility: Ability {
     let properties: [String : Any] = ["range": 2]
 }
 
+// MARK: Effects
 func damageEnemyEffect(in world: World, properties: [String: Any]) {
     let origin = properties["origin"] as! Coordinate
     let heading = properties["heading"] as! CompassDirection
