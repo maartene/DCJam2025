@@ -127,6 +127,23 @@ struct MockAbility: Ability {
             
             #expect(hpAfter == hpBefore)
         }
+        
+        @Test("heal all party members with an AoE") func healAll() {
+            let ability = HealPartyMember(position: .frontLeft)
+            let healAllAbility = combine(ability, AddAoEAbility())
+            
+            world.partyMembers.getMembers(grouping: .all)
+                .forEach { $0.takeDamage(1) }
+            
+            let hpBefore = world.partyMembers.getMembers(grouping: .all).map { $0.currentHP }
+            
+            healAllAbility.execute(in: world)
+            
+            let hpAfter = world.partyMembers.getMembers(grouping: .all).map { $0.currentHP }
+            for partyMember in zip(hpBefore, hpAfter) {
+                #expect(partyMember.0 < partyMember.1)
+            }
+        }
     }
     
     @Suite("For offensive abilities") struct OffensiveAbilities {

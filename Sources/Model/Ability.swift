@@ -30,14 +30,17 @@ struct DummyAbility: Ability {
 
 public struct DamageEnemyAbility: Ability {
     public let key = "a"
-    public private(set) var properties: [String : Any] = [:]
+    public let properties: [String : Any]
     public let effect = damageEnemyEffect
     
     public init(origin: Coordinate, heading: CompassDirection) {
+        var properties: [String: Any] = [:]
         properties["origin"] = origin
         properties["heading"] = heading
         properties["aoeRange"] = 0
         properties["range"] = 1
+        
+        self.properties = properties
     }
     
     public func execute(in world: World) {
@@ -90,11 +93,15 @@ struct CombinedAbility: Ability {
 
 struct HealPartyMember: Ability {
     let key = "h"
-    let properties: [String : Any] = [:]
-    let position: SinglePartyPosition
+    let properties: [String : Any]
+    public let effect = healPartyMemberEffect
+    
+    init(position: SinglePartyPosition) {
+        self.properties = ["position": position]
+    }
     
     func execute(in world: World) {
-        world.partyMembers[position].heal(3)
+        effect(world, properties)
     }
 }
 
@@ -133,3 +140,17 @@ func damageEnemyEffect(in world: World, properties: [String: Any]) {
             }
     }
 }
+
+
+func healPartyMemberEffect(in world: World, properties: [String: Any]) {
+    let position = properties["position"] as! SinglePartyPosition
+    let aoeRange = properties["aoeRange", default: 0] as! Int
+    
+    if aoeRange > 0 {
+        world.partyMembers.getMembers(grouping: .all)
+            .forEach { $0.heal(3) }
+    } else {
+        world.partyMembers[position].heal(3)
+    }
+}
+
