@@ -132,6 +132,9 @@ func damageEnemyEffect(in world: World, properties: [String: Any]) {
     func findPlaceOfImpact(origin: Coordinate, heading: CompassDirection, range: Int) -> Coordinate? {
         (1 ... range)
             .map { origin + heading.forward * $0 }
+            .filter {
+                world.currentFloor.hasUnobstructedView(from: origin, to: $0)
+            }
             .first { impactPosition in
                 if world.enemiesOnCurrentFloor.first(where: { $0.position == impactPosition }) != nil {
                     return true
