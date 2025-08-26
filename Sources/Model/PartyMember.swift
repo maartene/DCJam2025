@@ -80,6 +80,10 @@ extension PartyMember {
     public static func makeMage(name: String, position: SinglePartyPosition) -> PartyMember {
         let newPartyMember = makeMeleePartyMember(name: name, position: position)
         
+        newPartyMember.abilities = [
+            combine(HealPartyMember(), AddAoEAbility())
+        ]
+        
         return newPartyMember
     }
 }

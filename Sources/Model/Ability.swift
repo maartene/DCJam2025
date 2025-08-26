@@ -83,8 +83,8 @@ struct CombinedAbility: Ability {
         }
     }
     
-    func execute(by partyMember: PartyMember, in world: World, properties: [String: Any]? = nil) {
-        let properties = properties ?? self.properties
+    func execute(by partyMember: PartyMember, in world: World) {
+        //let properties = properties ?? self.properties
         
         for effect in effects {
             effect(partyMember, world, properties)
@@ -141,7 +141,6 @@ func damageEnemyEffect(caster: PartyMember, in world: World, properties: [String
             }
     }
 }
-
 
 func healPartyMemberEffect(caster: PartyMember, in world: World, properties: [String: Any]) {
     let aoeRange = properties["aoeRange", default: 0] as! Int
