@@ -61,29 +61,29 @@ public final class PartyMember: Damageable {
 }
 
 extension PartyMember {
-    public static func makeMeleePartyMember(name: String) -> PartyMember {
+    public static func makeMeleePartyMember(name: String, position: SinglePartyPosition) -> PartyMember {
         let newPartyMember = PartyMember(name: name)
         
         newPartyMember.abilities = [
-            DamageEnemyAbility(origin: Coordinate(x: 0, y: 0), heading: .north)
+            DamageEnemyAbility.makeAbility(ownerPosition: position)
         ]
         
         return newPartyMember
     }
-    public static func makeRanger(name: String) -> PartyMember {
+    public static func makeRanger(name: String, position: SinglePartyPosition) -> PartyMember {
         let newPartyMember = PartyMember(name: name)
         
         newPartyMember.abilities = [
-            DamageEnemyAbility(origin: Coordinate(x: 0, y: 0), heading: .north)
+            DamageEnemyAbility.makeAbility(ownerPosition: position)
         ]
         
         return newPartyMember
     }
-    public static func makeMage(name: String) -> PartyMember {
+    public static func makeMage(name: String, position: SinglePartyPosition) -> PartyMember {
         let newPartyMember = PartyMember(name: name)
         
         newPartyMember.abilities = [
-            DamageEnemyAbility(origin: Coordinate(x: 0, y: 0), heading: .north)
+            DamageEnemyAbility.makeAbility(ownerPosition: position)
         ]
         
         return newPartyMember

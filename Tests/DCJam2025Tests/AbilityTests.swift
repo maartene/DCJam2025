@@ -2,6 +2,10 @@ import Testing
 @testable import Model
 
 struct SpyAbility: Ability {
+    static func makeAbility(ownerPosition: Model.SinglePartyPosition) -> SpyAbility {
+        SpyAbility(action: { })
+    }
+    
     let key: String = "spy"
     let properties: [String : Any] = [:]
     let effect: (World, [String : Any]) -> Void
@@ -14,6 +18,10 @@ struct SpyAbility: Ability {
 }
 
 struct MockAbility: Ability {
+    static func makeAbility(ownerPosition: Model.SinglePartyPosition) -> MockAbility {
+        MockAbility(properties: [:])
+    }
+    
     let key: String
     let properties: [String: Any]
     
@@ -106,7 +114,7 @@ struct MockAbility: Ability {
     @Suite("for healing abilities") struct singleAbilities {
         let world = World(floors: [Floor()])
         @Test("be able to heal a party member") func heal() {
-            let ability = HealPartyMember(position: .frontLeft)
+            let ability = HealPartyMember(ownerPosition: .frontLeft)
             world.partyMembers[.frontLeft].takeDamage(3)
             let hpBefore = world.partyMembers[.frontLeft].currentHP
             
@@ -118,7 +126,7 @@ struct MockAbility: Ability {
         }
         
         @Test("not heal more than the maximum HP") func notHealOverMaximumHP() {
-            let ability = HealPartyMember(position: .frontLeft)
+            let ability = HealPartyMember(ownerPosition: .frontLeft)
             let hpBefore = world.partyMembers[.frontLeft].currentHP
             
             ability.execute(in: world)
@@ -129,7 +137,7 @@ struct MockAbility: Ability {
         }
         
         @Test("heal all party members with an AoE") func healAll() {
-            let ability = HealPartyMember(position: .frontLeft)
+            let ability = HealPartyMember(ownerPosition: .frontLeft)
             let healAllAbility = combine(ability, AddAoEAbility())
             
             world.partyMembers.getMembers(grouping: .all)
@@ -156,7 +164,7 @@ struct MockAbility: Ability {
         ])
         
         @Test("deal damage to a target") func dealDamageToATarget() throws {
-            let ability = DamageEnemyAbility(origin: world.partyPosition, heading: world.partyHeading)
+            let ability = DamageEnemyAbility()
             let target = try #require( world.enemiesOnCurrentFloor.first {
                 $0.position == Coordinate(x: 1, y: 2)
             })
@@ -168,7 +176,7 @@ struct MockAbility: Ability {
         }
         
         @Test("deal damage to only a single target") func dealDamageToASingleTarget() throws {
-            let ability = DamageEnemyAbility(origin: world.partyPosition, heading: world.partyHeading)
+            let ability = DamageEnemyAbility()
             
             ability.execute(in: world)
             
@@ -182,9 +190,7 @@ struct MockAbility: Ability {
         }
         
         @Test("deal damage in AoE") func dealDamageInAoE() throws {
-            let damageEnemyAbility = DamageEnemyAbility(
-                origin: world.partyPosition,
-                heading: world.partyHeading)
+            let damageEnemyAbility = DamageEnemyAbility()
             let addAoEAbility = AddAoEAbility()
             let ability = combine(damageEnemyAbility,  addAoEAbility)
             
@@ -217,9 +223,7 @@ struct MockAbility: Ability {
             )
             let target = try #require(world.enemiesOnCurrentFloor.first)
             
-            let damageEnemyAbility = DamageEnemyAbility(
-                origin: world.partyPosition,
-                heading: world.partyHeading)
+            let damageEnemyAbility = DamageEnemyAbility()
             let ability = combine(damageEnemyAbility, AddAoEAbility())
             
             let hpBeforeAbility = target.currentHP
@@ -238,9 +242,7 @@ struct MockAbility: Ability {
                 """
             ])
             
-            let damageEnemyAbility = DamageEnemyAbility(
-                origin: world.partyPosition,
-                heading: world.partyHeading)
+            let damageEnemyAbility = DamageEnemyAbility()
             let addRangeAbility = AddRangeAbility()
             let ability = combine(damageEnemyAbility, addRangeAbility)
             
@@ -262,9 +264,7 @@ struct MockAbility: Ability {
                 """
             ])
             
-            let damageEnemyAbility = DamageEnemyAbility(
-                origin: world.partyPosition,
-                heading: world.partyHeading)
+            let damageEnemyAbility = DamageEnemyAbility()
             let ability = combine(damageEnemyAbility, AddRangeAbility())
             
             let enemy = try #require(world.enemiesOnCurrentFloor.first(where: { $0.position == Coordinate(x: 0, y: 2) } ))
@@ -276,5 +276,4 @@ struct MockAbility: Ability {
             #expect(enemy.currentHP == hpBeforeAbility)
         }
     }
-    
 }

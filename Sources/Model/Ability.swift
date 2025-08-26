@@ -3,6 +3,8 @@ public protocol Ability {
     var properties: [String: Any] { get }
     func execute(in world: World)
     var effect: (World, [String: Any]) -> Void { get }
+    
+    static func makeAbility(ownerPosition: SinglePartyPosition) -> Self
 }
 
 extension Ability { 
@@ -25,19 +27,30 @@ func combine(_ abilities: (any Ability)...) -> CombinedAbility {
 
 // MARK: Concrete abilities
 struct DummyAbility: Ability {
+    static func makeAbility(ownerPosition: SinglePartyPosition) -> DummyAbility {
+        DummyAbility()
+    }
+    
+    private init() {
+        
+    }
+    
     let key = ""
     let properties: [String : Any] = [:]
 }
 
 public struct DamageEnemyAbility: Ability {
+    public static func makeAbility(ownerPosition: SinglePartyPosition) -> DamageEnemyAbility {
+        DamageEnemyAbility()
+    }
+    
     public let key = "a"
+    
     public let properties: [String : Any]
     public let effect = damageEnemyEffect
     
-    public init(origin: Coordinate, heading: CompassDirection) {
+    init() {
         properties = [
-            "origin": origin,
-            "heading": heading,
             "aoeRange": 0,
             "range": 1
         ]
@@ -49,11 +62,19 @@ public struct DamageEnemyAbility: Ability {
 }
 
 struct AddAoEAbility: Ability {
+    static func makeAbility(ownerPosition: SinglePartyPosition) -> AddAoEAbility {
+        AddAoEAbility()
+    }
+    
     public let key = "x"
     let properties: [String : Any] = ["aoeRange": 1]
 }
 
 struct CombinedAbility: Ability {
+    static func makeAbility(ownerPosition: SinglePartyPosition) -> CombinedAbility {
+        fatalError("Don't use `makeAbility` to create a CombinedAbility, use `combine(:) instead`")
+    }
+    
     let key: String
     let properties: [String: Any]
     let effects: [(World, [String: Any]) -> Void]
@@ -92,12 +113,16 @@ struct CombinedAbility: Ability {
 }
 
 struct HealPartyMember: Ability {
+    static func makeAbility(ownerPosition: SinglePartyPosition) -> HealPartyMember {
+        HealPartyMember(ownerPosition: ownerPosition)
+    }
+    
     let key = "h"
     let properties: [String : Any]
     public let effect = healPartyMemberEffect
     
-    init(position: SinglePartyPosition) {
-        self.properties = ["position": position]
+    init(ownerPosition: SinglePartyPosition) {
+        properties = ["ownerPosition": ownerPosition]
     }
     
     func execute(in world: World) {
@@ -106,14 +131,18 @@ struct HealPartyMember: Ability {
 }
 
 struct AddRangeAbility: Ability {
+    static func makeAbility(ownerPosition: SinglePartyPosition) -> AddRangeAbility {
+        AddRangeAbility()
+    }
+    
     let key = "x"
     let properties: [String : Any] = ["range": 2]
 }
 
 // MARK: Effects
 func damageEnemyEffect(in world: World, properties: [String: Any]) {
-    let origin = properties["origin"] as! Coordinate
-    let heading = properties["heading"] as! CompassDirection
+    let origin = world.partyPosition
+    let heading = world.partyHeading
     let aoeRange = properties["aoeRange"] as! Int
     let range = properties["range"] as! Int
     
@@ -147,14 +176,14 @@ func damageEnemyEffect(in world: World, properties: [String: Any]) {
 
 
 func healPartyMemberEffect(in world: World, properties: [String: Any]) {
-    let position = properties["position"] as! SinglePartyPosition
     let aoeRange = properties["aoeRange", default: 0] as! Int
+    let ownerPosition = properties["ownerPosition"] as! SinglePartyPosition
     
     if aoeRange > 0 {
         world.partyMembers.getMembers(grouping: .all)
             .forEach { $0.heal(3) }
     } else {
-        world.partyMembers[position].heal(3)
+        world.partyMembers[ownerPosition].heal(3)
     }
 }
 

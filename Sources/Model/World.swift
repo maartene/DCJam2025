@@ -22,10 +22,10 @@ public final class World {
     private var enemies: [Int: Set<Enemy>]
 
     public let partyMembers = PartyMembers(members: [
-        PartyMember.makeMeleePartyMember(name: "Loretta"),
-        PartyMember.makeMeleePartyMember(name: "Leroy"),
-        PartyMember.makeRanger(name: "Lenny"),
-        PartyMember.makeMage(name: "Ludo")
+        PartyMember.makeMeleePartyMember(name: "Loretta", position: .frontLeft),
+        PartyMember.makeMeleePartyMember(name: "Leroy", position: .frontRight),
+        PartyMember.makeRanger(name: "Lenny", position: .backLeft),
+        PartyMember.makeMage(name: "Ludo", position: .backRight)
     ])
 
     // Initializers
