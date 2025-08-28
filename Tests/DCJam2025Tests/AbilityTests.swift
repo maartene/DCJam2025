@@ -276,5 +276,22 @@ struct MockAbility: Ability {
             
             #expect(enemy.currentHP == hpBeforeAbility)
         }
+        
+        @Test("deal more damage when an ability is combined with a damage boost") func dealMoreDamageWhenCombinedWithADamageBoost() throws {
+            let target = try #require(world.enemiesOnCurrentFloor.first(where: { $0.position == Coordinate(x: 1, y: 2) } ))
+            let caster = world.partyMembers[.frontLeft]
+            let damageEnemyAbility = DamageEnemyAbility()
+            
+            let hpBeforeUnboosterAbility = target.currentHP
+            damageEnemyAbility.execute(by: caster, in: world)
+            let hpAfterUnboosterAbility = target.currentHP
+            let unboostedDamageDealt = hpBeforeUnboosterAbility - hpAfterUnboosterAbility
+            
+            let boostedDamageAbility = combine(damageEnemyAbility, AddPotencyAbility())
+            boostedDamageAbility.execute(by: caster, in: world)
+            let boostedDamageDealt = hpAfterUnboosterAbility - target.currentHP
+            
+            #expect(boostedDamageDealt > unboostedDamageDealt)
+        }
     }
 }

@@ -75,6 +75,10 @@ extension PartyMember {
     public static func makeRanger(name: String, position: SinglePartyPosition) -> PartyMember {
         let newPartyMember = makeMeleePartyMember(name: name, position: position)
         
+        newPartyMember.abilities = [
+            combine(DamageEnemyAbility(), AddRangeAbility())
+        ]
+        
         return newPartyMember
     }
     public static func makeMage(name: String, position: SinglePartyPosition) -> PartyMember {

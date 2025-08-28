@@ -107,12 +107,18 @@ struct AddRangeAbility: Ability {
     let properties: [String : Any] = ["range": 2]
 }
 
+struct AddPotencyAbility: Ability {
+    let properties: [String : Any] = ["potency": 2]
+    let key = "s"
+}
+
 // MARK: Effects
 func damageEnemyEffect(caster: PartyMember, in world: World, properties: [String: Any]) {
     let origin = world.partyPosition
     let heading = world.partyHeading
     let aoeRange = properties["aoeRange"] as! Int
     let range = properties["range"] as! Int
+    let potency = properties["potency", default: 0] as! Int
     
     guard let impactPosition = findPlaceOfImpact(origin: origin, heading: heading, range: range) else {
         return
@@ -123,7 +129,7 @@ func damageEnemyEffect(caster: PartyMember, in world: World, properties: [String
             $0.position.manhattanDistanceTo(impactPosition) <= aoeRange
         }
         .forEach {
-            $0.takeDamage(3)
+            $0.takeDamage(3 + potency)
         }
     
     func findPlaceOfImpact(origin: Coordinate, heading: CompassDirection, range: Int) -> Coordinate? {
