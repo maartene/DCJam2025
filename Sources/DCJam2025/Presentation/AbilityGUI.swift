@@ -38,29 +38,33 @@ public struct AbilityGUI {
         
         result.append(GUIText(position: Vector2(x: 20, y: 180), text: "Abilities:", color: .white, fontSize: 24))
         
-        result.append(GUIText(position: Vector2(x: 20, y: 210), text: "Select  Ability Components  Remove", color: .white, fontSize: 20))
+        result.append(GUIText(position: Vector2(x: 20, y: 210), text: "Select  Components  Actions", color: .white, fontSize: 20))
+        
+        // "Select  Components  Actions"
+        // "> #)             <"
         
         for i in 0 ..< partyMember.abilities.count {
             let ability = partyMember.abilities[i]
             let color = i == viewModel?.currentlySelectedAbilityIndex ? Color.blue : Color.white
             
             let y = Float(240 + i * 24)
-            result.append(GUIButton(position: Vector2(x: 20, y: y), size: Vector2(x: 20, y: 20), text: "\(i + 1):", enabled: true, action: { viewModel?.currentlySelectedAbilityIndex = i }))
+            result.append(GUIButton(position: Vector2(x: 44, y: y), size: Vector2(x: 40, y: 20), text: "(\(i + 1))", enabled: true, action: { viewModel?.currentlySelectedAbilityIndex = i }))
 
             let keys: [Character] = "abcd".map { $0 }
             
             if viewModel?.currentlySelectedAbilityIndex == i {
-                result.append(GUIText(position: Vector2(x: 50, y: y), text: ">            <", color: .white, fontSize: 20))
+                result.append(GUIText(position: Vector2(x: 20, y: y), text: ">", color: .white, fontSize: 20))
+                result.append(GUIText(position: Vector2(x: 210, y: y), text: "<", color: .white, fontSize: 20))
             }
             
             for j in 0 ..< keys.count {
                 let key = keys[j]
-                result.append(GUIButton(position: Vector2(x: Float(60 + 22 * j), y: y), size: Vector2(x: 20, y: 20), text: String(key), enabled: true, action: {
-                    
+                result.append(GUIButton(position: Vector2(x: Float(100 + 22 * j), y: y), size: Vector2(x: 20, y: 20), text: String(key), enabled: true, action: {
+                    removeComponent(keyIndex: j, abilityIndex: i)
                 }))
             }
             
-            result.append(GUIButton(position: Vector2(x: 180, y: y), size: Vector2(x: 20, y: 20), text: "-", enabled: true, action: { removeAbility(ability) }))
+            result.append(GUIButton(position: Vector2(x: 230, y: y), size: Vector2(x: 20, y: 20), text: "-", enabled: true, action: { removeAbility(ability) }))
         }
         
         
@@ -85,6 +89,12 @@ public struct AbilityGUI {
     
     func addAbility() {
         partyMember.abilities.append(DummyAbility())
+    }
+    
+    func removeComponent(keyIndex: Int, abilityIndex: Int) {
+        let existingAbility = partyMember.abilities[abilityIndex]
+        var keys = existingAbility.key.map { String($0) }
+        print("Removing component \(keys[keyIndex]) from \(existingAbility)")
     }
 }
 

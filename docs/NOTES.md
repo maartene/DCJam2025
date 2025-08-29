@@ -229,3 +229,6 @@ What is there to find? The answer to the ultimate secret: what came before? the 
 - ✅ Use new abilities in game
 - ✅ Heal now also uses potency
 - ✅ Remove magic numbers from Ability
+
+## 🍅 Pomodoro 44
+- 🚧 Mockup for UI
