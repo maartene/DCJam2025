@@ -21,6 +21,16 @@ extension Ability {
     }
 }
 
+public func allAbilities() -> [any Ability] {
+    [
+        DamageEnemyAbility(),
+        HealPartyMember(),
+        AddRangeAbility(),
+        AddPotencyAbility(),
+        AddAoEAbility()
+    ]
+}
+
 func combine(_ abilities: (any Ability)...) -> CombinedAbility {
     CombinedAbility(abilities: abilities)
 }
@@ -103,7 +113,7 @@ struct HealPartyMember: Ability {
 }
 
 struct AddRangeAbility: Ability {
-    let key = "x"
+    let key = "r"
     let properties: [String : Any] = ["range": 2]
 }
 

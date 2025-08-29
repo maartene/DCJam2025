@@ -42,6 +42,14 @@ public struct AbilityGUI {
         
         result.append(GUIButton(position: Vector2(x: 20, y: Float(210 + partyMember.abilities.count * 24)), size: Vector2(x: 100, y: 20), text: "Add ability", enabled: true, action: { addAbility() }))
         
+        result.append(GUIText(position: Vector2(x: 20, y: Float(240 + partyMember.abilities.count * 24)), text: "Available Abilities:", color: .white, fontSize: 24))
+        
+        let allAbilities = allAbilities()
+        for i in 0 ..< allAbilities.count {
+            let ability = allAbilities[i]
+            result.append(GUIButton(position: Vector2(x: Float(20 + i * 24), y: Float(270 + partyMember.abilities.count * 24)), size: Vector2(x: 20, y: 20), text: "\(ability.key)", enabled: true, action: { } ))
+        }
+        
         return result
     }
     
