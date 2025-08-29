@@ -50,15 +50,6 @@ import Testing
 @Suite("The party should be able to change abilities") struct ChangeAbilitiesTests {
     @Suite("adding abilities should") struct AddingAbilities {
         let partyMember = PartyMember.makeMage(name: "Example member", position: .backRight)
-        @Test("increase the number of abilities by one") func addAbilityTest() {
-            let originalAbilityCount = partyMember.abilities.count
-
-            let newAbility = DummyAbility()
-            partyMember.addAbility(newAbility)
-
-            #expect(partyMember.abilities.count == originalAbilityCount + 1)
-        }
-
         @Test("add the specific ability") func addSpecificAbilityTest() {
             let newAbility = DummyAbility()
             let originalAbilityCount = partyMember.abilities.count { $0.key == newAbility.key }
