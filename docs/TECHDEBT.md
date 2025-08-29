@@ -6,8 +6,6 @@
 - Rotating towards party is based on trial and error: rotate, see if facing party. otherwise repeat. this could be based on dot product
 
 ## 🚧 DOING
-    
-            
 
 
 ## ✅ DONE
@@ -72,3 +70,6 @@
 - Feature envy from AbilityGUI on PartyMember
     - [X] Adding and removing abilities is fixed
     - [X] Adding/removing components needs to be done
+- Missing tests to validate correct behaviour when two abilities have the same key (fixed in code)
+    - [X] When removing components
+    - [X] When adding components

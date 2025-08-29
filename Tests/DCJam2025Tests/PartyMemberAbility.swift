@@ -82,14 +82,15 @@ import Testing
     
     @Suite("changing an ability should") struct ChangeAbilityTests {
         @Suite("when adding a component to an ability") struct AddComponentToAbility {
-            let partyMember = PartyMember.makeMage(name: "Example member", position: .backRight)
+            let partyMember = PartyMember.makeMeleePartyMember(name: "Example member", position: .frontLeft)
             @Test("add a component to an existing ability") func addComponentToAbility() throws {
-                let originalAbility = try #require(partyMember.abilities.first)
+                try #require(partyMember.abilities.count > 1)
+                let originalAbility = partyMember.abilities[1]
 
                 let component = AddRangeAbility()
-                partyMember.addComponentToAbility(component: component, to: 0)
+                partyMember.addComponentToAbility(component: component, to: 1)
 
-                let changedAbility = try #require(partyMember.abilities.first)
+                let changedAbility = partyMember.abilities[1]
 
                 #expect(changedAbility.key == "\(originalAbility.key)\(component.key)")
             }
@@ -110,16 +111,22 @@ import Testing
             let partyMember = PartyMember.makeMeleePartyMember(name: "Example member", position: .frontRight)
             @Test("it should be removed from the key") func removeComponentFromAbilityTest() throws {
                 
-                let originalAbility = try #require(partyMember.abilities.first)
-                let originalAbilityKeys = originalAbility.key.map { String($0) }
-                try #require(originalAbilityKeys.count > 0)
+                try #require(partyMember.abilities.count > 1) 
 
-                partyMember.removeComponentFromAbility(componentKey: originalAbilityKeys.first!, from: 0)
+                let originalAbility0 = partyMember.abilities[0]
+                let originalAbility1 = partyMember.abilities[1]
+                let originalAbility0Keys = originalAbility0.key.map { String($0) }
+                let originalAbility1Keys = originalAbility1.key.map { String($0) }
 
-                let changedAbility = try #require(partyMember.abilities.first)
-                let changedAbilityKeys = changedAbility.key.map { String($0) }
+                partyMember.removeComponentFromAbility(componentKey: originalAbility1Keys.first!, from: 1)
 
-                #expect(changedAbilityKeys.count == originalAbilityKeys.count - 1)
+                let changedAbility0 = partyMember.abilities[0]
+                let changedAbility1 = partyMember.abilities[1]
+                let changedAbility0Keys = changedAbility0.key.map { String($0) }
+                let changedAbility1Keys = changedAbility1.key.map { String($0) }
+
+                #expect(changedAbility0Keys.count == originalAbility0Keys.count)
+                #expect(changedAbility1Keys.count == originalAbility1Keys.count - 1)
             }
         }
         
