@@ -108,6 +108,10 @@ extension Vector2 {
     static func +(lhs: Vector2, rhs: Vector2) -> Vector2 {
         Vector2(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
     }
+    
+    static func -(lhs: Vector2, rhs: Vector2) -> Vector2 {
+        Vector2(x: lhs.x - rhs.x, y: lhs.y - rhs.y)
+    }
 }
 
 let shaderUniformVec4: Int32 = 3

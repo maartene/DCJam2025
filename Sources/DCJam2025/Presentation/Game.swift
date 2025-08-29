@@ -185,10 +185,15 @@ class Game {
     }
 
     func drawGUI() {
-        GUI(world: world, sprites: sprites).drawParty()
+        AbilityGUI(sprites: sprites, partyMember: world.partyMembers[.frontLeft]).draw()
             .forEach {
                 $0.draw()
             }
+        
+//        GUI(world: world, sprites: sprites).drawParty()
+//            .forEach {
+//                $0.draw()
+//            }
     }
 
     private func loadShader() -> Shader {

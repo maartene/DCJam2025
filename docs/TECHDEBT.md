@@ -1,11 +1,11 @@
 # TECHDEBT
 
 ## ⚠️ TODO
+- Feature envy from AbilityGUI on PartyMember
 - Structure tests in suites and subsuites
 - Rotating towards party is based on trial and error: rotate, see if facing party. otherwise repeat. this could be based on dot product
 
 ## 🚧 DOING
-- Object calestanics for Ability
     
             
 
@@ -68,3 +68,4 @@
 - Duplication of logic between Enemy and World (Party)
     - Is it possible to re-use attack strategy?
     - Similarity between health of enemy and party members
+- Object calestanics for Ability
