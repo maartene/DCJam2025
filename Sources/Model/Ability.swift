@@ -151,12 +151,13 @@ func damageEnemyEffect(caster: PartyMember, in world: World, properties: [String
 func healPartyMemberEffect(caster: PartyMember, in world: World, properties: [String: Any]) {
     let aoeRange = properties["aoeRange", default: 0] as! Int
     let ownerPosition = caster.positionInParty
+    let potency = properties["potency", default: 0] as! Int
     
     if aoeRange > 0 {
         world.partyMembers.getMembers(grouping: .all)
-            .forEach { $0.heal(3) }
+            .forEach { $0.heal(3 + potency) }
     } else {
-        world.partyMembers[ownerPosition].heal(3)
+        world.partyMembers[ownerPosition].heal(3 + potency)
     }
 }
 

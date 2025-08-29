@@ -149,6 +149,26 @@ struct MockAbility: Ability {
                 #expect(partyMember.0 < partyMember.1)
             }
         }
+        
+        @Test("heal more health when an ability is combined with a heal boost") func healMoreHealthWhenCombinedWithAHealBoost() throws {
+            let caster = world.partyMembers[.frontLeft]
+            let healAbility = HealPartyMember()
+            
+            caster.takeDamage(caster.currentHP - 1)
+            #expect(caster.currentHP == 1)
+            
+            healAbility.execute(by: caster, in: world)
+            let amountHealedUnboosted = caster.currentHP - 1
+            
+            caster.takeDamage(caster.currentHP - 1)
+            #expect(caster.currentHP == 1)
+            
+            let boostedHealAbility = combine(HealPartyMember(), AddPotencyAbility())
+            boostedHealAbility.execute(by: caster, in: world)
+            let amountHealedBoosted = caster.currentHP - 1
+            
+            #expect(amountHealedBoosted > amountHealedUnboosted)
+        }
     }
     
     @Suite("For offensive abilities") struct OffensiveAbilities {
