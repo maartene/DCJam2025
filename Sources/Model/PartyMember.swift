@@ -60,6 +60,10 @@ public final class PartyMember: Damageable {
         
         return true
     }
+
+    func addAbility(_ ability: Ability) {
+        abilities.append(ability)
+    }
 }
 
 extension PartyMember {

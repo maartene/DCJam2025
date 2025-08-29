@@ -46,3 +46,19 @@ import Testing
         }
     }
 }
+
+@Suite("The party should be able to change abilities") struct ChangeAbilitiesTests {
+    @Suite("adding abilities") struct AddingAbilities {
+        let world = World(floors: [Floor()])
+        @Test("Add a new ability") func addAbilityTest() {
+            let partyMember = world.partyMembers[.backRight]
+            let originalAbilityCount = partyMember.abilities.count
+
+            let newAbility = DummyAbility()
+            partyMember.addAbility(newAbility)
+
+            #expect(partyMember.abilities.count == originalAbilityCount + 1)
+        }
+    }
+    
+}
