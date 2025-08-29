@@ -45,12 +45,11 @@ public struct AbilityGUI {
         
         for i in 0 ..< partyMember.abilities.count {
             let ability = partyMember.abilities[i]
-            let color = i == viewModel?.currentlySelectedAbilityIndex ? Color.blue : Color.white
             
             let y = Float(240 + i * 24)
             result.append(GUIButton(position: Vector2(x: 44, y: y), size: Vector2(x: 40, y: 20), text: "(\(i + 1))", enabled: true, action: { viewModel?.currentlySelectedAbilityIndex = i }))
 
-            let keys: [Character] = "abcd".map { $0 }
+            let keys: [Character] = ability.key.map { $0 }
             
             if viewModel?.currentlySelectedAbilityIndex == i {
                 result.append(GUIText(position: Vector2(x: 20, y: y), text: ">", color: .white, fontSize: 20))
@@ -82,13 +81,11 @@ public struct AbilityGUI {
     }
     
     func removeAbility(_ ability: any Ability) {
-        if let abilityIndex = partyMember.abilities.firstIndex(where: { $0.key == ability.key }) {
-            partyMember.abilities.remove(at: abilityIndex)
-        }
+        partyMember.deleteAbility(ability)
     }
     
     func addAbility() {
-        partyMember.abilities.append(DummyAbility())
+        partyMember.addAbility()
     }
     
     func removeComponent(keyIndex: Int, abilityIndex: Int) {
@@ -96,18 +93,6 @@ public struct AbilityGUI {
         var keys = existingAbility.key.map { String($0) }
         print("Removing component \(keys[keyIndex]) from \(existingAbility)")
     }
-}
-
-struct DummyAbility: Ability {
-    let effect: EffectSignature = { _,_,_ in }
-    
-    func execute(by partyMember: PartyMember, in world: World) {
-        
-    }
-    
-    let key: String = ""
-    
-    let properties: [String : Any] = [:]
 }
 
 final class AbilityGUIViewModel {

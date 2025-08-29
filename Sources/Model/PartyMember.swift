@@ -61,11 +61,11 @@ public final class PartyMember: Damageable {
         return true
     }
 
-    func addAbility(_ ability: Ability) {
+    public func addAbility(_ ability: Ability = DummyAbility()) {
         abilities.append(ability)
     }
 
-    func deleteAbility(_ ability: Ability) {
+    public func deleteAbility(_ ability: Ability) {
         guard let abilityIndex = abilities.firstIndex(where:  { $0.key == ability.key }) else {
             return 
         }

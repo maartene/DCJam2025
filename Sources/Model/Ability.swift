@@ -12,11 +12,11 @@ extension Ability {
         properties[key]
     }
     
-    func execute(by partyMember: PartyMember, in world: World) {
+    public func execute(by partyMember: PartyMember, in world: World) {
         effect(partyMember, world, properties)
     }
     
-    var effect: EffectSignature {
+    public var effect: EffectSignature {
         return { partyMember, _,_ in print("\(partyMember.name) executed ability \(self)") }
     }
 }
@@ -36,9 +36,11 @@ func combine(_ abilities: (any Ability)...) -> CombinedAbility {
 }
 
 // MARK: Concrete abilities
-struct DummyAbility: Ability {
-    let key = ""
-    let properties: [String : Any] = [:]
+public struct DummyAbility: Ability {
+    public let key = ""
+    public let properties: [String : Any] = [:]
+
+    public init() { }
 }
 
 public struct DamageEnemyAbility: Ability {
