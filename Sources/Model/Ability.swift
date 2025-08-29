@@ -32,6 +32,10 @@ public func allAbilities() -> [any Ability] {
 }
 
 func combine(_ abilities: (any Ability)...) -> CombinedAbility {
+    combine(abilities)
+}
+
+func combine(_ abilities: [any Ability]) -> CombinedAbility {
     CombinedAbility(abilities: abilities)
 }
 

@@ -80,6 +80,24 @@ public final class PartyMember: Damageable {
 
         abilities[existingAbilityIndex] = combine(abilities[existingAbilityIndex], component)
     }
+
+    public func removeComponentFromAbility(componentKey: String, from abilityToChange: any Ability) {
+         let existingAbilityIndex = abilities.firstIndex(where: { $0.key == abilityToChange.key } )!
+
+        let allAbilities = allAbilities()
+         var existingComponents = abilityToChange.key.map { String($0) }
+         .compactMap { existingComponentKey in 
+            allAbilities.first(where: { allAbility in 
+            allAbility.key == existingComponentKey 
+            })
+        }
+
+        let componentToRemove = existingComponents.firstIndex { $0.key == componentKey }!
+
+        existingComponents.remove(at: componentToRemove)
+
+        abilities[existingAbilityIndex] = combine(existingComponents)
+    }
 }
 
 extension PartyMember {
