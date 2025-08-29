@@ -72,6 +72,14 @@ public final class PartyMember: Damageable {
 
         abilities.remove(at: abilityIndex)
     }
+
+    public func addComponentToAbility(component: any Ability, to abilityToChange: any Ability) {
+        guard let existingAbilityIndex = abilities.firstIndex(where: { $0.key == abilityToChange.key } ) else {
+            return
+        }
+
+        abilities[existingAbilityIndex] = combine(abilities[existingAbilityIndex], component)
+    }
 }
 
 extension PartyMember {

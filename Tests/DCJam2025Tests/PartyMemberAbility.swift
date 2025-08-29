@@ -80,4 +80,28 @@ import Testing
         }
     }
     
+    @Suite("changing an ability should") struct ChangeAbilityTests {
+        let partyMember = PartyMember.makeMage(name: "Example member", position: .backRight)
+        @Test("add a component to an existing ability") func addComponentToAbility() throws {
+            let originalAbility = try #require(partyMember.abilities.first)
+
+            let component = AddRangeAbility()
+            partyMember.addComponentToAbility(component: component, to: originalAbility)
+
+            let changedAbility = try #require(partyMember.abilities.first)
+
+            #expect(changedAbility.key == "\(originalAbility.key)\(component.key)")
+        }
+
+        @Test("not add a component to an existing ability when existing ability cant be found") func abilityNotFound() throws {
+            let component = AddRangeAbility()
+            let originalAbilityKeys = partyMember.abilities.map { $0.key }
+            
+            partyMember.addComponentToAbility(component: component, to: DummyAbility())
+
+            let changedAbilityKeys = partyMember.abilities.map { $0.key }
+
+            #expect(changedAbilityKeys == originalAbilityKeys)
+        }
+    }
 }
