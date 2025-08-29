@@ -66,11 +66,11 @@ public final class PartyMember: Damageable {
     }
 
     func deleteAbility(_ ability: Ability) {
-        guard abilities.contains(where: { $0.key == ability.key }) else {
+        guard let abilityIndex = abilities.firstIndex(where:  { $0.key == ability.key }) else {
             return 
         }
 
-        abilities.removeFirst()
+        abilities.remove(at: abilityIndex)
     }
 }
 

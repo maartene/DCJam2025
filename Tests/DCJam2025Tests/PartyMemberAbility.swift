@@ -49,9 +49,8 @@ import Testing
 
 @Suite("The party should be able to change abilities") struct ChangeAbilitiesTests {
     @Suite("adding abilities") struct AddingAbilities {
-        let world = World(floors: [Floor()])
+        let partyMember = PartyMember.makeMage(name: "Example member", position: .backRight)
         @Test("increase the number of abilities by one") func addAbilityTest() {
-            let partyMember = world.partyMembers[.backRight]
             let originalAbilityCount = partyMember.abilities.count
 
             let newAbility = DummyAbility()
@@ -62,9 +61,8 @@ import Testing
     }
 
     @Suite("deleting abilities") struct DeletingAbilities {
-        let world = World(floors: [Floor()])
+        let partyMember = PartyMember.makeMage(name: "Example member", position: .backRight)
         @Test("should lower the amount of abilities by one") func deleteAbilityTest() throws {
-            let partyMember = world.partyMembers[.backRight]
             let originalAbilityCount = partyMember.abilities.count
 
             let ability = try #require(partyMember.abilities.first)
@@ -74,12 +72,20 @@ import Testing
         }
 
         @Test("should not remove any ability that doesnt exist") func dontRemoveAbilityThatDoesNotExist() {
-            let partyMember = world.partyMembers[.backRight]
             let originalAbilityCount = partyMember.abilities.count
 
             partyMember.deleteAbility(DummyAbility())
 
             #expect(partyMember.abilities.count == originalAbilityCount)
+        }
+
+        @Test("should delete the specified ability") func deleteSpecifiedAbility() throws {
+            let ability = try #require(partyMember.abilities.first)
+            let originalAbilityCount = partyMember.abilities.count { $0.key == ability.key }
+
+            partyMember.deleteAbility(ability)
+
+            #expect(partyMember.abilities.count { $0.key == ability.key } == originalAbilityCount - 1)
         }
     }
     
