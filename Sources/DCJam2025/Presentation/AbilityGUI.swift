@@ -74,7 +74,13 @@ public struct AbilityGUI {
         let allAbilities = allAbilities()
         for i in 0 ..< allAbilities.count {
             let ability = allAbilities[i]
-            result.append(GUIButton(position: Vector2(x: Float(20 + i * 24), y: Float(310 + partyMember.abilities.count * 24)), size: Vector2(x: 20, y: 20), text: "\(ability.key)", enabled: true, action: { } ))
+            if let selectedAbilityIndex = viewModel?.currentlySelectedAbilityIndex {
+                result.append(GUIButton(position: Vector2(x: Float(20 + i * 24), y: Float(310 + partyMember.abilities.count * 24)), size: Vector2(x: 20, y: 20), text: "\(ability.key)", enabled: true, action: {
+                partyMember.addComponentToAbility(component: ability, to: partyMember.abilities[selectedAbilityIndex])
+            } ))
+            } else {
+                result.append(GUIButton(position: Vector2(x: Float(20 + i * 24), y: Float(310 + partyMember.abilities.count * 24)), size: Vector2(x: 20, y: 20), text: "\(ability.key)", enabled: false, action: { } ))
+            }
         }
         
         return result
