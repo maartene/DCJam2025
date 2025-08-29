@@ -1,13 +1,11 @@
 # TECHDEBT
 
 ## ⚠️ TODO
+- Missing tests to validate correct behaviour when two abilities have the same key (fixed in code)
 - Structure tests in suites and subsuites
 - Rotating towards party is based on trial and error: rotate, see if facing party. otherwise repeat. this could be based on dot product
 
 ## 🚧 DOING
-- Feature envy from AbilityGUI on PartyMember
-    - [X] Adding and removing abilities is fixed
-    - [ ] Adding/removing components needs to be done
     
             
 
@@ -71,3 +69,6 @@
     - Is it possible to re-use attack strategy?
     - Similarity between health of enemy and party members
 - Object calestanics for Ability
+- Feature envy from AbilityGUI on PartyMember
+    - [X] Adding and removing abilities is fixed
+    - [X] Adding/removing components needs to be done

@@ -239,3 +239,10 @@ What is there to find? The answer to the ultimate secret: what came before? the 
     - ✅ Remove an ability
     - ⚠️ Add a component to an ability
     - ⚠️ Remove a component from an ability
+
+## 🍅 Pomodoro 46
+- ✅ Add functionality for managing abilities to PartyMember
+    - ✅ Add a new ability
+    - ✅ Remove an ability
+    - ✅ Add a component to an ability
+    - ✅ Remove a component from an ability
