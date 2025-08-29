@@ -31,7 +31,7 @@ struct GUIText: GUIDrawable {
     let fontSize: Int32
 
     func draw() {
-        DrawText(text, Int32(position.x), Int32(position.y), fontSize, .white)
+        DrawText(text, Int32(position.x), Int32(position.y), fontSize, color)
     }
 }
 

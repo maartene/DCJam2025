@@ -23,7 +23,8 @@ class Game {
     var shader: Shader!
 
     let rlHelper = RayLibStateHelper()
-
+    let abilityGUIViewModel = AbilityGUIViewModel()
+    
     let world = makeWorld(from: [
         """
         #######
@@ -185,7 +186,7 @@ class Game {
     }
 
     func drawGUI() {
-        AbilityGUI(sprites: sprites, partyMember: world.partyMembers[.frontLeft]).draw()
+        AbilityGUI(sprites: sprites, partyMember: world.partyMembers[.frontLeft], viewModel: abilityGUIViewModel).draw()
             .forEach {
                 $0.draw()
             }
