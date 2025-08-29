@@ -59,7 +59,7 @@ public struct AbilityGUI {
             for j in 0 ..< keys.count {
                 let key = keys[j]
                 result.append(GUIButton(position: Vector2(x: Float(100 + 22 * j), y: y), size: Vector2(x: 20, y: 20), text: String(key), enabled: true, action: {
-                    removeComponent(keyIndex: j, abilityIndex: i)
+                    removeComponent(componentKey: String(key), abilityIndex: i)
                 }))
             }
             
@@ -76,7 +76,7 @@ public struct AbilityGUI {
             let ability = allAbilities[i]
             if let selectedAbilityIndex = viewModel?.currentlySelectedAbilityIndex {
                 result.append(GUIButton(position: Vector2(x: Float(20 + i * 24), y: Float(310 + partyMember.abilities.count * 24)), size: Vector2(x: 20, y: 20), text: "\(ability.key)", enabled: true, action: {
-                partyMember.addComponentToAbility(component: ability, to: partyMember.abilities[selectedAbilityIndex])
+                partyMember.addComponentToAbility(component: ability, to: selectedAbilityIndex)
             } ))
             } else {
                 result.append(GUIButton(position: Vector2(x: Float(20 + i * 24), y: Float(310 + partyMember.abilities.count * 24)), size: Vector2(x: 20, y: 20), text: "\(ability.key)", enabled: false, action: { } ))
@@ -94,10 +94,8 @@ public struct AbilityGUI {
         partyMember.addAbility()
     }
     
-    func removeComponent(keyIndex: Int, abilityIndex: Int) {
-        let existingAbility = partyMember.abilities[abilityIndex]
-        var keys = existingAbility.key.map { String($0) }
-        print("Removing component \(keys[keyIndex]) from \(existingAbility)")
+    func removeComponent(componentKey: String, abilityIndex: Int) {
+        partyMember.removeComponentFromAbility(componentKey: componentKey, from: abilityIndex)
     }
 }
 

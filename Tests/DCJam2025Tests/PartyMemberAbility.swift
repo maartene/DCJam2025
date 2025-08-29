@@ -87,7 +87,7 @@ import Testing
                 let originalAbility = try #require(partyMember.abilities.first)
 
                 let component = AddRangeAbility()
-                partyMember.addComponentToAbility(component: component, to: originalAbility)
+                partyMember.addComponentToAbility(component: component, to: 0)
 
                 let changedAbility = try #require(partyMember.abilities.first)
 
@@ -98,7 +98,7 @@ import Testing
                 let component = AddRangeAbility()
                 let originalAbilityKeys = partyMember.abilities.map { $0.key }
                 
-                partyMember.addComponentToAbility(component: component, to: DummyAbility())
+                partyMember.addComponentToAbility(component: component, to: 5)
 
                 let changedAbilityKeys = partyMember.abilities.map { $0.key }
 
@@ -114,7 +114,7 @@ import Testing
                 let originalAbilityKeys = originalAbility.key.map { String($0) }
                 try #require(originalAbilityKeys.count > 0)
 
-                partyMember.removeComponentFromAbility(componentKey: originalAbilityKeys.first!, from: originalAbility)
+                partyMember.removeComponentFromAbility(componentKey: originalAbilityKeys.first!, from: 0)
 
                 let changedAbility = try #require(partyMember.abilities.first)
                 let changedAbilityKeys = changedAbility.key.map { String($0) }

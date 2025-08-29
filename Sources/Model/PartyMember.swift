@@ -73,16 +73,16 @@ public final class PartyMember: Damageable {
         abilities.remove(at: abilityIndex)
     }
 
-    public func addComponentToAbility(component: any Ability, to abilityToChange: any Ability) {
-        guard let existingAbilityIndex = abilities.firstIndex(where: { $0.key == abilityToChange.key } ) else {
-            return
+    public func addComponentToAbility(component: any Ability, to abilityToChangeIndex: Int) {
+        guard (0 ..< abilities.count).contains(abilityToChangeIndex) else {
+            return 
         }
 
-        abilities[existingAbilityIndex] = combine(abilities[existingAbilityIndex], component)
+        abilities[abilityToChangeIndex] = combine(abilities[abilityToChangeIndex], component)
     }
 
-    public func removeComponentFromAbility(componentKey: String, from abilityToChange: any Ability) {
-         let existingAbilityIndex = abilities.firstIndex(where: { $0.key == abilityToChange.key } )!
+    public func removeComponentFromAbility(componentKey: String, from abilityToChangeIndex: Int) {
+        let abilityToChange = abilities[abilityToChangeIndex]
 
         let allAbilities = allAbilities()
          var existingComponents = abilityToChange.key.map { String($0) }
@@ -96,7 +96,7 @@ public final class PartyMember: Damageable {
 
         existingComponents.remove(at: componentToRemove)
 
-        abilities[existingAbilityIndex] = combine(existingComponents)
+        abilities[abilityToChangeIndex] = combine(existingComponents)
     }
 }
 
