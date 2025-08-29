@@ -224,3 +224,6 @@ What is there to find? The answer to the ultimate secret: what came before? the 
 - ✅ Refactor for object calestenics
 - ✅ AoE heal
 - ✅ Fix ❌ only when there is first a straight LoS, can we hit with an AoE
+
+## 🍅 Pomodoro 43
+- ✅ Use new abilities in game

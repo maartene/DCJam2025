@@ -226,13 +226,13 @@ import Model
     @Test("convert partymembers into drawables") func convertPartymembersIntoDrawables() {
         let world = makeWorld(from: ["."])
 
-        let expectedDrawablePositions = [Vector2(x: 890.0, y: 10.0), Vector2(x: 895.0, y: 10.0), Vector2(x: 1000.0, y: 35.0), Vector2(x: 1000.0, y: 75.0), Vector2(x: 895.0, y: 140.0), Vector2(x: 925.0, y: 140.0), Vector2(x: 927.0, y: 142.0), Vector2(x: 1085.0, y: 10.0), Vector2(x: 1090.0, y: 10.0), Vector2(x: 1195.0, y: 35.0), Vector2(x: 1195.0, y: 75.0), Vector2(x: 1090.0, y: 140.0), Vector2(x: 1120.0, y: 140.0), Vector2(x: 1122.0, y: 142.0), Vector2(x: 890.0, y: 170.0), Vector2(x: 895.0, y: 170.0), Vector2(x: 1000.0, y: 195.0), Vector2(x: 1000.0, y: 235.0), Vector2(x: 895.0, y: 300.0), Vector2(x: 925.0, y: 300.0), Vector2(x: 927.0, y: 302.0), Vector2(x: 1085.0, y: 170.0), Vector2(x: 1090.0, y: 170.0), Vector2(x: 1195.0, y: 195.0), Vector2(x: 1195.0, y: 235.0), Vector2(x: 1090.0, y: 300.0), Vector2(x: 1120.0, y: 300.0), Vector2(x: 1122.0, y: 302.0)]
+        let expectedDrawablePositions = [Vector2(x: 890.0, y: 10.0), Vector2(x: 895.0, y: 10.0), Vector2(x: 1000.0, y: 35.0), Vector2(x: 1000.0, y: 75.0), Vector2(x: 895.0, y: 140.0), Vector2(x: 925.0, y: 140.0), Vector2(x: 927.0, y: 142.0), Vector2(x: 1085.0, y: 10.0), Vector2(x: 1090.0, y: 10.0), Vector2(x: 1195.0, y: 35.0), Vector2(x: 1195.0, y: 75.0), Vector2(x: 1090.0, y: 140.0), Vector2(x: 1120.0, y: 140.0), Vector2(x: 1122.0, y: 142.0), Vector2(x: 890.0, y: 170.0), Vector2(x: 895.0, y: 170.0), Vector2(x: 1000.0, y: 195.0), Vector2(x: 895.0, y: 300.0), Vector2(x: 925.0, y: 300.0), Vector2(x: 927.0, y: 302.0), Vector2(x: 1085.0, y: 170.0), Vector2(x: 1090.0, y: 170.0), Vector2(x: 1195.0, y: 195.0), Vector2(x: 1195.0, y: 235.0), Vector2(x: 1090.0, y: 300.0), Vector2(x: 1120.0, y: 300.0), Vector2(x: 1122.0, y: 302.0)]
 
         let gui = GUI(world: world, sprites: [:])
         let drawables = gui.drawParty()
         let drawablePositions = drawables
             .map { $0.position }
-
+        
         #expect(drawablePositions.count == expectedDrawablePositions.count)
         for drawable in expectedDrawablePositions {
             #expect(drawablePositions.contains(drawable))

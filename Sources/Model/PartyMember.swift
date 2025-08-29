@@ -67,7 +67,8 @@ extension PartyMember {
         let newPartyMember = PartyMember(name: name, positionInParty: position)
         
         newPartyMember.abilities = [
-            DamageEnemyAbility()
+            combine(DamageEnemyAbility(), AddPotencyAbility()),
+            combine(DamageEnemyAbility()),
         ]
         
         return newPartyMember
@@ -85,6 +86,7 @@ extension PartyMember {
         let newPartyMember = makeMeleePartyMember(name: name, position: position)
         
         newPartyMember.abilities = [
+            DamageEnemyAbility(),
             combine(HealPartyMember(), AddAoEAbility())
         ]
         

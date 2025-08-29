@@ -105,24 +105,22 @@ struct GUI {
 
         let attackButtonSize = Vector2(x: 70, y: 40)
 
-        result.append(contentsOf: drawAttackButtonFor(memberPosition, position: position + Vector2(x: 5 + 100 + 5, y: 25), size: attackButtonSize))
-        result.append(contentsOf: drawAttackButtonFor(memberPosition, position: position + Vector2(x: 5 + 100 + 5, y: 25 + attackButtonSize.y), size: attackButtonSize))
-
+        for i in 0 ..< partyMember.abilities.count {
+            let ability = partyMember.abilities[i]
+            result.append(contentsOf: drawAttackButtonFor(memberPosition, ability: ability, position: position + Vector2(x: 5 + 100 + 5, y: 25 + attackButtonSize.y * Float(i)), size: attackButtonSize))
+        }
+        
         result.append(contentsOf: drawHPBar(currentHP: partyMember.currentHP, maxHP: 10, position: position + Vector2(x: 5, y: 130)))
 
         return result
     }
 
-    private func drawAttackButtonFor(_ memberPosition: SinglePartyPosition, position: Vector2, size: Vector2) -> [any GUIDrawable] {
+    private func drawAttackButtonFor(_ memberPosition: SinglePartyPosition, ability: any Ability, position: Vector2, size: Vector2) -> [any GUIDrawable] {
         guard let world else {
             return []
         }
         
         let partyMember = world.partyMembers[memberPosition]
-        
-        guard let ability = partyMember.abilities.first else {
-            return []
-        }
 
         return [
             GUIButton(position: position, size: size, text: ability.key, enabled: partyMember.canExecuteAbility(ability, at: Date())) {
