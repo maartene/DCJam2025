@@ -64,6 +64,14 @@ public final class PartyMember: Damageable {
     func addAbility(_ ability: Ability) {
         abilities.append(ability)
     }
+
+    func deleteAbility(_ ability: Ability) {
+        guard abilities.contains(where: { $0.key == ability.key }) else {
+            return 
+        }
+
+        abilities.removeFirst()
+    }
 }
 
 extension PartyMember {

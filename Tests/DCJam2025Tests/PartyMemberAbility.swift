@@ -50,7 +50,7 @@ import Testing
 @Suite("The party should be able to change abilities") struct ChangeAbilitiesTests {
     @Suite("adding abilities") struct AddingAbilities {
         let world = World(floors: [Floor()])
-        @Test("Add a new ability") func addAbilityTest() {
+        @Test("increase the number of abilities by one") func addAbilityTest() {
             let partyMember = world.partyMembers[.backRight]
             let originalAbilityCount = partyMember.abilities.count
 
@@ -58,6 +58,28 @@ import Testing
             partyMember.addAbility(newAbility)
 
             #expect(partyMember.abilities.count == originalAbilityCount + 1)
+        }
+    }
+
+    @Suite("deleting abilities") struct DeletingAbilities {
+        let world = World(floors: [Floor()])
+        @Test("should lower the amount of abilities by one") func deleteAbilityTest() throws {
+            let partyMember = world.partyMembers[.backRight]
+            let originalAbilityCount = partyMember.abilities.count
+
+            let ability = try #require(partyMember.abilities.first)
+            partyMember.deleteAbility(ability)
+
+            #expect(partyMember.abilities.count == originalAbilityCount - 1)
+        }
+
+        @Test("should not remove any ability that doesnt exist") func dontRemoveAbilityThatDoesNotExist() {
+            let partyMember = world.partyMembers[.backRight]
+            let originalAbilityCount = partyMember.abilities.count
+
+            partyMember.deleteAbility(DummyAbility())
+
+            #expect(partyMember.abilities.count == originalAbilityCount)
         }
     }
     
