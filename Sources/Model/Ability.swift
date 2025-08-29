@@ -114,6 +114,7 @@ struct AddPotencyAbility: Ability {
 
 // MARK: Effects
 func damageEnemyEffect(caster: PartyMember, in world: World, properties: [String: Any]) {
+    let baseDamage = 3
     let origin = world.partyPosition
     let heading = world.partyHeading
     let aoeRange = properties["aoeRange"] as! Int
@@ -129,7 +130,7 @@ func damageEnemyEffect(caster: PartyMember, in world: World, properties: [String
             $0.position.manhattanDistanceTo(impactPosition) <= aoeRange
         }
         .forEach {
-            $0.takeDamage(3 + potency)
+            $0.takeDamage(baseDamage + potency)
         }
     
     func findPlaceOfImpact(origin: Coordinate, heading: CompassDirection, range: Int) -> Coordinate? {
@@ -149,15 +150,18 @@ func damageEnemyEffect(caster: PartyMember, in world: World, properties: [String
 }
 
 func healPartyMemberEffect(caster: PartyMember, in world: World, properties: [String: Any]) {
+    let baseHealAmount = 3
     let aoeRange = properties["aoeRange", default: 0] as! Int
     let ownerPosition = caster.positionInParty
     let potency = properties["potency", default: 0] as! Int
     
+    let healAmount = baseHealAmount + potency
+    
     if aoeRange > 0 {
         world.partyMembers.getMembers(grouping: .all)
-            .forEach { $0.heal(3 + potency) }
+            .forEach { $0.heal(healAmount) }
     } else {
-        world.partyMembers[ownerPosition].heal(3 + potency)
+        world.partyMembers[ownerPosition].heal(healAmount)
     }
 }
 
