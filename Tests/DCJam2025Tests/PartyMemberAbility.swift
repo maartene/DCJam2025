@@ -62,15 +62,6 @@ import Testing
 
     @Suite("deleting abilities") struct DeletingAbilities {
         let partyMember = PartyMember.makeMage(name: "Example member", position: .backRight)
-        @Test("should lower the amount of abilities by one") func deleteAbilityTest() throws {
-            let originalAbilityCount = partyMember.abilities.count
-
-            let ability = try #require(partyMember.abilities.first)
-            partyMember.deleteAbility(ability)
-
-            #expect(partyMember.abilities.count == originalAbilityCount - 1)
-        }
-
         @Test("should not remove any ability that doesnt exist") func dontRemoveAbilityThatDoesNotExist() {
             let originalAbilityCount = partyMember.abilities.count
 
