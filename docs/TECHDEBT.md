@@ -1,11 +1,13 @@
 # TECHDEBT
 
 ## ⚠️ TODO
-- Feature envy from AbilityGUI on PartyMember
 - Structure tests in suites and subsuites
 - Rotating towards party is based on trial and error: rotate, see if facing party. otherwise repeat. this could be based on dot product
 
 ## 🚧 DOING
+- Feature envy from AbilityGUI on PartyMember
+    - [X] Adding and removing abilities is fixed
+    - [ ] Adding/removing components needs to be done
     
             
 
