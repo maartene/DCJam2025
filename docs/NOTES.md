@@ -227,3 +227,5 @@ What is there to find? The answer to the ultimate secret: what came before? the 
 
 ## 🍅 Pomodoro 43
 - ✅ Use new abilities in game
+- ✅ Heal now also uses potency
+- ✅ Remove magic numbers from Ability
