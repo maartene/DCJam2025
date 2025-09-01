@@ -87,7 +87,7 @@ extension Vector3 {
         Vector3(x: 0, y: 1, z: 0)
     }
 
-    static func +(lhs: Vector3, rhs: Vector3) -> Vector3 {
+    static func + (lhs: Vector3, rhs: Vector3) -> Vector3 {
         Vector3(x: lhs.x + rhs.x, y: lhs.y + rhs.y, z: lhs.z + rhs.z)
     }
 
@@ -108,11 +108,11 @@ enum GuiState {
 }
 
 extension Vector2 {
-    static func +(lhs: Vector2, rhs: Vector2) -> Vector2 {
+    static func + (lhs: Vector2, rhs: Vector2) -> Vector2 {
         Vector2(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
     }
 
-    static func -(lhs: Vector2, rhs: Vector2) -> Vector2 {
+    static func - (lhs: Vector2, rhs: Vector2) -> Vector2 {
         Vector2(x: lhs.x - rhs.x, y: lhs.y - rhs.y)
     }
 }
@@ -128,7 +128,8 @@ final class RayLibStateHelper {
     private var states = Set<RayLibState>()
 
     func withDrawing(instructions: () -> Void) {
-        precondition(states.contains(.drawing) == false, "Only call `withDrawing` when not in a nested `withDrawing` call")
+        precondition(states.contains(.drawing) == false,
+                     "Only call `withDrawing` when not in a nested `withDrawing` call")
 
         BeginDrawing()
         states.insert(.drawing)
@@ -138,8 +139,10 @@ final class RayLibStateHelper {
     }
 
     func with3DDrawing(camera: Camera, instructions: () -> Void) {
-        precondition(states.contains(.drawing), "Only call `with3DDrawing` when in drawing state")
-        precondition(states.contains(.drawing3D) == false, "Only call `withDrawing` when not in a nested `with3DDrawing` call")
+        precondition(states.contains(.drawing),
+                     "Only call `with3DDrawing` when in drawing state")
+        precondition(states.contains(.drawing3D) == false,
+                     "Only call `withDrawing` when not in a nested `with3DDrawing` call")
 
         BeginMode3D(camera)
         states.insert(.drawing3D)
@@ -149,8 +152,10 @@ final class RayLibStateHelper {
     }
 
     func withShader(_ shader: Shader, instructions: () -> Void) {
-        precondition(states.contains(.drawing3D), "Only call `with3DDrawing` when in drawing3D state")
-        precondition(states.contains(.shading) == false, "Only call `withShader` when not in a nested `withShader` call")
+        precondition(states.contains(.drawing3D),
+                     "Only call `with3DDrawing` when in drawing3D state")
+        precondition(states.contains(.shading) == false,
+                     "Only call `withShader` when not in a nested `withShader` call")
 
         BeginShaderMode(shader)
         states.insert(.shading)

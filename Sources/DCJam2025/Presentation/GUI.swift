@@ -110,8 +110,7 @@ struct GUI {
     }
 
     private func drawPartyMember(_ memberPosition: SinglePartyPosition, position: Vector2)
-        -> [any GUIDrawable]
-    {
+        -> [any GUIDrawable] {
         guard let world else {
             return []
         }

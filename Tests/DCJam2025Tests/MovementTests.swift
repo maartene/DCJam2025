@@ -13,11 +13,11 @@ import Testing
             (MovementDirection.forward, Coordinate(x: 0, y: 1)),
             (MovementDirection.backwards, Coordinate(x: 0, y: -1)),
             (MovementDirection.left, Coordinate(x: -1, y: 0)),
-            (MovementDirection.right, Coordinate(x: 1, y: 0)),
-        ]) func movePartyForward(
+            (MovementDirection.right, Coordinate(x: 1, y: 0))
+        ])
+    func movePartyForward(
             testcase: (direction: MovementDirection, expectedPosition: Coordinate)
-        )
-    {
+        ) {
         worldWithSingleFloor.executeCommand(.move(direction: testcase.direction), at: Date())
 
         #expect(worldWithSingleFloor.partyPosition == testcase.expectedPosition)

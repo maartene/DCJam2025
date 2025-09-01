@@ -18,7 +18,8 @@ import Model
         #expect(world.state == .defeated)
     }
 
-    @Test("be 'inProgress' when at least one party member is not unconcious") func notLostWhenAtLeastOnePartyMemberIsAlive() {
+    @Test("be 'inProgress' when at least one party member is not unconcious")
+    func notLostWhenAtLeastOnePartyMemberIsAlive() {
         worldWithSingleFloor.partyMembers[.frontLeft].takeDamage(Int.max)
         worldWithSingleFloor.partyMembers[.frontRight].takeDamage(Int.max)
         worldWithSingleFloor.partyMembers[.backLeft].takeDamage(Int.max)

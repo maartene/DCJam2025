@@ -64,7 +64,7 @@ class Game {
         #..s.....s.#....#...#.........#
         #..........#.#..#...#.#....#..#
         ###############################
-        """,
+        """
     ])
 
     func run() {
@@ -115,13 +115,11 @@ class Game {
             KEY_A: { self.world.executeCommand(.move(direction: .right), at: Date()) },
             KEY_S: { self.world.executeCommand(.move(direction: .backwards), at: Date()) },
             KEY_Q: { self.world.executeCommand(.turnClockwise, at: Date()) },
-            KEY_E: { self.world.executeCommand(.turnCounterClockwise, at: Date()) },
+            KEY_E: { self.world.executeCommand(.turnCounterClockwise, at: Date()) }
         ]
 
-        for keyAction in inputActionMap {
-            if isKeyPressed(keyAction.key) {
-                keyAction.value()
-            }
+        for keyAction in inputActionMap where isKeyPressed(keyAction.key) {
+            keyAction.value()
         }
     }
 
@@ -255,7 +253,7 @@ class Game {
             "Loretta",
             "Ludo",
             "Lenny",
-            "Leroy",
+            "Leroy"
         ]
 
         imageNames.forEach {
@@ -275,7 +273,7 @@ class Game {
             "floor_wood_large",
             "ceiling_tile",
             "chest_gold",
-            "shadow",
+            "shadow"
         ]
 
         modelNames.forEach {
@@ -286,7 +284,7 @@ class Game {
     private func loadModel(_ fileName: String, withExtension ext: String) -> Model {
         let shaderOverrideSlot = [
             "Skeleton_Warrior": 1,
-            "shadow": 1,
+            "shadow": 1
         ]
 
         guard let modelURL = Bundle.module.url(forResource: fileName, withExtension: ext)
@@ -302,7 +300,7 @@ class Game {
 
     private func loadFontsizes() {
         let fontsizes: [Int32] = [
-            16, 20, 24, 32, 36,
+            16, 20, 24, 32, 36
         ]
 
         fontsizes.forEach {

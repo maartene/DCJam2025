@@ -208,8 +208,8 @@ struct MockAbility: Ability {
 
             let hpsAfterAbility = world.enemiesOnCurrentFloor
                 .map { $0.currentHP }
-                .reduce(into: [:]) { partialResult, hp in
-                    partialResult[hp, default: 0] += 1
+                .reduce(into: [:]) { partialResult, currentHP in
+                    partialResult[currentHP, default: 0] += 1
                 }
 
             #expect(hpsAfterAbility.filter { $0.value == 1 }.count == 1)
@@ -223,7 +223,7 @@ struct MockAbility: Ability {
             let enemyCoordinates = [
                 Coordinate(x: 0, y: 2),
                 Coordinate(x: 1, y: 2),
-                Coordinate(x: 2, y: 2),
+                Coordinate(x: 2, y: 2)
             ]
 
             let enemies = enemyCoordinates.map { coordinate in

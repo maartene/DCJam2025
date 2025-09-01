@@ -73,7 +73,8 @@ import Model
         #expect(world.partyMembers[.frontRight].currentHP < originalHPForFrontRightPartyMember)
     }
 
-    @Test("rotates towards a party when its not facing party") func enemiesRotateTowardsPartyWhenItsNotFacingParty() throws {
+    @Test("rotates towards a party when its not facing party")
+    func enemiesRotateTowardsPartyWhenItsNotFacingParty() throws {
         let world = makeWorld(from: [
             """
             ..

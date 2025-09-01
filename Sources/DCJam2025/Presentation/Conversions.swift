@@ -36,7 +36,7 @@ public func getSpriteAndPositionForTileAtPosition(
     let tileToSpriteMap: [Tile: String] = [
         .wall: "wall",
         .stairsDown: "stairsDown",
-        .stairsUp: "stairsUp",
+        .stairsUp: "stairsUp"
     ]
 
     let tile = floor.tileAt(position)
@@ -59,7 +59,7 @@ public func getSpriteAndPositionForEntityAtPosition(
         .north: "north",
         .east: "west",
         .south: "south",
-        .west: "east",
+        .west: "east"
     ]
 
     let correctedX = Int32(floor.maxX - position.x) * spriteSize + offsetX
@@ -132,7 +132,7 @@ public struct Drawable3D: Equatable {
             Drawable3D(
                 modelName: "shadow",
                 position: entity.position.toVector3 + Vector3(x: 0, y: -0.487, z: 0), up: .up,
-                rotation: 0, tint: .shadow, scale: .one.scale(0.5)),
+                rotation: 0, tint: .shadow, scale: .one.scale(0.5))
         ]
     }
 }
@@ -181,8 +181,7 @@ public struct Drawable2D: Equatable {
     }
 
     static func makeEnemy(enemy: Enemy, on floor: Floor, offsetX: Int32 = 0, offsetY: Int32 = 0)
-        -> Drawable2D
-    {
+        -> Drawable2D {
         let spriteNameAndPosition = getSpriteAndPositionForEntityAtPosition(
             enemy.position, heading: enemy.heading, on: floor, offsetX: offsetX, offsetY: offsetY)
 
