@@ -39,7 +39,7 @@ let package = Package(
             swiftSettings: [
                 .unsafeFlags(["-Xfrontend", "-validate-tbd-against-ir=none"])
             ],
-            plugins: targetPlugins
+            // plugins: targetPlugins
         ),
         .target(
             name: "Model"
@@ -52,7 +52,7 @@ let package = Package(
             dependencies: [
                 "DCJam2025", "Model",
             ],
-            plugins: targetPlugins
+            // plugins: targetPlugins
         ),
         .systemLibrary(
             name: "raylib", pkgConfig: "raylib",
