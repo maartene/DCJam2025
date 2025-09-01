@@ -19,7 +19,7 @@ public struct PartyMembers {
     }
 
     private func getMember(at position: SinglePartyPosition) -> PartyMember {
-        members.first(where: { $0.positionInParty == position } )!
+        members.first(where: { $0.positionInParty == position })!
     }
 
     public func getMembers(grouping: PartyPositionGroup) -> [PartyMember] {
@@ -36,7 +36,7 @@ public struct PartyMembers {
     public var hasAlivePartyMember: Bool {
         members.filter { $0.isAlive }.isEmpty == false
     }
-    
+
     func executeAbility(
         _ ability: any Ability,
         from userPosition: SinglePartyPosition,
@@ -44,7 +44,7 @@ public struct PartyMembers {
         at time: Date
     ) {
         let user = getMember(at: userPosition)
-        
+
         user.executeAbility(ability, in: world, at: time)
     }
 }

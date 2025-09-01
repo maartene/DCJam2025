@@ -28,36 +28,36 @@ public final class PartyMember: Damageable {
     public func takeDamage(_ amount: Int) {
         currentHP -= amount
     }
-    
+
     public func heal(_ amount: Int) {
         currentHP += amount
-        
+
         currentHP = min(maximumHP, currentHP)
     }
-    
+
     func executeAbility(_ ability: any Ability, in world: World, at time: Date) {
         guard canExecuteAbility(ability, at: time) else {
             return
         }
-        
+
         ability.execute(by: self, in: world)
-        
+
         cooldownExpiresNew = Date().addingTimeInterval(cooldown)
     }
-    
+
     public func canExecuteAbility(_ ability: any Ability, at time: Date) -> Bool {
         guard cooldownExpiresNew <= time else {
             return false
         }
-        
+
         guard isAlive else {
             return false
         }
-        
+
         guard abilities.contains(where: { $0.key == ability.key }) else {
             return false
         }
-        
+
         return true
     }
 
@@ -66,8 +66,8 @@ public final class PartyMember: Damageable {
     }
 
     public func deleteAbility(_ ability: Ability) {
-        guard let abilityIndex = abilities.firstIndex(where:  { $0.key == ability.key }) else {
-            return 
+        guard let abilityIndex = abilities.firstIndex(where: { $0.key == ability.key }) else {
+            return
         }
 
         abilities.remove(at: abilityIndex)
@@ -75,7 +75,7 @@ public final class PartyMember: Damageable {
 
     public func addComponentToAbility(component: any Ability, to abilityToChangeIndex: Int) {
         guard (0 ..< abilities.count).contains(abilityToChangeIndex) else {
-            return 
+            return
         }
 
         abilities[abilityToChangeIndex] = combine(abilities[abilityToChangeIndex], component)
@@ -86,9 +86,9 @@ public final class PartyMember: Damageable {
 
         let allAbilities = allAbilities()
          var existingComponents = abilityToChange.key.map { String($0) }
-         .compactMap { existingComponentKey in 
-            allAbilities.first(where: { allAbility in 
-            allAbility.key == existingComponentKey 
+         .compactMap { existingComponentKey in
+            allAbilities.first(where: { allAbility in
+            allAbility.key == existingComponentKey
             })
         }
 
@@ -103,31 +103,31 @@ public final class PartyMember: Damageable {
 extension PartyMember {
     public static func makeMeleePartyMember(name: String, position: SinglePartyPosition) -> PartyMember {
         let newPartyMember = PartyMember(name: name, positionInParty: position)
-        
+
         newPartyMember.abilities = [
             combine(DamageEnemyAbility(), AddPotencyAbility()),
-            combine(DamageEnemyAbility()),
+            combine(DamageEnemyAbility())
         ]
-        
+
         return newPartyMember
     }
     public static func makeRanger(name: String, position: SinglePartyPosition) -> PartyMember {
         let newPartyMember = makeMeleePartyMember(name: name, position: position)
-        
+
         newPartyMember.abilities = [
             combine(DamageEnemyAbility(), AddRangeAbility())
         ]
-        
+
         return newPartyMember
     }
     public static func makeMage(name: String, position: SinglePartyPosition) -> PartyMember {
         let newPartyMember = makeMeleePartyMember(name: name, position: position)
-        
+
         newPartyMember.abilities = [
             DamageEnemyAbility(),
             combine(HealPartyMember(), AddAoEAbility())
         ]
-        
+
         return newPartyMember
     }
 }

@@ -16,19 +16,19 @@ public struct Coordinate: Sendable {
         self.y = y
     }
 
-    public static func +(lhs: Coordinate, rhs: Coordinate) -> Coordinate {
+    public static func + (lhs: Coordinate, rhs: Coordinate) -> Coordinate {
         Coordinate(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
     }
 
-    public static func +=(lhs: inout Coordinate, rhs: Coordinate) {
+    public static func += (lhs: inout Coordinate, rhs: Coordinate) {
         lhs = lhs + rhs
     }
 
-    public static func -(lhs: Coordinate, rhs: Coordinate) -> Coordinate {
+    public static func - (lhs: Coordinate, rhs: Coordinate) -> Coordinate {
         Coordinate(x: lhs.x - rhs.x, y: lhs.y - rhs.y)
     }
 
-    public static func *(vector: Coordinate, scalar: Int) -> Coordinate {
+    public static func * (vector: Coordinate, scalar: Int) -> Coordinate {
         Coordinate(x: vector.x * scalar, y: vector.y * scalar)
     }
 
@@ -38,7 +38,7 @@ public struct Coordinate: Sendable {
     }
 
     public var magnitude: Double {
-        sqrt(Double(x*x + y*y))
+        sqrt(Double(x * x + y * y))
     }
 
     static var square3x3: Set<Coordinate> {
@@ -51,14 +51,15 @@ public struct Coordinate: Sendable {
             Coordinate(x: 1, y: 0),
             Coordinate(x: -1, y: 1),
             Coordinate(x: 0, y: 1),
-            Coordinate(x: 1, y: 1)
+            Coordinate(x: 1, y: 1),
         ]
     }
 
     var squareAround: Set<Coordinate> {
-        Set(Coordinate.square3x3.map {
-            $0 + self
-        })
+        Set(
+            Coordinate.square3x3.map {
+                $0 + self
+            })
     }
 
     var neighbours: [Coordinate] {
@@ -66,7 +67,7 @@ public struct Coordinate: Sendable {
             Coordinate(x: 1, y: 0),
             Coordinate(x: -1, y: 0),
             Coordinate(x: 0, y: +1),
-            Coordinate(x: 0, y: -1)
+            Coordinate(x: 0, y: -1),
         ].map { $0 + self }
     }
 
@@ -75,8 +76,8 @@ public struct Coordinate: Sendable {
     }
 }
 
-extension Coordinate: Equatable { }
-extension Coordinate: Hashable { }
+extension Coordinate: Equatable {}
+extension Coordinate: Hashable {}
 
 extension Coordinate {
     private static func plotLineLow(x0: Int, y0: Int, x1: Int, y1: Int) -> [Coordinate] {
@@ -91,16 +92,16 @@ extension Coordinate {
             dy = -dy
         }
 
-        var D: Double = 2*dy - dx
+        var dd: Double = 2 * dy - dx
         var y = Double(y0)
 
-        for x in x0 ... x1 {
+        for x in x0...x1 {
             result.append(Coordinate(x: x, y: Int(y)))
-            if D > 0 {
-               y = y + yi
-               D = D - 2*dx
+            if dd > 0 {
+                y += yi
+                dd -= 2 * dx
             }
-            D = D + 2*dy
+            dd += 2 * dy
         }
 
         return result
@@ -119,16 +120,16 @@ extension Coordinate {
             dx = -dx
         }
 
-        var D: Double = 2*dx - dy
+        var dd: Double = 2 * dx - dy
         var x = Double(x0)
 
-        for y in y0 ... y1 {
+        for y in y0...y1 {
             result.append(Coordinate(x: Int(x), y: y))
-            if D > 0 {
-               x = x + xi
-               D = D - 2*dy
+            if dd > 0 {
+                x += xi
+                dd -= 2 * dy
             }
-            D = D + 2*dx
+            dd += 2 * dx
         }
         return result
     }

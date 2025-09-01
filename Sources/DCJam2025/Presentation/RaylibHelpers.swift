@@ -55,7 +55,7 @@ extension Color {
     public static var yellow: Color {
         Color(r: 253, g: 249, b: 0, a: 255)
     }
-    
+
     public static var darkPurple: Color {
         Color(r: 112, g: 31, b: 126, a: 255)
     }
@@ -111,7 +111,7 @@ extension Vector2 {
     static func +(lhs: Vector2, rhs: Vector2) -> Vector2 {
         Vector2(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
     }
-    
+
     static func -(lhs: Vector2, rhs: Vector2) -> Vector2 {
         Vector2(x: lhs.x - rhs.x, y: lhs.y - rhs.y)
     }

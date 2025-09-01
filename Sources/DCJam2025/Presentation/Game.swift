@@ -6,9 +6,9 @@
 //
 
 import Foundation
-import raylib
 import Model
 import raygui
+import raylib
 
 class Game {
     let screenWidth: Int32 = 1280
@@ -27,7 +27,7 @@ class Game {
 
     let rlHelper = RayLibStateHelper()
     let abilityGUIViewModel = AbilityGUIViewModel()
-    
+
     let world = makeWorld(from: [
         """
         #######
@@ -64,13 +64,13 @@ class Game {
         #..s.....s.#....#...#.........#
         #..........#.#..#...#.#....#..#
         ###############################
-        """
+        """,
     ])
 
     func run() {
         SetConfigFlags(FLAG_MSAA_4X_HINT.rawValue)
         SetConfigFlags(FLAG_WINDOW_HIGHDPI.rawValue)
-        
+
         InitWindow(screenWidth, screenHeight, "DCJam2025")
         SetTargetFPS(60)
 
@@ -79,13 +79,13 @@ class Game {
         loadImages()
         loadModels()
         loadFontsizes()
-        
+
         guard let style = Bundle.module.url(forResource: "style", withExtension: "rgs") else {
             fatalError("Could not find style file")
         }
-        
+
         GuiLoadStyle(style.path(percentEncoded: false))
-        
+
         while WindowShouldClose() == false {
             update()
             drawGameView()
@@ -115,7 +115,7 @@ class Game {
             KEY_A: { self.world.executeCommand(.move(direction: .right), at: Date()) },
             KEY_S: { self.world.executeCommand(.move(direction: .backwards), at: Date()) },
             KEY_Q: { self.world.executeCommand(.turnClockwise, at: Date()) },
-            KEY_E: { self.world.executeCommand(.turnCounterClockwise, at: Date()) }
+            KEY_E: { self.world.executeCommand(.turnCounterClockwise, at: Date()) },
         ]
 
         for keyAction in inputActionMap {
@@ -136,9 +136,14 @@ class Game {
     }
 
     private func updateLights() {
-        pointLight = CreateLight(Int32(LIGHT_POINT.rawValue), camera.position, Vector3(x: 0, y: 0, z: 0), Color(r: 200, g: 150, b: 100, a: 255) * 0.8, shader, 0)
+        pointLight = CreateLight(
+            Int32(LIGHT_POINT.rawValue), camera.position, Vector3(x: 0, y: 0, z: 0),
+            Color(r: 200, g: 150, b: 100, a: 255) * 0.8, shader, 0)
 
-        SetShaderValue(shader, shader.locs[Int(SHADER_LOC_VECTOR_VIEW.rawValue)], [camera.position.x, camera.position.y, camera.position.z], Int32(SHADER_UNIFORM_VEC3.rawValue))
+        SetShaderValue(
+            shader, shader.locs[Int(SHADER_LOC_VECTOR_VIEW.rawValue)],
+            [camera.position.x, camera.position.y, camera.position.z],
+            Int32(SHADER_UNIFORM_VEC3.rawValue))
         UpdateLightValues(shader, pointLight)
     }
 
@@ -198,17 +203,20 @@ class Game {
     }
 
     func drawGUI() {
-//        DrawTextEx(font, "Hello, World", Vector2(x: 10, y: 200), 32, 10, .white)
-        
-        AbilityGUI(sprites: sprites, fontsizes: pixelFontSizes, partyMember: world.partyMembers[.frontLeft], viewModel: abilityGUIViewModel).draw()
+        //        DrawTextEx(font, "Hello, World", Vector2(x: 10, y: 200), 32, 10, .white)
+
+        AbilityGUI(
+            sprites: sprites, fontsizes: pixelFontSizes,
+            partyMember: world.partyMembers[.frontLeft], viewModel: abilityGUIViewModel
+        ).draw()
             .forEach {
                 $0.draw()
             }
-        
-//        GUI(world: world, sprites: sprites).drawParty()
-//            .forEach {
-//                $0.draw()
-//            }
+
+        //        GUI(world: world, sprites: sprites).drawParty()
+        //            .forEach {
+        //                $0.draw()
+        //            }
     }
 
     private func loadShader() -> Shader {
@@ -223,8 +231,9 @@ class Game {
         }
 
         // Load basic lighting shader
-        let shader = LoadShader(vertexURL.path(percentEncoded: false),
-                                fragURL.path(percentEncoded: false))
+        let shader = LoadShader(
+            vertexURL.path(percentEncoded: false),
+            fragURL.path(percentEncoded: false))
         // Get some required shader locations
         shader.locs[11] = GetShaderLocation(shader, "viewPos")
 
@@ -246,7 +255,7 @@ class Game {
             "Loretta",
             "Ludo",
             "Lenny",
-            "Leroy"
+            "Leroy",
         ]
 
         imageNames.forEach {
@@ -266,7 +275,7 @@ class Game {
             "floor_wood_large",
             "ceiling_tile",
             "chest_gold",
-            "shadow"
+            "shadow",
         ]
 
         modelNames.forEach {
@@ -277,7 +286,7 @@ class Game {
     private func loadModel(_ fileName: String, withExtension ext: String) -> Model {
         let shaderOverrideSlot = [
             "Skeleton_Warrior": 1,
-            "shadow": 1
+            "shadow": 1,
         ]
 
         guard let modelURL = Bundle.module.url(forResource: fileName, withExtension: ext)
@@ -290,22 +299,24 @@ class Game {
         model.materials[shaderSlot].shader = shader
         return model
     }
-    
+
     private func loadFontsizes() {
         let fontsizes: [Int32] = [
-            16, 20, 24, 32, 36
+            16, 20, 24, 32, 36,
         ]
-        
+
         fontsizes.forEach {
             pixelFontSizes[$0] = loadFontsize($0)
         }
     }
-    
+
     private func loadFontsize(_ size: Int32) -> Font {
-        guard let fontURL = Bundle.module.url(forResource: "Arapey-Regular", withExtension: "ttf") else {
+        guard let fontURL = Bundle.module.url(forResource: "Arapey-Regular", withExtension: "ttf")
+        else {
             fatalError("Could not find font file")
         }
-        
-        return LoadFontEx(fontURL.path(percentEncoded: false), size * GUIText.IMPORT_RENDER_MULTIPLIER, nil, 0)
+
+        return LoadFontEx(
+            fontURL.path(percentEncoded: false), size * GUIText.imageRenderMultiplier, nil, 0)
     }
 }

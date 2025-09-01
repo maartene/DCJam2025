@@ -18,7 +18,7 @@ extension AttackPartyStrategy {
         let manhattanDistance = world.partyPosition.manhattanDistanceTo(enemyPosition)
         return manhattanDistance <= range
     }
-    
+
     func damageTargets(in world: World) {
         let potentialTargets = getValidTargets(in: world)
         potentialTargets.randomElement()?.takeDamage(damage)

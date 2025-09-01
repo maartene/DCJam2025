@@ -1,3 +1,17 @@
 included:
   - Sources
   - Tests
+
+cyclomatic_complexity:
+  - warning: 4
+  - error: 10
+
+identifier_name:
+  excluded: # excluded via string array
+    - x
+    - y
+    - z
+    - r
+    - g
+    - b
+    - a
