@@ -26,13 +26,33 @@ struct GUIRectangle: GUIDrawable {
 }
 
 struct GUIText: GUIDrawable {
+    private static let BASE_TEXT_SIZE: Int32 = 64
+    private static let BASE_SPACING_FOR_IMPORT_TEXT_SIZE: Float = 4
+    static let IMPORT_RENDER_MULTIPLIER: Int32 = 2
+    let font: Font
     let position: Vector2
     let text: String
     let color: Color
-    let fontSize: Int32
 
+    init(font: Font?, position: Vector2, text: String, color: Color) {
+        self.font = font ?? Font()
+        self.position = position
+        self.text = text
+        self.color = color
+    }
+    
+    var fontSize: Float {
+        Float(font.baseSize / Self.IMPORT_RENDER_MULTIPLIER)
+    }
+    
+    var spacing: Float {
+        Self.BASE_SPACING_FOR_IMPORT_TEXT_SIZE * fontSize / Float(Self.BASE_TEXT_SIZE)
+    }
+    
     func draw() {
-        DrawText(text, Int32(position.x), Int32(position.y), fontSize, color)
+        DrawTextEx(font, text, position, fontSize, spacing, color)
+        //GuiLabel(Rectangle(x: position.x, y: position.y, width: 200, height: 30), text)
+        
     }
 }
 
@@ -71,6 +91,7 @@ struct GUIButton: GUIDrawable {
 struct GUI {
     weak var world: World?
     let sprites: [String: Texture]
+    let fontsizes: [Int32: Font]
 
     func drawParty() -> [any GUIDrawable] {
         GuiSetState(GuiState.normal)
@@ -94,11 +115,11 @@ struct GUI {
         let partyMember = world.partyMembers[memberPosition]
         let x = position.x
         let y = position.y
-        let fontSize: Int32 = 24
+        let fontSize: Float = 24
 
         result.append(GUIRectangle(position: Vector2(x: x, y: y), size: Vector2(x: 185, y: 150), color: .darkGray))
 
-        result.append(GUIText(position: Vector2(x: x + 5, y: y), text: partyMember.name, color: .white, fontSize: fontSize))
+        result.append(GUIText(font: fontsizes[Int32(fontSize)], position: Vector2(x: x + 5, y: y), text: partyMember.name, color: .white))
 
         if let portrait = sprites[partyMember.name] {
             result.append(GUITexture(position: Vector2(x: x + 5, y: y + 25), texture: portrait, color: .white))
@@ -134,7 +155,7 @@ struct GUI {
         var result = [any GUIDrawable]()
 
         // label:
-        result.append(GUIText(position: position, text: "HP: ", color: .white, fontSize: 16))
+        result.append(GUIText(font: fontsizes[16], position: position, text: "HP: ", color: .white))
 
         // outer bar:
         result.append(GUIRectangle(position: position + Vector2(x: 30, y: 0), size: Vector2(x: 145, y: 15), color: .white))

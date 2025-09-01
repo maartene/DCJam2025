@@ -19,9 +19,11 @@ class Game {
 
     var sprites = [String: Texture2D]()
     var models = [String: Model]()
+    var pixelFontSizes = [Int32: Font]()
 
     var pointLight: Light!
     var shader: Shader!
+    var font: Font!
 
     let rlHelper = RayLibStateHelper()
     let abilityGUIViewModel = AbilityGUIViewModel()
@@ -67,6 +69,8 @@ class Game {
 
     func run() {
         SetConfigFlags(FLAG_MSAA_4X_HINT.rawValue)
+        SetConfigFlags(FLAG_WINDOW_HIGHDPI.rawValue)
+        
         InitWindow(screenWidth, screenHeight, "DCJam2025")
         SetTargetFPS(60)
 
@@ -74,6 +78,13 @@ class Game {
 
         loadImages()
         loadModels()
+        loadFontsizes()
+        
+        guard let style = Bundle.module.url(forResource: "style", withExtension: "rgs") else {
+            fatalError("Could not find style file")
+        }
+        
+        GuiLoadStyle(style.path(percentEncoded: false))
         
         while WindowShouldClose() == false {
             update()
@@ -187,7 +198,9 @@ class Game {
     }
 
     func drawGUI() {
-        AbilityGUI(sprites: sprites, partyMember: world.partyMembers[.frontLeft], viewModel: abilityGUIViewModel).draw()
+//        DrawTextEx(font, "Hello, World", Vector2(x: 10, y: 200), 32, 10, .white)
+        
+        AbilityGUI(sprites: sprites, fontsizes: pixelFontSizes, partyMember: world.partyMembers[.frontLeft], viewModel: abilityGUIViewModel).draw()
             .forEach {
                 $0.draw()
             }
@@ -276,5 +289,23 @@ class Game {
         let shaderSlot = shaderOverrideSlot[fileName, default: 0]
         model.materials[shaderSlot].shader = shader
         return model
+    }
+    
+    private func loadFontsizes() {
+        let fontsizes: [Int32] = [
+            16, 20, 24, 32, 36
+        ]
+        
+        fontsizes.forEach {
+            pixelFontSizes[$0] = loadFontsize($0)
+        }
+    }
+    
+    private func loadFontsize(_ size: Int32) -> Font {
+        guard let fontURL = Bundle.module.url(forResource: "Arapey-Regular", withExtension: "ttf") else {
+            fatalError("Could not find font file")
+        }
+        
+        return LoadFontEx(fontURL.path(percentEncoded: false), size * GUIText.IMPORT_RENDER_MULTIPLIER, nil, 0)
     }
 }

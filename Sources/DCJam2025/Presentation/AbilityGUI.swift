@@ -13,11 +13,13 @@ import raylib
 
 public struct AbilityGUI {
     let sprites: [String: Texture]
+    let fontsizes: [Int32: Font]
     let partyMember: PartyMember
     weak var viewModel: AbilityGUIViewModel?
     
-    init(sprites: [String : Texture], partyMember: PartyMember, viewModel: AbilityGUIViewModel) {
+    init(sprites: [String : Texture], fontsizes: [Int32: Font], partyMember: PartyMember, viewModel: AbilityGUIViewModel) {
         self.sprites = sprites
+        self.fontsizes = fontsizes
         self.partyMember = partyMember
         self.viewModel = viewModel
     }
@@ -28,33 +30,35 @@ public struct AbilityGUI {
         
         var result = [GUIDrawable]()
         
-        result.append(GUIRectangle(position: Vector2(x: 10, y: 10), size: Vector2(x: width, y: height), color: .darkGray))
+        result.append(GUIRectangle(position: Vector2(x: 10, y: 10), size: Vector2(x: width, y: height), color: Color(r: 80, g: 80, b: 80, a: 192)))
         
-        result.append(GUIText(position: Vector2(x: 20, y: 20), text: partyMember.name, color: .white, fontSize: 36))
+        result.append(GUIText(font: fontsizes[36], position: Vector2(x: 20, y: 20), text: partyMember.name, color: .white))
         
         if let portrait = sprites[partyMember.name] {
             result.append(GUITexture(position: Vector2(x: 20, y: 20 + 42), texture: portrait, color: .white))
         }
         
-        result.append(GUIText(position: Vector2(x: 20, y: 180), text: "Abilities:", color: .white, fontSize: 24))
         
-        result.append(GUIText(position: Vector2(x: 20, y: 210), text: "Select  Components  Actions", color: .white, fontSize: 20))
+        result.append(GUIText(font: fontsizes[24], position: Vector2(x: 20, y: 180), text: "Abilities:", color: .white))
         
-        // "Select  Components  Actions"
-        // "> #)             <"
+        result.append(GUIText(font: fontsizes[20], position: Vector2(x: 20, y: 210), text: "Select", color: .white))
+        
+        result.append(GUIText(font: fontsizes[20], position: Vector2(x: 100, y: 210), text: "Components", color: .white))
+        
+        result.append(GUIText(font: fontsizes[20], position: Vector2(x: 230, y: 210), text: "Actions", color: .white))
         
         for i in 0 ..< partyMember.abilities.count {
             let ability = partyMember.abilities[i]
             
             let y = Float(240 + i * 24)
-            result.append(GUIButton(position: Vector2(x: 44, y: y), size: Vector2(x: 40, y: 20), text: "(\(i + 1))", enabled: true, action: { viewModel?.currentlySelectedAbilityIndex = i }))
-
-            let keys: [Character] = ability.key.map { $0 }
             
             if viewModel?.currentlySelectedAbilityIndex == i {
-                result.append(GUIText(position: Vector2(x: 20, y: y), text: ">", color: .white, fontSize: 20))
-                result.append(GUIText(position: Vector2(x: 210, y: y), text: "<", color: .white, fontSize: 20))
+                result.append(GUIRectangle(position: Vector2(x: 20 - 2, y: y - 2), size: Vector2(x: 280 + 4, y: 24), color: .darkPurple))
             }
+            
+            result.append(GUIButton(position: Vector2(x: 20, y: y), size: Vector2(x: 40, y: 20), text: "(\(i + 1))", enabled: true, action: { viewModel?.currentlySelectedAbilityIndex = i }))
+
+            let keys: [Character] = ability.key.map { $0 }
             
             for j in 0 ..< keys.count {
                 let key = keys[j]
@@ -69,7 +73,7 @@ public struct AbilityGUI {
         
         result.append(GUIButton(position: Vector2(x: 20, y: Float(240 + partyMember.abilities.count * 24 + 5)), size: Vector2(x: 100, y: 20), text: "Add ability", enabled: true, action: { addAbility() }))
         
-        result.append(GUIText(position: Vector2(x: 20, y: Float(280 + partyMember.abilities.count * 24)), text: "Available Abilities:", color: .white, fontSize: 24))
+        result.append(GUIText(font: fontsizes[24], position: Vector2(x: 20, y: Float(280 + partyMember.abilities.count * 24)), text: "Available Abilities:", color: .white))
         
         let allAbilities = allAbilities()
         for i in 0 ..< allAbilities.count {

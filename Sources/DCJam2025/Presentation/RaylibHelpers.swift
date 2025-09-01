@@ -20,7 +20,6 @@ extension Color {
 //    #define DARKBLUE   CLITERAL(Color){ 0, 82, 172, 255 }      // Dark Blue
 //    #define PURPLE     CLITERAL(Color){ 200, 122, 255, 255 }   // Purple
 //    #define VIOLET     CLITERAL(Color){ 135, 60, 190, 255 }    // Violet
-//    #define DARKPURPLE CLITERAL(Color){ 112, 31, 126, 255 }    // Dark Purple
 //    #define BEIGE      CLITERAL(Color){ 211, 176, 131, 255 }   // Beige
 //    #define BROWN      CLITERAL(Color){ 127, 106, 79, 255 }    // Brown
 //    #define DARKBROWN  CLITERAL(Color){ 76, 63, 47, 255 }      // Dark Brown
@@ -55,6 +54,10 @@ extension Color {
 
     public static var yellow: Color {
         Color(r: 253, g: 249, b: 0, a: 255)
+    }
+    
+    public static var darkPurple: Color {
+        Color(r: 112, g: 31, b: 126, a: 255)
     }
 
     public static var shadow: Color {
