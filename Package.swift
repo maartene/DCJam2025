@@ -33,10 +33,7 @@ let package = Package(
             name: "Model"
         ),
         .target(
-            name: "raygui",
-            cSettings: [
-                .define("RAYGUI_IMPLEMENTATION"),
-            ]
+            name: "raygui"
         ),
         .testTarget(
             name: "DCJam2025Tests",
