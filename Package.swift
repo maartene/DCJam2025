@@ -10,6 +10,7 @@ let package = Package(
     ],
     products: [
         .library(name: "raylib", targets: ["raylib"]),
+        .library(name: "raygui", targets: ["raygui"]),
         .executable(name: "DCJam2025", targets: ["DCJam2025"]),
     ],
     targets: [
@@ -17,12 +18,11 @@ let package = Package(
         // Targets can depend on other targets in this package and products from dependencies.
         .executableTarget(
             name: "DCJam2025",
-            dependencies: ["raylib", "Model"],
+            dependencies: ["raylib", "Model", "raygui"],
             resources: [
                 .process("Resources")
             ],
             cSettings: [
-                .define("RAYGUI_IMPLEMENTATION"),
                 .define("RLIGHTS_IMPLEMENTATION")
             ],
             swiftSettings: [
@@ -31,6 +31,12 @@ let package = Package(
         ),
         .target(
             name: "Model"
+        ),
+        .target(
+            name: "raygui",
+            cSettings: [
+                .define("RAYGUI_IMPLEMENTATION"),
+            ]
         ),
         .testTarget(
             name: "DCJam2025Tests",

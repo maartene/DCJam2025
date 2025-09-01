@@ -1,0 +1,5 @@
+module raygui {
+    umbrella header "include/raygui.h"
+    export *
+    link "raygui"
+}

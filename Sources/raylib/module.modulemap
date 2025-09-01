@@ -13,11 +13,6 @@ module raylib {
         export *
     }
 
-    module raygui {
-        header "include/raygui.h"
-        export *
-    }
-
     module rlights {
         header "include/rlights.h"
         export *

@@ -8,6 +8,7 @@
 import raylib
 import Model
 import Foundation
+import raygui
 
 protocol GUIDrawable {
     var position: Vector2 { get }

@@ -8,6 +8,7 @@
 import Foundation
 import raylib
 import Model
+import raygui
 
 class Game {
     let screenWidth: Int32 = 1280
@@ -73,7 +74,7 @@ class Game {
 
         loadImages()
         loadModels()
-
+        
         while WindowShouldClose() == false {
             update()
             drawGameView()
