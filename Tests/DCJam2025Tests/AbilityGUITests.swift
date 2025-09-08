@@ -17,7 +17,7 @@ import Model
         
         let drawables = gui.draw()
         
-        let buttons = drawables.buttons(filter: "AvailableAbilities")
+        let buttons = drawables.buttons(groupingID: "AvailableAbilities")
         
         #expect(buttons.count == allAbilities().count)
         
@@ -34,7 +34,7 @@ import Model
             
             let drawables = gui.draw()
             
-            let buttons = drawables.buttons(filter: "AvailableAbilities")
+            let buttons = drawables.buttons(groupingID: "AvailableAbilities")
 
             #expect(buttons.count == allAbilities().count)
             
@@ -48,8 +48,7 @@ import Model
             
             let drawables = gui.draw()
             
-            let rectangles = drawables.compactMap { $0 as? GUIRectangle }
-                .filter { $0.filter == "Abilities" }
+            let rectangles = drawables.rectangles(groupingID: "Abilities")
             
             #expect(rectangles.isEmpty)
             

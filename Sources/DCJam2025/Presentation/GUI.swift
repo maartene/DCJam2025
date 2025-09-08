@@ -19,13 +19,13 @@ struct GUIRectangle: GUIDrawable {
     let position: Vector2
     let size: Vector2
     let color: Color
-    let filter: String?
+    let groupingID: String?
 
-    init(position: Vector2, size: Vector2, color: Color, filter: String? = nil) {
+    init(position: Vector2, size: Vector2, color: Color, groupingID: String? = nil) {
         self.position = position
         self.size = size
         self.color = color
-        self.filter = filter
+        self.groupingID = groupingID
     }
     
     func draw() {
@@ -79,7 +79,7 @@ struct GUIButton: GUIDrawable {
     let size: Vector2
     let text: String
     let enabled: Bool
-    let filter: String?
+    let groupingID: String?
     let action: () -> Void
     
     func draw() {
@@ -179,7 +179,7 @@ struct GUI {
             GUIButton(
                 position: position, size: size, text: ability.key,
                 enabled: partyMember.canExecuteAbility(ability, at: Date()),
-                filter: "AttackButtons"
+                groupingID: "AttackButtons"
             ) {
                 world.executeCommand(
                     .executeAbility(user: memberPosition, ability: ability), at: Date())
@@ -213,15 +213,21 @@ struct GUI {
 }
 
 extension Array<any GUIDrawable> {
-    func buttons(filter: String? = nil) -> [GUIButton] {
+    func buttons(groupingID: String? = nil) -> [GUIButton] {
         compactMap {
             $0 as? GUIButton
         }
         .filter {
-            if let filter {
-                return $0.filter == filter
-            }
-            return true
+            $0.groupingID == groupingID
+        }
+    }
+    
+    func rectangles(groupingID: String? = nil) -> [GUIRectangle] {
+        compactMap {
+            $0 as? GUIRectangle
+        }
+        .filter {
+            $0.groupingID == groupingID
         }
     }
 }
