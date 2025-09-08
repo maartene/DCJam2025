@@ -71,8 +71,9 @@ struct GUIButton: GUIDrawable {
     let size: Vector2
     let text: String
     let enabled: Bool
+    let filter: String?
     let action: () -> Void
-
+    
     func draw() {
         let saveGuiState = GuiGetState()
         let buttonRectangle = Rectangle(x: position.x, y: position.y, width: size.x, height: size.y)
@@ -169,7 +170,8 @@ struct GUI {
         return [
             GUIButton(
                 position: position, size: size, text: ability.key,
-                enabled: partyMember.canExecuteAbility(ability, at: Date())
+                enabled: partyMember.canExecuteAbility(ability, at: Date()),
+                filter: "AttackButtons"
             ) {
                 world.executeCommand(
                     .executeAbility(user: memberPosition, ability: ability), at: Date())

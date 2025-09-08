@@ -86,6 +86,7 @@ public struct AbilityGUI {
                     position: Vector2(x: 20, y: yPosition), size: Vector2(x: 40, y: 20),
                     text: "(\(abilityIndex + 1))",
                     enabled: true,
+                    filter: "Abilities",
                     action: { viewModel?.currentlySelectedAbilityIndex = abilityIndex }))
 
             let keys: [Character] = ability.key.map { $0 }
@@ -96,6 +97,7 @@ public struct AbilityGUI {
                     GUIButton(
                         position: Vector2(x: Float(100 + 22 * keyIndex), y: yPosition),
                         size: Vector2(x: 20, y: 20), text: String(key), enabled: true,
+                        filter: "Abilities",
                         action: {
                             removeComponent(componentKey: String(key), abilityIndex: abilityIndex)
                         }))
@@ -104,13 +106,16 @@ public struct AbilityGUI {
             result.append(
                 GUIButton(
                     position: Vector2(x: 230, y: yPosition), size: Vector2(x: 20, y: 20), text: "-",
-                    enabled: true, action: { removeAbility(ability) }))
+                    enabled: true,
+                    filter: "Abilities",
+                    action: { removeAbility(ability) }))
         }
 
         result.append(
             GUIButton(
                 position: Vector2(x: 20, y: Float(240 + partyMember.abilities.count * 24 + 5)),
                 size: Vector2(x: 100, y: 20), text: "Add ability", enabled: true,
+                filter: "Abilities",
                 action: { addAbility() }))
 
         result.append(
@@ -129,6 +134,7 @@ public struct AbilityGUI {
                             x: Float(20 + abilityIndex * 24),
                             y: Float(310 + partyMember.abilities.count * 24)),
                         size: Vector2(x: 20, y: 20), text: "\(ability.key)", enabled: true,
+                        filter: "AvailableAbilities",
                         action: {
                             partyMember.addComponentToAbility(
                                 component: ability, to: selectedAbilityIndex)
@@ -140,6 +146,7 @@ public struct AbilityGUI {
                             x: Float(20 + abilityIndex * 24),
                             y: Float(310 + partyMember.abilities.count * 24)),
                         size: Vector2(x: 20, y: 20), text: "\(ability.key)", enabled: false,
+                        filter: "AvailableAbilities",
                         action: {}))
             }
         }
