@@ -18,7 +18,7 @@ import Model
         gui = AbilityGUI(sprites: [:], fontsizes: [:], partyMember: partyMember, viewModel: AbilityGUIViewModel())
     }
     
-    @Test("contain buttons for all the abilities the game knows about") func showAllAbilities() {        
+    @Test("contain buttons for all the abilities the game knows about") func showAllAbilities() {
         let drawables = gui.draw()
         
         let buttons = drawables.buttons(groupingID: "AvailableAbilities")
@@ -28,6 +28,17 @@ import Model
         for ability in allAbilities() {
             #expect(buttons.contains(where: { $0.text == ability.key } ))
         }
+    }
+    
+    @Test("show all the party members' abilities") func showAllPartyMemberAbilities() {
+        let drawables = gui.draw()
+        
+        let buttons = drawables.buttons(groupingID: "Abilities")
+        
+        for i in 0 ..< partyMember.abilities.count {
+            #expect(buttons.contains(where: { $0.text == "(\(i + 1))" } ))
+        }
+        
     }
     
     @Suite("when no ability is selected") struct NoAbilitySelected {
@@ -51,7 +62,7 @@ import Model
             }
         }
         
-        @Test("there should be no selection bare on the screen") func noSelectionBar() {
+        @Test("there should be no selection bar on the screen") func noSelectionBar() {
             let drawables = gui.draw()
             
             let rectangles = drawables.rectangles(groupingID: "Abilities")
