@@ -87,7 +87,7 @@ public final class AbilityGUI {
                     text: "(\(abilityIndex + 1))",
                     enabled: true,
                     groupingID: "Abilities",
-                    action: { self.currentlySelectedAbilityIndex = abilityIndex }))
+                    action: { [weak self] in self?.currentlySelectedAbilityIndex = abilityIndex }))
 
             let keys: [Character] = ability.key.map { $0 }
 
@@ -99,7 +99,7 @@ public final class AbilityGUI {
                         size: Vector2(x: 20, y: 20), text: String(key), enabled: true,
                         groupingID: "Abilities",
                         action: {
-                            self.removeComponent(componentKey: String(key), abilityIndex: abilityIndex)
+                            [weak self] in self?.removeComponent(componentKey: String(key), abilityIndex: abilityIndex)
                         }))
             }
 
@@ -108,7 +108,7 @@ public final class AbilityGUI {
                     position: Vector2(x: 230, y: yPosition), size: Vector2(x: 20, y: 20), text: "-",
                     enabled: true,
                     groupingID: "Abilities",
-                    action: { self.removeAbility(ability) }))
+                    action: { [weak self] in self?.removeAbility(ability) }))
         }
 
         result.append(
@@ -116,7 +116,7 @@ public final class AbilityGUI {
                 position: Vector2(x: 20, y: Float(240 + partyMember.abilities.count * 24 + 5)),
                 size: Vector2(x: 100, y: 20), text: "Add ability", enabled: true,
                 groupingID: "Abilities",
-                action: { self.addAbility() }))
+                action: { [weak self] in self?.addAbility() }))
 
         result.append(
             GUIText(
@@ -136,7 +136,7 @@ public final class AbilityGUI {
                         size: Vector2(x: 20, y: 20), text: "\(ability.key)", enabled: true,
                         groupingID: "AvailableAbilities",
                         action: {
-                            self.partyMember.addComponentToAbility(
+                            [weak self] in self?.partyMember.addComponentToAbility(
                                 component: ability, to: selectedAbilityIndex)
                         }))
             } else {
