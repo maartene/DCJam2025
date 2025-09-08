@@ -26,7 +26,6 @@ class Game {
     var font: Font!
 
     let rlHelper = RayLibStateHelper()
-    let abilityGUIViewModel = AbilityGUIViewModel()
 
     let world = makeWorld(from: [
         """
@@ -88,7 +87,12 @@ class Game {
 
         GuiLoadStyle(style.path(percentEncoded: false))
 
-        abilityGUI = AbilityGUI(sprites: [:], fontsizes: [:], partyMember: world.partyMembers[.frontLeft])
+        abilityGUI = AbilityGUI(
+            sprites: sprites,
+            fontsizes: pixelFontSizes,
+            partyMember:
+                world.partyMembers[.frontLeft]
+        )
         
         while WindowShouldClose() == false {
             update()

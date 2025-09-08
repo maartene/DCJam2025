@@ -10,35 +10,37 @@ import Testing
 import Model
 
 @Suite("The AbilityGUI should") struct AbilityGUITests {
-    let partyMember: PartyMember
-    let gui: AbilityGUI
-    
-    init() {
-        partyMember = PartyMember.makeMage(name: "Example Partymember", position: .backRight)
-        gui = AbilityGUI(sprites: [:], fontsizes: [:], partyMember: partyMember)
-    }
-    
-    @Test("contain buttons for all the abilities the game knows about") func showAllAbilities() {
-        let drawables = gui.draw()
+    @Suite("regardless of whether an ability is selected") struct RegardlessOfSelection {
+        let partyMember: PartyMember
+        let gui: AbilityGUI
         
-        let buttons = drawables.buttons(groupingID: "AvailableAbilities")
-        
-        #expect(buttons.count == allAbilities().count)
-        
-        for ability in allAbilities() {
-            #expect(buttons.contains(where: { $0.text == ability.key } ))
-        }
-    }
-    
-    @Test("show all the party members' abilities") func showAllPartyMemberAbilities() {
-        let drawables = gui.draw()
-        
-        let buttons = drawables.buttons(groupingID: "Abilities")
-        
-        for i in 0 ..< partyMember.abilities.count {
-            #expect(buttons.contains(where: { $0.text == "(\(i + 1))" } ))
+        init() {
+            partyMember = PartyMember.makeMage(name: "Example Partymember", position: .backRight)
+            gui = AbilityGUI(sprites: [:], fontsizes: [:], partyMember: partyMember)
         }
         
+        @Test("contain buttons for all the abilities the game knows about") func showAllAbilities() {
+            let drawables = gui.draw()
+            
+            let buttons = drawables.buttons(groupingID: "AvailableAbilities")
+            
+            #expect(buttons.count == allAbilities().count)
+            
+            for ability in allAbilities() {
+                #expect(buttons.contains(where: { $0.text == ability.key } ))
+            }
+        }
+        
+        @Test("show all the party members' abilities") func showAllPartyMemberAbilities() {
+            let drawables = gui.draw()
+            
+            let buttons = drawables.buttons(groupingID: "Abilities")
+            
+            for i in 0 ..< partyMember.abilities.count {
+                #expect(buttons.contains(where: { $0.text == "(\(i + 1))" } ))
+            }
+            
+        }
     }
     
     @Suite("when no ability is selected") struct NoAbilitySelected {

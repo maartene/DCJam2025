@@ -246,3 +246,22 @@ What is there to find? The answer to the ultimate secret: what came before? the 
     - ✅ Remove an ability
     - ✅ Add a component to an ability
     - ✅ Remove a component from an ability
+
+## 🍅 Pomodoro 47
+- 🚧 Testable UI
+    - 🚧 Show abilities
+        - ✅ Selection buttons
+            - ✅ Click behaviour (remove component)
+        - ⚠️ Ability components
+            - ⚠️ Show button
+            - ⚠️ Click behaviour (remove component)
+        - ⚠️ Remove button
+            - ⚠️ Show button
+            - ⚠️ Click behaviour (remove ability)
+    - ⚠️ Add ability button
+        - ⚠️ Show
+        - ⚠️ Click behaviour (remove ability)
+    - ✅ Selection
+    - 🚧 Available ability components
+        - ✅ Show buttons enabled/disabled
+        - ⚠️ Click behaviour (add component)

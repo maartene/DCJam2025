@@ -166,7 +166,3 @@ public final class AbilityGUI {
         partyMember.removeComponentFromAbility(componentKey: componentKey, from: abilityIndex)
     }
 }
-
-final class AbilityGUIViewModel {
-    var currentlySelectedAbilityIndex: Int?
-}
