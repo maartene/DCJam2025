@@ -10,11 +10,15 @@ import Testing
 import Model
 
 @Suite("The AbilityGUI should") struct AbilityGUITests {
-    let partyMember = PartyMember.makeMage(name: "Example Partymember", position: .backRight)
+    let partyMember: PartyMember
+    let gui: AbilityGUI
     
-    @Test("contain buttons for all the abilities the game knows about") func showAllAbilities() {
-        let gui = AbilityGUI(sprites: [:], fontsizes: [:], partyMember: partyMember, viewModel: AbilityGUIViewModel())
-        
+    init() {
+        partyMember = PartyMember.makeMage(name: "Example Partymember", position: .backRight)
+        gui = AbilityGUI(sprites: [:], fontsizes: [:], partyMember: partyMember, viewModel: AbilityGUIViewModel())
+    }
+    
+    @Test("contain buttons for all the abilities the game knows about") func showAllAbilities() {        
         let drawables = gui.draw()
         
         let buttons = drawables.buttons(groupingID: "AvailableAbilities")
