@@ -17,15 +17,12 @@ import Model
         
         let drawables = gui.draw()
         
-        let buttons = drawables.compactMap { $0 as? GUIButton }
-            .filter { $0.filter == "AvailableAbilities"}
+        let buttons = drawables.buttons(filter: "AvailableAbilities")
         
         #expect(buttons.count == allAbilities().count)
         
         for ability in allAbilities() {
-            #expect(drawables.contains(where: {
-                ($0 as? GUIButton)?.text == ability.key
-            }))
+            #expect(buttons.contains(where: { $0.text == ability.key } ))
         }
     }
     
@@ -37,10 +34,8 @@ import Model
             
             let drawables = gui.draw()
             
-            let buttons = drawables.compactMap { $0 as? GUIButton }
-                .filter {
-                    $0.filter == "AvailableAbilities"
-                }
+            let buttons = drawables.buttons(filter: "AvailableAbilities")
+
             #expect(buttons.count == allAbilities().count)
             
             buttons.forEach {

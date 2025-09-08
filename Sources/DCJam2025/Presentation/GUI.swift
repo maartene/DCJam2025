@@ -203,3 +203,17 @@ struct GUI {
         return result
     }
 }
+
+extension Array<any GUIDrawable> {
+    func buttons(filter: String? = nil) -> [GUIButton] {
+        compactMap {
+            $0 as? GUIButton
+        }
+        .filter {
+            if let filter {
+                return $0.filter == filter
+            }
+            return true
+        }
+    }
+}
