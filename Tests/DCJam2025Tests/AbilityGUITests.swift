@@ -15,7 +15,7 @@ import Model
     
     init() {
         partyMember = PartyMember.makeMage(name: "Example Partymember", position: .backRight)
-        gui = AbilityGUI(sprites: [:], fontsizes: [:], partyMember: partyMember, viewModel: AbilityGUIViewModel())
+        gui = AbilityGUI(sprites: [:], fontsizes: [:], partyMember: partyMember)
     }
     
     @Test("contain buttons for all the abilities the game knows about") func showAllAbilities() {
@@ -47,7 +47,7 @@ import Model
         
         init() {
             partyMember = PartyMember.makeMage(name: "Example Partymember", position: .backRight)
-            gui = AbilityGUI(sprites: [:], fontsizes: [:], partyMember: partyMember, viewModel: AbilityGUIViewModel())
+            gui = AbilityGUI(sprites: [:], fontsizes: [:], partyMember: partyMember)
         }
         
         @Test("all the 'available ability' buttons should be disabled") func allAvailabilityButtonsAreDisabled() {
@@ -69,6 +69,45 @@ import Model
             
             #expect(rectangles.isEmpty)
             
+        }
+        
+        @Test("when an ability is pressed, the selection bar should appear") func selectAnAbility() throws {
+            let abilityButton = try #require(gui.draw().buttons(groupingID: "Abilities")
+                .first(where: { $0.text == "(2)" })
+            )
+                        
+            abilityButton.tap()
+                
+            let rectangles = gui.draw().rectangles(groupingID: "Abilities")
+
+            #expect(rectangles.isEmpty == false)
+        }
+    }
+    
+    @Suite("when an ability is selected") struct AbilitySelected {
+        let partyMember: PartyMember
+        let gui: AbilityGUI
+        
+        init() {
+            partyMember = PartyMember.makeMage(name: "Example Partymember", position: .backRight)
+            gui = AbilityGUI(sprites: [:], fontsizes: [:], partyMember: partyMember)
+            
+            let abilityButton = gui.draw().buttons(groupingID: "Abilities")
+                .first(where: { $0.text == "(2)" })
+                        
+            abilityButton?.tap()
+        }
+        
+        @Test("all the 'available ability' buttons should be enabled") func allAvailableAbilityButtonsShouldBeEnabled() {
+            let drawables = gui.draw()
+            
+            let buttons = drawables.buttons(groupingID: "AvailableAbilities")
+
+            #expect(buttons.count == allAbilities().count)
+            
+            buttons.forEach {
+                #expect($0.enabled == true)
+            }
         }
     }
 }

@@ -96,6 +96,10 @@ struct GUIButton: GUIDrawable {
         }
         GuiSetState(saveGuiState)
     }
+    
+    func tap() {
+        action()
+    }
 }
 
 struct GUI {
@@ -221,6 +225,8 @@ extension Array<any GUIDrawable> {
             $0.groupingID == groupingID
         }
     }
+    
+    
     
     func rectangles(groupingID: String? = nil) -> [GUIRectangle] {
         compactMap {

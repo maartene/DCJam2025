@@ -11,20 +11,18 @@ import Foundation
 import Model
 import raylib
 
-public struct AbilityGUI {
+public final class AbilityGUI {
     let sprites: [String: Texture]
     let fontsizes: [Int32: Font]
     let partyMember: PartyMember
-    weak var viewModel: AbilityGUIViewModel?
-
+    private var currentlySelectedAbilityIndex: Int?
+    
     init(
         sprites: [String: Texture], fontsizes: [Int32: Font], partyMember: PartyMember,
-        viewModel: AbilityGUIViewModel
     ) {
         self.sprites = sprites
         self.fontsizes = fontsizes
         self.partyMember = partyMember
-        self.viewModel = viewModel
     }
 
     func draw() -> [GUIDrawable] {
@@ -73,7 +71,7 @@ public struct AbilityGUI {
 
             let yPosition = Float(240 + abilityIndex * 24)
 
-            if viewModel?.currentlySelectedAbilityIndex == abilityIndex {
+            if currentlySelectedAbilityIndex == abilityIndex {
                 result.append(
                     GUIRectangle(
                         position: Vector2(x: 20 - 2, y: yPosition - 2),
@@ -89,7 +87,7 @@ public struct AbilityGUI {
                     text: "(\(abilityIndex + 1))",
                     enabled: true,
                     groupingID: "Abilities",
-                    action: { viewModel?.currentlySelectedAbilityIndex = abilityIndex }))
+                    action: { self.currentlySelectedAbilityIndex = abilityIndex }))
 
             let keys: [Character] = ability.key.map { $0 }
 
@@ -101,7 +99,7 @@ public struct AbilityGUI {
                         size: Vector2(x: 20, y: 20), text: String(key), enabled: true,
                         groupingID: "Abilities",
                         action: {
-                            removeComponent(componentKey: String(key), abilityIndex: abilityIndex)
+                            self.removeComponent(componentKey: String(key), abilityIndex: abilityIndex)
                         }))
             }
 
@@ -110,7 +108,7 @@ public struct AbilityGUI {
                     position: Vector2(x: 230, y: yPosition), size: Vector2(x: 20, y: 20), text: "-",
                     enabled: true,
                     groupingID: "Abilities",
-                    action: { removeAbility(ability) }))
+                    action: { self.removeAbility(ability) }))
         }
 
         result.append(
@@ -118,7 +116,7 @@ public struct AbilityGUI {
                 position: Vector2(x: 20, y: Float(240 + partyMember.abilities.count * 24 + 5)),
                 size: Vector2(x: 100, y: 20), text: "Add ability", enabled: true,
                 groupingID: "Abilities",
-                action: { addAbility() }))
+                action: { self.addAbility() }))
 
         result.append(
             GUIText(
@@ -129,7 +127,7 @@ public struct AbilityGUI {
         let allAbilities = allAbilities()
         for abilityIndex in 0..<allAbilities.count {
             let ability = allAbilities[abilityIndex]
-            if let selectedAbilityIndex = viewModel?.currentlySelectedAbilityIndex {
+            if let selectedAbilityIndex = currentlySelectedAbilityIndex {
                 result.append(
                     GUIButton(
                         position: Vector2(
@@ -138,7 +136,7 @@ public struct AbilityGUI {
                         size: Vector2(x: 20, y: 20), text: "\(ability.key)", enabled: true,
                         groupingID: "AvailableAbilities",
                         action: {
-                            partyMember.addComponentToAbility(
+                            self.partyMember.addComponentToAbility(
                                 component: ability, to: selectedAbilityIndex)
                         }))
             } else {

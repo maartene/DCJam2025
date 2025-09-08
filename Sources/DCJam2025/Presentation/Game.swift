@@ -66,6 +66,8 @@ class Game {
         ###############################
         """
     ])
+    
+    var abilityGUI: AbilityGUI!
 
     func run() {
         SetConfigFlags(FLAG_MSAA_4X_HINT.rawValue)
@@ -86,6 +88,8 @@ class Game {
 
         GuiLoadStyle(style.path(percentEncoded: false))
 
+        abilityGUI = AbilityGUI(sprites: [:], fontsizes: [:], partyMember: world.partyMembers[.frontLeft])
+        
         while WindowShouldClose() == false {
             update()
             drawGameView()
@@ -203,10 +207,7 @@ class Game {
     func drawGUI() {
         //        DrawTextEx(font, "Hello, World", Vector2(x: 10, y: 200), 32, 10, .white)
 
-        AbilityGUI(
-            sprites: sprites, fontsizes: pixelFontSizes,
-            partyMember: world.partyMembers[.frontLeft], viewModel: abilityGUIViewModel
-        ).draw()
+        abilityGUI.draw()
             .forEach {
                 $0.draw()
             }
