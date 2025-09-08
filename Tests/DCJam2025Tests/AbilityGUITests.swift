@@ -27,11 +27,15 @@ import Model
     }
     
     @Suite("when no ability is selected") struct NoAbilitySelected {
-        let partyMember = PartyMember.makeMage(name: "Example Partymember", position: .backRight)
+        let partyMember: PartyMember
+        let gui: AbilityGUI
+        
+        init() {
+            partyMember = PartyMember.makeMage(name: "Example Partymember", position: .backRight)
+            gui = AbilityGUI(sprites: [:], fontsizes: [:], partyMember: partyMember, viewModel: AbilityGUIViewModel())
+        }
         
         @Test("all the 'available ability' buttons should be disabled") func allAvailabilityButtonsAreDisabled() {
-            let gui = AbilityGUI(sprites: [:], fontsizes: [:], partyMember: partyMember, viewModel: AbilityGUIViewModel())
-            
             let drawables = gui.draw()
             
             let buttons = drawables.buttons(groupingID: "AvailableAbilities")
@@ -44,8 +48,6 @@ import Model
         }
         
         @Test("there should be no selection bare on the screen") func noSelectionBar() {
-            let gui = AbilityGUI(sprites: [:], fontsizes: [:], partyMember: partyMember, viewModel: AbilityGUIViewModel())
-            
             let drawables = gui.draw()
             
             let rectangles = drawables.rectangles(groupingID: "Abilities")
