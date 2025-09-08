@@ -42,5 +42,17 @@ import Model
                 #expect($0.enabled == false)
             }
         }
+        
+        @Test("there should be no selection bare on the screen") func noSelectionBar() {
+            let gui = AbilityGUI(sprites: [:], fontsizes: [:], partyMember: partyMember, viewModel: AbilityGUIViewModel())
+            
+            let drawables = gui.draw()
+            
+            let rectangles = drawables.compactMap { $0 as? GUIRectangle }
+                .filter { $0.filter == "Abilities" }
+            
+            #expect(rectangles.isEmpty)
+            
+        }
     }
 }

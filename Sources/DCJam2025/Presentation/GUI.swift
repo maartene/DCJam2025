@@ -19,7 +19,15 @@ struct GUIRectangle: GUIDrawable {
     let position: Vector2
     let size: Vector2
     let color: Color
+    let filter: String?
 
+    init(position: Vector2, size: Vector2, color: Color, filter: String? = nil) {
+        self.position = position
+        self.size = size
+        self.color = color
+        self.filter = filter
+    }
+    
     func draw() {
         DrawRectangle(Int32(position.x), Int32(position.y), Int32(size.x), Int32(size.y), color)
     }

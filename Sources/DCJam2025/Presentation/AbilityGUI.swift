@@ -78,7 +78,9 @@ public struct AbilityGUI {
                     GUIRectangle(
                         position: Vector2(x: 20 - 2, y: yPosition - 2),
                         size: Vector2(x: 280 + 4, y: 24),
-                        color: .darkPurple))
+                        color: .darkPurple,
+                        filter: "Abilities")
+                )
             }
 
             result.append(
