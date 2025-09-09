@@ -98,6 +98,14 @@ import Model
             #expect(buttons.filter({ $0.text == "-" }).count == 1)
             #expect(partyMember.abilities.count == 1)
         }
+        
+        @Test("should show an Add ability button") func showAddAbilityButton() {
+            let drawables = gui.draw()
+            
+            let buttons = drawables.buttons(groupingID: "Abilities")
+            
+            #expect(buttons.contains(where: { $0.text == "Add ability" }))
+        }
     }
     
     @Suite("when no ability is selected") struct NoAbilitySelected {

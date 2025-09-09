@@ -268,7 +268,7 @@ What is there to find? The answer to the ultimate secret: what came before? the 
 
 ## 🍅 Pomodoro 48
 - 🚧 Testable UI
-    - 🚧 Show abilities
+    - ✅ Show abilities
         - ✅ Selection buttons
             - ✅ Click behaviour (remove component)
         - ✅ Ability components
