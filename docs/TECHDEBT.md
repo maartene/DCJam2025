@@ -1,6 +1,7 @@
 # TECHDEBT
 
 ## ⚠️ TODO
+- AbilityGUI should be refactored
 - AbilityGUITests can be streamlined with some more helper functions
 - Missing tests to validate correct behaviour when two abilities have the same key (fixed in code)
 - Structure tests in suites and subsuites
