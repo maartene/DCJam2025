@@ -52,6 +52,14 @@ import Model
                 #expect(buttons.contains(where: { $0.text == component } ))
             }
         }
+        
+        @Test("does not show components that are not in an ability") func doesNotShowMissingComponents() {
+            let drawables = gui.draw()
+            
+            let buttons = drawables.buttons(groupingID: "Abilities")
+            
+            #expect(buttons.contains(where: { $0.text == "y" } ) == false)
+        }
     }
     
     @Suite("when no ability is selected") struct NoAbilitySelected {
