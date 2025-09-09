@@ -274,8 +274,8 @@ What is there to find? The answer to the ultimate secret: what came before? the 
         - ✅ Ability components
             - ✅ Show button
             - ✅ Click behaviour (remove component)
-        - ⚠️ Remove button
-            - ⚠️ Show button
+        - 🚧 Remove button
+            - ✅ Show button
             - ⚠️ Click behaviour (remove ability)
     - ⚠️ Add ability button
         - ⚠️ Show

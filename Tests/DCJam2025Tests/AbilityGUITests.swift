@@ -75,6 +75,14 @@ import Model
             #expect(buttons.contains(where: { $0.text == "h" } ) == false)
             #expect(partyMember.abilities.contains(where: { $0.key.contains("h") } ) == false)
         }
+        
+        @Test("should show a 'Remove ability' button") func showRemoveAbilityButton() {
+            let drawables = gui.draw()
+            
+            let buttons = drawables.buttons(groupingID: "Abilities")
+            
+            #expect(buttons.contains(where: { $0.text == "-" } ))
+        }
     }
     
     @Suite("when no ability is selected") struct NoAbilitySelected {
