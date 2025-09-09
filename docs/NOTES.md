@@ -262,6 +262,27 @@ What is there to find? The answer to the ultimate secret: what came before? the 
         - ⚠️ Show
         - ⚠️ Click behaviour (remove ability)
     - ✅ Selection
+    - 🚧 Available ability components
+        - ✅ Show buttons enabled/disabled
+        - ⚠️ Click behaviour (add component)
+
+## 🍅 Pomodoro 48
+- 🚧 Testable UI
+    - 🚧 Show abilities
+        - ✅ Selection buttons
+            - ✅ Click behaviour (remove component)
+        - ✅ Ability components
+            - ✅ Show button
+            - ✅ Click behaviour (remove component)
+        - ⚠️ Remove button
+            - ⚠️ Show button
+            - ⚠️ Click behaviour (remove ability)
+    - ⚠️ Add ability button
+        - ⚠️ Show
+        - ⚠️ Click behaviour (remove ability)
+    - ✅ Selection
     - ✅ Available ability components
         - ✅ Show buttons enabled/disabled
         - ✅ Click behaviour (add component)
+
+

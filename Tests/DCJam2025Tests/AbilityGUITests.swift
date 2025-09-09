@@ -60,6 +60,21 @@ import Model
             
             #expect(buttons.contains(where: { $0.text == "y" } ) == false)
         }
+        
+        @Test("when a component is clicked, its removed from the ability") func removeComponent() throws {
+            let componentButton = try #require(gui.draw().buttons(groupingID: "Abilities")
+                .first(where: { $0.text == "h" })
+            )
+                        
+            componentButton.tap()
+            
+            let drawables = gui.draw()
+            
+            let buttons = drawables.buttons(groupingID: "Abilities")
+            
+            #expect(buttons.contains(where: { $0.text == "h" } ) == false)
+            #expect(partyMember.abilities.contains(where: { $0.key.contains("h") } ) == false)
+        }
     }
     
     @Suite("when no ability is selected") struct NoAbilitySelected {
@@ -142,6 +157,7 @@ import Model
             
             let buttons = drawables.buttons(groupingID: "Abilities")
             #expect(buttons.contains(where: { $0.text == "r" } ))
+            #expect(partyMember.abilities.contains(where: { $0.key.contains("r")} ))
         }
     }
 }
