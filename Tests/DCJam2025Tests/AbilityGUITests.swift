@@ -106,6 +106,21 @@ import Model
             
             #expect(buttons.contains(where: { $0.text == "Add ability" }))
         }
+        
+        @Test("when the 'Add ability' button is clicked, should add a new ability") func addAbilityButtonClicked() throws {
+            let addAbilityButton = try #require(gui.draw().buttons(groupingID: "Abilities")
+                .first(where: { $0.text == "Add ability" })
+            )
+                        
+            addAbilityButton.tap()
+            
+            let drawables = gui.draw()
+            
+            let buttons = drawables.buttons(groupingID: "Abilities")
+            
+            #expect(buttons.contains(where: { $0.text == "(3)" }))
+            #expect(partyMember.abilities.count == 3)
+        }
     }
     
     @Suite("when no ability is selected") struct NoAbilitySelected {
