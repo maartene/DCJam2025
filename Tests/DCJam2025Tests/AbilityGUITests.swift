@@ -83,6 +83,21 @@ import Model
             
             #expect(buttons.contains(where: { $0.text == "-" } ))
         }
+        
+        @Test("should remove the ability when the Remove ability button is clicked") func removeAbilityButtonClicked() throws {
+            let componentButton = try #require(gui.draw().buttons(groupingID: "Abilities")
+                .first(where: { $0.text == "-" })
+            )
+                        
+            componentButton.tap()
+            
+            let drawables = gui.draw()
+            
+            let buttons = drawables.buttons(groupingID: "Abilities")
+            
+            #expect(buttons.filter({ $0.text == "-" }).count == 1)
+            #expect(partyMember.abilities.count == 1)
+        }
     }
     
     @Suite("when no ability is selected") struct NoAbilitySelected {
