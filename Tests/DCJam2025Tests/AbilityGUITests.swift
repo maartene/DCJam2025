@@ -39,7 +39,18 @@ import Model
             for i in 0 ..< partyMember.abilities.count {
                 #expect(buttons.contains(where: { $0.text == "(\(i + 1))" } ))
             }
+        }
+        
+        @Test("shows all the components of a party members ability") func showAllAbilityComponents() {
+            let drawables = gui.draw()
             
+            let buttons = drawables.buttons(groupingID: "Abilities")
+            
+            let expectedComponents = ["a", "h", "x"]
+            
+            expectedComponents.forEach { component in
+                #expect(buttons.contains(where: { $0.text == component } ))
+            }
         }
     }
     

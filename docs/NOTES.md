@@ -262,6 +262,6 @@ What is there to find? The answer to the ultimate secret: what came before? the 
         - ⚠️ Show
         - ⚠️ Click behaviour (remove ability)
     - ✅ Selection
-    - 🚧 Available ability components
+    - ✅ Available ability components
         - ✅ Show buttons enabled/disabled
-        - ⚠️ Click behaviour (add component)
+        - ✅ Click behaviour (add component)
