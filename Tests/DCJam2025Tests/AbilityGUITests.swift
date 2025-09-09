@@ -111,5 +111,18 @@ import Model
                 #expect($0.enabled == true)
             }
         }
+        
+        @Test("and an available ability is clicked, its added to the selected ability") func addComponentToSelectedAbility() throws {
+            let componentButton = try #require(gui.draw().buttons(groupingID: "AvailableAbilities")
+                .first(where: { $0.text == "r" })
+            )
+                        
+            componentButton.tap()
+            
+            let drawables = gui.draw()
+            
+            let buttons = drawables.buttons(groupingID: "Abilities")
+            #expect(buttons.contains(where: { $0.text == "r" } ))
+        }
     }
 }
