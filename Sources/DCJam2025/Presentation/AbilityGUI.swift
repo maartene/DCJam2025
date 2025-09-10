@@ -24,18 +24,44 @@ public final class AbilityGUI {
         self.fontsizes = fontsizes
         self.partyMember = partyMember
     }
-
+    
     func draw() -> [GUIDrawable] {
         let width: Float = 1280 - 10 - 10
         let height: Float = 720 - 10 - 10
 
         var result = [GUIDrawable]()
+        
+        result.append(contentsOf: background(width: width, height: height))
+        result.append(contentsOf: portrait())
+        result.append(contentsOf: abilities())
+        result.append(contentsOf: availableAbilities())
 
-        result.append(
+        return result
+    }
+
+    func removeAbility(_ ability: any Ability) {
+        partyMember.deleteAbility(ability)
+    }
+
+    func addAbility() {
+        partyMember.addAbility()
+    }
+
+    func removeComponent(componentKey: String, abilityIndex: Int) {
+        partyMember.removeComponentFromAbility(componentKey: componentKey, from: abilityIndex)
+    }
+    
+    private func background(width: Float, height: Float) -> [GUIDrawable] {
+        [
             GUIRectangle(
                 position: Vector2(x: 10, y: 10), size: Vector2(x: width, y: height),
-                color: Color(r: 80, g: 80, b: 80, a: 192)))
-
+                color: Color(r: 80, g: 80, b: 80, a: 192))
+        ]
+    }
+    
+    private func portrait() -> [GUIDrawable] {
+        var result = [GUIDrawable]()
+        
         result.append(
             GUIText(
                 font: fontsizes[36], position: Vector2(x: 20, y: 20), text: partyMember.name,
@@ -45,26 +71,27 @@ public final class AbilityGUI {
             result.append(
                 GUITexture(position: Vector2(x: 20, y: 20 + 42), texture: portrait, color: .white))
         }
-
-        result.append(
+        
+        return result
+    }
+    
+    private func abilities() -> [GUIDrawable] {
+        var result = [GUIDrawable]()
+        
+        result.append(contentsOf: [
             GUIText(
                 font: fontsizes[24], position: Vector2(x: 20, y: 180), text: "Abilities:",
-                color: .white))
-
-        result.append(
+                color: .white),
             GUIText(
-                font: fontsizes[20], position: Vector2(x: 20, y: 210), text: "Select", color: .white
-            ))
-
-        result.append(
+                font: fontsizes[20], position: Vector2(x: 20, y: 210), text: "Select", color: .white),
             GUIText(
                 font: fontsizes[20], position: Vector2(x: 100, y: 210), text: "Components",
-                color: .white))
-
-        result.append(
+                color: .white),
             GUIText(
                 font: fontsizes[20], position: Vector2(x: 230, y: 210), text: "Actions",
-                color: .white))
+                color: .white)
+            ]
+        )
 
         for abilityIndex in 0..<partyMember.abilities.count {
             let ability = partyMember.abilities[abilityIndex]
@@ -117,7 +144,13 @@ public final class AbilityGUI {
                 size: Vector2(x: 100, y: 20), text: "Add ability", enabled: true,
                 groupingID: "Abilities",
                 action: { [weak self] in self?.addAbility() }))
+        
+        return result
+    }
 
+    private func availableAbilities() -> [GUIDrawable] {
+        var result = [GUIDrawable]()
+        
         result.append(
             GUIText(
                 font: fontsizes[24],
@@ -150,19 +183,7 @@ public final class AbilityGUI {
                         action: {}))
             }
         }
-
+        
         return result
-    }
-
-    func removeAbility(_ ability: any Ability) {
-        partyMember.deleteAbility(ability)
-    }
-
-    func addAbility() {
-        partyMember.addAbility()
-    }
-
-    func removeComponent(componentKey: String, abilityIndex: Int) {
-        partyMember.removeComponentFromAbility(componentKey: componentKey, from: abilityIndex)
     }
 }
