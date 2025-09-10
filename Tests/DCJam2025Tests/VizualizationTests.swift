@@ -15,10 +15,16 @@ import raylib
 
 @MainActor
 @Suite("Game initialization") struct GameInitializationTests {
-    @Test("should load models") func loadModels() throws {
+    @Test("should load models") func loadModels() {
         let game = Game()
         
         #expect(game.models.isEmpty == false)
+    }
+    
+    @Test("should load images") func loadImages() {
+        let game = Game()
+        
+        #expect(game.sprites.isEmpty == false)
     }
 }
 

@@ -78,6 +78,7 @@ class Game {
         shader = loadShader()
         
         loadModels()
+        loadImages()
     }
     
     deinit {
@@ -85,7 +86,7 @@ class Game {
     }
     
     func run() {
-        loadImages()
+        
         loadFontsizes()
 
         guard let style = Bundle.module.url(forResource: "style", withExtension: "rgs") else {
