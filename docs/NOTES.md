@@ -288,3 +288,6 @@ What is there to find? The answer to the ultimate secret: what came before? the 
 ## 🍅 Pomodoro 49
 - ✅ Add snapshot testing for drawing on screen
 - ✅ Add initialization testing for game
+
+## 🍅 Pomodoro 50
+- 🚧 Refactor AbilityGUI

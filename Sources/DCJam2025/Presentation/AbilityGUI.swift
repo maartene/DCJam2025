@@ -29,14 +29,12 @@ public final class AbilityGUI {
         let width: Float = 1280 - 10 - 10
         let height: Float = 720 - 10 - 10
 
-        var result = [GUIDrawable]()
-        
-        result.append(contentsOf: background(width: width, height: height))
-        result.append(contentsOf: portrait())
-        result.append(contentsOf: abilities())
-        result.append(contentsOf: availableAbilities())
-
-        return result
+        return [
+            background(width: width, height: height),
+            portrait(),
+            abilities(),
+            availableAbilities()
+        ].flatMap { $0 }
     }
 
     func removeAbility(_ ability: any Ability) {
