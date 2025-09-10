@@ -13,17 +13,22 @@ import raylib
 
 @testable import DCJam2025
 
-@MainActor
+
+@MainActor // because of Window/GPU initialization, this needs to run on main thread
 @Suite("Game initialization") struct GameInitializationTests {
     // this is a single test because these tests require full Window/GPU initialization
     // that is an expensive, long running operation
     // by combining the tests, we cut down on test run time
+    let game = Game()
+    
     @Test("should load models, images and fonts") func loadModels() {
-        let game = Game()
-        
         #expect(game.models.isEmpty == false)
         #expect(game.sprites.isEmpty == false)
         #expect(game.pixelFontSizes.isEmpty == false)
+    }
+    
+    @Test("should initialize GUIs") func initializeGUIs() {
+        #expect(game.abilityGUI != nil)
     }
 }
 

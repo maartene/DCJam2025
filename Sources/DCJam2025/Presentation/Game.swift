@@ -15,16 +15,15 @@ class Game {
     let screenHeight: Int32 = 720
     let offset: Float = -0.1
 
-    var camera = makeCamera()
-
-    var sprites = [String: Texture2D]()
-    var models = [String: Model]()
-    var pixelFontSizes = [Int32: Font]()
-
-    var pointLight: Light!
-    var shader: Shader!
-    var font: Font!
-
+    private(set) var camera = makeCamera()
+    
+    // GPU dependant fields - unfortunately some need to be implicitly unwrapped optionals
+    private(set) var sprites = [String: Texture2D]()
+    private(set) var shader: Shader!
+    private(set) var models = [String: Model]()
+    private(set) var pixelFontSizes = [Int32: Font]()
+    private(set) var abilityGUI: AbilityGUI!
+    
     let rlHelper = RayLibStateHelper()
 
     let world = makeWorld(from: [
@@ -65,8 +64,6 @@ class Game {
         ###############################
         """
     ])
-    
-    var abilityGUI: AbilityGUI!
 
     init() {
         SetConfigFlags(FLAG_MSAA_4X_HINT.rawValue)
@@ -80,6 +77,13 @@ class Game {
         loadModels()
         loadImages()
         loadFontsizes()
+        
+        abilityGUI = AbilityGUI(
+            sprites: sprites,
+            fontsizes: pixelFontSizes,
+            partyMember:
+                world.partyMembers[.frontLeft]
+        )
     }
     
     deinit {
@@ -87,19 +91,8 @@ class Game {
     }
     
     func run() {
-        guard let style = Bundle.module.url(forResource: "style", withExtension: "rgs") else {
-            fatalError("Could not find style file")
-        }
+        setStyle()
 
-        GuiLoadStyle(style.path(percentEncoded: false))
-
-        abilityGUI = AbilityGUI(
-            sprites: sprites,
-            fontsizes: pixelFontSizes,
-            partyMember:
-                world.partyMembers[.frontLeft]
-        )
-        
         while WindowShouldClose() == false {
             update()
             drawGameView()
@@ -147,7 +140,7 @@ class Game {
     }
 
     private func updateLights() {
-        pointLight = CreateLight(
+        let pointLight = CreateLight(
             Int32(LIGHT_POINT.rawValue), camera.position, Vector3(x: 0, y: 0, z: 0),
             Color(r: 200, g: 150, b: 100, a: 255) * 0.8, shader, 0)
 
@@ -326,5 +319,13 @@ class Game {
 
         return LoadFontEx(
             fontURL.path(percentEncoded: false), size * GUIText.imageRenderMultiplier, nil, 0)
+    }
+    
+    private func setStyle() {
+        guard let style = Bundle.module.url(forResource: "style", withExtension: "rgs") else {
+            fatalError("Could not find style file")
+        }
+
+        GuiLoadStyle(style.path(percentEncoded: false))
     }
 }
