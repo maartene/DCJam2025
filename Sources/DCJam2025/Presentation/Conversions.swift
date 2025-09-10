@@ -78,7 +78,7 @@ public func hpBarColor(currentHP: Int, maxHP: Int) -> Color {
     }
 }
 
-public struct Drawable3D: Equatable {
+public struct Drawable3D: Equatable, Hashable {
     let modelName: String
     let position: Vector3
     let up: Vector3
@@ -163,7 +163,7 @@ public func floorToDrawables(_ floor: Floor) -> [Drawable3D] {
     return result
 }
 
-public struct Drawable2D: Equatable {
+public struct Drawable2D: Equatable, Hashable {
     let spriteName: String
     let position: Vector2
     let tint: Color

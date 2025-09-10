@@ -3,16 +3,6 @@
 
 import PackageDescription
 
-var dependencies: [Package.Dependency] = []
-var targetPlugins: [Target.PluginUsage] = []
-
-#if os(macOS) || os(iOS)
-    dependencies.append(
-        .package(url: "https://github.com/SimplyDanny/SwiftLintPlugins", from: "0.58.2"))
-    targetPlugins.append(
-        .plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins"))
-#endif
-
 let package = Package(
     name: "DCJam2025",
     platforms: [
@@ -23,7 +13,9 @@ let package = Package(
         .library(name: "raygui", targets: ["raygui"]),
         .executable(name: "DCJam2025", targets: ["DCJam2025"]),
     ],
-    dependencies: dependencies,
+    dependencies: [
+        .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", from: "1.12.0")
+    ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
@@ -38,8 +30,7 @@ let package = Package(
             ],
             swiftSettings: [
                 .unsafeFlags(["-Xfrontend", "-validate-tbd-against-ir=none"])
-            ],
-            // plugins: targetPlugins
+            ]
         ),
         .target(
             name: "Model"
@@ -50,9 +41,15 @@ let package = Package(
         .testTarget(
             name: "DCJam2025Tests",
             dependencies: [
+                "DCJam2025", "Model"
+            ]
+        ),
+        .testTarget(
+            name: "SnapshotTests",
+            dependencies: [
                 "DCJam2025", "Model",
-            ],
-            // plugins: targetPlugins
+                .product(name: "SnapshotTesting", package: "swift-snapshot-testing")
+            ]
         ),
         .systemLibrary(
             name: "raylib", pkgConfig: "raylib",

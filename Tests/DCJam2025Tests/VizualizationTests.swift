@@ -232,59 +232,6 @@ struct ConversionGameLogicAndVizualizationTests {
         #expect(partySpriteInfo.spriteName == testcase.expectedSpriteName)
         #expect(partySpriteInfo.position == testcase.expectedScreen)
     }
-
-    @Test("Convert a map to Drawables") func miniMapToDrawables() {
-        let world = makeWorld(from: [
-            """
-            .S<
-            T>.
-            #.s
-            """
-        ])
-
-        let expectedDrawables = [
-            Drawable2D(
-                spriteName: "floor", position: Vector2(x: 16.0, y: 32.0),
-                tint: Color(r: 255, g: 255, b: 255, a: 255)),
-            Drawable2D(
-                spriteName: "target", position: Vector2(x: 32.0, y: 16.0),
-                tint: Color(r: 255, g: 255, b: 255, a: 255)),
-            Drawable2D(
-                spriteName: "stairsDown", position: Vector2(x: 16.0, y: 16.0),
-                tint: Color(r: 255, g: 255, b: 255, a: 255)),
-            Drawable2D(
-                spriteName: "stairsUp", position: Vector2(x: 0.0, y: 32.0),
-                tint: Color(r: 255, g: 255, b: 255, a: 255)),
-            Drawable2D(
-                spriteName: "floor", position: Vector2(x: 32.0, y: 32.0),
-                tint: Color(r: 255, g: 255, b: 255, a: 255)),
-            Drawable2D(
-                spriteName: "floor", position: Vector2(x: 0.0, y: 16.0),
-                tint: Color(r: 255, g: 255, b: 255, a: 255)),
-            Drawable2D(
-                spriteName: "floor", position: Vector2(x: 32.0, y: 48.0),
-                tint: Color(r: 255, g: 255, b: 255, a: 255)),
-            Drawable2D(
-                spriteName: "floor", position: Vector2(x: 16.0, y: 48.0),
-                tint: Color(r: 255, g: 255, b: 255, a: 255)),
-            Drawable2D(
-                spriteName: "floor", position: Vector2(x: 0.0, y: 48.0),
-                tint: Color(r: 255, g: 255, b: 255, a: 255)),
-            Drawable2D(
-                spriteName: "north", position: Vector2(x: 16.0, y: 32.0),
-                tint: Color(r: 255, g: 255, b: 255, a: 255)),
-            Drawable2D(
-                spriteName: "east", position: Vector2(x: 0.0, y: 0.0),
-                tint: Color(r: 230, g: 41, b: 55, a: 255)),
-        ]
-
-        let drawables = minimap(for: world)
-
-        #expect(drawables.count == expectedDrawables.count)
-        for drawable in drawables {
-            #expect(expectedDrawables.contains(drawable))
-        }
-    }
 }
 
 @Suite("Map conversions") struct MapConversionTests {
@@ -417,35 +364,4 @@ struct ConversionGameLogicAndVizualizationTests {
         }
     }
 }
-
-@Suite("GUI conversion") struct GUIConversionsTests {
-    @Test("convert partymembers into drawables") func convertPartymembersIntoDrawables() {
-        let world = makeWorld(from: ["."])
-
-        let expectedDrawablePositions = [
-            Vector2(x: 890.0, y: 10.0), Vector2(x: 895.0, y: 10.0), Vector2(x: 1000.0, y: 35.0),
-            Vector2(x: 1000.0, y: 75.0), Vector2(x: 895.0, y: 140.0), Vector2(x: 925.0, y: 140.0),
-            Vector2(x: 927.0, y: 142.0), Vector2(x: 1085.0, y: 10.0), Vector2(x: 1090.0, y: 10.0),
-            Vector2(x: 1195.0, y: 35.0), Vector2(x: 1195.0, y: 75.0), Vector2(x: 1090.0, y: 140.0),
-            Vector2(x: 1120.0, y: 140.0), Vector2(x: 1122.0, y: 142.0), Vector2(x: 890.0, y: 170.0),
-            Vector2(x: 895.0, y: 170.0), Vector2(x: 1000.0, y: 195.0), Vector2(x: 895.0, y: 300.0),
-            Vector2(x: 925.0, y: 300.0), Vector2(x: 927.0, y: 302.0), Vector2(x: 1085.0, y: 170.0),
-            Vector2(x: 1090.0, y: 170.0), Vector2(x: 1195.0, y: 195.0),
-            Vector2(x: 1195.0, y: 235.0), Vector2(x: 1090.0, y: 300.0),
-            Vector2(x: 1120.0, y: 300.0), Vector2(x: 1122.0, y: 302.0),
-        ]
-
-        let gui = GUI(world: world, sprites: [:], fontsizes: [:])
-        let drawables = gui.drawParty()
-        let drawablePositions =
-            drawables
-            .map { $0.position }
-
-        #expect(drawablePositions.count == expectedDrawablePositions.count)
-        for drawable in expectedDrawablePositions {
-            #expect(drawablePositions.contains(drawable))
-        }
-    }
-}
-
 // swiftlint:enable large_tuple

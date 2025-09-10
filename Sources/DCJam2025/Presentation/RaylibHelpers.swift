@@ -7,6 +7,7 @@
 
 import raylib
 
+// MARK: Color
 extension Color {
 //    #define LIGHTGRAY  CLITERAL(Color){ 200, 200, 200, 255 }   // Light Gray
 //    #define GRAY       CLITERAL(Color){ 130, 130, 130, 255 }   // Gray
@@ -74,31 +75,27 @@ extension Color: @retroactive Equatable {
     }
 }
 
-enum CameraProjection {
-    static var PERSPECTIVE: Int32 { 0 }
+extension Color: @retroactive Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(r)
+        hasher.combine(g)
+        hasher.combine(b)
+        hasher.combine(a)
+    }
+    
+    
 }
 
-extension Vector3 {
-    static var one: Vector3 {
-        Vector3(x: 1, y: 1, z: 1)
-    }
-
-    static var up: Vector3 {
-        Vector3(x: 0, y: 1, z: 0)
-    }
-
-    static func + (lhs: Vector3, rhs: Vector3) -> Vector3 {
-        Vector3(x: lhs.x + rhs.x, y: lhs.y + rhs.y, z: lhs.z + rhs.z)
-    }
-
-    func scale(_ scalar: Float) -> Vector3 {
-        Vector3(x: x * scalar, y: y * scalar, z: z * scalar)
-    }
+// MARK: Miscelaneous
+enum CameraProjection {
+    static var PERSPECTIVE: Int32 { 0 }
 }
 
 func isKeyPressed(_ key: KeyboardKey) -> Bool {
     IsKeyPressed(Int32(key.rawValue))
 }
+
+let shaderUniformVec4: Int32 = 3
 
 enum GuiState {
     static let normal: Int32 = 0
@@ -107,18 +104,8 @@ enum GuiState {
     static let disabled: Int32 = 3
 }
 
-extension Vector2 {
-    static func + (lhs: Vector2, rhs: Vector2) -> Vector2 {
-        Vector2(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
-    }
 
-    static func - (lhs: Vector2, rhs: Vector2) -> Vector2 {
-        Vector2(x: lhs.x - rhs.x, y: lhs.y - rhs.y)
-    }
-}
-
-let shaderUniformVec4: Int32 = 3
-
+// MARK: Make sure drawing is in correct state
 final class RayLibStateHelper {
     enum RayLibState: Hashable {
         case drawing
@@ -165,14 +152,59 @@ final class RayLibStateHelper {
     }
 }
 
+// MARK: Vector3
+extension Vector3 {
+    static var one: Vector3 {
+        Vector3(x: 1, y: 1, z: 1)
+    }
+
+    static var up: Vector3 {
+        Vector3(x: 0, y: 1, z: 0)
+    }
+
+    static func + (lhs: Vector3, rhs: Vector3) -> Vector3 {
+        Vector3(x: lhs.x + rhs.x, y: lhs.y + rhs.y, z: lhs.z + rhs.z)
+    }
+
+    func scale(_ scalar: Float) -> Vector3 {
+        Vector3(x: x * scalar, y: y * scalar, z: z * scalar)
+    }
+}
+
 extension Vector3: @retroactive Equatable {
     public static func == (lhs: Vector3, rhs: Vector3) -> Bool {
         lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z
     }
 }
 
+extension Vector3: @retroactive Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(x)
+        hasher.combine(y)
+        hasher.combine(z)
+    }
+}
+
+// MARK: Vector2
+extension Vector2 {
+    static func + (lhs: Vector2, rhs: Vector2) -> Vector2 {
+        Vector2(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
+    }
+
+    static func - (lhs: Vector2, rhs: Vector2) -> Vector2 {
+        Vector2(x: lhs.x - rhs.x, y: lhs.y - rhs.y)
+    }
+}
+
 extension Vector2: @retroactive Equatable {
     public static func == (lhs: Vector2, rhs: Vector2) -> Bool {
         lhs.x == rhs.x && lhs.y == rhs.y
+    }
+}
+
+extension Vector2: @retroactive Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(x)
+        hasher.combine(y)
     }
 }

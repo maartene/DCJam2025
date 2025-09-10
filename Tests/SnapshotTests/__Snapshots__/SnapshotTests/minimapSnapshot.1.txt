@@ -1,0 +1,111 @@
+▿ 11 members
+  ▿ Drawable2D
+    ▿ position: Vector2
+      - x: 0.0
+      - y: 0.0
+    - spriteName: "east"
+    ▿ tint: Color
+      - a: 255
+      - b: 55
+      - g: 41
+      - r: 230
+  ▿ Drawable2D
+    ▿ position: Vector2
+      - x: 0.0
+      - y: 16.0
+    - spriteName: "floor"
+    ▿ tint: Color
+      - a: 255
+      - b: 255
+      - g: 255
+      - r: 255
+  ▿ Drawable2D
+    ▿ position: Vector2
+      - x: 0.0
+      - y: 32.0
+    - spriteName: "stairsUp"
+    ▿ tint: Color
+      - a: 255
+      - b: 255
+      - g: 255
+      - r: 255
+  ▿ Drawable2D
+    ▿ position: Vector2
+      - x: 0.0
+      - y: 48.0
+    - spriteName: "floor"
+    ▿ tint: Color
+      - a: 255
+      - b: 255
+      - g: 255
+      - r: 255
+  ▿ Drawable2D
+    ▿ position: Vector2
+      - x: 16.0
+      - y: 16.0
+    - spriteName: "stairsDown"
+    ▿ tint: Color
+      - a: 255
+      - b: 255
+      - g: 255
+      - r: 255
+  ▿ Drawable2D
+    ▿ position: Vector2
+      - x: 16.0
+      - y: 32.0
+    - spriteName: "floor"
+    ▿ tint: Color
+      - a: 255
+      - b: 255
+      - g: 255
+      - r: 255
+  ▿ Drawable2D
+    ▿ position: Vector2
+      - x: 16.0
+      - y: 32.0
+    - spriteName: "north"
+    ▿ tint: Color
+      - a: 255
+      - b: 255
+      - g: 255
+      - r: 255
+  ▿ Drawable2D
+    ▿ position: Vector2
+      - x: 16.0
+      - y: 48.0
+    - spriteName: "floor"
+    ▿ tint: Color
+      - a: 255
+      - b: 255
+      - g: 255
+      - r: 255
+  ▿ Drawable2D
+    ▿ position: Vector2
+      - x: 32.0
+      - y: 16.0
+    - spriteName: "target"
+    ▿ tint: Color
+      - a: 255
+      - b: 255
+      - g: 255
+      - r: 255
+  ▿ Drawable2D
+    ▿ position: Vector2
+      - x: 32.0
+      - y: 32.0
+    - spriteName: "floor"
+    ▿ tint: Color
+      - a: 255
+      - b: 255
+      - g: 255
+      - r: 255
+  ▿ Drawable2D
+    ▿ position: Vector2
+      - x: 32.0
+      - y: 48.0
+    - spriteName: "floor"
+    ▿ tint: Color
+      - a: 255
+      - b: 255
+      - g: 255
+      - r: 255
