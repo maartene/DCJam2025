@@ -22,5 +22,7 @@ jobs:
         run: swift build
       - name: Test
         run: swift test --enable-code-coverage
+        env:
+          GITHUB_ACTIONS: enabled
       - name: Upload results to Codecov
         uses: codecov/codecov-action@v5

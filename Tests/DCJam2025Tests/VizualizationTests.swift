@@ -7,6 +7,7 @@
 //  Created by Maarten Engels on 11/04/2025.
 //
 
+import Foundation
 import Model
 import Testing
 import raylib
@@ -15,7 +16,7 @@ import raylib
 
 
 @MainActor // because of Window/GPU initialization, this needs to run on main thread
-@Suite("Game initialization") struct GameInitializationTests {
+@Suite("Game initialization", .disabled(if: ProcessInfo.processInfo.environment["GITHUB_ACTIONS"] != nil)) struct GameInitializationTests {
     // this is a single test because these tests require full Window/GPU initialization
     // that is an expensive, long running operation
     // by combining the tests, we cut down on test run time
