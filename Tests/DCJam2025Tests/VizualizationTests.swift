@@ -13,6 +13,15 @@ import raylib
 
 @testable import DCJam2025
 
+@MainActor
+@Suite("Game initialization") struct GameInitializationTests {
+    @Test("should load models") func loadModels() throws {
+        let game = Game()
+        
+        #expect(game.models.isEmpty == false)
+    }
+}
+
 @Suite("Converting between game logic structures and visual representations should")
 struct ConversionGameLogicAndVizualizationTests {
     @Test(

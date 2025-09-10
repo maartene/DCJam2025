@@ -68,17 +68,24 @@ class Game {
     
     var abilityGUI: AbilityGUI!
 
-    func run() {
+    init() {
         SetConfigFlags(FLAG_MSAA_4X_HINT.rawValue)
         SetConfigFlags(FLAG_WINDOW_HIGHDPI.rawValue)
-
+        
         InitWindow(screenWidth, screenHeight, "DCJam2025")
         SetTargetFPS(60)
-
+        
         shader = loadShader()
-
-        loadImages()
+        
         loadModels()
+    }
+    
+    deinit {
+        CloseWindow()
+    }
+    
+    func run() {
+        loadImages()
         loadFontsizes()
 
         guard let style = Bundle.module.url(forResource: "style", withExtension: "rgs") else {
@@ -98,7 +105,7 @@ class Game {
             update()
             drawGameView()
         }
-        CloseWindow()
+        //CloseWindow()
     }
 
     private static func makeCamera() -> Camera3D {
