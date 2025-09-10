@@ -15,7 +15,6 @@ import raylib
 
 @Suite("Converting between game logic structures and visual representations should")
 struct ConversionGameLogicAndVizualizationTests {
-
     @Test(
         "return the expected position for specific testcases",
         arguments: [
@@ -235,115 +234,6 @@ struct ConversionGameLogicAndVizualizationTests {
 }
 
 @Suite("Map conversions") struct MapConversionTests {
-    // swiftlint:disable:next function_body_length
-    @Test("convert a map into drawables") func convertAMapIntoDrawables() {
-        let floor = Floor([
-            ["#", ".", ".", "#"],
-            ["#", "S", ">", "#"],
-            ["#", "<", "T", "#"],
-        ])
-
-        let expectedDrawables = [
-            Drawable3D(
-                modelName: "wall", position: Vector3(x: 0.0, y: 0.0, z: 0.0),
-                up: Vector3(x: 0.0, y: 1.0, z: 0.0), rotation: 0.0,
-                tint: Color(r: 255, g: 255, b: 255, a: 255),
-                scale: Vector3(x: 0.25, y: 0.25, z: 0.25)),
-            Drawable3D(
-                modelName: "floor_wood_large", position: Vector3(x: 1.0, y: -0.5, z: 0.0),
-                up: Vector3(x: 0.0, y: 1.0, z: 0.0), rotation: 0.0,
-                tint: Color(r: 255, g: 255, b: 255, a: 255),
-                scale: Vector3(x: 0.25, y: 0.25, z: 0.25)),
-            Drawable3D(
-                modelName: "ceiling_tile", position: Vector3(x: 1.0, y: 0.5, z: 0.0),
-                up: Vector3(x: 0.0, y: 1.0, z: 0.0), rotation: 0.0,
-                tint: Color(r: 255, g: 255, b: 255, a: 255),
-                scale: Vector3(x: 0.25, y: 0.25, z: 0.25)),
-            Drawable3D(
-                modelName: "floor_wood_large", position: Vector3(x: 2.0, y: -0.5, z: 0.0),
-                up: Vector3(x: 0.0, y: 1.0, z: 0.0), rotation: 0.0,
-                tint: Color(r: 255, g: 255, b: 255, a: 255),
-                scale: Vector3(x: 0.25, y: 0.25, z: 0.25)),
-            Drawable3D(
-                modelName: "ceiling_tile", position: Vector3(x: 2.0, y: 0.5, z: 0.0),
-                up: Vector3(x: 0.0, y: 1.0, z: 0.0), rotation: 0.0,
-                tint: Color(r: 255, g: 255, b: 255, a: 255),
-                scale: Vector3(x: 0.25, y: 0.25, z: 0.25)),
-            Drawable3D(
-                modelName: "wall", position: Vector3(x: 3.0, y: 0.0, z: 0.0),
-                up: Vector3(x: 0.0, y: 1.0, z: 0.0), rotation: 0.0,
-                tint: Color(r: 255, g: 255, b: 255, a: 255),
-                scale: Vector3(x: 0.25, y: 0.25, z: 0.25)),
-            Drawable3D(
-                modelName: "wall", position: Vector3(x: 0.0, y: 0.0, z: 1.0),
-                up: Vector3(x: 0.0, y: 1.0, z: 0.0), rotation: 0.0,
-                tint: Color(r: 255, g: 255, b: 255, a: 255),
-                scale: Vector3(x: 0.25, y: 0.25, z: 0.25)),
-            Drawable3D(
-                modelName: "floor_wood_large", position: Vector3(x: 1.0, y: -0.5, z: 1.0),
-                up: Vector3(x: 0.0, y: 1.0, z: 0.0), rotation: 0.0,
-                tint: Color(r: 255, g: 255, b: 255, a: 255),
-                scale: Vector3(x: 0.25, y: 0.25, z: 0.25)),
-            Drawable3D(
-                modelName: "ceiling_tile", position: Vector3(x: 1.0, y: 0.5, z: 1.0),
-                up: Vector3(x: 0.0, y: 1.0, z: 0.0), rotation: 0.0,
-                tint: Color(r: 255, g: 255, b: 255, a: 255),
-                scale: Vector3(x: 0.25, y: 0.25, z: 0.25)),
-            Drawable3D(
-                modelName: "stairs", position: Vector3(x: 2.0, y: -1.5, z: 1.5),
-                up: Vector3(x: 0.0, y: 1.0, z: 0.0), rotation: 180.0,
-                tint: Color(r: 255, g: 255, b: 255, a: 255),
-                scale: Vector3(x: 0.25, y: 0.25, z: 0.25)),
-            Drawable3D(
-                modelName: "ceiling_tile", position: Vector3(x: 2.0, y: 0.5, z: 1.0),
-                up: Vector3(x: 0.0, y: 1.0, z: 0.0), rotation: 0.0,
-                tint: Color(r: 255, g: 255, b: 255, a: 255),
-                scale: Vector3(x: 0.25, y: 0.25, z: 0.25)),
-            Drawable3D(
-                modelName: "wall", position: Vector3(x: 3.0, y: 0.0, z: 1.0),
-                up: Vector3(x: 0.0, y: 1.0, z: 0.0), rotation: 0.0,
-                tint: Color(r: 255, g: 255, b: 255, a: 255),
-                scale: Vector3(x: 0.25, y: 0.25, z: 0.25)),
-            Drawable3D(
-                modelName: "wall", position: Vector3(x: 0.0, y: 0.0, z: 2.0),
-                up: Vector3(x: 0.0, y: 1.0, z: 0.0), rotation: 0.0,
-                tint: Color(r: 255, g: 255, b: 255, a: 255),
-                scale: Vector3(x: 0.25, y: 0.25, z: 0.25)),
-            Drawable3D(
-                modelName: "stairs", position: Vector3(x: 1.0, y: -0.5, z: 2.5),
-                up: Vector3(x: 0.0, y: 1.0, z: 0.0), rotation: 180.0,
-                tint: Color(r: 255, g: 255, b: 255, a: 255),
-                scale: Vector3(x: 0.25, y: 0.25, z: 0.25)),
-            Drawable3D(
-                modelName: "floor_wood_large", position: Vector3(x: 2.0, y: -0.5, z: 2.0),
-                up: Vector3(x: 0.0, y: 1.0, z: 0.0), rotation: 0.0,
-                tint: Color(r: 255, g: 255, b: 255, a: 255),
-                scale: Vector3(x: 0.25, y: 0.25, z: 0.25)),
-            Drawable3D(
-                modelName: "ceiling_tile", position: Vector3(x: 2.0, y: 0.5, z: 2.0),
-                up: Vector3(x: 0.0, y: 1.0, z: 0.0), rotation: 0.0,
-                tint: Color(r: 255, g: 255, b: 255, a: 255),
-                scale: Vector3(x: 0.25, y: 0.25, z: 0.25)),
-            Drawable3D(
-                modelName: "wall", position: Vector3(x: 3.0, y: 0.0, z: 2.0),
-                up: Vector3(x: 0.0, y: 1.0, z: 0.0), rotation: 0.0,
-                tint: Color(r: 255, g: 255, b: 255, a: 255),
-                scale: Vector3(x: 0.25, y: 0.25, z: 0.25)),
-            Drawable3D(
-                modelName: "chest_gold", position: Vector3(x: 2.0, y: -0.5, z: 2.0),
-                up: Vector3(x: 0.0, y: 1.0, z: 0.0), rotation: 180.0,
-                tint: Color(r: 255, g: 255, b: 255, a: 255),
-                scale: Vector3(x: 0.25, y: 0.25, z: 0.25)),
-        ]
-
-        let drawables = floorToDrawables(floor)
-
-        #expect(drawables.count == expectedDrawables.count)
-        for drawable in drawables {
-            #expect(expectedDrawables.contains(drawable))
-        }
-    }
-
     @Test("convert an enemy into a drawable") func convertEnemyIntoDrawables() {
         let enemy = Enemy.makeRangedEnemy(at: Coordinate(x: 12, y: 95))
 

@@ -285,4 +285,5 @@ What is there to find? The answer to the ultimate secret: what came before? the 
         - ✅ Show buttons enabled/disabled
         - ✅ Click behaviour (add component)
 
-
+## 🍅 Pomodoro 49
+- ✅ Add snapshot testing for drawing on screen
