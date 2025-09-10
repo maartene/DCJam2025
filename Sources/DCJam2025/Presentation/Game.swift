@@ -86,10 +86,6 @@ class Game {
         )
     }
     
-    deinit {
-        CloseWindow()
-    }
-    
     func run() {
         setStyle()
 
@@ -97,6 +93,8 @@ class Game {
             update()
             drawGameView()
         }
+        
+        CloseWindow()
     }
 
     private static func makeCamera() -> Camera3D {
