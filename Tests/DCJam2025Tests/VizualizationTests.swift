@@ -15,16 +15,15 @@ import raylib
 
 @MainActor
 @Suite("Game initialization") struct GameInitializationTests {
-    @Test("should load models") func loadModels() {
+    // this is a single test because these tests require full Window/GPU initialization
+    // that is an expensive, long running operation
+    // by combining the tests, we cut down on test run time
+    @Test("should load models, images and fonts") func loadModels() {
         let game = Game()
         
         #expect(game.models.isEmpty == false)
-    }
-    
-    @Test("should load images") func loadImages() {
-        let game = Game()
-        
         #expect(game.sprites.isEmpty == false)
+        #expect(game.pixelFontSizes.isEmpty == false)
     }
 }
 

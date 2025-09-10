@@ -79,6 +79,7 @@ class Game {
         
         loadModels()
         loadImages()
+        loadFontsizes()
     }
     
     deinit {
@@ -86,9 +87,6 @@ class Game {
     }
     
     func run() {
-        
-        loadFontsizes()
-
         guard let style = Bundle.module.url(forResource: "style", withExtension: "rgs") else {
             fatalError("Could not find style file")
         }
@@ -106,7 +104,6 @@ class Game {
             update()
             drawGameView()
         }
-        //CloseWindow()
     }
 
     private static func makeCamera() -> Camera3D {
