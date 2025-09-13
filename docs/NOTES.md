@@ -291,3 +291,6 @@ What is there to find? The answer to the ultimate secret: what came before? the 
 
 ## 🍅 Pomodoro 50
 - 🚧 Refactor AbilityGUI
+
+## 🍅 Pomodoro 51
+- ✅ Refactor AbilityGUI

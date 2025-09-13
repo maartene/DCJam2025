@@ -54,39 +54,27 @@ import Model
         }
         
         @Test("does not show components that are not in an ability") func doesNotShowMissingComponents() {
-            let drawables = gui.draw()
-            
-            let buttons = drawables.buttons(groupingID: "Abilities")
-            
-            #expect(buttons.contains(where: { $0.text == "y" } ) == false)
+            #expect(getButton("y", from: gui.draw(), groupingID: "Abilities") == nil)
         }
         
         @Test("when a component is clicked, its removed from the ability") func removeComponent() throws {
-            let componentButton = try #require(gui.draw().buttons(groupingID: "Abilities")
-                .first(where: { $0.text == "h" })
+            let componentButton = try #require(
+                getButton("h", from: gui.draw(), groupingID: "Abilities")
             )
                         
             componentButton.tap()
             
-            let drawables = gui.draw()
-            
-            let buttons = drawables.buttons(groupingID: "Abilities")
-            
-            #expect(buttons.contains(where: { $0.text == "h" } ) == false)
+            #expect(getButton("h", from: gui.draw(), groupingID: "Abilities") == nil)
             #expect(partyMember.abilities.contains(where: { $0.key.contains("h") } ) == false)
         }
         
         @Test("should show a 'Remove ability' button") func showRemoveAbilityButton() {
-            let drawables = gui.draw()
-            
-            let buttons = drawables.buttons(groupingID: "Abilities")
-            
-            #expect(buttons.contains(where: { $0.text == "-" } ))
+            #expect(getButton("-", from: gui.draw(), groupingID: "Abilities") != nil)
         }
         
         @Test("should remove the ability when the Remove ability button is clicked") func removeAbilityButtonClicked() throws {
-            let componentButton = try #require(gui.draw().buttons(groupingID: "Abilities")
-                .first(where: { $0.text == "-" })
+            let componentButton = try #require(
+                getButton("-", from: gui.draw(), groupingID: "Abilities")
             )
                         
             componentButton.tap()
@@ -100,25 +88,17 @@ import Model
         }
         
         @Test("should show an Add ability button") func showAddAbilityButton() {
-            let drawables = gui.draw()
-            
-            let buttons = drawables.buttons(groupingID: "Abilities")
-            
-            #expect(buttons.contains(where: { $0.text == "Add ability" }))
+            #expect(getButton("Add ability", from: gui.draw(), groupingID: "Abilities") != nil)
         }
         
         @Test("when the 'Add ability' button is clicked, should add a new ability") func addAbilityButtonClicked() throws {
-            let addAbilityButton = try #require(gui.draw().buttons(groupingID: "Abilities")
-                .first(where: { $0.text == "Add ability" })
+            let addAbilityButton = try #require(
+                getButton("Add ability", from: gui.draw(), groupingID: "Abilities")
             )
                         
             addAbilityButton.tap()
             
-            let drawables = gui.draw()
-            
-            let buttons = drawables.buttons(groupingID: "Abilities")
-            
-            #expect(buttons.contains(where: { $0.text == "(3)" }))
+            #expect(getButton("(3)", from: gui.draw(), groupingID: "Abilities") != nil)
             #expect(partyMember.abilities.count == 3)
         }
     }
@@ -154,8 +134,8 @@ import Model
         }
         
         @Test("when an ability is pressed, the selection bar should appear") func selectAnAbility() throws {
-            let abilityButton = try #require(gui.draw().buttons(groupingID: "Abilities")
-                .first(where: { $0.text == "(2)" })
+            let abilityButton = try #require(
+                getButton("(2)", from: gui.draw(), groupingID: "Abilities")
             )
                         
             abilityButton.tap()
@@ -174,8 +154,7 @@ import Model
             partyMember = PartyMember.makeMage(name: "Example Partymember", position: .backRight)
             gui = AbilityGUI(sprites: [:], fontsizes: [:], partyMember: partyMember)
             
-            let abilityButton = gui.draw().buttons(groupingID: "Abilities")
-                .first(where: { $0.text == "(2)" })
+            let abilityButton = getButton("(2)", from: gui.draw(), groupingID: "Abilities")
                         
             abilityButton?.tap()
         }
@@ -193,17 +172,19 @@ import Model
         }
         
         @Test("and an available ability is clicked, its added to the selected ability") func addComponentToSelectedAbility() throws {
-            let componentButton = try #require(gui.draw().buttons(groupingID: "AvailableAbilities")
-                .first(where: { $0.text == "r" })
+            let componentButton = try #require(
+                getButton("r", from: gui.draw(), groupingID: "AvailableAbilities")
             )
                         
             componentButton.tap()
             
-            let drawables = gui.draw()
-            
-            let buttons = drawables.buttons(groupingID: "Abilities")
-            #expect(buttons.contains(where: { $0.text == "r" } ))
+            #expect(getButton("r", from: gui.draw(), groupingID: "Abilities") != nil)
             #expect(partyMember.abilities.contains(where: { $0.key.contains("r")} ))
         }
     }
+}
+
+fileprivate func getButton(_ name: String, from drawables: [GUIDrawable], groupingID: String) -> GUIButton? {
+    drawables.buttons(groupingID: groupingID)
+        .first(where: { $0.text == name })
 }
