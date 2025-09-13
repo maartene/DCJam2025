@@ -49,7 +49,7 @@ public final class AbilityGUI {
             GUIRectangle(
                 position: Vector2(x: 10, y: 10), size: Vector2(x: width, y: height),
                 color: Color(r: 80, g: 80, b: 80, a: 192)),
-            GUIButton(position: Vector2(x: width, y: 10), size: Vector2(x: 20, y: 20), text: "X", enabled: true, groupingID: "Window", action: { [weak self] in self?.shouldShow = false })
+            GUIButton(position: Vector2(x: width - 10, y: 10), size: Vector2(x: 20, y: 20), text: "X", enabled: true, groupingID: "Window", action: { [weak self] in self?.shouldShow = false })
         ]
     }
     
