@@ -37,17 +37,7 @@ public final class AbilityGUI {
         ].flatMap { $0 }
     }
 
-    func removeAbility(_ ability: any Ability) {
-        partyMember.deleteAbility(ability)
-    }
-
-    func addAbility() {
-        partyMember.addAbility()
-    }
-
-    func removeComponent(componentKey: String, abilityIndex: Int) {
-        partyMember.removeComponentFromAbility(componentKey: componentKey, from: abilityIndex)
-    }
+    
     
     private func background(width: Float, height: Float) -> [GUIDrawable] {
         [
@@ -92,48 +82,7 @@ public final class AbilityGUI {
         )
 
         for abilityIndex in 0..<partyMember.abilities.count {
-            let ability = partyMember.abilities[abilityIndex]
-
-            let yPosition = Float(240 + abilityIndex * 24)
-
-            if currentlySelectedAbilityIndex == abilityIndex {
-                result.append(
-                    GUIRectangle(
-                        position: Vector2(x: 20 - 2, y: yPosition - 2),
-                        size: Vector2(x: 280 + 4, y: 24),
-                        color: .darkPurple,
-                        groupingID: "Abilities")
-                )
-            }
-
-            result.append(
-                GUIButton(
-                    position: Vector2(x: 20, y: yPosition), size: Vector2(x: 40, y: 20),
-                    text: "(\(abilityIndex + 1))",
-                    enabled: true,
-                    groupingID: "Abilities",
-                    action: { [weak self] in self?.currentlySelectedAbilityIndex = abilityIndex }))
-
-            let keys: [Character] = ability.key.map { $0 }
-
-            for keyIndex in 0..<keys.count {
-                let key = keys[keyIndex]
-                result.append(
-                    GUIButton(
-                        position: Vector2(x: Float(100 + 22 * keyIndex), y: yPosition),
-                        size: Vector2(x: 20, y: 20), text: String(key), enabled: true,
-                        groupingID: "Abilities",
-                        action: {
-                            [weak self] in self?.removeComponent(componentKey: String(key), abilityIndex: abilityIndex)
-                        }))
-            }
-
-            result.append(
-                GUIButton(
-                    position: Vector2(x: 230, y: yPosition), size: Vector2(x: 20, y: 20), text: "-",
-                    enabled: true,
-                    groupingID: "Abilities",
-                    action: { [weak self] in self?.removeAbility(ability) }))
+            result.append(contentsOf: renderAbility(abilityIndex: abilityIndex))
         }
 
         result.append(
@@ -142,6 +91,55 @@ public final class AbilityGUI {
                 size: Vector2(x: 100, y: 20), text: "Add ability", enabled: true,
                 groupingID: "Abilities",
                 action: { [weak self] in self?.addAbility() }))
+        
+        return result
+    }
+    
+    private func renderAbility(abilityIndex: Int) -> [GUIDrawable] {
+        var result = [GUIDrawable]()
+        
+        let ability = partyMember.abilities[abilityIndex]
+
+        let yPosition = Float(240 + abilityIndex * 24)
+
+        if currentlySelectedAbilityIndex == abilityIndex {
+            result.append(
+                GUIRectangle(
+                    position: Vector2(x: 20 - 2, y: yPosition - 2),
+                    size: Vector2(x: 280 + 4, y: 24),
+                    color: .darkPurple,
+                    groupingID: "Abilities")
+            )
+        }
+
+        result.append(
+            GUIButton(
+                position: Vector2(x: 20, y: yPosition), size: Vector2(x: 40, y: 20),
+                text: "(\(abilityIndex + 1))",
+                enabled: true,
+                groupingID: "Abilities",
+                action: { [weak self] in self?.currentlySelectedAbilityIndex = abilityIndex }))
+
+        let keys: [Character] = ability.key.map { $0 }
+
+        for keyIndex in 0..<keys.count {
+            let key = keys[keyIndex]
+            result.append(
+                GUIButton(
+                    position: Vector2(x: Float(100 + 22 * keyIndex), y: yPosition),
+                    size: Vector2(x: 20, y: 20), text: String(key), enabled: true,
+                    groupingID: "Abilities",
+                    action: {
+                        [weak self] in self?.removeComponent(componentKey: String(key), abilityIndex: abilityIndex)
+                    }))
+        }
+
+        result.append(
+            GUIButton(
+                position: Vector2(x: 230, y: yPosition), size: Vector2(x: 20, y: 20), text: "-",
+                enabled: true,
+                groupingID: "Abilities",
+                action: { [weak self] in self?.removeAbility(ability) }))
         
         return result
     }
@@ -156,32 +154,58 @@ public final class AbilityGUI {
                 text: "Available Abilities:", color: .white))
 
         let allAbilities = allAbilities()
-        for abilityIndex in 0..<allAbilities.count {
-            let ability = allAbilities[abilityIndex]
-            if let selectedAbilityIndex = currentlySelectedAbilityIndex {
-                result.append(
-                    GUIButton(
-                        position: Vector2(
-                            x: Float(20 + abilityIndex * 24),
-                            y: Float(310 + partyMember.abilities.count * 24)),
-                        size: Vector2(x: 20, y: 20), text: "\(ability.key)", enabled: true,
-                        groupingID: "AvailableAbilities",
-                        action: {
-                            [weak self] in self?.partyMember.addComponentToAbility(
-                                component: ability, to: selectedAbilityIndex)
-                        }))
-            } else {
-                result.append(
-                    GUIButton(
-                        position: Vector2(
-                            x: Float(20 + abilityIndex * 24),
-                            y: Float(310 + partyMember.abilities.count * 24)),
-                        size: Vector2(x: 20, y: 20), text: "\(ability.key)", enabled: false,
-                        groupingID: "AvailableAbilities",
-                        action: {}))
-            }
+        for abilityIndex in 0 ..< allAbilities.count {
+            result.append(contentsOf: renderAvailableAbility(abilityIndex: abilityIndex, availableAbilities: allAbilities))
         }
         
         return result
+    }
+    
+    private func renderAvailableAbility(abilityIndex: Int, availableAbilities: [any Ability]) -> [GUIDrawable] {
+        var result = [GUIDrawable]()
+        
+        let ability = availableAbilities[abilityIndex]
+        if let selectedAbilityIndex = currentlySelectedAbilityIndex {
+            result.append(
+                GUIButton(
+                    position: Vector2(
+                        x: Float(20 + abilityIndex * 24),
+                        y: Float(310 + partyMember.abilities.count * 24)),
+                    size: Vector2(x: 20, y: 20), text: "\(ability.key)", enabled: true,
+                    groupingID: "AvailableAbilities",
+                    action: {
+                        [weak self] in self?.addComponentToAbility(
+                            ability, abilityIndex: selectedAbilityIndex
+                        )
+                    }))
+        } else {
+            result.append(
+                GUIButton(
+                    position: Vector2(
+                        x: Float(20 + abilityIndex * 24),
+                        y: Float(310 + partyMember.abilities.count * 24)),
+                    size: Vector2(x: 20, y: 20), text: "\(ability.key)", enabled: false,
+                    groupingID: "AvailableAbilities",
+                    action: {}))
+        }
+        
+        return result
+    }
+    
+    private func removeAbility(_ ability: any Ability) {
+        partyMember.deleteAbility(ability)
+    }
+
+    private func addAbility() {
+        partyMember.addAbility()
+    }
+
+    private func removeComponent(componentKey: String, abilityIndex: Int) {
+        partyMember.removeComponentFromAbility(componentKey: componentKey, from: abilityIndex)
+    }
+    
+    private func addComponentToAbility(_ ability: Ability, abilityIndex: Int) {
+        partyMember.addComponentToAbility(
+            component: ability, to: abilityIndex)
     }
 }
