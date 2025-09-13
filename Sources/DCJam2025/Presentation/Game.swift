@@ -205,17 +205,17 @@ class Game {
     }
 
     func drawGUI() {
-        //        DrawTextEx(font, "Hello, World", Vector2(x: 10, y: 200), 32, 10, .white)
-
+        GUI(world: world, sprites: sprites, fontsizes: pixelFontSizes).drawParty()
+            .forEach {
+                $0.draw()
+            }
+        
         abilityGUI.draw()
             .forEach {
                 $0.draw()
             }
 
-        //        GUI(world: world, sprites: sprites).drawParty()
-        //            .forEach {
-        //                $0.draw()
-        //            }
+                
     }
 
     private func loadShader() -> Shader {
