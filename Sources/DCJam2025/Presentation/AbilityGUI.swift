@@ -16,6 +16,7 @@ public final class AbilityGUI {
     let fontsizes: [Int32: Font]
     let partyMember: PartyMember
     private var currentlySelectedAbilityIndex: Int?
+    private var shouldShow = true
     
     init(
         sprites: [String: Texture], fontsizes: [Int32: Font], partyMember: PartyMember,
@@ -26,11 +27,15 @@ public final class AbilityGUI {
     }
     
     func draw() -> [GUIDrawable] {
+        guard shouldShow else {
+            return []
+        }
+        
         let width: Float = 1280 - 10 - 10
         let height: Float = 720 - 10 - 10
 
         return [
-            background(width: width, height: height),
+            window(width: width, height: height),
             portrait(),
             abilities(),
             availableAbilities()
@@ -39,11 +44,12 @@ public final class AbilityGUI {
 
     
     
-    private func background(width: Float, height: Float) -> [GUIDrawable] {
+    private func window(width: Float, height: Float) -> [GUIDrawable] {
         [
             GUIRectangle(
                 position: Vector2(x: 10, y: 10), size: Vector2(x: width, y: height),
-                color: Color(r: 80, g: 80, b: 80, a: 192))
+                color: Color(r: 80, g: 80, b: 80, a: 192)),
+            GUIButton(position: Vector2(x: width, y: 10), size: Vector2(x: 20, y: 20), text: "X", enabled: true, groupingID: "Window", action: { [weak self] in self?.shouldShow = false })
         ]
     }
     

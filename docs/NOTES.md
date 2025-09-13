@@ -294,3 +294,4 @@ What is there to find? The answer to the ultimate secret: what came before? the 
 
 ## 🍅 Pomodoro 51
 - ✅ Refactor AbilityGUI
+- ✅ AbilityGUITests can be streamlined with some more helper functions

@@ -1,13 +1,10 @@
 # TECHDEBT
 
 ## ⚠️ TODO
-- AbilityGUITests can be streamlined with some more helper functions
-- Missing tests to validate correct behaviour when two abilities have the same key (fixed in code)
 - Structure tests in suites and subsuites
 - Rotating towards party is based on trial and error: rotate, see if facing party. otherwise repeat. this could be based on dot product
 
 ## 🚧 DOING
-- AbilityGUI should be refactored
 
 
 ## ✅ DONE
@@ -75,3 +72,5 @@
 - Missing tests to validate correct behaviour when two abilities have the same key (fixed in code)
     - [X] When removing components
     - [X] When adding components
+- AbilityGUI should be refactored
+- AbilityGUITests can be streamlined with some more helper functions

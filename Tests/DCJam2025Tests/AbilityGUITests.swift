@@ -101,6 +101,18 @@ import Model
             #expect(getButton("(3)", from: gui.draw(), groupingID: "Abilities") != nil)
             #expect(partyMember.abilities.count == 3)
         }
+        
+        @Test("should show a close button") func showCloseButton() {
+            #expect(getButton("X", from: gui.draw(), groupingID: "Window") != nil)
+        }
+        
+        @Test("should hide gui when close button is clicked") func closeButtonClicked() throws {
+            let closeButton = try #require(getButton("X", from: gui.draw(), groupingID: "Window"))
+            
+            closeButton.tap()
+            
+            #expect(gui.draw().isEmpty)
+        }
     }
     
     @Suite("when no ability is selected") struct NoAbilitySelected {
