@@ -1,4 +1,4 @@
-▿ 20 elements
+▿ 21 elements
   ▿ GUIRectangle
     ▿ color: Color
       - a: 192
@@ -12,6 +12,18 @@
     ▿ size: Vector2
       - x: 1260.0
       - y: 700.0
+  ▿ GUIButton
+    - action: (Function)
+    - enabled: true
+    ▿ groupingID: Optional<String>
+      - some: "Window"
+    ▿ position: Vector2
+      - x: 1250.0
+      - y: 10.0
+    ▿ size: Vector2
+      - x: 20.0
+      - y: 20.0
+    - text: "X"
   ▿ GUIText
     ▿ color: Color
       - a: 255
