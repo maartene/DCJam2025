@@ -41,12 +41,14 @@ struct GUIText: GUIDrawable {
     let position: Vector2
     let text: String
     let color: Color
+    let groupingID: String?
 
-    init(font: Font?, position: Vector2, text: String, color: Color) {
+    init(font: Font?, position: Vector2, text: String, color: Color, groupingID: String? = nil) {
         self.font = font ?? Font()
         self.position = position
         self.text = text
         self.color = color
+        self.groupingID = groupingID
     }
 
     var fontSize: Float {

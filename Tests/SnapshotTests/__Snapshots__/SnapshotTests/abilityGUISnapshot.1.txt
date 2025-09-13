@@ -1,4 +1,4 @@
-▿ 21 elements
+▿ 22 elements
   ▿ GUIRectangle
     ▿ color: Color
       - a: 192
@@ -42,6 +42,7 @@
         - id: 0
         - mipmaps: 0
         - width: 0
+    - groupingID: Optional<String>.none
     ▿ position: Vector2
       - x: 20.0
       - y: 20.0
@@ -64,6 +65,7 @@
         - id: 0
         - mipmaps: 0
         - width: 0
+    - groupingID: Optional<String>.none
     ▿ position: Vector2
       - x: 20.0
       - y: 180.0
@@ -86,6 +88,7 @@
         - id: 0
         - mipmaps: 0
         - width: 0
+    - groupingID: Optional<String>.none
     ▿ position: Vector2
       - x: 20.0
       - y: 210.0
@@ -108,6 +111,7 @@
         - id: 0
         - mipmaps: 0
         - width: 0
+    - groupingID: Optional<String>.none
     ▿ position: Vector2
       - x: 100.0
       - y: 210.0
@@ -130,6 +134,7 @@
         - id: 0
         - mipmaps: 0
         - width: 0
+    - groupingID: Optional<String>.none
     ▿ position: Vector2
       - x: 230.0
       - y: 210.0
@@ -248,6 +253,7 @@
         - id: 0
         - mipmaps: 0
         - width: 0
+    - groupingID: Optional<String>.none
     ▿ position: Vector2
       - x: 20.0
       - y: 328.0
@@ -312,3 +318,27 @@
       - x: 20.0
       - y: 20.0
     - text: "x"
+  ▿ GUIText
+    ▿ color: Color
+      - a: 255
+      - b: 255
+      - g: 255
+      - r: 255
+    ▿ font: Font
+      - baseSize: 0
+      - glyphCount: 0
+      - glyphPadding: 0
+      - glyphs: Optional<UnsafeMutablePointer<GlyphInfo>>.none
+      - recs: Optional<UnsafeMutablePointer<Rectangle>>.none
+      ▿ texture: Texture
+        - format: 0
+        - height: 0
+        - id: 0
+        - mipmaps: 0
+        - width: 0
+    ▿ groupingID: Optional<String>
+      - some: "Tooltip"
+    ▿ position: Vector2
+      - x: 10.0
+      - y: 400.0
+    - text: "Explanation"

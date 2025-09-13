@@ -38,7 +38,8 @@ public final class AbilityGUI {
             window(width: width, height: height),
             portrait(),
             abilities(),
-            availableAbilities()
+            availableAbilities(),
+            [GUIText(font: fontsizes[16], position: Vector2(x: 10, y: 400), text: "Explanation", color: .white, groupingID: "Tooltip")]
         ].flatMap { $0 }
     }
 

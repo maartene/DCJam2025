@@ -1,6 +1,7 @@
 # TECHDEBT
 
 ## ⚠️ TODO
+- GUI probably requires another abstraction, so we can choose which one to show
 - Structure tests in suites and subsuites
 - Rotating towards party is based on trial and error: rotate, see if facing party. otherwise repeat. this could be based on dot product
 

@@ -193,10 +193,22 @@ import Model
             #expect(getButton("r", from: gui.draw(), groupingID: "Abilities") != nil)
             #expect(partyMember.abilities.contains(where: { $0.key.contains("r")} ))
         }
+        
+        @Test("should show a tooltip when hovering over a component") func showTooltip() throws {
+                let drawables = gui.draw()
+                
+                #expect(getTooltip(from: drawables) != nil)
+        }
     }
 }
 
 fileprivate func getButton(_ name: String, from drawables: [GUIDrawable], groupingID: String) -> GUIButton? {
     drawables.buttons(groupingID: groupingID)
         .first(where: { $0.text == name })
+}
+
+fileprivate func getTooltip(from drawables: [GUIDrawable]) -> String? {
+    drawables.compactMap { $0 as? GUIText }
+        .first(where: { $0.groupingID == "Tooltip" } )?
+        .text
 }
